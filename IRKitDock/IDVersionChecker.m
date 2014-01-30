@@ -6,10 +6,12 @@
 //  Copyright (c) 2014年 Masakazu Ohtsuka. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "IDVersionChecker.h"
 
-@interface IDAppDelegate : NSObject <NSApplicationDelegate,IDVersionCheckerDelegate>
+@implementation IDVersionChecker
 
+- (void)checkWithInterval:(NSTimeInterval)intervalSeconds {
+    
+}
 
 @end
