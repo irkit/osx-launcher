@@ -19,8 +19,7 @@
     return self;
 }
 
-- (void)_setupPopover
-{
+- (void)_setupPopover {
     if (!self.popover) {
         self.popover = [[NSPopover alloc] init];
         self.popover.contentViewController = [[IDPopoverController alloc] init];
@@ -32,7 +31,6 @@
     NSLog(@"Menulet clicked");
 
     self.active = ! self.active;
-    [view setNeedsDisplay:YES];
 
     if (self.active) {
         [self _setupPopover];

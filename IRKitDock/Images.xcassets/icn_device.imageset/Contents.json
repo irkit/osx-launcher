@@ -2,12 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "Moon_Full.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "icn_device@2x.png"
     }
   ],
   "info" : {

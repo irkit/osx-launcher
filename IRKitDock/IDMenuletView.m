@@ -8,19 +8,11 @@
 
 #import "IDMenuletView.h"
 
-static void *kActiveChangedKVO = &kActiveChangedKVO;
-
 @implementation IDMenuletView
 
-- (void)drawRect:(NSRect)rect
-{
-    NSImage *menuletIcon;
-    [[NSColor clearColor] set];   
-    if ([self.controller isActive]) {
-        menuletIcon = [NSImage imageNamed:@"Moon_Full.png"];
-    } else {
-        menuletIcon = [NSImage imageNamed:@"Moon_New.png"];
-    }
+- (void)drawRect:(NSRect)rect {
+    [[NSColor clearColor] set];
+    NSImage *menuletIcon = [NSImage imageNamed:@"icn_device@2x.png"];
     [menuletIcon drawInRect:NSInsetRect(rect, 2, 2)
                    fromRect:NSZeroRect
                   operation:NSCompositeSourceOver

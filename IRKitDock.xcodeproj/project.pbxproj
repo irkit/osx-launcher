@@ -19,8 +19,6 @@
 		C71F8C5B189A015200298DFA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71F8C3A189A015200298DFA /* Cocoa.framework */; };
 		C71F8C63189A015200298DFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C61189A015200298DFA /* InfoPlist.strings */; };
 		C71F8C65189A015200298DFA /* IRKitDockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C64189A015200298DFA /* IRKitDockTests.m */; };
-		C7766F99189A4E0800898267 /* Moon_New.png in Resources */ = {isa = PBXBuildFile; fileRef = C7766F97189A4E0800898267 /* Moon_New.png */; };
-		C7766F9A189A4E0800898267 /* Moon_Full.png in Resources */ = {isa = PBXBuildFile; fileRef = C7766F98189A4E0800898267 /* Moon_Full.png */; };
 		C7766FA1189A4F5300898267 /* IDVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* IDVersionChecker.m */; };
 		C7766FA4189A524800898267 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* Log.m */; };
 		C77ECAF2189A41A2006C8338 /* IDMenuletController.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* IDMenuletController.m */; };
@@ -61,8 +59,6 @@
 		C71F8C60189A015200298DFA /* IRKitDockTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRKitDockTests-Info.plist"; sourceTree = "<group>"; };
 		C71F8C62189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C71F8C64189A015200298DFA /* IRKitDockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRKitDockTests.m; sourceTree = "<group>"; };
-		C7766F97189A4E0800898267 /* Moon_New.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Moon_New.png; sourceTree = "<group>"; };
-		C7766F98189A4E0800898267 /* Moon_Full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Moon_Full.png; sourceTree = "<group>"; };
 		C7766F9F189A4F5300898267 /* IDVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDVersionChecker.h; sourceTree = "<group>"; };
 		C7766FA0189A4F5300898267 /* IDVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDVersionChecker.m; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
@@ -191,8 +187,6 @@
 			children = (
 				C71F8C4F189A015200298DFA /* MainMenu.xib */,
 				C71F8C52189A015200298DFA /* Images.xcassets */,
-				C7766F97189A4E0800898267 /* Moon_New.png */,
-				C7766F98189A4E0800898267 /* Moon_Full.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -302,8 +296,6 @@
 				C71F8C4B189A015200298DFA /* Credits.rtf in Resources */,
 				C71F8C51189A015200298DFA /* MainMenu.xib in Resources */,
 				C77ECAF5189A41A2006C8338 /* IDPopoverController.xib in Resources */,
-				C7766F9A189A4E0800898267 /* Moon_Full.png in Resources */,
-				C7766F99189A4E0800898267 /* Moon_New.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
