@@ -16,6 +16,13 @@
     self = [super init];
     if (!self) { return nil; }
 
+    __weak typeof(self) _self = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName: NSApplicationWillResignActiveNotification object: nil queue: nil usingBlock:^(NSNotification *note) {
+        LOG( @"popover closed" );
+        _self.active = NO;
+        [_self.popover performClose: _self];
+    }];
+
     return self;
 }
 
