@@ -23,10 +23,8 @@
 		C71F8C65189A015200298DFA /* IRLauncherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C64189A015200298DFA /* IRLauncherTests.m */; };
 		C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* ILVersionChecker.m */; };
 		C7766FA4189A524800898267 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* Log.m */; };
-		C77ECAF2189A41A2006C8338 /* ILMenuletController.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* ILMenuletController.m */; };
+		C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* ILMenu.m */; };
 		C77ECAF3189A41A2006C8338 /* ILMenuletView.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEC189A41A2006C8338 /* ILMenuletView.m */; };
-		C77ECAF4189A41A2006C8338 /* ILPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEE189A41A2006C8338 /* ILPopoverController.m */; };
-		C77ECAF5189A41A2006C8338 /* ILPopoverController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C77ECAEF189A41A2006C8338 /* ILPopoverController.xib */; };
 		C7F6C493189A66B600A79261 /* ILUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6C492189A66B600A79261 /* ILUtils.m */; };
 /* End PBXBuildFile section */
 
@@ -71,13 +69,10 @@
 		C7766FA0189A4F5300898267 /* ILVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILVersionChecker.m; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		C7766FA3189A524800898267 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Log.m; sourceTree = "<group>"; };
-		C77ECAE9189A41A2006C8338 /* ILMenuletController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuletController.h; sourceTree = "<group>"; };
-		C77ECAEA189A41A2006C8338 /* ILMenuletController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenuletController.m; sourceTree = "<group>"; };
+		C77ECAE9189A41A2006C8338 /* ILMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenu.h; sourceTree = "<group>"; };
+		C77ECAEA189A41A2006C8338 /* ILMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenu.m; sourceTree = "<group>"; };
 		C77ECAEB189A41A2006C8338 /* ILMenuletView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuletView.h; sourceTree = "<group>"; };
 		C77ECAEC189A41A2006C8338 /* ILMenuletView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenuletView.m; sourceTree = "<group>"; };
-		C77ECAED189A41A2006C8338 /* ILPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILPopoverController.h; sourceTree = "<group>"; };
-		C77ECAEE189A41A2006C8338 /* ILPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILPopoverController.m; sourceTree = "<group>"; };
-		C77ECAEF189A41A2006C8338 /* ILPopoverController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILPopoverController.xib; sourceTree = "<group>"; };
 		C7F6C491189A66B600A79261 /* ILUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUtils.h; sourceTree = "<group>"; };
 		C7F6C492189A66B600A79261 /* ILUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -159,14 +154,13 @@
 			children = (
 				C71E8996189FA05F007BC9C4 /* Categories */,
 				C7FD7F88189CFC9600EF0906 /* IRKit */,
-				C7766F9E189A4EA100898267 /* Popover */,
 				C7766F9D189A4E9B00898267 /* Menulet */,
 				C7766F9B189A4E0F00898267 /* Resources */,
-				C71F8C4C189A015200298DFA /* ILAppDelegate.h */,
-				C71F8C4D189A015200298DFA /* ILAppDelegate.m */,
 				C71F8C41189A015200298DFA /* Supporting Files */,
 				C7766F9F189A4F5300898267 /* ILVersionChecker.h */,
 				C7766FA0189A4F5300898267 /* ILVersionChecker.m */,
+				C71F8C4C189A015200298DFA /* ILAppDelegate.h */,
+				C71F8C4D189A015200298DFA /* ILAppDelegate.m */,
 				C7F6C491189A66B600A79261 /* ILUtils.h */,
 				C7F6C492189A66B600A79261 /* ILUtils.m */,
 				C71E898F189F8E21007BC9C4 /* const.h */,
@@ -218,22 +212,12 @@
 		C7766F9D189A4E9B00898267 /* Menulet */ = {
 			isa = PBXGroup;
 			children = (
-				C77ECAE9189A41A2006C8338 /* ILMenuletController.h */,
-				C77ECAEA189A41A2006C8338 /* ILMenuletController.m */,
+				C77ECAE9189A41A2006C8338 /* ILMenu.h */,
+				C77ECAEA189A41A2006C8338 /* ILMenu.m */,
 				C77ECAEB189A41A2006C8338 /* ILMenuletView.h */,
 				C77ECAEC189A41A2006C8338 /* ILMenuletView.m */,
 			);
 			name = Menulet;
-			sourceTree = "<group>";
-		};
-		C7766F9E189A4EA100898267 /* Popover */ = {
-			isa = PBXGroup;
-			children = (
-				C77ECAED189A41A2006C8338 /* ILPopoverController.h */,
-				C77ECAEE189A41A2006C8338 /* ILPopoverController.m */,
-				C77ECAEF189A41A2006C8338 /* ILPopoverController.xib */,
-			);
-			name = Popover;
 			sourceTree = "<group>";
 		};
 		C7FD7F88189CFC9600EF0906 /* IRKit */ = {
@@ -328,7 +312,6 @@
 				C71F8C53189A015200298DFA /* Images.xcassets in Resources */,
 				C71F8C4B189A015200298DFA /* Credits.rtf in Resources */,
 				C71F8C51189A015200298DFA /* MainMenu.xib in Resources */,
-				C77ECAF5189A41A2006C8338 /* ILPopoverController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,10 +367,9 @@
 				C71E8999189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m in Sources */,
 				C77ECAF3189A41A2006C8338 /* ILMenuletView.m in Sources */,
 				C7F6C493189A66B600A79261 /* ILUtils.m in Sources */,
-				C77ECAF2189A41A2006C8338 /* ILMenuletController.m in Sources */,
+				C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */,
 				C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */,
 				C71F8C47189A015200298DFA /* main.m in Sources */,
-				C77ECAF4189A41A2006C8338 /* ILPopoverController.m in Sources */,
 				C71F8C4E189A015200298DFA /* ILAppDelegate.m in Sources */,
 				C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */,
 			);

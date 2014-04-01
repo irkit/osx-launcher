@@ -13,5 +13,29 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="494" customClass="ILAppDelegate"/>
         <customObject id="420" customClass="NSFontManager"/>
+        <menu id="nVI-uD-uLB" customClass="ILMenu">
+            <items>
+                <menuItem title="Send Signals (None Found)" tag="10" enabled="NO" id="Ji8-hp-uI5">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="PbL-Dn-FCA"/>
+                <menuItem title="IRKit (Searching...)" tag="20" enabled="NO" id="uCB-gE-BaK">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="bep-vl-uFo"/>
+                <menuItem title="Help" id="OHb-2K-DBA">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showHelp:" target="-2" id="JvY-qo-5IW"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="hRv-Uy-a1b"/>
+                <menuItem title="Quit IRLauncher" keyEquivalent="q" id="aX7-vm-frd">
+                    <connections>
+                        <action selector="terminate:" target="-2" id="Pxs-Ca-vac"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
     </objects>
 </document>

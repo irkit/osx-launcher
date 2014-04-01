@@ -12,6 +12,17 @@
 
 @implementation ILUtils
 
++ (id)firstObjectOf:(NSArray *)array meetsBlock:(BOOL (^)(id obj, NSUInteger idx))block {
+    __block id result = nil;
+    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if (block(obj,idx)) {
+            result = obj;
+            *stop = 1;
+        }
+    }];
+    return result;
+}
+
 + (NSURL*) URLPathForVersion: (NSString*) versionString {
     NSString *directory = [[NSFileManager defaultManager] applicationSupportDirectory];
     NSURL *directoryURL = [NSURL fileURLWithPath: directory];

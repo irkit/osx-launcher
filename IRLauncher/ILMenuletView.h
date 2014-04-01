@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ILMenuletController.h"
+#import "ILMenu.h"
+
+typedef BOOL (^ILEventBlock)(NSEvent *event);
 
 @interface ILMenuletView : NSView
 
-@property (nonatomic, strong) id<ILMenuletController> controller;
+@property (nonatomic, copy) ILEventBlock onMouseDown;
 
 @end

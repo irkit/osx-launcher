@@ -8,7 +8,6 @@
 
 #import "ILAppDelegate.h"
 #import "ILMenuletView.h"
-#import "ILMenuletController.h"
 #import "ILVersionChecker.h"
 #import "ILUtils.h"
 #import "const.h"
@@ -17,6 +16,7 @@
 
 @property (nonatomic, strong) NSStatusItem *item;
 @property (nonatomic, strong) ILMenuletView *menuletView;
+@property (nonatomic, strong) ILMenu *menu;
 @property (nonatomic, strong) ILVersionChecker *versionChecker;
 @property (nonatomic, strong) NSString *newestVersionString;
 @property (nonatomic, strong) NSTimer *checkTimer;
@@ -27,14 +27,29 @@
 @implementation ILAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    __weak typeof(self) _self = self;
     CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
+
+    self.menuletView             = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
+    self.menuletView.onMouseDown = (ILEventBlock)^(NSEvent *event) {
+        [_self.item popUpStatusItemMenu: _self.menu];
+    };
+
     self.item = [[NSStatusBar systemStatusBar] statusItemWithLength: thickness];
-
-    self.menuletView            = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
-    self.menuletView.controller = [[ILMenuletController alloc] init];
-
     [self.item setView: self.menuletView];
     [self.item setHighlightMode: NO];
+
+    NSArray *nibEntries = @[];
+    [[NSBundle mainBundle] loadNibNamed: @"MainMenu" owner: self topLevelObjects: &nibEntries];
+    self.menu = (ILMenu*)[ILUtils firstObjectOf: nibEntries meetsBlock:^BOOL (id obj, NSUInteger idx) {
+        if ([obj isKindOfClass: [ILMenu class]]) {
+            return YES;
+        }
+        return NO;
+    }];
+    // self.item.menu = menu;
+
+    // self.menuletView.menu = menu;
 
     self.versionChecker          = [[ILVersionChecker alloc] init];
     self.versionChecker.delegate = self;
@@ -71,6 +86,14 @@
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
     LOG( @"hostname: %@ newVersion: %@ currentVersion: %@", hostname, newVersion, currentVersion);
 
+}
+
+- (void) showHelp: (id)sender {
+    LOG_CURRENT_METHOD;
+}
+
+- (void) terminate: (id)sender {
+    [[NSApplication sharedApplication] terminate: sender];
 }
 
 #pragma mark - IRSearcherDelegate

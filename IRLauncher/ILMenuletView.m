@@ -21,7 +21,7 @@
 
 - (void)mouseDown:(NSEvent *)event {
     NSLog(@"Mouse down event: %@", event);
-    [self.controller menuletClicked: self];
+    self.onMouseDown(event);
 }
 
 @end
