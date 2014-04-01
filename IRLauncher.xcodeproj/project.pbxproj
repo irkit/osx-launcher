@@ -8,23 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		11C9F3851196497CA0BD6036 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1EF2A37F2D4D4C81E28AF5 /* libPods.a */; };
+		C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C71E8993189F92B7007BC9C4 /* IRSearcher.m */; };
+		C71E8999189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */; };
 		C71F8C3B189A015200298DFA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71F8C3A189A015200298DFA /* Cocoa.framework */; };
 		C71F8C45189A015200298DFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C43189A015200298DFA /* InfoPlist.strings */; };
 		C71F8C47189A015200298DFA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C46189A015200298DFA /* main.m */; };
 		C71F8C4B189A015200298DFA /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C49189A015200298DFA /* Credits.rtf */; };
-		C71F8C4E189A015200298DFA /* IDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C4D189A015200298DFA /* IDAppDelegate.m */; };
+		C71F8C4E189A015200298DFA /* ILAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C4D189A015200298DFA /* ILAppDelegate.m */; };
 		C71F8C51189A015200298DFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C4F189A015200298DFA /* MainMenu.xib */; };
 		C71F8C53189A015200298DFA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C52189A015200298DFA /* Images.xcassets */; };
 		C71F8C5A189A015200298DFA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71F8C59189A015200298DFA /* XCTest.framework */; };
 		C71F8C5B189A015200298DFA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71F8C3A189A015200298DFA /* Cocoa.framework */; };
 		C71F8C63189A015200298DFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C61189A015200298DFA /* InfoPlist.strings */; };
-		C71F8C65189A015200298DFA /* IRKitDockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C64189A015200298DFA /* IRKitDockTests.m */; };
-		C7766FA1189A4F5300898267 /* IDVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* IDVersionChecker.m */; };
+		C71F8C65189A015200298DFA /* IRLauncherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C64189A015200298DFA /* IRLauncherTests.m */; };
+		C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* ILVersionChecker.m */; };
 		C7766FA4189A524800898267 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* Log.m */; };
-		C77ECAF2189A41A2006C8338 /* IDMenuletController.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* IDMenuletController.m */; };
-		C77ECAF3189A41A2006C8338 /* IDMenuletView.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEC189A41A2006C8338 /* IDMenuletView.m */; };
-		C77ECAF4189A41A2006C8338 /* IDPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEE189A41A2006C8338 /* IDPopoverController.m */; };
-		C77ECAF5189A41A2006C8338 /* IDPopoverController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C77ECAEF189A41A2006C8338 /* IDPopoverController.xib */; };
+		C77ECAF2189A41A2006C8338 /* ILMenuletController.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* ILMenuletController.m */; };
+		C77ECAF3189A41A2006C8338 /* ILMenuletView.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEC189A41A2006C8338 /* ILMenuletView.m */; };
+		C77ECAF4189A41A2006C8338 /* ILPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEE189A41A2006C8338 /* ILPopoverController.m */; };
+		C77ECAF5189A41A2006C8338 /* ILPopoverController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C77ECAEF189A41A2006C8338 /* ILPopoverController.xib */; };
+		C7F6C493189A66B600A79261 /* ILUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6C492189A66B600A79261 /* ILUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,43 +36,50 @@
 			containerPortal = C71F8C2F189A015200298DFA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = C71F8C36189A015200298DFA;
-			remoteInfo = IRKitDock;
+			remoteInfo = IRLauncher;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		5B1EF2A37F2D4D4C81E28AF5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB52621429724E208636A191 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		C71F8C37189A015200298DFA /* IRKitDock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRKitDock.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C71E898F189F8E21007BC9C4 /* const.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = const.h; sourceTree = "<group>"; };
+		C71E8993189F92B7007BC9C4 /* IRSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSearcher.m; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.m"; sourceTree = "<group>"; };
+		C71E8994189F92B7007BC9C4 /* IRSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSearcher.h; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.h"; sourceTree = "<group>"; };
+		C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
+		C71E8998189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
+		C71F8C37189A015200298DFA /* IRLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71F8C3A189A015200298DFA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C71F8C3D189A015200298DFA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		C71F8C3E189A015200298DFA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C71F8C3F189A015200298DFA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		C71F8C42189A015200298DFA /* IRKitDock-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRKitDock-Info.plist"; sourceTree = "<group>"; };
+		C71F8C42189A015200298DFA /* IRLauncher-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRLauncher-Info.plist"; sourceTree = "<group>"; };
 		C71F8C44189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C71F8C46189A015200298DFA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C71F8C48189A015200298DFA /* IRKitDock-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRKitDock-Prefix.pch"; sourceTree = "<group>"; };
+		C71F8C48189A015200298DFA /* IRLauncher-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRLauncher-Prefix.pch"; sourceTree = "<group>"; };
 		C71F8C4A189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		C71F8C4C189A015200298DFA /* IDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDAppDelegate.h; sourceTree = "<group>"; };
-		C71F8C4D189A015200298DFA /* IDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDAppDelegate.m; sourceTree = "<group>"; };
+		C71F8C4C189A015200298DFA /* ILAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILAppDelegate.h; sourceTree = "<group>"; };
+		C71F8C4D189A015200298DFA /* ILAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ILAppDelegate.m; sourceTree = "<group>"; };
 		C71F8C50189A015200298DFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		C71F8C52189A015200298DFA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C71F8C58189A015200298DFA /* IRKitDockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IRKitDockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C71F8C58189A015200298DFA /* IRLauncherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IRLauncherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71F8C59189A015200298DFA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		C71F8C60189A015200298DFA /* IRKitDockTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRKitDockTests-Info.plist"; sourceTree = "<group>"; };
+		C71F8C60189A015200298DFA /* IRLauncherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRLauncherTests-Info.plist"; sourceTree = "<group>"; };
 		C71F8C62189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C71F8C64189A015200298DFA /* IRKitDockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRKitDockTests.m; sourceTree = "<group>"; };
-		C7766F9F189A4F5300898267 /* IDVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDVersionChecker.h; sourceTree = "<group>"; };
-		C7766FA0189A4F5300898267 /* IDVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDVersionChecker.m; sourceTree = "<group>"; };
+		C71F8C64189A015200298DFA /* IRLauncherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRLauncherTests.m; sourceTree = "<group>"; };
+		C7766F9F189A4F5300898267 /* ILVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILVersionChecker.h; sourceTree = "<group>"; };
+		C7766FA0189A4F5300898267 /* ILVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILVersionChecker.m; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		C7766FA3189A524800898267 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Log.m; sourceTree = "<group>"; };
-		C77ECAE9189A41A2006C8338 /* IDMenuletController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDMenuletController.h; sourceTree = "<group>"; };
-		C77ECAEA189A41A2006C8338 /* IDMenuletController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDMenuletController.m; sourceTree = "<group>"; };
-		C77ECAEB189A41A2006C8338 /* IDMenuletView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDMenuletView.h; sourceTree = "<group>"; };
-		C77ECAEC189A41A2006C8338 /* IDMenuletView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDMenuletView.m; sourceTree = "<group>"; };
-		C77ECAED189A41A2006C8338 /* IDPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPopoverController.h; sourceTree = "<group>"; };
-		C77ECAEE189A41A2006C8338 /* IDPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPopoverController.m; sourceTree = "<group>"; };
-		C77ECAEF189A41A2006C8338 /* IDPopoverController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IDPopoverController.xib; sourceTree = "<group>"; };
+		C77ECAE9189A41A2006C8338 /* ILMenuletController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuletController.h; sourceTree = "<group>"; };
+		C77ECAEA189A41A2006C8338 /* ILMenuletController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenuletController.m; sourceTree = "<group>"; };
+		C77ECAEB189A41A2006C8338 /* ILMenuletView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuletView.h; sourceTree = "<group>"; };
+		C77ECAEC189A41A2006C8338 /* ILMenuletView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenuletView.m; sourceTree = "<group>"; };
+		C77ECAED189A41A2006C8338 /* ILPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILPopoverController.h; sourceTree = "<group>"; };
+		C77ECAEE189A41A2006C8338 /* ILPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILPopoverController.m; sourceTree = "<group>"; };
+		C77ECAEF189A41A2006C8338 /* ILPopoverController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILPopoverController.xib; sourceTree = "<group>"; };
+		C7F6C491189A66B600A79261 /* ILUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUtils.h; sourceTree = "<group>"; };
+		C7F6C492189A66B600A79261 /* ILUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,11 +104,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C71E8996189FA05F007BC9C4 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */,
+				C71E8998189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.h */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		C71F8C2E189A015200298DFA = {
 			isa = PBXGroup;
 			children = (
-				C71F8C40189A015200298DFA /* IRKitDock */,
-				C71F8C5E189A015200298DFA /* IRKitDockTests */,
+				C71F8C40189A015200298DFA /* IRLauncher */,
+				C71F8C5E189A015200298DFA /* IRLauncherTests */,
 				C71F8C39189A015200298DFA /* Frameworks */,
 				C71F8C38189A015200298DFA /* Products */,
 				BB52621429724E208636A191 /* Pods.xcconfig */,
@@ -108,8 +127,8 @@
 		C71F8C38189A015200298DFA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C71F8C37189A015200298DFA /* IRKitDock.app */,
-				C71F8C58189A015200298DFA /* IRKitDockTests.xctest */,
+				C71F8C37189A015200298DFA /* IRLauncher.app */,
+				C71F8C58189A015200298DFA /* IRLauncherTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,19 +154,24 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		C71F8C40189A015200298DFA /* IRKitDock */ = {
+		C71F8C40189A015200298DFA /* IRLauncher */ = {
 			isa = PBXGroup;
 			children = (
+				C71E8996189FA05F007BC9C4 /* Categories */,
+				C7FD7F88189CFC9600EF0906 /* IRKit */,
 				C7766F9E189A4EA100898267 /* Popover */,
 				C7766F9D189A4E9B00898267 /* Menulet */,
 				C7766F9B189A4E0F00898267 /* Resources */,
-				C71F8C4C189A015200298DFA /* IDAppDelegate.h */,
-				C71F8C4D189A015200298DFA /* IDAppDelegate.m */,
+				C71F8C4C189A015200298DFA /* ILAppDelegate.h */,
+				C71F8C4D189A015200298DFA /* ILAppDelegate.m */,
 				C71F8C41189A015200298DFA /* Supporting Files */,
-				C7766F9F189A4F5300898267 /* IDVersionChecker.h */,
-				C7766FA0189A4F5300898267 /* IDVersionChecker.m */,
+				C7766F9F189A4F5300898267 /* ILVersionChecker.h */,
+				C7766FA0189A4F5300898267 /* ILVersionChecker.m */,
+				C7F6C491189A66B600A79261 /* ILUtils.h */,
+				C7F6C492189A66B600A79261 /* ILUtils.m */,
+				C71E898F189F8E21007BC9C4 /* const.h */,
 			);
-			path = IRKitDock;
+			path = IRLauncher;
 			sourceTree = "<group>";
 		};
 		C71F8C41189A015200298DFA /* Supporting Files */ = {
@@ -155,28 +179,28 @@
 			children = (
 				C7766FA2189A524800898267 /* Log.h */,
 				C7766FA3189A524800898267 /* Log.m */,
-				C71F8C42189A015200298DFA /* IRKitDock-Info.plist */,
+				C71F8C42189A015200298DFA /* IRLauncher-Info.plist */,
 				C71F8C43189A015200298DFA /* InfoPlist.strings */,
 				C71F8C46189A015200298DFA /* main.m */,
-				C71F8C48189A015200298DFA /* IRKitDock-Prefix.pch */,
+				C71F8C48189A015200298DFA /* IRLauncher-Prefix.pch */,
 				C71F8C49189A015200298DFA /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C71F8C5E189A015200298DFA /* IRKitDockTests */ = {
+		C71F8C5E189A015200298DFA /* IRLauncherTests */ = {
 			isa = PBXGroup;
 			children = (
-				C71F8C64189A015200298DFA /* IRKitDockTests.m */,
+				C71F8C64189A015200298DFA /* IRLauncherTests.m */,
 				C71F8C5F189A015200298DFA /* Supporting Files */,
 			);
-			path = IRKitDockTests;
+			path = IRLauncherTests;
 			sourceTree = "<group>";
 		};
 		C71F8C5F189A015200298DFA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C71F8C60189A015200298DFA /* IRKitDockTests-Info.plist */,
+				C71F8C60189A015200298DFA /* IRLauncherTests-Info.plist */,
 				C71F8C61189A015200298DFA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -194,10 +218,10 @@
 		C7766F9D189A4E9B00898267 /* Menulet */ = {
 			isa = PBXGroup;
 			children = (
-				C77ECAE9189A41A2006C8338 /* IDMenuletController.h */,
-				C77ECAEA189A41A2006C8338 /* IDMenuletController.m */,
-				C77ECAEB189A41A2006C8338 /* IDMenuletView.h */,
-				C77ECAEC189A41A2006C8338 /* IDMenuletView.m */,
+				C77ECAE9189A41A2006C8338 /* ILMenuletController.h */,
+				C77ECAEA189A41A2006C8338 /* ILMenuletController.m */,
+				C77ECAEB189A41A2006C8338 /* ILMenuletView.h */,
+				C77ECAEC189A41A2006C8338 /* ILMenuletView.m */,
 			);
 			name = Menulet;
 			sourceTree = "<group>";
@@ -205,19 +229,28 @@
 		C7766F9E189A4EA100898267 /* Popover */ = {
 			isa = PBXGroup;
 			children = (
-				C77ECAED189A41A2006C8338 /* IDPopoverController.h */,
-				C77ECAEE189A41A2006C8338 /* IDPopoverController.m */,
-				C77ECAEF189A41A2006C8338 /* IDPopoverController.xib */,
+				C77ECAED189A41A2006C8338 /* ILPopoverController.h */,
+				C77ECAEE189A41A2006C8338 /* ILPopoverController.m */,
+				C77ECAEF189A41A2006C8338 /* ILPopoverController.xib */,
 			);
 			name = Popover;
+			sourceTree = "<group>";
+		};
+		C7FD7F88189CFC9600EF0906 /* IRKit */ = {
+			isa = PBXGroup;
+			children = (
+				C71E8993189F92B7007BC9C4 /* IRSearcher.m */,
+				C71E8994189F92B7007BC9C4 /* IRSearcher.h */,
+			);
+			name = IRKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C71F8C36189A015200298DFA /* IRKitDock */ = {
+		C71F8C36189A015200298DFA /* IRLauncher */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C71F8C68189A015200298DFA /* Build configuration list for PBXNativeTarget "IRKitDock" */;
+			buildConfigurationList = C71F8C68189A015200298DFA /* Build configuration list for PBXNativeTarget "IRLauncher" */;
 			buildPhases = (
 				A0C37A0958E54AD29D2B6E41 /* Check Pods Manifest.lock */,
 				C71F8C33189A015200298DFA /* Sources */,
@@ -229,14 +262,14 @@
 			);
 			dependencies = (
 			);
-			name = IRKitDock;
-			productName = IRKitDock;
-			productReference = C71F8C37189A015200298DFA /* IRKitDock.app */;
+			name = IRLauncher;
+			productName = IRLauncher;
+			productReference = C71F8C37189A015200298DFA /* IRLauncher.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C71F8C57189A015200298DFA /* IRKitDockTests */ = {
+		C71F8C57189A015200298DFA /* IRLauncherTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C71F8C6B189A015200298DFA /* Build configuration list for PBXNativeTarget "IRKitDockTests" */;
+			buildConfigurationList = C71F8C6B189A015200298DFA /* Build configuration list for PBXNativeTarget "IRLauncherTests" */;
 			buildPhases = (
 				C71F8C54189A015200298DFA /* Sources */,
 				C71F8C55189A015200298DFA /* Frameworks */,
@@ -247,9 +280,9 @@
 			dependencies = (
 				C71F8C5D189A015200298DFA /* PBXTargetDependency */,
 			);
-			name = IRKitDockTests;
-			productName = IRKitDockTests;
-			productReference = C71F8C58189A015200298DFA /* IRKitDockTests.xctest */;
+			name = IRLauncherTests;
+			productName = IRLauncherTests;
+			productReference = C71F8C58189A015200298DFA /* IRLauncherTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -267,7 +300,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C71F8C32189A015200298DFA /* Build configuration list for PBXProject "IRKitDock" */;
+			buildConfigurationList = C71F8C32189A015200298DFA /* Build configuration list for PBXProject "IRLauncher" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -280,8 +313,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C71F8C36189A015200298DFA /* IRKitDock */,
-				C71F8C57189A015200298DFA /* IRKitDockTests */,
+				C71F8C36189A015200298DFA /* IRLauncher */,
+				C71F8C57189A015200298DFA /* IRLauncherTests */,
 			);
 		};
 /* End PBXProject section */
@@ -295,7 +328,7 @@
 				C71F8C53189A015200298DFA /* Images.xcassets in Resources */,
 				C71F8C4B189A015200298DFA /* Credits.rtf in Resources */,
 				C71F8C51189A015200298DFA /* MainMenu.xib in Resources */,
-				C77ECAF5189A41A2006C8338 /* IDPopoverController.xib in Resources */,
+				C77ECAF5189A41A2006C8338 /* ILPopoverController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,12 +381,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7766FA4189A524800898267 /* Log.m in Sources */,
-				C77ECAF3189A41A2006C8338 /* IDMenuletView.m in Sources */,
-				C77ECAF2189A41A2006C8338 /* IDMenuletController.m in Sources */,
+				C71E8999189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m in Sources */,
+				C77ECAF3189A41A2006C8338 /* ILMenuletView.m in Sources */,
+				C7F6C493189A66B600A79261 /* ILUtils.m in Sources */,
+				C77ECAF2189A41A2006C8338 /* ILMenuletController.m in Sources */,
+				C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */,
 				C71F8C47189A015200298DFA /* main.m in Sources */,
-				C77ECAF4189A41A2006C8338 /* IDPopoverController.m in Sources */,
-				C71F8C4E189A015200298DFA /* IDAppDelegate.m in Sources */,
-				C7766FA1189A4F5300898267 /* IDVersionChecker.m in Sources */,
+				C77ECAF4189A41A2006C8338 /* ILPopoverController.m in Sources */,
+				C71F8C4E189A015200298DFA /* ILAppDelegate.m in Sources */,
+				C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,7 +397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C71F8C65189A015200298DFA /* IRKitDockTests.m in Sources */,
+				C71F8C65189A015200298DFA /* IRLauncherTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +406,7 @@
 /* Begin PBXTargetDependency section */
 		C71F8C5D189A015200298DFA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C71F8C36189A015200298DFA /* IRKitDock */;
+			target = C71F8C36189A015200298DFA /* IRLauncher */;
 			targetProxy = C71F8C5C189A015200298DFA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -487,9 +523,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "IRKitDock/IRKitDock-Prefix.pch";
-				INFOPLIST_FILE = "IRKitDock/IRKitDock-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "IRLauncher/IRLauncher-Prefix.pch";
+				INFOPLIST_FILE = "IRLauncher/IRLauncher-Info.plist";
+				PRODUCT_NAME = IRLauncher;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -501,9 +537,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "IRKitDock/IRKitDock-Prefix.pch";
-				INFOPLIST_FILE = "IRKitDock/IRKitDock-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "IRLauncher/IRLauncher-Prefix.pch";
+				INFOPLIST_FILE = "IRLauncher/IRLauncher-Info.plist";
+				PRODUCT_NAME = IRLauncher;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -511,20 +547,20 @@
 		C71F8C6C189A015200298DFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IRKitDock.app/Contents/MacOS/IRKitDock";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IRLauncher.app/Contents/MacOS/IRLauncher";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "IRKitDock/IRKitDock-Prefix.pch";
+				GCC_PREFIX_HEADER = "IRLauncher/IRLauncher-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "IRKitDockTests/IRKitDockTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "IRLauncherTests/IRLauncherTests-Info.plist";
+				PRODUCT_NAME = IRLauncherTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -533,16 +569,16 @@
 		C71F8C6D189A015200298DFA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IRKitDock.app/Contents/MacOS/IRKitDock";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IRLauncher.app/Contents/MacOS/IRLauncher";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "IRKitDock/IRKitDock-Prefix.pch";
-				INFOPLIST_FILE = "IRKitDockTests/IRKitDockTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "IRLauncher/IRLauncher-Prefix.pch";
+				INFOPLIST_FILE = "IRLauncherTests/IRLauncherTests-Info.plist";
+				PRODUCT_NAME = IRLauncherTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -551,7 +587,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C71F8C32189A015200298DFA /* Build configuration list for PBXProject "IRKitDock" */ = {
+		C71F8C32189A015200298DFA /* Build configuration list for PBXProject "IRLauncher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C71F8C66189A015200298DFA /* Debug */,
@@ -560,7 +596,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C71F8C68189A015200298DFA /* Build configuration list for PBXNativeTarget "IRKitDock" */ = {
+		C71F8C68189A015200298DFA /* Build configuration list for PBXNativeTarget "IRLauncher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C71F8C69189A015200298DFA /* Debug */,
@@ -569,7 +605,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C71F8C6B189A015200298DFA /* Build configuration list for PBXNativeTarget "IRKitDockTests" */ = {
+		C71F8C6B189A015200298DFA /* Build configuration list for PBXNativeTarget "IRLauncherTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C71F8C6C189A015200298DFA /* Debug */,
