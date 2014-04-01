@@ -10,7 +10,7 @@
 #import "ILAppDelegate.h"
 
 const NSInteger kTagSignals = 10;
-const NSInteger kTagDevices = 20;
+const NSInteger kTagPeripherals = 20;
 
 @implementation ILMenu
 

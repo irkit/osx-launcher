@@ -8,7 +8,7 @@
 
 #import "ILVersionChecker.h"
 #import <AFNetworking/AFNetworking.h>
-#import "const.h"
+#import "ILConst.h"
 
 @interface ILVersionChecker ()
 

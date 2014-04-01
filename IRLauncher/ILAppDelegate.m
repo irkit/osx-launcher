@@ -10,7 +10,7 @@
 #import "ILMenuletView.h"
 #import "ILVersionChecker.h"
 #import "ILUtils.h"
-#import "const.h"
+#import "ILConst.h"
 
 @interface ILAppDelegate ()
 
@@ -47,9 +47,6 @@
         }
         return NO;
     }];
-    // self.item.menu = menu;
-
-    // self.menuletView.menu = menu;
 
     self.versionChecker          = [[ILVersionChecker alloc] init];
     self.versionChecker.delegate = self;

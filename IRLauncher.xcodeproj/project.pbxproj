@@ -21,6 +21,9 @@
 		C71F8C5B189A015200298DFA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71F8C3A189A015200298DFA /* Cocoa.framework */; };
 		C71F8C63189A015200298DFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C61189A015200298DFA /* InfoPlist.strings */; };
 		C71F8C65189A015200298DFA /* IRLauncherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C64189A015200298DFA /* IRLauncherTests.m */; };
+		C76CCA6318EAB96300644C0E /* ILPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = C76CCA6018EAB96300644C0E /* ILPeripheral.m */; };
+		C76CCA6418EAB96300644C0E /* ILSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = C76CCA6218EAB96300644C0E /* ILSignal.m */; };
+		C76CCA6718EABA8500644C0E /* IRReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C76CCA6618EABA8500644C0E /* IRReachability.m */; };
 		C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* ILVersionChecker.m */; };
 		C7766FA4189A524800898267 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* Log.m */; };
 		C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* ILMenu.m */; };
@@ -41,7 +44,7 @@
 /* Begin PBXFileReference section */
 		5B1EF2A37F2D4D4C81E28AF5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB52621429724E208636A191 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		C71E898F189F8E21007BC9C4 /* const.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = const.h; sourceTree = "<group>"; };
+		C71E898F189F8E21007BC9C4 /* ILConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILConst.h; sourceTree = "<group>"; };
 		C71E8993189F92B7007BC9C4 /* IRSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSearcher.m; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.m"; sourceTree = "<group>"; };
 		C71E8994189F92B7007BC9C4 /* IRSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSearcher.h; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.h"; sourceTree = "<group>"; };
 		C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
@@ -65,6 +68,12 @@
 		C71F8C60189A015200298DFA /* IRLauncherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRLauncherTests-Info.plist"; sourceTree = "<group>"; };
 		C71F8C62189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C71F8C64189A015200298DFA /* IRLauncherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRLauncherTests.m; sourceTree = "<group>"; };
+		C76CCA5F18EAB96300644C0E /* ILPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILPeripheral.h; sourceTree = "<group>"; };
+		C76CCA6018EAB96300644C0E /* ILPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILPeripheral.m; sourceTree = "<group>"; };
+		C76CCA6118EAB96300644C0E /* ILSignal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSignal.h; sourceTree = "<group>"; };
+		C76CCA6218EAB96300644C0E /* ILSignal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSignal.m; sourceTree = "<group>"; };
+		C76CCA6518EABA8500644C0E /* IRReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRReachability.h; path = "../../ios-sdk/IRKit/IRKit/IRReachability.h"; sourceTree = "<group>"; };
+		C76CCA6618EABA8500644C0E /* IRReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRReachability.m; path = "../../ios-sdk/IRKit/IRKit/IRReachability.m"; sourceTree = "<group>"; };
 		C7766F9F189A4F5300898267 /* ILVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILVersionChecker.h; sourceTree = "<group>"; };
 		C7766FA0189A4F5300898267 /* ILVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILVersionChecker.m; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
@@ -159,11 +168,15 @@
 				C71F8C41189A015200298DFA /* Supporting Files */,
 				C7766F9F189A4F5300898267 /* ILVersionChecker.h */,
 				C7766FA0189A4F5300898267 /* ILVersionChecker.m */,
+				C76CCA5F18EAB96300644C0E /* ILPeripheral.h */,
+				C76CCA6018EAB96300644C0E /* ILPeripheral.m */,
+				C76CCA6118EAB96300644C0E /* ILSignal.h */,
+				C76CCA6218EAB96300644C0E /* ILSignal.m */,
 				C71F8C4C189A015200298DFA /* ILAppDelegate.h */,
 				C71F8C4D189A015200298DFA /* ILAppDelegate.m */,
 				C7F6C491189A66B600A79261 /* ILUtils.h */,
 				C7F6C492189A66B600A79261 /* ILUtils.m */,
-				C71E898F189F8E21007BC9C4 /* const.h */,
+				C71E898F189F8E21007BC9C4 /* ILConst.h */,
 			);
 			path = IRLauncher;
 			sourceTree = "<group>";
@@ -223,6 +236,8 @@
 		C7FD7F88189CFC9600EF0906 /* IRKit */ = {
 			isa = PBXGroup;
 			children = (
+				C76CCA6618EABA8500644C0E /* IRReachability.m */,
+				C76CCA6518EABA8500644C0E /* IRReachability.h */,
 				C71E8993189F92B7007BC9C4 /* IRSearcher.m */,
 				C71E8994189F92B7007BC9C4 /* IRSearcher.h */,
 			);
@@ -363,7 +378,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C76CCA6318EAB96300644C0E /* ILPeripheral.m in Sources */,
 				C7766FA4189A524800898267 /* Log.m in Sources */,
+				C76CCA6418EAB96300644C0E /* ILSignal.m in Sources */,
 				C71E8999189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m in Sources */,
 				C77ECAF3189A41A2006C8338 /* ILMenuletView.m in Sources */,
 				C7F6C493189A66B600A79261 /* ILUtils.m in Sources */,
@@ -372,6 +389,7 @@
 				C71F8C47189A015200298DFA /* main.m in Sources */,
 				C71F8C4E189A015200298DFA /* ILAppDelegate.m in Sources */,
 				C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */,
+				C76CCA6718EABA8500644C0E /* IRReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

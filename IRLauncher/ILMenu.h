@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ILPeripheral.h"
+#import "ILSignal.h"
 
 @interface ILMenu : NSMenu
+
+- (void) addPeripherals:(ILPeripheral*)peripheral;
+- (void) addSignals:(ILSignal*)signal;
 
 @end
