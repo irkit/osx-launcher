@@ -9,8 +9,15 @@
 #import "ILMenu.h"
 #import "ILAppDelegate.h"
 
-const NSInteger kTagSignals = 10;
-const NSInteger kTagDevices = 20;
+const NSInteger kTagSignals     = 10;
+const NSInteger kTagPeripherals = 20;
+
+@interface ILMenu ()
+
+@property (nonatomic) NSMutableArray *signals;
+@property (nonatomic) NSMutableArray *peripherals;
+
+@end
 
 @implementation ILMenu
 
@@ -19,6 +26,32 @@ const NSInteger kTagDevices = 20;
     if (!self) { return nil; }
 
     return self;
+}
+
+- (void)addSignalMenuItem:(NSMenuItem *)item {
+    LOG( @"item: %@", item );
+
+    [_signals addObject: item];
+
+    NSUInteger index = [self indexOfItemWithTag: kTagSignals];
+    [self insertItem: item atIndex: index + self.numberOfSignalMenuItems + 1];
+}
+
+- (void)addPeripheralMenuItem:(NSMenuItem *)item {
+    LOG( @"item: %@", item );
+
+    [_peripherals addObject: item];
+
+    NSUInteger index = [self indexOfItemWithTag: kTagPeripherals];
+    [self insertItem: item atIndex: index + self.numberOfPeripheralMenuItems + 1];
+}
+
+- (NSUInteger)numberOfSignalMenuItems {
+    return _signals.count;
+}
+
+- (NSUInteger)numberOfPeripheralMenuItems {
+    return _peripherals.count;
 }
 
 @end

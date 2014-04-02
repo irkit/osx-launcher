@@ -12,6 +12,9 @@
 #import "ILUtils.h"
 #import "const.h"
 
+const int kSignalTagOffset     = 1000;
+const int kPeripheralTagOffset = 100;
+
 @interface ILAppDelegate ()
 
 @property (nonatomic, strong) NSStatusItem *item;
@@ -32,6 +35,12 @@
 
     self.menuletView             = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
     self.menuletView.onMouseDown = (ILEventBlock)^(NSEvent *event) {
+        NSMenuItem *signalItem = [[NSMenuItem alloc] init];
+        signalItem.title  = @"Air Conditioner ON";
+        signalItem.target = _self;
+        signalItem.action = @selector(send:);
+        signalItem.tag    = kSignalTagOffset + 0;
+        [_self.menu addSignalMenuItem: signalItem];
         [_self.item popUpStatusItemMenu: _self.menu];
     };
 
@@ -47,9 +56,6 @@
         }
         return NO;
     }];
-    // self.item.menu = menu;
-
-    // self.menuletView.menu = menu;
 
     self.versionChecker          = [[ILVersionChecker alloc] init];
     self.versionChecker.delegate = self;
@@ -86,6 +92,12 @@
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
     LOG( @"hostname: %@ newVersion: %@ currentVersion: %@", hostname, newVersion, currentVersion);
 
+}
+
+#pragma mark - NSMenuItem actions
+
+- (void) send: (id)sender {
+    LOG( @"sender: %@", sender );
 }
 
 - (void) showHelp: (id)sender {

@@ -10,4 +10,7 @@
 
 @interface ILMenu : NSMenu
 
+- (void)addSignalMenuItem: (NSMenuItem*)item;
+- (void)addPeripheralMenuItem: (NSMenuItem*)item;
+
 @end
