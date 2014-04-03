@@ -29,7 +29,7 @@ const NSInteger kTagPeripherals = 20;
 }
 
 - (void)addSignalMenuItem:(NSMenuItem *)item {
-    LOG( @"item: %@", item );
+    ILLOG( @"item: %@", item );
 
     [_signals addObject: item];
 
@@ -38,7 +38,7 @@ const NSInteger kTagPeripherals = 20;
 }
 
 - (void)addPeripheralMenuItem:(NSMenuItem *)item {
-    LOG( @"item: %@", item );
+    ILLOG( @"item: %@", item );
 
     [_peripherals addObject: item];
 

@@ -28,12 +28,12 @@
 #pragma mark - Private
 
 - (void) check {
-    LOG_CURRENT_METHOD;
+    ILLOG_CURRENT_METHOD;
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET: @"https://api.github.com/repos/irkit/device/releases" parameters: nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *tag = ((NSArray*)responseObject)[ 0 ];
-        LOG( @"tag: %@", tag );
+        ILLOG( @"tag: %@", tag );
 
         NSString *assetURLString = tag[@"assets"][ 0 ][ @"url" ];
         // api.github.com -> uploads.github.com
@@ -51,7 +51,7 @@
              didFailCheckWithError: error];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        LOG(@"Error: %@", error);
+        ILLOG(@"Error: %@", error);
         [self.delegate checker: self
          didFailCheckWithError: error];
     }];

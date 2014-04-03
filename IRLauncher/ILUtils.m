@@ -39,7 +39,7 @@
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest: request progress: nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         return pathURL;
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        LOG(@"File downloaded to: %@", filePath);
+        ILLOG(@"File downloaded to: %@", filePath);
         completion(error);
     }];
     [downloadTask resume];
@@ -49,7 +49,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSString *url                          = [NSString stringWithFormat: @"http://%@/", hostname];
     [manager GET: url parameters: nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        LOG(@"JSON: %@", responseObject);
+        ILLOG(@"JSON: %@", responseObject);
         NSHTTPURLResponse *res = operation.response;
         NSString* server = res.allHeaderFields[ @"Server" ];
         if (!server) {
@@ -62,12 +62,12 @@
         completion( tmp[0], tmp[1] );
         return;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        LOG(@"Error: %@", error);
+        ILLOG(@"Error: %@", error);
     }];
 }
 
 + (BOOL) releasedVersionString:(NSString*) releaseVersionString isNewerThanPeripheralVersion: (NSString*)peripheralVersion {
-    LOG( @"releaseVersion: %@ peripheralVersion: %@", releaseVersionString, peripheralVersion);
+    ILLOG( @"releaseVersion: %@ peripheralVersion: %@", releaseVersionString, peripheralVersion);
 
     NSArray *releaseVersionParts    = [[releaseVersionString substringFromIndex: 1] componentsSeparatedByString: @"."];
     NSArray *peripheralVersionParts = [peripheralVersion componentsSeparatedByString: @"."];

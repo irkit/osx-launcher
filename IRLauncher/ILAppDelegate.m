@@ -72,7 +72,7 @@ const int kPeripheralTagOffset = 100;
 }
 
 - (void)checkWithInterval:(NSTimeInterval)intervalSeconds {
-    LOG_CURRENT_METHOD;
+    ILLOG_CURRENT_METHOD;
 
     if (_checkTimer) {
         [_checkTimer invalidate];
@@ -90,19 +90,19 @@ const int kPeripheralTagOffset = 100;
 }
 
 - (void) checkIfIRKitUpdated {
-    LOG( @"version: %@", _newestVersionString );
+    ILLOG( @"version: %@", _newestVersionString );
 
     [IRSearcher sharedInstance].delegate = self;
     // [[IRSearcher sharedInstance] startSearchingForInterval:60.]; // 1min.
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
-    LOG( @"hostname: %@ newVersion: %@ currentVersion: %@", hostname, newVersion, currentVersion);
+    ILLOG( @"hostname: %@ newVersion: %@ currentVersion: %@", hostname, newVersion, currentVersion);
 
 }
 
 - (void) findSignalsUnderDirectory: (NSURL*)signalsURL completion: (void (^)(NSArray *foundSignals)) completion {
-    LOG( @"signalsURL: %@", signalsURL );
+    ILLOG( @"signalsURL: %@", signalsURL );
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSMutableArray *ret = @[].mutableCopy;
@@ -150,11 +150,11 @@ const int kPeripheralTagOffset = 100;
 #pragma mark - NSMenuItem actions
 
 - (void) send: (id)sender {
-    LOG( @"sender: %@", sender );
+    ILLOG( @"sender: %@", sender );
 }
 
 - (void) showHelp: (id)sender {
-    LOG_CURRENT_METHOD;
+    ILLOG_CURRENT_METHOD;
 }
 
 - (void) terminate: (id)sender {
@@ -164,12 +164,12 @@ const int kPeripheralTagOffset = 100;
 #pragma mark - IRSearcherDelegate
 
 - (void) searcher:(IRSearcher *)searcher didResolveService:(NSNetService *)service {
-    LOG( @"service: %@", service );
+    ILLOG( @"service: %@", service );
 
     __weak ILAppDelegate *_self   = self;
     __weak NSNetService *_service = service;
     [ILUtils getModelNameAndVersion: service.hostName withCompletion:^(NSString *modelName, NSString *version) {
-        LOG(@"modelName: %@, version: %@", modelName, version);
+        ILLOG(@"modelName: %@, version: %@", modelName, version);
         if ([modelName isEqualToString: IRKitModelName]) {
             if ([ILUtils releasedVersionString: _self.newestVersionString isNewerThanPeripheralVersion: version]) {
                 [_self notifyUpdate: _service.hostName newVersion: _self.newestVersionString currentVersion: version];
@@ -181,7 +181,7 @@ const int kPeripheralTagOffset = 100;
 #pragma mark - ILVersionCheckerDelegate
 
 - (void) checker:(ILVersionChecker *)checker didFindVersion:(NSString *)versionString onURL:(NSURL *)assetURL {
-    LOG( @"checker: %@", checker );
+    ILLOG( @"checker: %@", checker );
 
     _newestVersionString = versionString;
 
@@ -201,7 +201,7 @@ const int kPeripheralTagOffset = 100;
 }
 
 - (void) checker:(ILVersionChecker *)checker didFailCheckWithError:(NSError *)error {
-    LOG( @"error: %@", error );
+    ILLOG( @"error: %@", error );
     // we can check on next timer, ignore errors
 }
 

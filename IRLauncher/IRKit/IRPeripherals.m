@@ -1,0 +1,1 @@
+../../../ios-sdk/IRKit/IRKit/IRPeripherals.m
