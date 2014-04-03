@@ -8,11 +8,6 @@ NSString *_ILLog(NSString *format, ...){
     return str;
 }
 
-void ILLog(NSString *format, ...){
-    va_list args;
-    va_start(args, format);
-    NSString *prepended_format = [NSString stringWithFormat: @"[IRLauncher]%@", format];
-    va_end(args);
-
-    NSLog( prepended_format, args );
+void ILLog(NSString *msg) {
+    NSLog(@"[IRLauncher]%@", msg);
 }

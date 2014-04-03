@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 NSString *_ILLog(NSString *format, ...);
-void ILLog(NSString *format, ...);
+void ILLog(NSString *msg);
 
 // '#define LOG_DISABLED 1' before '#import "Log.h"' in .m file to disable logging only in that file
 #ifndef ILLOG_DISABLED

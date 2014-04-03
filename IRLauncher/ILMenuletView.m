@@ -20,7 +20,7 @@
 }
 
 - (void)mouseDown:(NSEvent *)event {
-    ILLog(@"Mouse down event: %@", event);
+    ILLOG(@"Mouse down event: %@", event);
     self.onMouseDown(event);
 }
 
