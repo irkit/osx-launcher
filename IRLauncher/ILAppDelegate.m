@@ -35,12 +35,6 @@ const int kPeripheralTagOffset = 100;
 
     self.menuletView             = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
     self.menuletView.onMouseDown = (ILEventBlock)^(NSEvent *event) {
-        NSMenuItem *signalItem = [[NSMenuItem alloc] init];
-        signalItem.title  = @"Air Conditioner ON";
-        signalItem.target = _self;
-        signalItem.action = @selector(send:);
-        signalItem.tag    = kSignalTagOffset + 0;
-        [_self.menu addSignalMenuItem: signalItem];
         [_self.item popUpStatusItemMenu: _self.menu];
     };
 
@@ -55,6 +49,19 @@ const int kPeripheralTagOffset = 100;
             return YES;
         }
         return NO;
+    }];
+    NSString *signalsPath = [NSHomeDirectory() stringByAppendingPathComponent: @".irkit.d/signals"];
+    NSURL *signalsURL     = [NSURL fileURLWithPath: signalsPath];
+
+    [self findSignalsUnderDirectory: signalsURL completion:^(NSArray *foundSignals) {
+        [foundSignals enumerateObjectsUsingBlock:^(NSDictionary *signal, NSUInteger idx, BOOL *stop) {
+                NSMenuItem *signalItem = [[NSMenuItem alloc] init];
+                signalItem.title  = signal[ @"name" ];
+                signalItem.target = _self;
+                signalItem.action = @selector(send:);
+                signalItem.tag    = kSignalTagOffset + idx;
+                [_self.menu addSignalMenuItem: signalItem];
+            }];
     }];
 
     self.versionChecker          = [[ILVersionChecker alloc] init];
@@ -92,6 +99,52 @@ const int kPeripheralTagOffset = 100;
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
     LOG( @"hostname: %@ newVersion: %@ currentVersion: %@", hostname, newVersion, currentVersion);
 
+}
+
+- (void) findSignalsUnderDirectory: (NSURL*)signalsURL completion: (void (^)(NSArray *foundSignals)) completion {
+    LOG( @"signalsURL: %@", signalsURL );
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSMutableArray *ret = @[].mutableCopy;
+
+        NSFileManager *manager = [NSFileManager defaultManager];
+        NSError *error;
+        // Enumerate the directory (specified elsewhere in your code)
+        // Request the two properties the method uses, name and isDirectory
+        // Ignore hidden files
+        // The errorHandler: parameter is set to nil. Typically you'd want to present a panel
+        NSArray *fileURLs = [manager contentsOfDirectoryAtURL: signalsURL
+                                   includingPropertiesForKeys: @[ NSURLNameKey, NSURLIsDirectoryKey ]
+                                                      options: NSDirectoryEnumerationSkipsHiddenFiles|NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsPackageDescendants
+                                                        error: &error];
+
+        // Enumerate the dirEnumerator results, each value is stored in allURLs
+        for (NSURL *fileURL in fileURLs) {
+
+            // Retrieve the file name. From NSURLNameKey, cached during the enumeration.
+            NSString *fileName;
+            [fileURL getResourceValue: &fileName forKey: NSURLNameKey error: NULL];
+
+            // Retrieve whether a directory. From NSURLIsDirectoryKey, also
+            // cached during the enumeration.
+            NSNumber *isDirectory;
+            [fileURL getResourceValue: &isDirectory forKey: NSURLIsDirectoryKey error: NULL];
+
+            // Ignore files under the _extras directory
+            if ([isDirectory boolValue]==NO) {
+                NSData *content = [manager contentsAtPath: [fileURL path]];
+                NSMutableDictionary *object = [NSJSONSerialization JSONObjectWithData: content
+                                                                              options: NSJSONReadingMutableContainers
+                                                                                error: &error];
+                object[ @"name" ] = [[fileURL URLByDeletingPathExtension] lastPathComponent];
+                [ret addObject: object];
+            }
+        }
+
+        dispatch_async( dispatch_get_main_queue(), ^{
+                completion( ret );
+            });
+    });
 }
 
 #pragma mark - NSMenuItem actions
