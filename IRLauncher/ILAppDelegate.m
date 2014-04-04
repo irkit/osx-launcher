@@ -12,10 +12,12 @@
 #import "ILUtils.h"
 #import "ILSignalsDirectorySearcher.h"
 #import "IRSignals.h"
+#import "IRKit.h"
 #import "const.h"
 
 const int kSignalTagOffset     = 1000;
 const int kPeripheralTagOffset = 100;
+static NSString *kIRKitAPIKey  = @"----FILLME---";
 
 @interface ILAppDelegate ()
 
@@ -31,6 +33,8 @@ const int kPeripheralTagOffset = 100;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     __weak typeof(self) _self = self;
     CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
+
+    [IRKit startWithAPIKey: kIRKitAPIKey];
 
     self.menuletView             = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
     self.menuletView.onMouseDown = (ILEventBlock)^(NSEvent *event) {
