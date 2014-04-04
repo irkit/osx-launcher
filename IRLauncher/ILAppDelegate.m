@@ -86,7 +86,8 @@ const int kPeripheralTagOffset = 100;
 }
 
 - (void) checkReleasedVersion: (NSTimer*) timer {
-    [_versionChecker check];
+    // TODO
+    // [_versionChecker check];
 }
 
 - (void) checkIfIRKitUpdated {
