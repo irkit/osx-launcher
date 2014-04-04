@@ -10,6 +10,8 @@
 
 @interface ILMenu : NSMenu
 
+- (void)setSignalHeaderTitle:(NSString*)text;
+- (void)setPeripheralHeaderTitle:(NSString*)text;
 - (void)addSignalMenuItem: (NSMenuItem*)item;
 - (void)addPeripheralMenuItem: (NSMenuItem*)item;
 

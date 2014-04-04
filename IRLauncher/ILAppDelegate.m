@@ -10,6 +10,8 @@
 #import "ILMenuletView.h"
 #import "ILVersionChecker.h"
 #import "ILUtils.h"
+#import "ILSignalsDirectorySearcher.h"
+#import "IRSignals.h"
 #import "const.h"
 
 const int kSignalTagOffset     = 1000;
@@ -23,7 +25,7 @@ const int kPeripheralTagOffset = 100;
 @property (nonatomic, strong) ILVersionChecker *versionChecker;
 @property (nonatomic, strong) NSString *newestVersionString;
 @property (nonatomic, strong) NSTimer *checkTimer;
-@property (nonatomic, strong) IRSearcher *searcher;
+@property (nonatomic, strong) IRSignals *signals;
 
 @end
 
@@ -50,16 +52,26 @@ const int kPeripheralTagOffset = 100;
         }
         return NO;
     }];
+    [self.menu setSignalHeaderTitle: @"Signals (Searching...)"];
+    [self.menu setPeripheralHeaderTitle: @"IRKits (Searching...)"];
+
     NSString *signalsPath = [NSHomeDirectory() stringByAppendingPathComponent: @".irkit.d/signals"];
     NSURL *signalsURL     = [NSURL fileURLWithPath: signalsPath];
 
-    [self findSignalsUnderDirectory: signalsURL completion:^(NSArray *foundSignals) {
-        [foundSignals enumerateObjectsUsingBlock:^(NSDictionary *signal, NSUInteger idx, BOOL *stop) {
+    self.signals = [[IRSignals alloc] init];
+
+    [ILSignalsDirectorySearcher findSignalsUnderDirectory: signalsURL completion:^(NSArray *foundSignals) {
+        [_self.menu setSignalHeaderTitle: @"Signals"];
+        [foundSignals enumerateObjectsUsingBlock:^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
+                IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
+                [_self.signals addSignalsObject: signal];
+
+                NSUInteger index = [_self.signals indexOfSignal: signal];
                 NSMenuItem *signalItem = [[NSMenuItem alloc] init];
-                signalItem.title  = signal[ @"name" ];
+                signalItem.title  = signal.name;
                 signalItem.target = _self;
                 signalItem.action = @selector(send:);
-                signalItem.tag    = kSignalTagOffset + idx;
+                signalItem.tag    = kSignalTagOffset + index;
                 [_self.menu addSignalMenuItem: signalItem];
             }];
     }];
@@ -102,56 +114,16 @@ const int kPeripheralTagOffset = 100;
 
 }
 
-- (void) findSignalsUnderDirectory: (NSURL*)signalsURL completion: (void (^)(NSArray *foundSignals)) completion {
-    ILLOG( @"signalsURL: %@", signalsURL );
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSMutableArray *ret = @[].mutableCopy;
-
-        NSFileManager *manager = [NSFileManager defaultManager];
-        NSError *error;
-        // Enumerate the directory (specified elsewhere in your code)
-        // Request the two properties the method uses, name and isDirectory
-        // Ignore hidden files
-        // The errorHandler: parameter is set to nil. Typically you'd want to present a panel
-        NSArray *fileURLs = [manager contentsOfDirectoryAtURL: signalsURL
-                                   includingPropertiesForKeys: @[ NSURLNameKey, NSURLIsDirectoryKey ]
-                                                      options: NSDirectoryEnumerationSkipsHiddenFiles|NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsPackageDescendants
-                                                        error: &error];
-
-        // Enumerate the dirEnumerator results, each value is stored in allURLs
-        for (NSURL *fileURL in fileURLs) {
-
-            // Retrieve the file name. From NSURLNameKey, cached during the enumeration.
-            NSString *fileName;
-            [fileURL getResourceValue: &fileName forKey: NSURLNameKey error: NULL];
-
-            // Retrieve whether a directory. From NSURLIsDirectoryKey, also
-            // cached during the enumeration.
-            NSNumber *isDirectory;
-            [fileURL getResourceValue: &isDirectory forKey: NSURLIsDirectoryKey error: NULL];
-
-            // Ignore files under the _extras directory
-            if ([isDirectory boolValue]==NO) {
-                NSData *content = [manager contentsAtPath: [fileURL path]];
-                NSMutableDictionary *object = [NSJSONSerialization JSONObjectWithData: content
-                                                                              options: NSJSONReadingMutableContainers
-                                                                                error: &error];
-                object[ @"name" ] = [[fileURL URLByDeletingPathExtension] lastPathComponent];
-                [ret addObject: object];
-            }
-        }
-
-        dispatch_async( dispatch_get_main_queue(), ^{
-                completion( ret );
-            });
-    });
-}
-
 #pragma mark - NSMenuItem actions
 
 - (void) send: (id)sender {
     ILLOG( @"sender: %@", sender );
+
+    NSUInteger signalIndex = ((NSMenuItem*)sender).tag - kSignalTagOffset;
+    IRSignal *signal       = (IRSignal*)[self.signals objectInSignalsAtIndex: signalIndex];
+    [signal sendWithCompletion:^(NSError *error) {
+        ILLOG( @"sent: %@", error );
+    }];
 }
 
 - (void) showHelp: (id)sender {

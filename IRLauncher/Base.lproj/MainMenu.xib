@@ -15,11 +15,11 @@
         <customObject id="420" customClass="NSFontManager"/>
         <menu id="nVI-uD-uLB" customClass="ILMenu">
             <items>
-                <menuItem title="Send Signals (None Found)" tag="10" enabled="NO" id="Ji8-hp-uI5">
+                <menuItem tag="10" enabled="NO" id="Ji8-hp-uI5">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="PbL-Dn-FCA"/>
-                <menuItem title="IRKit (Searching...)" tag="20" enabled="NO" id="uCB-gE-BaK">
+                <menuItem tag="20" enabled="NO" id="uCB-gE-BaK">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="bep-vl-uFo"/>

@@ -28,6 +28,16 @@ const NSInteger kTagPeripherals = 20;
     return self;
 }
 
+- (void)setSignalHeaderTitle:(NSString*)text {
+    NSMenuItem *item = [self itemWithTag: kTagSignals];
+    item.title = text;
+}
+
+- (void)setPeripheralHeaderTitle:(NSString*)text {
+    NSMenuItem *item = [self itemWithTag: kTagPeripherals];
+    item.title = text;
+}
+
 - (void)addSignalMenuItem:(NSMenuItem *)item {
     ILLOG( @"item: %@", item );
 
