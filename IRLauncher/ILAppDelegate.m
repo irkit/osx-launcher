@@ -1,5 +1,5 @@
 //
-//  ILVersionChecker.m
+//  ILAppDelegate.m
 //  IRLauncher
 //
 //  Created by Masakazu Ohtsuka on 2014/01/30.
@@ -22,9 +22,6 @@ const int kPeripheralTagOffset = 100;
 @property (nonatomic, strong) NSStatusItem *item;
 @property (nonatomic, strong) ILMenuletView *menuletView;
 @property (nonatomic, strong) ILMenu *menu;
-@property (nonatomic, strong) ILVersionChecker *versionChecker;
-@property (nonatomic, strong) NSString *newestVersionString;
-@property (nonatomic, strong) NSTimer *checkTimer;
 @property (nonatomic, strong) IRSignals *signals;
 
 @end
@@ -54,6 +51,7 @@ const int kPeripheralTagOffset = 100;
     }];
     [self.menu setSignalHeaderTitle: @"Signals (Searching...)"];
     [self.menu setPeripheralHeaderTitle: @"IRKits (Searching...)"];
+    [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)"];
 
     NSString *signalsPath = [NSHomeDirectory() stringByAppendingPathComponent: @".irkit.d/signals"];
     NSURL *signalsURL     = [NSURL fileURLWithPath: signalsPath];
@@ -72,38 +70,12 @@ const int kPeripheralTagOffset = 100;
                 signalItem.target = _self;
                 signalItem.action = @selector(send:);
                 signalItem.tag    = kSignalTagOffset + index;
+                if (index < 10) {
+                    signalItem.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
+                }
                 [_self.menu addSignalMenuItem: signalItem];
             }];
     }];
-
-    self.versionChecker          = [[ILVersionChecker alloc] init];
-    self.versionChecker.delegate = self;
-
-    // check every 24 hours
-    [self checkWithInterval: 24. * 60. * 60.];
-}
-
-- (void)checkWithInterval:(NSTimeInterval)intervalSeconds {
-    ILLOG_CURRENT_METHOD;
-
-    if (_checkTimer) {
-        [_checkTimer invalidate];
-    }
-    _checkTimer = [NSTimer timerWithTimeInterval: intervalSeconds
-                                          target: self
-                                        selector: @selector(checkReleasedVersion:)
-                                        userInfo: nil
-                                         repeats: YES];
-    [_checkTimer fire];
-}
-
-- (void) checkReleasedVersion: (NSTimer*) timer {
-    // TODO
-    // [_versionChecker check];
-}
-
-- (void) checkIfIRKitUpdated {
-    ILLOG( @"version: %@", _newestVersionString );
 
     [IRSearcher sharedInstance].delegate = self;
     [[IRSearcher sharedInstance] startSearching];
@@ -144,41 +116,14 @@ const int kPeripheralTagOffset = 100;
     [ILUtils getModelNameAndVersion: hostname withCompletion:^(NSString *modelName, NSString *version) {
         ILLOG(@"modelName: %@, version: %@", modelName, version);
         if ([modelName isEqualToString: IRKitModelName]) {
-            if ([ILUtils releasedVersionString: _self.newestVersionString
-                  isNewerThanPeripheralVersion: version]) {
-                [_self notifyUpdate: hostname
-                         newVersion: _self.newestVersionString
-                     currentVersion: version];
-            }
+            ILVersionChecker *checker = [[ILVersionChecker alloc] init];
+            [checker checkUpdateForVersion: version foundUpdateBlock:^(NSString *newVersion) {
+                    [_self notifyUpdate: hostname
+                             newVersion: newVersion
+                         currentVersion: version];
+                }];
         }
     }];
-}
-
-#pragma mark - ILVersionCheckerDelegate
-
-- (void) checker:(ILVersionChecker *)checker didFindVersion:(NSString *)versionString onURL:(NSURL *)assetURL {
-    ILLOG( @"checker: %@", checker );
-
-    _newestVersionString = versionString;
-
-    NSURL *pathURL = [ILUtils URLPathForVersion: versionString];
-    if ([[NSFileManager defaultManager] fileExistsAtPath: pathURL.absoluteString]) {
-        // already downloaded
-        [self checkIfIRKitUpdated];
-    }
-    else {
-        __weak ILAppDelegate *_self = self;
-        [ILUtils downloadAssetURL: assetURL toPathURL: pathURL completion:^(NSError* error) {
-            if (!error) {
-                [_self checkIfIRKitUpdated];
-            }
-        }];
-    }
-}
-
-- (void) checker:(ILVersionChecker *)checker didFailCheckWithError:(NSError *)error {
-    ILLOG( @"error: %@", error );
-    // we can check on next timer, ignore errors
 }
 
 @end

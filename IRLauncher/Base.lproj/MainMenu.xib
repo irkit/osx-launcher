@@ -23,6 +23,10 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="bep-vl-uFo"/>
+                <menuItem tag="30" enabled="NO" id="rat-Y6-aHg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="NHa-e0-FcY"/>
                 <menuItem title="Help" id="OHb-2K-DBA">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

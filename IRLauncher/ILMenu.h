@@ -12,6 +12,7 @@
 
 - (void)setSignalHeaderTitle:(NSString*)text;
 - (void)setPeripheralHeaderTitle:(NSString*)text;
+- (void)setUSBHeaderTitle:(NSString*)text;
 - (void)addSignalMenuItem: (NSMenuItem*)item;
 - (void)addPeripheralMenuItem: (NSMenuItem*)item;
 

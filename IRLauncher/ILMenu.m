@@ -11,6 +11,7 @@
 
 const NSInteger kTagSignals     = 10;
 const NSInteger kTagPeripherals = 20;
+const NSInteger kTagUSB         = 30;
 
 @interface ILMenu ()
 
@@ -35,6 +36,11 @@ const NSInteger kTagPeripherals = 20;
 
 - (void)setPeripheralHeaderTitle:(NSString*)text {
     NSMenuItem *item = [self itemWithTag: kTagPeripherals];
+    item.title = text;
+}
+
+- (void)setUSBHeaderTitle:(NSString*)text {
+    NSMenuItem *item = [self itemWithTag: kTagUSB];
     item.title = text;
 }
 
