@@ -94,7 +94,7 @@ const int kPeripheralTagOffset = 100;
     ILLOG( @"version: %@", _newestVersionString );
 
     [IRSearcher sharedInstance].delegate = self;
-    // [[IRSearcher sharedInstance] startSearchingForInterval:60.]; // 1min.
+    [[IRSearcher sharedInstance] startSearching];
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
@@ -167,13 +167,16 @@ const int kPeripheralTagOffset = 100;
 - (void) searcher:(IRSearcher *)searcher didResolveService:(NSNetService *)service {
     ILLOG( @"service: %@", service );
 
-    __weak ILAppDelegate *_self   = self;
-    __weak NSNetService *_service = service;
-    [ILUtils getModelNameAndVersion: service.hostName withCompletion:^(NSString *modelName, NSString *version) {
+    __weak ILAppDelegate *_self = self;
+    NSString *hostname          = service.hostName;
+    [ILUtils getModelNameAndVersion: hostname withCompletion:^(NSString *modelName, NSString *version) {
         ILLOG(@"modelName: %@, version: %@", modelName, version);
         if ([modelName isEqualToString: IRKitModelName]) {
-            if ([ILUtils releasedVersionString: _self.newestVersionString isNewerThanPeripheralVersion: version]) {
-                [_self notifyUpdate: _service.hostName newVersion: _self.newestVersionString currentVersion: version];
+            if ([ILUtils releasedVersionString: _self.newestVersionString
+                  isNewerThanPeripheralVersion: version]) {
+                [_self notifyUpdate: hostname
+                         newVersion: _self.newestVersionString
+                     currentVersion: version];
             }
         }
     }];
