@@ -35,7 +35,7 @@
 		C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848018ED5F1F007FB4E1 /* IRHTTPJSONOperation.m */; };
 		C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848218ED5F1F007FB4E1 /* IRHTTPOperationQueue.m */; };
 		C781848818ED5F1F007FB4E1 /* IRPeripherals.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848418ED5F1F007FB4E1 /* IRPeripherals.m */; };
-		C781848B18ED5F6C007FB4E1 /* IRPersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848A18ED5F6C007FB4E1 /* IRPersistentStore.m */; };
+		C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C798A30D18FD3F9100C9994C /* ILFileStore.m */; };
 		C7B6934818EE63BA00DE7027 /* IRSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934718EE63BA00DE7027 /* IRSignals.m */; };
 		C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */; };
 		C7F6C493189A66B600A79261 /* ILUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6C492189A66B600A79261 /* ILUtils.m */; };
@@ -107,7 +107,8 @@
 		C781848318ED5F1F007FB4E1 /* IRPeripherals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPeripherals.h; path = "../../ios-sdk/IRKit/IRKit/IRPeripherals.h"; sourceTree = "<group>"; };
 		C781848418ED5F1F007FB4E1 /* IRPeripherals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRPeripherals.m; path = "../../ios-sdk/IRKit/IRKit/IRPeripherals.m"; sourceTree = "<group>"; };
 		C781848918ED5F6C007FB4E1 /* IRPersistentStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPersistentStore.h; path = "../../ios-sdk/IRKit/IRKit/IRPersistentStore.h"; sourceTree = "<group>"; };
-		C781848A18ED5F6C007FB4E1 /* IRPersistentStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRPersistentStore.m; path = "../../ios-sdk/IRKit/IRKit/IRPersistentStore.m"; sourceTree = "<group>"; };
+		C798A30C18FD3F9100C9994C /* ILFileStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILFileStore.h; sourceTree = "<group>"; };
+		C798A30D18FD3F9100C9994C /* ILFileStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILFileStore.m; sourceTree = "<group>"; };
 		C7B6934618EE63BA00DE7027 /* IRSignals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSignals.h; path = "../../ios-sdk/IRKit/IRKit/IRSignals.h"; sourceTree = "<group>"; };
 		C7B6934718EE63BA00DE7027 /* IRSignals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSignals.m; path = "../../ios-sdk/IRKit/IRKit/IRSignals.m"; sourceTree = "<group>"; };
 		C7B6934918EE647600DE7027 /* ILSignalsDirectorySearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSignalsDirectorySearcher.h; sourceTree = "<group>"; };
@@ -205,6 +206,8 @@
 				C71E898F189F8E21007BC9C4 /* const.h */,
 				C7B6934918EE647600DE7027 /* ILSignalsDirectorySearcher.h */,
 				C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */,
+				C798A30C18FD3F9100C9994C /* ILFileStore.h */,
+				C798A30D18FD3F9100C9994C /* ILFileStore.m */,
 			);
 			path = IRLauncher;
 			sourceTree = "<group>";
@@ -269,7 +272,6 @@
 				C7647EB518ED5DD000171E7F /* IRKit.h */,
 				C7647EB618ED5DD000171E7F /* IRKit.m */,
 				C781848918ED5F6C007FB4E1 /* IRPersistentStore.h */,
-				C781848A18ED5F6C007FB4E1 /* IRPersistentStore.m */,
 				C781847D18ED5F1F007FB4E1 /* IRHelper.h */,
 				C781847E18ED5F1F007FB4E1 /* IRHelper.m */,
 				C781847F18ED5F1F007FB4E1 /* IRHTTPJSONOperation.h */,
@@ -443,10 +445,10 @@
 				C781848818ED5F1F007FB4E1 /* IRPeripherals.m in Sources */,
 				C7647EBA18ED5DD000171E7F /* IRKit.m in Sources */,
 				C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */,
-				C781848B18ED5F6C007FB4E1 /* IRPersistentStore.m in Sources */,
 				C71F8C47189A015200298DFA /* main.m in Sources */,
 				C71F8C4E189A015200298DFA /* ILAppDelegate.m in Sources */,
 				C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */,
+				C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */,
 				C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */,
 				C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */,
 				C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */,

@@ -13,6 +13,7 @@
 #import "ILSignalsDirectorySearcher.h"
 #import "IRSignals.h"
 #import "IRKit.h"
+#import "ILFileStore.h"
 #import "const.h"
 
 const int kSignalTagOffset     = 1000;
@@ -34,6 +35,8 @@ static NSString *kIRKitAPIKey  = @"----FILLME---";
     __weak typeof(self) _self = self;
     CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
 
+    ILFileStore *store = [[ILFileStore alloc] init];
+    [IRKit setPersistentStore: store];
     [IRKit startWithAPIKey: kIRKitAPIKey];
 
     self.menuletView             = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
@@ -57,8 +60,8 @@ static NSString *kIRKitAPIKey  = @"----FILLME---";
     [self.menu setPeripheralHeaderTitle: @"IRKits (Searching...)"];
     [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)"];
 
-    NSString *signalsPath = [NSHomeDirectory() stringByAppendingPathComponent: @".irkit.d/signals"];
-    NSURL *signalsURL     = [NSURL fileURLWithPath: signalsPath];
+    NSString *signalsDirectory = [NSHomeDirectory() stringByAppendingPathComponent: @".irkit.d/signals"];
+    NSURL *signalsURL          = [NSURL fileURLWithPath: signalsDirectory];
 
     self.signals = [[IRSignals alloc] init];
 
