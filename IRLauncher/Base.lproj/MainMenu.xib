@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+        <customObject id="-2" userLabel="File's Owner" customClass="ILAppDelegate">
             <connections>
                 <outlet property="delegate" destination="494" id="495"/>
             </connections>
@@ -66,13 +66,13 @@
                 <menuItem title="Help" id="iUC-AZ-yDI">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="showHelp:" target="-2" id="j01-b9-VQj"/>
+                        <action selector="showHelp:" target="-2" id="pc7-ZW-KUi"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="hRv-Uy-a1b"/>
                 <menuItem title="Quit IRLauncher" keyEquivalent="q" id="aX7-vm-frd">
                     <connections>
-                        <action selector="terminate:" target="-2" id="Pxs-Ca-vac"/>
+                        <action selector="terminate:" target="-2" id="al7-dm-93C"/>
                     </connections>
                 </menuItem>
             </items>
@@ -131,7 +131,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Install" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xT6-lb-Y37">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="controlContent"/>
+                        <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
                     <connections>
                         <action selector="pressed:" target="x6N-0s-UBK" id="Ipl-u4-miu"/>

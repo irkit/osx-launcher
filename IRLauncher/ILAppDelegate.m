@@ -102,11 +102,11 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     }];
 }
 
-- (void) showHelp: (id)sender {
+- (IBAction) showHelp: (id)sender {
     ILLOG_CURRENT_METHOD;
 }
 
-- (void) terminate: (id)sender {
+- (IBAction) terminate: (id)sender {
     [[NSApplication sharedApplication] terminate: sender];
 }
 

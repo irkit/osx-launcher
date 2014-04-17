@@ -13,4 +13,7 @@
 
 @interface ILAppDelegate : NSObject <NSApplicationDelegate,IRSearcherDelegate,NSMenuDelegate,ILMenuCheckboxViewDelegate,ILMenuButtonViewDelegate>
 
+- (IBAction) showHelp: (id)sender;
+- (IBAction) terminate: (id)sender;
+
 @end
