@@ -13,7 +13,7 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="494" customClass="ILAppDelegate"/>
         <customObject id="420" customClass="NSFontManager"/>
-        <customView id="iu7-JD-aJ7" customClass="ILMenuHeaderView">
+        <customView id="iu7-JD-aJ7" customClass="ILMenuProgressView">
             <rect key="frame" x="0.0" y="0.0" width="322" height="20"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -56,10 +56,14 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="NHa-e0-FcY"/>
-                <menuItem title="Help" id="OHb-2K-DBA">
+                <menuItem title="Start at login" tag="40" id="OHb-2K-DBA">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="n4q-lY-mQ3"/>
+                <menuItem title="Help" id="iUC-AZ-yDI">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="showHelp:" target="-2" id="JvY-qo-5IW"/>
+                        <action selector="showHelp:" target="-2" id="j01-b9-VQj"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="hRv-Uy-a1b"/>
@@ -70,5 +74,41 @@
                 </menuItem>
             </items>
         </menu>
+        <customView id="Ieh-xK-nIX" customClass="ILMenuCheckboxView">
+            <rect key="frame" x="0.0" y="0.0" width="322" height="20"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eoq-Z0-WRM">
+                    <rect key="frame" x="19" y="2" width="38" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="Mla-ic-247">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="WDs-a7-RN4">
+                    <rect key="frame" x="286" y="1" width="22" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Ln4-T0-FaQ">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="checkboxTouched:" target="Ieh-xK-nIX" id="O1v-qP-5xI"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="eoq-Z0-WRM" secondAttribute="centerY" id="0pI-y8-1Nc"/>
+                <constraint firstAttribute="centerY" secondItem="WDs-a7-RN4" secondAttribute="centerY" id="fyY-bj-W2R"/>
+                <constraint firstItem="eoq-Z0-WRM" firstAttribute="leading" secondItem="Ieh-xK-nIX" secondAttribute="leading" constant="21" id="xY9-GS-NHE"/>
+                <constraint firstAttribute="trailing" secondItem="WDs-a7-RN4" secondAttribute="trailing" constant="16" id="yQJ-EO-qqD"/>
+            </constraints>
+            <connections>
+                <outlet property="checkbox" destination="WDs-a7-RN4" id="634-CH-TCX"/>
+                <outlet property="textField" destination="eoq-Z0-WRM" id="g93-J5-rJg"/>
+            </connections>
+        </customView>
     </objects>
 </document>

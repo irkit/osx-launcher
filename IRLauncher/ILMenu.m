@@ -8,17 +8,19 @@
 
 #import "ILMenu.h"
 #import "ILAppDelegate.h"
-#import "ILMenuHeaderView.h"
+#import "ILMenuProgressView.h"
+#import "ILMenuCheckboxView.h"
 #import "ILUtils.h"
 
-const NSInteger kTagSignals     = 10;
-const NSInteger kTagPeripherals = 20;
-const NSInteger kTagUSB         = 30;
+const NSInteger kTagSignals              = 10;
+const NSInteger kTagPeripherals          = 20;
+const NSInteger kTagUSB                  = 30;
+const NSInteger kTagStartAtLoginCheckbox = 40;
 
 @interface ILMenu ()
 
-@property (nonatomic) NSMutableArray *signals;
-@property (nonatomic) NSMutableArray *peripherals;
+@property (nonatomic) NSMutableArray *signalMenuItems;
+@property (nonatomic) NSMutableArray *peripheralMenuItems;
 
 @end
 
@@ -48,7 +50,7 @@ const NSInteger kTagUSB         = 30;
 - (void)addSignalMenuItem:(NSMenuItem *)item {
     ILLOG( @"item: %@", item );
 
-    [_signals addObject: item];
+    [_signalMenuItems addObject: item];
 
     NSUInteger index = [self indexOfItemWithTag: kTagSignals];
     [self insertItem: item atIndex: index + self.numberOfSignalMenuItems + 1];
@@ -57,28 +59,28 @@ const NSInteger kTagUSB         = 30;
 - (void)addPeripheralMenuItem:(NSMenuItem *)item {
     ILLOG( @"item: %@", item );
 
-    [_peripherals addObject: item];
+    [_peripheralMenuItems addObject: item];
 
     NSUInteger index = [self indexOfItemWithTag: kTagPeripherals];
     [self insertItem: item atIndex: index + self.numberOfPeripheralMenuItems + 1];
 }
 
 - (NSUInteger)numberOfSignalMenuItems {
-    return _signals.count;
+    return _signalMenuItems.count;
 }
 
 - (NSUInteger)numberOfPeripheralMenuItems {
-    return _peripherals.count;
+    return _peripheralMenuItems.count;
 }
 
 #pragma mark - Private
 
 - (void) setHeaderTitleWithTag: (NSUInteger)tag title:(NSString*)title animating:(BOOL)animating {
     NSMenuItem *item = [self itemWithTag: tag];
-    if (![item.view isKindOfClass: [ILMenuHeaderView class]]) {
-        item.view = [ILUtils loadClassFromNib: [ILMenuHeaderView class]];
+    if (![item.view isKindOfClass: [ILMenuProgressView class]]) {
+        item.view = [ILUtils loadClassFromNib: [ILMenuProgressView class]];
     }
-    ILMenuHeaderView *view = (ILMenuHeaderView*)item.view;
+    ILMenuProgressView *view = (ILMenuProgressView*)item.view;
     view.animating = animating;
     [view.textField setStringValue: title];
 }
@@ -90,18 +92,23 @@ const NSInteger kTagUSB         = 30;
 
     NSArray *items = @[ [self itemWithTag: kTagSignals], [self itemWithTag: kTagPeripherals],[self itemWithTag: kTagUSB]];
     [items enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
-        [(ILMenuHeaderView*)item.view startAnimationIfNeeded];
-//        NSRect frame = item.view.frame;
-//        frame.size.width = menu.size.width;
-//        item.view.frame = frame;
+        [(ILMenuProgressView*)item.view startAnimationIfNeeded];
     }];
+
+    NSMenuItem *startAtLogin = [self itemWithTag: kTagStartAtLoginCheckbox];
+    if (![startAtLogin.view isKindOfClass: [ILMenuCheckboxView class]]) {
+        ILMenuCheckboxView *view =[ILUtils loadClassFromNib: [ILMenuCheckboxView class]];
+        view.delegate = self.checkboxDelegate;
+        [view.textField setStringValue: @"Start at login"];
+        startAtLogin.view = view;
+    }
 }
 
 - (void) menuDidClose:(NSMenu *)menu {
     ILLOG_CURRENT_METHOD;
     NSArray *items = @[ [self itemWithTag: kTagSignals], [self itemWithTag: kTagPeripherals],[self itemWithTag: kTagUSB]];
     [items enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
-        [(ILMenuHeaderView*)item.view stopAnimation];
+        [(ILMenuProgressView*)item.view stopAnimation];
     }];
 }
 

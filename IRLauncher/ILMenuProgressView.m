@@ -6,16 +6,15 @@
 //  Copyright (c) 2014年 Masakazu Ohtsuka. All rights reserved.
 //
 
-#import "ILMenuHeaderView.h"
+#import "ILMenuProgressView.h"
 
-@implementation ILMenuHeaderView
+@implementation ILMenuProgressView
 
 - (instancetype)initWithFrame:(NSRect)frameRect {
     self = [super initWithFrame: frameRect];
     if (!self) { return self; }
 
     [self.indicator setUsesThreadedAnimation: YES];
-    self.autoresizingMask = NSViewWidthSizable;
 
     return self;
 }

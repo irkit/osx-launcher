@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ILMenuHeaderView : NSView
+@interface ILMenuProgressView : NSView
 
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *indicator;
 @property (nonatomic, weak) IBOutlet NSTextField *textField;

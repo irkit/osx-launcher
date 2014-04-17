@@ -14,7 +14,7 @@
 #import "IRSignals.h"
 #import "IRKit.h"
 #import "ILFileStore.h"
-#import "ILMenuHeaderView.h"
+#import "ILMenuProgressView.h"
 #import "const.h"
 
 const int kSignalTagOffset     = 1000;
@@ -49,7 +49,8 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     [self.item setView: self.menuletView];
     [self.item setHighlightMode: NO];
 
-    self.menu = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
+    self.menu                  = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
+    self.menu.checkboxDelegate = self;
     [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
     [self.menu setPeripheralHeaderTitle: @"IRKits (Searching...)" animating: YES];
     [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)" animating: YES];
@@ -105,6 +106,12 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
 - (void) terminate: (id)sender {
     [[NSApplication sharedApplication] terminate: sender];
+}
+
+#pragma mark - ILMenuCheckboxViewDelegate
+
+- (void) menuCheckboxView:(ILMenuCheckboxView *)view didTouchCheckbox:(id)sender newValue:(BOOL)onoff {
+    ILLOG( @"value: %d", onoff );
 }
 
 #pragma mark - IRSearcherDelegate
