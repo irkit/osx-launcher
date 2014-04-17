@@ -19,7 +19,7 @@
 
 const int kSignalTagOffset     = 1000;
 const int kPeripheralTagOffset = 100;
-static NSString *kIRKitAPIKey  = @"----FILLME---";
+static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
 @interface ILAppDelegate ()
 
