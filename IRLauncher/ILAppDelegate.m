@@ -41,21 +41,21 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     [IRKit setPersistentStore: store];
     [IRKit startWithAPIKey: kIRKitAPIKey];
 
-    self.menuletView             = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
-    self.menuletView.onMouseDown = (ILEventBlock)^(NSEvent *event) {
-        [_self.item popUpStatusItemMenu: _self.menu];
-    };
-
-    self.item = [[NSStatusBar systemStatusBar] statusItemWithLength: thickness];
-    [self.item setView: self.menuletView];
-    [self.item setHighlightMode: NO];
-
     self.menu                  = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
     self.menu.checkboxDelegate = self;
     self.menu.buttonDelegate   = self;
     [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
     [self.menu setPeripheralHeaderTitle: @"IRKits (Searching...)" animating: YES];
     [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)" animating: YES];
+
+    self.menuletView      = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
+    self.menuletView.menu = self.menu;
+
+    self.item = [[NSStatusBar systemStatusBar] statusItemWithLength: thickness];
+    [self.item setView: self.menuletView];
+    [self.item setHighlightMode: NO];
+
+    self.menuletView.statusItem = self.item;
 
     NSString *signalsDirectory = [NSHomeDirectory() stringByAppendingPathComponent: @".irkit.d/signals"];
     NSURL *signalsURL          = [NSURL fileURLWithPath: signalsDirectory];

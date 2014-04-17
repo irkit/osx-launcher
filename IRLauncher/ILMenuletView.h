@@ -12,6 +12,7 @@ typedef BOOL (^ILEventBlock)(NSEvent *event);
 
 @interface ILMenuletView : NSView
 
-@property (nonatomic, copy) ILEventBlock onMouseDown;
+@property (nonatomic, weak) NSStatusItem *statusItem;
+@property (nonatomic, weak) NSMenu *menu;
 
 @end

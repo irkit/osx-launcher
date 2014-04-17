@@ -21,7 +21,7 @@
 
 - (void)mouseDown:(NSEvent *)event {
     ILLOG(@"Mouse down event: %@", event);
-    self.onMouseDown(event);
+    [self.statusItem popUpStatusItemMenu: self.menu];
 }
 
 @end
