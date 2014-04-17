@@ -59,6 +59,9 @@
                 <menuItem title="Start at login" tag="40" id="OHb-2K-DBA">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
+                <menuItem title="Quicksilver integration" tag="50" id="yxf-fC-Qqh">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="n4q-lY-mQ3"/>
                 <menuItem title="Help" id="iUC-AZ-yDI">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -108,6 +111,42 @@
             <connections>
                 <outlet property="checkbox" destination="WDs-a7-RN4" id="634-CH-TCX"/>
                 <outlet property="textField" destination="eoq-Z0-WRM" id="g93-J5-rJg"/>
+            </connections>
+        </customView>
+        <customView id="x6N-0s-UBK" customClass="ILMenuButtonView">
+            <rect key="frame" x="0.0" y="0.0" width="322" height="22"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nR7-Zp-wS6">
+                    <rect key="frame" x="19" y="3" width="38" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="765-M3-Azs">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I2E-Wy-XF6">
+                    <rect key="frame" x="255" y="1" width="49" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundRect" title="Install" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xT6-lb-Y37">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="controlContent"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="pressed:" target="x6N-0s-UBK" id="Ipl-u4-miu"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="I2E-Wy-XF6" secondAttribute="centerY" id="IKz-q5-lsQ"/>
+                <constraint firstItem="nR7-Zp-wS6" firstAttribute="leading" secondItem="x6N-0s-UBK" secondAttribute="leading" constant="21" id="MqG-ww-1FR"/>
+                <constraint firstAttribute="centerY" secondItem="nR7-Zp-wS6" secondAttribute="centerY" id="PL1-KM-AYP"/>
+                <constraint firstAttribute="trailing" secondItem="I2E-Wy-XF6" secondAttribute="trailing" constant="18" id="WC8-5F-olE"/>
+            </constraints>
+            <connections>
+                <outlet property="button" destination="I2E-Wy-XF6" id="xai-at-T0x"/>
+                <outlet property="textField" destination="nR7-Zp-wS6" id="xYp-hd-eaZ"/>
             </connections>
         </customView>
     </objects>

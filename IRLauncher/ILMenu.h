@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "ILMenuCheckboxView.h"
+#import "ILMenuButtonView.h"
 
 @interface ILMenu : NSMenu<NSMenuDelegate>
 
 @property (nonatomic, weak) id<ILMenuCheckboxViewDelegate> checkboxDelegate;
+@property (nonatomic, weak) id<ILMenuButtonViewDelegate> buttonDelegate;
 
 - (void)setSignalHeaderTitle:(NSString*)title animating:(BOOL)animating;
 - (void)setPeripheralHeaderTitle:(NSString*)title animating:(BOOL)animating;

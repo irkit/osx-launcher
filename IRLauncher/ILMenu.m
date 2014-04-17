@@ -7,15 +7,16 @@
 //
 
 #import "ILMenu.h"
-#import "ILAppDelegate.h"
 #import "ILMenuProgressView.h"
 #import "ILMenuCheckboxView.h"
+#import "ILMenuButtonView.h"
 #import "ILUtils.h"
 
-const NSInteger kTagSignals              = 10;
-const NSInteger kTagPeripherals          = 20;
-const NSInteger kTagUSB                  = 30;
-const NSInteger kTagStartAtLoginCheckbox = 40;
+const NSInteger kTagSignals                = 10;
+const NSInteger kTagPeripherals            = 20;
+const NSInteger kTagUSB                    = 30;
+const NSInteger kTagStartAtLoginCheckbox   = 40;
+const NSInteger kTagQuicksilverIntegration = 50;
 
 @interface ILMenu ()
 
@@ -101,6 +102,15 @@ const NSInteger kTagStartAtLoginCheckbox = 40;
         view.delegate = self.checkboxDelegate;
         [view.textField setStringValue: @"Start at login"];
         startAtLogin.view = view;
+    }
+
+    NSMenuItem *quicksilverIntegration = [self itemWithTag: kTagQuicksilverIntegration];
+    if (![quicksilverIntegration.view isKindOfClass: [ILMenuCheckboxView class]]) {
+        ILMenuButtonView *view =[ILUtils loadClassFromNib: [ILMenuButtonView class]];
+        view.delegate = self.buttonDelegate;
+        [view.textField setStringValue: @"Quicksilver integration"];
+        [view.button setStringValue: @"Install"];
+        quicksilverIntegration.view = view;
     }
 }
 

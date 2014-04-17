@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ILMenu.h"
 
 typedef BOOL (^ILEventBlock)(NSEvent *event);
 
