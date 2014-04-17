@@ -45,9 +45,6 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     self.menu.checkboxDelegate = self;
     self.menu.buttonDelegate   = self;
     self.menu.menuDelegate     = self;
-    [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
-    [self.menu setPeripheralHeaderTitle: @"IRKits (Searching...)" animating: YES];
-    [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)" animating: YES];
 
     self.menuletView      = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
     self.menuletView.menu = self.menu;
@@ -63,6 +60,7 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
     self.signals = [[IRSignals alloc] init];
 
+    [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
     [ILSignalsDirectorySearcher findSignalsUnderDirectory: signalsURL completion:^(NSArray *foundSignals) {
         [_self.menu setSignalHeaderTitle: @"Signals" animating: NO];
         [foundSignals enumerateObjectsUsingBlock:^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
@@ -83,6 +81,8 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     }];
 
     [IRSearcher sharedInstance].delegate = self;
+
+    [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)" animating: YES];
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
@@ -126,15 +126,22 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
 - (void) menuWillOpen:(ILMenu *)menu {
     ILLOG_CURRENT_METHOD;
-//    [[IRSearcher sharedInstance] startSearchingForTimeInterval: 5.];
+    [[IRSearcher sharedInstance] startSearchingForTimeInterval: 5.];
 }
 
 - (void) menuDidClose:(ILMenu *)menu {
     ILLOG_CURRENT_METHOD;
+
     [[IRSearcher sharedInstance] stop];
 }
 
 #pragma mark - IRSearcherDelegate
+
+- (void) searcherWillStartSearching:(IRSearcher *)searcher {
+    ILLOG_CURRENT_METHOD;
+
+    [_menu setPeripheralHeaderTitle: @"IRKits (Searching...)" animating: YES];
+}
 
 - (void) searcher:(IRSearcher *)searcher didResolveService:(NSNetService *)service {
     ILLOG( @"service: %@", service );
@@ -152,6 +159,12 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
                 }];
         }
     }];
+}
+
+- (void) searcherDidTimeout:(IRSearcher *)searcher {
+    ILLOG_CURRENT_METHOD;
+    [self.menu setPeripheralHeaderTitle: @"IRKits" animating: NO];
+    [[IRSearcher sharedInstance] startSearchingAfterTimeInterval: 5. forTimeInterval: 5.];
 }
 
 @end

@@ -19,6 +19,11 @@
     return self;
 }
 
+- (void) setAnimating:(BOOL)animating {
+    _animating = animating;
+    [self startAnimationIfNeeded];
+}
+
 - (void) startAnimationIfNeeded {
     if (self.animating) {
         NSProgressIndicator *indicator = self.indicator;
@@ -26,6 +31,9 @@
                         withObject: nil
                         afterDelay: 0.0
                            inModes: [NSArray arrayWithObject: NSEventTrackingRunLoopMode]];
+    }
+    else {
+        [self stopAnimation];
     }
 }
 
