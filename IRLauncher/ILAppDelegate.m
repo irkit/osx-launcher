@@ -44,6 +44,7 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     self.menu                  = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
     self.menu.checkboxDelegate = self;
     self.menu.buttonDelegate   = self;
+    self.menu.menuDelegate     = self;
     [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
     [self.menu setPeripheralHeaderTitle: @"IRKits (Searching...)" animating: YES];
     [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)" animating: YES];
@@ -82,7 +83,6 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     }];
 
     [IRSearcher sharedInstance].delegate = self;
-    [[IRSearcher sharedInstance] startSearching];
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
@@ -120,6 +120,18 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
 - (void) menuButtonView:(ILMenuButtonView *)view didPress: (id)sender {
     ILLOG_CURRENT_METHOD;
+}
+
+#pragma mark - ILMenuDelegate
+
+- (void) menuWillOpen:(ILMenu *)menu {
+    ILLOG_CURRENT_METHOD;
+//    [[IRSearcher sharedInstance] startSearchingForTimeInterval: 5.];
+}
+
+- (void) menuDidClose:(ILMenu *)menu {
+    ILLOG_CURRENT_METHOD;
+    [[IRSearcher sharedInstance] stop];
 }
 
 #pragma mark - IRSearcherDelegate
