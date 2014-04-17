@@ -112,6 +112,8 @@ const NSInteger kTagQuicksilverIntegration = 50;
         [view.button setStringValue: @"Install"];
         quicksilverIntegration.view = view;
     }
+
+    [self.menuDelegate menuWillOpen: self];
 }
 
 - (void) menuDidClose:(NSMenu *)menu {
@@ -120,6 +122,8 @@ const NSInteger kTagQuicksilverIntegration = 50;
     [items enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
         [(ILMenuProgressView*)item.view stopAnimation];
     }];
+
+    [self.menuDelegate menuDidClose: self];
 }
 
 @end
