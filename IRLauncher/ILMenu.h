@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ILMenu : NSMenu
+@interface ILMenu : NSMenu<NSMenuDelegate>
 
-- (void)setSignalHeaderTitle:(NSString*)text;
-- (void)setPeripheralHeaderTitle:(NSString*)text;
-- (void)setUSBHeaderTitle:(NSString*)text;
+- (void)setSignalHeaderTitle:(NSString*)title animating:(BOOL)animating;
+- (void)setPeripheralHeaderTitle:(NSString*)title animating:(BOOL)animating;
+- (void)setUSBHeaderTitle:(NSString*)title animating:(BOOL)animating;
 - (void)addSignalMenuItem: (NSMenuItem*)item;
 - (void)addPeripheralMenuItem: (NSMenuItem*)item;
 

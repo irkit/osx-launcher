@@ -13,6 +13,35 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="494" customClass="ILAppDelegate"/>
         <customObject id="420" customClass="NSFontManager"/>
+        <customView id="iu7-JD-aJ7" customClass="ILMenuHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="322" height="20"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="HGp-DR-mNd">
+                    <rect key="frame" x="286" y="2" width="16" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </progressIndicator>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j78-V9-xCy">
+                    <rect key="frame" x="19" y="2" width="38" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="eQu-bf-RYV">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="HGp-DR-mNd" secondAttribute="trailing" constant="20" symbolic="YES" id="PIf-9a-YIT"/>
+                <constraint firstAttribute="centerY" secondItem="j78-V9-xCy" secondAttribute="centerY" id="QMf-6K-lyJ"/>
+                <constraint firstAttribute="centerY" secondItem="HGp-DR-mNd" secondAttribute="centerY" id="e99-OT-DDb"/>
+                <constraint firstItem="j78-V9-xCy" firstAttribute="leading" secondItem="iu7-JD-aJ7" secondAttribute="leading" constant="21" id="m4a-3u-nYj"/>
+            </constraints>
+            <connections>
+                <outlet property="indicator" destination="HGp-DR-mNd" id="lyS-pl-HWE"/>
+                <outlet property="textField" destination="j78-V9-xCy" id="jp5-Of-3JH"/>
+            </connections>
+        </customView>
         <menu id="nVI-uD-uLB" customClass="ILMenu">
             <items>
                 <menuItem title="Signals" tag="10" enabled="NO" id="Ji8-hp-uI5">
@@ -23,7 +52,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="bep-vl-uFo"/>
-                <menuItem title="IRKits connected via USB" tag="30" enabled="NO" id="rat-Y6-aHg">
+                <menuItem title="IRKits connected via USB (Searching...)" tag="30" enabled="NO" id="rat-Y6-aHg">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="NHa-e0-FcY"/>

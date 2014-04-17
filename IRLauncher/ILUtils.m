@@ -12,6 +12,23 @@
 
 @implementation ILUtils
 
++ (NSView*)clonedViewOf:(NSView*)original {
+    NSData *data = [NSArchiver archivedDataWithRootObject: original];
+    return [NSUnarchiver unarchiveObjectWithData: data];
+}
+
++ (id)loadClassFromNib: (Class)class {
+    NSArray *nibEntries = @[];
+    NSNib *nib          = [[NSNib alloc] initWithNibNamed: @"MainMenu" bundle: [NSBundle mainBundle]];
+    [nib instantiateWithOwner: nil topLevelObjects: &nibEntries];
+    return [ILUtils firstObjectOf: nibEntries meetsBlock:^BOOL (id obj, NSUInteger idx) {
+        if ([obj isKindOfClass: class]) {
+            return YES;
+        }
+        return NO;
+    }];
+}
+
 + (id)firstObjectOf:(NSArray *)array meetsBlock:(BOOL (^)(id obj, NSUInteger idx))block {
     __block id result = nil;
     [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

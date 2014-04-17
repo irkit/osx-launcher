@@ -14,6 +14,7 @@
 #import "IRSignals.h"
 #import "IRKit.h"
 #import "ILFileStore.h"
+#import "ILMenuHeaderView.h"
 #import "const.h"
 
 const int kSignalTagOffset     = 1000;
@@ -48,17 +49,10 @@ static NSString *kIRKitAPIKey  = @"----FILLME---";
     [self.item setView: self.menuletView];
     [self.item setHighlightMode: NO];
 
-    NSArray *nibEntries = @[];
-    [[NSBundle mainBundle] loadNibNamed: @"MainMenu" owner: self topLevelObjects: &nibEntries];
-    self.menu = (ILMenu*)[ILUtils firstObjectOf: nibEntries meetsBlock:^BOOL (id obj, NSUInteger idx) {
-        if ([obj isKindOfClass: [ILMenu class]]) {
-            return YES;
-        }
-        return NO;
-    }];
-    [self.menu setSignalHeaderTitle: @"Signals (Searching...)"];
-    [self.menu setPeripheralHeaderTitle: @"IRKits (Searching...)"];
-    [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)"];
+    self.menu = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
+    [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
+    [self.menu setPeripheralHeaderTitle: @"IRKits (Searching...)" animating: YES];
+    [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)" animating: YES];
 
     NSString *signalsDirectory = [NSHomeDirectory() stringByAppendingPathComponent: @".irkit.d/signals"];
     NSURL *signalsURL          = [NSURL fileURLWithPath: signalsDirectory];
@@ -66,7 +60,7 @@ static NSString *kIRKitAPIKey  = @"----FILLME---";
     self.signals = [[IRSignals alloc] init];
 
     [ILSignalsDirectorySearcher findSignalsUnderDirectory: signalsURL completion:^(NSArray *foundSignals) {
-        [_self.menu setSignalHeaderTitle: @"Signals"];
+        [_self.menu setSignalHeaderTitle: @"Signals" animating: NO];
         [foundSignals enumerateObjectsUsingBlock:^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
                 IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
                 [_self.signals addSignalsObject: signal];

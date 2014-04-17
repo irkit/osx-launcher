@@ -10,6 +10,8 @@
 
 @interface ILUtils : NSObject
 
++ (NSView*)clonedViewOf:(NSView*)original;
++ (id)loadClassFromNib: (Class)class;
 + (id)firstObjectOf:(NSArray *)array meetsBlock:(BOOL (^)(id obj, NSUInteger idx))block;
 + (NSURL*) URLPathForVersion: (NSString*) versionString;
 + (void) downloadAssetURL: (NSURL*) assetURL toPathURL: (NSURL*) pathURL completion: (void (^)(NSError*)) completion;
