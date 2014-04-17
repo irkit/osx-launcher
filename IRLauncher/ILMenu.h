@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ILPeripheral.h"
-#import "ILSignal.h"
+#import "ILMenuCheckboxView.h"
 
-@interface ILMenu : NSMenu
+@interface ILMenu : NSMenu<NSMenuDelegate>
 
-- (void) addPeripherals:(ILPeripheral*)peripheral;
-- (void) addSignals:(ILSignal*)signal;
+@property (nonatomic, weak) id<ILMenuCheckboxViewDelegate> checkboxDelegate;
+
+- (void)setSignalHeaderTitle:(NSString*)title animating:(BOOL)animating;
+- (void)setPeripheralHeaderTitle:(NSString*)title animating:(BOOL)animating;
+- (void)setUSBHeaderTitle:(NSString*)title animating:(BOOL)animating;
+- (void)addSignalMenuItem: (NSMenuItem*)item;
+- (void)addPeripheralMenuItem: (NSMenuItem*)item;
 
 @end

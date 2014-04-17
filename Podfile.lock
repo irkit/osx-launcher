@@ -15,11 +15,18 @@ PODS:
   - AFNetworking/Reachability (2.1.0)
   - AFNetworking/Security (2.1.0)
   - AFNetworking/Serialization (2.1.0)
+  - ISHTTPOperation (1.1.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.1.0)
+  - ISHTTPOperation (from `~/src/ISHTTPOperation`)
+
+EXTERNAL SOURCES:
+  ISHTTPOperation:
+    :path: ~/src/ISHTTPOperation
 
 SPEC CHECKSUMS:
   AFNetworking: c7d7901a83f631414c7eda1737261f696101a5cd
+  ISHTTPOperation: c06567969e38763166d6af3a33c4c2263b4a5cfa
 
 COCOAPODS: 0.29.0

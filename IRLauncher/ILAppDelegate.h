@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ILVersionChecker.h"
 #import "IRSearcher.h"
+#import "ILMenuCheckboxView.h"
 
-@interface ILAppDelegate : NSObject <NSApplicationDelegate,ILVersionCheckerDelegate,IRSearcherDelegate>
+@interface ILAppDelegate : NSObject <NSApplicationDelegate,IRSearcherDelegate,NSMenuDelegate,ILMenuCheckboxViewDelegate>
 
 @end

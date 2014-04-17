@@ -12,7 +12,6 @@
 
 @interface ILVersionChecker ()
 
-
 @end
 
 @implementation ILVersionChecker
@@ -25,15 +24,13 @@
     return self;
 }
 
-#pragma mark - Private
-
-- (void) check {
-    LOG_CURRENT_METHOD;
+- (void)checkUpdateForVersion:(NSString*)currentVersion foundUpdateBlock:(void (^)(NSString *newVersion))completion {
+    ILLOG( @"currentVersion: %@", currentVersion );
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET: @"https://api.github.com/repos/irkit/device/releases" parameters: nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *tag = ((NSArray*)responseObject)[ 0 ];
-        LOG( @"tag: %@", tag );
+        ILLOG( @"tag: %@", tag );
 
         NSString *assetURLString = tag[@"assets"][ 0 ][ @"url" ];
         // api.github.com -> uploads.github.com
@@ -41,20 +38,15 @@
                                     relativeToURL: [NSURL URLWithString: @"https://uploads.github.com/"]];
 
         if (downloadURL && tag[@"name"]) {
-            [self.delegate checker: self
-                    didFindVersion: tag[@"name"]
-                             onURL: downloadURL];
         }
         else {
-            NSError *error = [NSError errorWithDomain: IRLauncherErrorDomain code: IRLauncherErrorCodeInvalidTag userInfo: nil];
-            [self.delegate checker: self
-             didFailCheckWithError: error];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        LOG(@"Error: %@", error);
-        [self.delegate checker: self
-         didFailCheckWithError: error];
+        ILLOG(@"error: %@", error);
     }];
+
 }
+
+#pragma mark - Private
 
 @end
