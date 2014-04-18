@@ -22,6 +22,7 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
 @property (nonatomic) NSMutableArray *signalMenuItems;
 @property (nonatomic) NSMutableArray *peripheralMenuItems;
+@property (nonatomic) BOOL isVisible;
 
 @end
 
@@ -83,13 +84,16 @@ const NSInteger kTagQuicksilverIntegration = 50;
     }
     ILMenuProgressView *view = (ILMenuProgressView*)item.view;
     view.animating = animating;
+    if (self.isVisible) {
+        [view startAnimationIfNeeded];
+    }
     [view.textField setStringValue: title];
 }
 
 #pragma mark - NSMenuDelegate
 
 - (void) menuWillOpen:(NSMenu *)menu {
-    ILLOG( @"size: %@", NSStringFromSize(menu.size));
+    self.isVisible = YES;
 
     NSArray *items = @[ [self itemWithTag: kTagSignals], [self itemWithTag: kTagPeripherals],[self itemWithTag: kTagUSB]];
     [items enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
@@ -117,7 +121,8 @@ const NSInteger kTagQuicksilverIntegration = 50;
 }
 
 - (void) menuDidClose:(NSMenu *)menu {
-    ILLOG_CURRENT_METHOD;
+    self.isVisible = NO;
+
     NSArray *items = @[ [self itemWithTag: kTagSignals], [self itemWithTag: kTagPeripherals],[self itemWithTag: kTagUSB]];
     [items enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
         [(ILMenuProgressView*)item.view stopAnimation];

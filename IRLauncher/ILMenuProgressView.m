@@ -7,24 +7,26 @@
 //
 
 #import "ILMenuProgressView.h"
+#import "ILLog.h"
 
 @implementation ILMenuProgressView
 
-- (instancetype)initWithFrame:(NSRect)frameRect {
-    self = [super initWithFrame: frameRect];
-    if (!self) { return self; }
+- (void) awakeFromNib {
+    ILLOG_CURRENT_METHOD;
 
     [self.indicator setUsesThreadedAnimation: YES];
-
-    return self;
+    [self.indicator setDisplayedWhenStopped: NO];
 }
 
 - (void) setAnimating:(BOOL)animating {
+    ILLOG( @"animating: %d", animating );
+
     _animating = animating;
-    [self startAnimationIfNeeded];
 }
 
 - (void) startAnimationIfNeeded {
+    ILLOG( @"self: %@ indicator: %@ title: %@ animating: %d", self, self.indicator, self.textField.stringValue, self.animating );
+
     if (self.animating) {
         NSProgressIndicator *indicator = self.indicator;
         [indicator performSelector: @selector(startAnimation:)
@@ -39,7 +41,10 @@
 
 - (void) stopAnimation {
     NSProgressIndicator *indicator = self.indicator;
-    [indicator stopAnimation: nil];
+    [indicator performSelector: @selector(stopAnimation:)
+                    withObject: nil
+                    afterDelay: 0.0
+                       inModes: [NSArray arrayWithObject: NSEventTrackingRunLoopMode]];
 }
 
 @end

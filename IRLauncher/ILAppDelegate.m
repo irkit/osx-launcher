@@ -78,6 +78,7 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
                 }
                 [_self.menu addSignalMenuItem: signalItem];
             }];
+        [self.menu setSignalHeaderTitle: @"Signals" animating: NO];
     }];
 
     [IRSearcher sharedInstance].delegate = self;
