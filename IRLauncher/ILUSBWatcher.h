@@ -8,17 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-extern const NSUInteger kUSBEventPlugged;
-extern const NSUInteger kUSBEventUnplugged;
-
-typedef void (^USBDeviceMatchedBlock)(NSUInteger event, NSDictionary *info);
+extern NSString * const kILUSBWatcherNotificationAdded;
+extern NSString * const kILUSBWatcherNotificationRemoved;
+extern NSString * const kILUSBWatcherNotificationDeviceNameKey;
+extern NSString * const kILUSBWatcherNotificationLocationIDKey;
 
 @interface ILUSBWatcher : NSObject
 
 @property (nonatomic) BOOL isRunning;
 
 + (instancetype) sharedInstance;
-- (int) watchUSBMatchingPredicate:(NSPredicate*)predicate matchedBlock:(USBDeviceMatchedBlock)block;
-- (void) stop;
+- (void) startWatchingUSBMatchingPredicate:(NSPredicate*)predicate;
+- (void) stopWatchingUSB;
 
 @end

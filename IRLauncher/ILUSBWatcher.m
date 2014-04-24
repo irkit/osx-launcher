@@ -68,15 +68,17 @@
 #include <IOKit/IOCFPlugIn.h>
 #include <IOKit/usb/IOUSBLib.h>
 
-const NSUInteger kUSBEventPlugged   = 1;
-const NSUInteger kUSBEventUnplugged = 2;
+NSString * const kILUSBWatcherNotificationAdded         = @"ILUSBWatcherAdded";
+NSString * const kILUSBWatcherNotificationRemoved       = @"ILUSBWatcherRemoved";
+NSString * const kILUSBWatcherNotificationDeviceNameKey = @"devicename";
+NSString * const kILUSBWatcherNotificationLocationIDKey = @"locationid";
 
-typedef struct MyPrivateData {
+typedef struct ILUSBData {
     io_object_t notification;
-    IOUSBDeviceInterface    **deviceInterface;
+    IOUSBDeviceInterface **deviceInterface;
     CFStringRef deviceName;
     UInt32 locationID;
-} MyPrivateData;
+} ILUSBData;
 
 static IONotificationPortRef gNotifyPort;
 static io_iterator_t gAddedIter;
@@ -93,17 +95,25 @@ static CFRunLoopRef gRunLoop;
 //================================================================================================
 void DeviceNotification(void *refCon, io_service_t service, natural_t messageType, void *messageArgument){
     kern_return_t kr;
-    MyPrivateData *privateDataRef = (MyPrivateData *) refCon;
+    ILUSBData *privateDataRef = (ILUSBData *) refCon;
 
     if (messageType == kIOMessageServiceIsTerminated) {
-        ILLOG( @"Device removed." );
+        // ILLOG( @"Device removed." );
 
         // Dump our private data to stderr just to see what it looks like.
-        ILLOG( @"->deviceName: %@", privateDataRef->deviceName );
-        ILLOG( @"->locationID: 0x%x", (unsigned int)privateDataRef->locationID );
+        // ILLOG( @"->deviceName: %@", privateDataRef->deviceName );
+        // ILLOG( @"->locationID: 0x%x", (unsigned int)privateDataRef->locationID );
 
-        // Free the data we're no longer using now that the device is going away
-        CFRelease(privateDataRef->deviceName);
+        NSString *deviceName = (__bridge_transfer NSString*)privateDataRef->deviceName;
+        NSNumber *locationID = [NSNumber numberWithUnsignedInt: privateDataRef->locationID];
+        dispatch_async(dispatch_get_main_queue(),^() {
+            [[NSNotificationCenter defaultCenter] postNotificationName: kILUSBWatcherNotificationRemoved
+                                                                object: nil
+                                                              userInfo: @{
+                 kILUSBWatcherNotificationDeviceNameKey: deviceName,
+                 kILUSBWatcherNotificationLocationIDKey: locationID,
+             }];
+        });
 
         if (privateDataRef->deviceInterface) {
             kr = (*privateDataRef->deviceInterface)->Release(privateDataRef->deviceInterface);
@@ -130,36 +140,29 @@ void DeviceNotification(void *refCon, io_service_t service, natural_t messageTyp
 //
 //================================================================================================
 void DeviceAdded(void *refCon, io_iterator_t iterator){
-    kern_return_t kr;
     io_service_t usbDevice;
-    IOCFPlugInInterface **plugInInterface = NULL;
-    SInt32 score;
-    HRESULT res;
 
     while ((usbDevice = IOIteratorNext(iterator))) {
-        io_name_t deviceName;
-        CFStringRef deviceNameAsCFString;
-        MyPrivateData   *privateDataRef = NULL;
-        UInt32 locationID;
-
-        ILLOG(@"Device added.");
+        // ILLOG(@"Device added.");
 
         // Add some app-specific information about this device.
         // Create a buffer to hold the data.
-        privateDataRef = malloc(sizeof(MyPrivateData));
-        bzero(privateDataRef, sizeof(MyPrivateData));
+        ILUSBData *privateDataRef = malloc(sizeof(ILUSBData));
+        bzero(privateDataRef, sizeof(ILUSBData));
 
         // Get the USB device's name.
-        kr = IORegistryEntryGetName(usbDevice, deviceName);
+        io_name_t deviceName;
+        kern_return_t kr = IORegistryEntryGetName(usbDevice, deviceName);
         if (KERN_SUCCESS != kr) {
             deviceName[0] = '\0';
         }
 
-        deviceNameAsCFString = CFStringCreateWithCString(kCFAllocatorDefault, deviceName,
-                                                         kCFStringEncodingASCII);
+        CFStringRef deviceNameAsCFString = CFStringCreateWithCString(kCFAllocatorDefault,
+                                                                     deviceName,
+                                                                     kCFStringEncodingASCII);
 
         // Dump our data to stderr just to see what it looks like.
-        ILLOG( @"deviceName: %@", deviceNameAsCFString );
+        // ILLOG( @"deviceName: %@", deviceNameAsCFString );
 
         // Save the device's name to our private data.
         privateDataRef->deviceName = deviceNameAsCFString;
@@ -167,8 +170,13 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
         // Now, get the locationID of this device. In order to do this, we need to create an IOUSBDeviceInterface
         // for our device. This will create the necessary connections between our userland application and the
         // kernel object for the USB Device.
-        kr = IOCreatePlugInInterfaceForService(usbDevice, kIOUSBDeviceUserClientTypeID, kIOCFPlugInInterfaceID,
-                                               &plugInInterface, &score);
+        SInt32 score;
+        IOCFPlugInInterface **plugInInterface = NULL;
+        kr = IOCreatePlugInInterfaceForService(usbDevice,
+                                               kIOUSBDeviceUserClientTypeID,
+                                               kIOCFPlugInInterfaceID,
+                                               &plugInInterface,
+                                               &score);
 
         if ((kIOReturnSuccess != kr) || !plugInInterface) {
             ILLOG( @"IOCreatePlugInInterfaceForService returned 0x%08x.\n", kr);
@@ -176,8 +184,9 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
         }
 
         // Use the plugin interface to retrieve the device interface.
-        res = (*plugInInterface)->QueryInterface(plugInInterface, CFUUIDGetUUIDBytes(kIOUSBDeviceInterfaceID),
-                                                 (LPVOID*) &privateDataRef->deviceInterface);
+        HRESULT res = (*plugInInterface)->QueryInterface(plugInInterface,
+                                                         CFUUIDGetUUIDBytes(kIOUSBDeviceInterfaceID),
+                                                         (LPVOID*) &privateDataRef->deviceInterface);
 
         // Now done with the plugin interface.
         (*plugInInterface)->Release(plugInInterface);
@@ -191,14 +200,13 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
         // In this case, fetch the locationID. The locationID uniquely identifies the device
         // and will remain the same, even across reboots, so long as the bus topology doesn't change.
 
+        UInt32 locationID;
         kr = (*privateDataRef->deviceInterface)->GetLocationID(privateDataRef->deviceInterface, &locationID);
         if (KERN_SUCCESS != kr) {
             ILLOG( @"GetLocationID returned 0x%08x.\n", kr);
             continue;
         }
-        else {
-            ILLOG( @"Location ID: 0x%x\n\n", (unsigned int)locationID);
-        }
+        // ILLOG( @"Location ID: 0x%x\n\n", (unsigned int)locationID);
 
         privateDataRef->locationID = locationID;
 
@@ -211,10 +219,20 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
                                               privateDataRef,                   // refCon
                                               &(privateDataRef->notification)   // notification
                                               );
-
         if (KERN_SUCCESS != kr) {
             ILLOG( @"IOServiceAddInterestNotification returned 0x%08x.\n", kr);
         }
+
+        NSString *deviceNameString = (__bridge NSString*)privateDataRef->deviceName;
+        NSNumber *locationIDNumber = [NSNumber numberWithUnsignedInt: privateDataRef->locationID];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName: kILUSBWatcherNotificationAdded
+                                                                object: nil
+                                                              userInfo: @{
+                 kILUSBWatcherNotificationDeviceNameKey: deviceNameString,
+                 kILUSBWatcherNotificationLocationIDKey: locationIDNumber,
+             }];
+        });
 
         // Done with this USB device; release the reference added by IOIteratorNext
         kr = IOObjectRelease(usbDevice);
@@ -225,7 +243,6 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
 
 @property (nonatomic) BOOL isStopped;
 @property (nonatomic) NSPredicate *predicate;
-@property (nonatomic, copy) USBDeviceMatchedBlock matchedBlock;
 
 @end
 
@@ -241,18 +258,16 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
     return queue;
 }
 
-- (int) watchUSBMatchingPredicate:(NSPredicate*)predicate
-                     matchedBlock:(USBDeviceMatchedBlock)block {
+- (void) startWatchingUSBMatchingPredicate :(NSPredicate*)predicate {
     ILLOG( @"predicate: %@", predicate );
 
     if (self.isRunning) {
         // TODO synchronize?
-        return -1;
+        return;
     }
 
-    self.isRunning    = YES;
-    self.predicate    = predicate;
-    self.matchedBlock = block;
+    self.isRunning = YES;
+    self.predicate = predicate;
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
@@ -297,6 +312,8 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
                                                             );
         if (kr) {
             ILLOG( @"error code: %d", kr );
+            self.isRunning = NO;
+            return;
         }
 
         // Iterate once to get already-present devices and arm the notification
@@ -309,10 +326,10 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
 
         self.isRunning = NO;
     });
-    return 0;
+    return;
 }
 
-- (void) stop {
+- (void) stopWatchingUSB {
     ILLOG_CURRENT_METHOD;
 
     self.isStopped = YES;
