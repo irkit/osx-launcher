@@ -12,13 +12,15 @@ extern NSString * const kILUSBWatcherNotificationAdded;
 extern NSString * const kILUSBWatcherNotificationRemoved;
 extern NSString * const kILUSBWatcherNotificationDeviceNameKey;
 extern NSString * const kILUSBWatcherNotificationLocationIDKey;
+extern NSString * const kILUSBWatcherNotificationVendorIDKey;
+extern NSString * const kILUSBWatcherNotificationProductIDKey;
 
 @interface ILUSBWatcher : NSObject
 
 @property (nonatomic) BOOL isRunning;
 
 + (instancetype) sharedInstance;
-- (void) startWatchingUSBMatchingPredicate:(NSPredicate*)predicate;
+- (void) startWatchingUSB;
 - (void) stopWatchingUSB;
 
 @end

@@ -22,6 +22,8 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
 @property (nonatomic) NSMutableArray *signalMenuItems;
 @property (nonatomic) NSMutableArray *peripheralMenuItems;
+@property (nonatomic) NSMutableDictionary *usbMenuItems;
+@property (nonatomic) NSMutableArray *usbMenuItemsOrders;
 @property (nonatomic) BOOL isVisible;
 
 @end
@@ -33,6 +35,11 @@ const NSInteger kTagQuicksilverIntegration = 50;
     if (!self) { return nil; }
 
     self.delegate = self;
+
+    _signalMenuItems     = @[].mutableCopy;
+    _peripheralMenuItems = @[].mutableCopy;
+    _usbMenuItemsOrders  = @[].mutableCopy;
+    _usbMenuItems        = @{}.mutableCopy;
 
     return self;
 }
@@ -55,7 +62,7 @@ const NSInteger kTagQuicksilverIntegration = 50;
     [_signalMenuItems addObject: item];
 
     NSUInteger index = [self indexOfItemWithTag: kTagSignals];
-    [self insertItem: item atIndex: index + self.numberOfSignalMenuItems + 1];
+    [self insertItem: item atIndex: index + self.numberOfSignalMenuItems];
 }
 
 - (void)addPeripheralMenuItem:(NSMenuItem *)item {
@@ -64,8 +71,34 @@ const NSInteger kTagQuicksilverIntegration = 50;
     [_peripheralMenuItems addObject: item];
 
     NSUInteger index = [self indexOfItemWithTag: kTagPeripherals];
-    [self insertItem: item atIndex: index + self.numberOfPeripheralMenuItems + 1];
+    [self insertItem: item atIndex: index + self.numberOfPeripheralMenuItems];
 }
+
+- (void)addUSBMenuItem:(NSMenuItem *)item withLocationId:(NSNumber *)locationId {
+    self.usbMenuItems[ locationId ] = item;
+    [self.usbMenuItemsOrders addObject: item];
+
+    NSUInteger index = [self indexOfItemWithTag: kTagUSB];
+    [self insertItem: item atIndex: index + self.numberOfUSBMenuItems];
+}
+
+- (void)removeUSBMenuItemWithLocationId:(NSNumber *)locationId {
+    NSMenuItem *item = self.usbMenuItems[ locationId ];
+    if (!item) {
+        return;
+    }
+
+    [self.usbMenuItems removeObjectForKey: locationId];
+    [self.usbMenuItemsOrders removeObject: item];
+
+    [self removeItem: item];
+}
+
+- (NSUInteger)numberOfUSBMenuItems {
+    return _usbMenuItemsOrders.count;
+}
+
+#pragma mark - Private
 
 - (NSUInteger)numberOfSignalMenuItems {
     return _signalMenuItems.count;
@@ -74,8 +107,6 @@ const NSInteger kTagQuicksilverIntegration = 50;
 - (NSUInteger)numberOfPeripheralMenuItems {
     return _peripheralMenuItems.count;
 }
-
-#pragma mark - Private
 
 - (void) setHeaderTitleWithTag: (NSUInteger)tag title:(NSString*)title animating:(BOOL)animating {
     NSMenuItem *item = [self itemWithTag: tag];

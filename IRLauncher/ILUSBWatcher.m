@@ -72,12 +72,16 @@ NSString * const kILUSBWatcherNotificationAdded         = @"ILUSBWatcherAdded";
 NSString * const kILUSBWatcherNotificationRemoved       = @"ILUSBWatcherRemoved";
 NSString * const kILUSBWatcherNotificationDeviceNameKey = @"devicename";
 NSString * const kILUSBWatcherNotificationLocationIDKey = @"locationid";
+NSString * const kILUSBWatcherNotificationVendorIDKey   = @"vendorid";
+NSString * const kILUSBWatcherNotificationProductIDKey  = @"productid";
 
 typedef struct ILUSBData {
     io_object_t notification;
     IOUSBDeviceInterface **deviceInterface;
     CFStringRef deviceName;
     UInt32 locationID;
+    UInt16 vendorID;
+    UInt16 productID;
 } ILUSBData;
 
 static IONotificationPortRef gNotifyPort;
@@ -106,12 +110,16 @@ void DeviceNotification(void *refCon, io_service_t service, natural_t messageTyp
 
         NSString *deviceName = (__bridge_transfer NSString*)privateDataRef->deviceName;
         NSNumber *locationID = [NSNumber numberWithUnsignedInt: privateDataRef->locationID];
+        NSNumber *vendorID   = [NSNumber numberWithUnsignedInt: privateDataRef->vendorID];
+        NSNumber *productID  = [NSNumber numberWithUnsignedInt: privateDataRef->productID];
         dispatch_async(dispatch_get_main_queue(),^() {
             [[NSNotificationCenter defaultCenter] postNotificationName: kILUSBWatcherNotificationRemoved
                                                                 object: nil
                                                               userInfo: @{
                  kILUSBWatcherNotificationDeviceNameKey: deviceName,
                  kILUSBWatcherNotificationLocationIDKey: locationID,
+                 kILUSBWatcherNotificationVendorIDKey:   vendorID,
+                 kILUSBWatcherNotificationProductIDKey:  productID,
              }];
         });
 
@@ -207,8 +215,25 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
             continue;
         }
         // ILLOG( @"Location ID: 0x%x\n\n", (unsigned int)locationID);
-
         privateDataRef->locationID = locationID;
+
+        UInt16 vendorID;
+        kr = (*privateDataRef->deviceInterface)->GetDeviceVendor(privateDataRef->deviceInterface, &vendorID);
+        if (KERN_SUCCESS != kr) {
+            ILLOG( @"GetDeviceVendor returned 0x%08x.\n", kr);
+            continue;
+        }
+        // ILLOG( @"Vendor ID: 0x%x\n\n", (unsigned int)vendorID);
+        privateDataRef->vendorID = vendorID;
+
+        UInt16 productID;
+        kr = (*privateDataRef->deviceInterface)->GetDeviceProduct(privateDataRef->deviceInterface, &productID);
+        if (KERN_SUCCESS != kr) {
+            ILLOG( @"GetDeviceProduct returned 0x%08x.\n", kr);
+            continue;
+        }
+        // ILLOG( @"Product ID: 0x%x\n\n", (unsigned int)productID);
+        privateDataRef->productID = productID;
 
         // Register for an interest notification of this device being removed. Use a reference to our
         // private data as the refCon which will be passed to the notification callback.
@@ -223,14 +248,14 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
             ILLOG( @"IOServiceAddInterestNotification returned 0x%08x.\n", kr);
         }
 
-        NSString *deviceNameString = (__bridge NSString*)privateDataRef->deviceName;
-        NSNumber *locationIDNumber = [NSNumber numberWithUnsignedInt: privateDataRef->locationID];
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName: kILUSBWatcherNotificationAdded
                                                                 object: nil
                                                               userInfo: @{
-                 kILUSBWatcherNotificationDeviceNameKey: deviceNameString,
-                 kILUSBWatcherNotificationLocationIDKey: locationIDNumber,
+                 kILUSBWatcherNotificationDeviceNameKey: (__bridge NSString*)privateDataRef->deviceName,
+                 kILUSBWatcherNotificationLocationIDKey: [NSNumber numberWithUnsignedInt: privateDataRef->locationID],
+                 kILUSBWatcherNotificationVendorIDKey:   [NSNumber numberWithUnsignedInt: privateDataRef->vendorID],
+                 kILUSBWatcherNotificationProductIDKey:  [NSNumber numberWithUnsignedInt: privateDataRef->productID],
              }];
         });
 
@@ -242,7 +267,6 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
 @interface ILUSBWatcher ()
 
 @property (nonatomic) BOOL isStopped;
-@property (nonatomic) NSPredicate *predicate;
 
 @end
 
@@ -258,8 +282,8 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
     return queue;
 }
 
-- (void) startWatchingUSBMatchingPredicate :(NSPredicate*)predicate {
-    ILLOG( @"predicate: %@", predicate );
+- (void) startWatchingUSB {
+    ILLOG_CURRENT_METHOD;
 
     if (self.isRunning) {
         // TODO synchronize?
@@ -267,7 +291,6 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
     }
 
     self.isRunning = YES;
-    self.predicate = predicate;
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 

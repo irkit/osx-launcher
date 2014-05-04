@@ -21,7 +21,14 @@
 
 const int kSignalTagOffset     = 1000;
 const int kPeripheralTagOffset = 100;
+const int kUSBTagOffset        = 200;
 static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
+
+#define kILUSBVendorIRKit     @0x1D50
+#define kILUSBProductLeonardo @0x8036
+
+#define kILUSBVendorArduino   @0x2341
+#define kILUSBProductIRKit    @0x6085
 
 @interface ILAppDelegate ()
 
@@ -84,16 +91,39 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
     [IRSearcher sharedInstance].delegate = self;
 
-    [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)" animating: YES];
+    [self.menu setUSBHeaderTitle: @"IRKits connected via USB (none found)" animating: NO];
 
-    [[ILUSBWatcher sharedInstance] startWatchingUSBMatchingPredicate: nil];
-    [[NSNotificationCenter defaultCenter] addObserverForName: kILUSBWatcherNotificationAdded object: nil queue: NULL usingBlock:^(NSNotification *note) {
+    [[ILUSBWatcher sharedInstance] startWatchingUSB];
+    [[NSNotificationCenter defaultCenter] addObserverForName: kILUSBWatcherNotificationAdded
+                                                      object: nil
+                                                       queue: NULL
+                                                  usingBlock:^(NSNotification *note) {
         NSDictionary *info = note.userInfo;
         ILLOG( @"added USB: %@", info );
+
+        if ( ([info[ kILUSBWatcherNotificationVendorIDKey ] isEqualToNumber: kILUSBVendorIRKit] &&
+              [info[ kILUSBWatcherNotificationProductIDKey ] isEqualToNumber: kILUSBProductIRKit]) ||
+             ([info [kILUSBWatcherNotificationVendorIDKey ] isEqualToNumber: kILUSBVendorArduino] &&
+              [info[ kILUSBWatcherNotificationProductIDKey ] isEqualToNumber: kILUSBProductLeonardo]) ) {
+            NSMenuItem *usbItem = [[NSMenuItem alloc] init];
+            usbItem.title  = info[ kILUSBWatcherNotificationDeviceNameKey ];
+            usbItem.target = _self;
+            usbItem.action = @selector(confirmUpdate:);
+            [_self.menu addUSBMenuItem: usbItem
+                        withLocationId: info[ kILUSBWatcherNotificationLocationIDKey ]];
+            [_self.menu setUSBHeaderTitle: @"IRKits connected via USB" animating: NO];
+        }
     }];
-    [[NSNotificationCenter defaultCenter] addObserverForName: kILUSBWatcherNotificationRemoved object: nil queue: nil usingBlock:^(NSNotification *note) {
+    [[NSNotificationCenter defaultCenter] addObserverForName: kILUSBWatcherNotificationRemoved
+                                                      object: nil
+                                                       queue: nil
+                                                  usingBlock:^(NSNotification *note) {
         NSDictionary *info = note.userInfo;
         ILLOG( @"removed USB: %@", info );
+        [_self.menu removeUSBMenuItemWithLocationId: info[ kILUSBWatcherNotificationLocationIDKey ]];
+        if ([_self.menu numberOfUSBMenuItems] == 0) {
+            [_self.menu setUSBHeaderTitle: @"IRKits connected via USB (none found)" animating: NO];
+        }
     }];
 }
 
@@ -112,6 +142,11 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     [signal sendWithCompletion:^(NSError *error) {
         ILLOG( @"sent: %@", error );
     }];
+}
+
+- (void) confirmUpdate: (id)sender {
+    ILLOG( @"sender: %@", sender );
+
 }
 
 - (IBAction) showHelp: (id)sender {
