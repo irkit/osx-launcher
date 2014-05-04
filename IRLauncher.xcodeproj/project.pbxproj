@@ -29,6 +29,7 @@
 		C7647EB918ED5DD000171E7F /* IRHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB418ED5DD000171E7F /* IRHTTPClient.m */; };
 		C7647EBA18ED5DD000171E7F /* IRKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB618ED5DD000171E7F /* IRKit.m */; };
 		C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB818ED5DD000171E7F /* IRReachability.m */; };
+		C7704E8C1901172700EE32E0 /* ILUSBWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C7704E8B1901172700EE32E0 /* ILUSBWatcher.m */; };
 		C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* ILVersionChecker.m */; };
 		C7766FA4189A524800898267 /* ILLog.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* ILLog.m */; };
 		C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* ILMenu.m */; };
@@ -96,6 +97,8 @@
 		C7647EB618ED5DD000171E7F /* IRKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRKit.m; path = "../../ios-sdk/IRKit/IRKit/IRKit.m"; sourceTree = "<group>"; };
 		C7647EB718ED5DD000171E7F /* IRReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRReachability.h; path = "../../ios-sdk/IRKit/IRKit/IRReachability.h"; sourceTree = "<group>"; };
 		C7647EB818ED5DD000171E7F /* IRReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRReachability.m; path = "../../ios-sdk/IRKit/IRKit/IRReachability.m"; sourceTree = "<group>"; };
+		C7704E8A1901172700EE32E0 /* ILUSBWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUSBWatcher.h; sourceTree = "<group>"; };
+		C7704E8B1901172700EE32E0 /* ILUSBWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUSBWatcher.m; sourceTree = "<group>"; };
 		C7766F9F189A4F5300898267 /* ILVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILVersionChecker.h; sourceTree = "<group>"; };
 		C7766FA0189A4F5300898267 /* ILVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILVersionChecker.m; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* ILLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLog.h; sourceTree = "<group>"; };
@@ -218,6 +221,8 @@
 				C798A30C18FD3F9100C9994C /* ILFileStore.h */,
 				C798A30D18FD3F9100C9994C /* ILFileStore.m */,
 				C7965C2018FFB465004FF579 /* ILConst.h */,
+				C7704E8A1901172700EE32E0 /* ILUSBWatcher.h */,
+				C7704E8B1901172700EE32E0 /* ILUSBWatcher.m */,
 			);
 			path = IRLauncher;
 			sourceTree = "<group>";
@@ -461,6 +466,7 @@
 				C708913118FFA926007BC304 /* ILMenuCheckboxView.m in Sources */,
 				C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */,
 				C781848818ED5F1F007FB4E1 /* IRPeripherals.m in Sources */,
+				C7704E8C1901172700EE32E0 /* ILUSBWatcher.m in Sources */,
 				C7647EBA18ED5DD000171E7F /* IRKit.m in Sources */,
 				C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */,
 				C71F8C47189A015200298DFA /* main.m in Sources */,

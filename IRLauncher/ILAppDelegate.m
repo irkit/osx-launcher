@@ -17,6 +17,7 @@
 #import "ILMenuProgressView.h"
 #import "ILConst.h"
 #import "ILMenu.h"
+#import "ILUSBWatcher.h"
 
 const int kSignalTagOffset     = 1000;
 const int kPeripheralTagOffset = 100;
@@ -84,6 +85,16 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     [IRSearcher sharedInstance].delegate = self;
 
     [self.menu setUSBHeaderTitle: @"IRKits connected via USB (Searching...)" animating: YES];
+
+    [[ILUSBWatcher sharedInstance] startWatchingUSBMatchingPredicate: nil];
+    [[NSNotificationCenter defaultCenter] addObserverForName: kILUSBWatcherNotificationAdded object: nil queue: NULL usingBlock:^(NSNotification *note) {
+        NSDictionary *info = note.userInfo;
+        ILLOG( @"added USB: %@", info );
+    }];
+    [[NSNotificationCenter defaultCenter] addObserverForName: kILUSBWatcherNotificationRemoved object: nil queue: nil usingBlock:^(NSNotification *note) {
+        NSDictionary *info = note.userInfo;
+        ILLOG( @"removed USB: %@", info );
+    }];
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
