@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "icon_16x16.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "icn_device@2x.png"
+      "filename" : "icon_16x16@2x.png"
     }
   ],
   "info" : {

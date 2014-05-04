@@ -12,7 +12,7 @@
 
 - (void)drawRect:(NSRect)rect {
     [[NSColor clearColor] set];
-    NSImage *menuletIcon = [NSImage imageNamed: @"icn_device@2x.png"];
+    NSImage *menuletIcon = [NSImage imageNamed: @"StatusBarIcon"];
     [menuletIcon drawInRect: NSInsetRect(rect, 2, 2)
                    fromRect: NSZeroRect
                   operation: NSCompositeSourceOver
