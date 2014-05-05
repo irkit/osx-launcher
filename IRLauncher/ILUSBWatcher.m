@@ -88,6 +88,10 @@ static IONotificationPortRef gNotifyPort;
 static io_iterator_t gAddedIter;
 static CFRunLoopRef gRunLoop;
 
+static kern_return_t scanAndCreatePropertiesForServicesMatchingClassName( io_registry_entry_t service,
+                                                                          NSString *expectedClassName,
+                                                                          CFMutableDictionaryRef *properties );
+
 //================================================================================================
 //
 //	DeviceNotification
@@ -259,9 +263,63 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
              }];
         });
 
+        if ((privateDataRef->vendorID == 0x1D50) && (privateDataRef->productID == 0x6085)) {
+            CFMutableDictionaryRef properties = 0; // (needs release)
+            kr = scanAndCreatePropertiesForServicesMatchingClassName( usbDevice, @"IOModemSerialStreamSync", &properties );
+            ILLOG( @"  properties: %@", (__bridge NSMutableDictionary*)properties );
+            if (kr == KERN_SUCCESS) {
+                CFRelease(properties);
+            }
+        }
+
         // Done with this USB device; release the reference added by IOIteratorNext
         kr = IOObjectRelease(usbDevice);
     }
+}
+
+static kern_return_t scanAndCreatePropertiesForServicesMatchingClassName( io_registry_entry_t service,
+                                                                          NSString *expectedClassName,
+                                                                          CFMutableDictionaryRef *properties ) {
+
+    io_registry_entry_t child       = 0;
+    io_registry_entry_t childUpNext = 0;
+    io_iterator_t children          = 0;
+    kern_return_t status            = KERN_SUCCESS;
+
+    status = IORegistryEntryGetChildIterator(service, kIOServicePlane, &children);
+    if (status != KERN_SUCCESS) {
+        return status;
+    }
+
+    childUpNext = IOIteratorNext(children);
+
+    io_name_t class_;
+    status = IOObjectGetClass(service, class_);
+    NSString *classname = [NSString stringWithCString: class_ encoding: NSUTF8StringEncoding];
+    ILLOG( @"classname: %@", classname );
+
+    status = KERN_FAILURE; // set KERN_SUCCESS if found
+
+    if ([classname isEqualToString: expectedClassName]) {
+        status = IORegistryEntryCreateCFProperties( childUpNext,
+                                                    properties,
+                                                    kCFAllocatorDefault,
+                                                    kNilOptions );
+    }
+    else {
+        // Traverse over the children of this service, til scan returns SUCCESS
+        while (childUpNext && (status != KERN_SUCCESS)) {
+            child       = childUpNext;
+            childUpNext = IOIteratorNext(children);
+            status      = scanAndCreatePropertiesForServicesMatchingClassName( child, expectedClassName, properties );
+            IOObjectRelease(child);
+        }
+        if (childUpNext) {
+            IOObjectRelease(childUpNext);
+        }
+    }
+    IOObjectRelease(children);
+    return status;
 }
 
 @interface ILUSBWatcher ()
