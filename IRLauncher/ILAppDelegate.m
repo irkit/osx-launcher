@@ -118,9 +118,11 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
             NSString *title = [NSString stringWithFormat: @"%@ (%@)"
                                , [ILUtils chompedString: info[ kILUSBWatcherNotificationDeviceNameKey ]]
                                , peripheral.dialinDevice];
-            usbItem.title = title;
-            usbItem.target = _self;
-            usbItem.action = @selector(confirmUpdate:);
+            ILMenuButtonView *view = [ILUtils loadClassFromNib: [ILMenuButtonView class]];
+            view.delegate = _self;
+            [view.textField setStringValue: title];
+            view.button.title = @"Update Firmware";
+            usbItem.view = view;
             usbItem.tag = kUSBTagOffset + index;
             [_self.menu addUSBMenuItem: usbItem];
             [_self.menu setUSBHeaderTitle: @"IRKits connected via USB" animating: NO];
@@ -194,7 +196,7 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 #pragma mark - ILMenuButtonViewDelegate
 
 - (void) menuButtonView:(ILMenuButtonView *)view didPress: (id)sender {
-    ILLOG_CURRENT_METHOD;
+    ILLOG( @"sender: %@", sender );
 }
 
 #pragma mark - ILMenuDelegate

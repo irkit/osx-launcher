@@ -136,11 +136,11 @@ const NSInteger kTagQuicksilverIntegration = 50;
     }
 
     NSMenuItem *quicksilverIntegration = [self itemWithTag: kTagQuicksilverIntegration];
-    if (![quicksilverIntegration.view isKindOfClass: [ILMenuCheckboxView class]]) {
+    if (![quicksilverIntegration.view isKindOfClass: [ILMenuButtonView class]]) {
         ILMenuButtonView *view =[ILUtils loadClassFromNib: [ILMenuButtonView class]];
         view.delegate = self.buttonDelegate;
         [view.textField setStringValue: @"Quicksilver integration"];
-        [view.button setStringValue: @"Install"];
+        view.button.title           = @"Install";
         quicksilverIntegration.view = view;
     }
 
