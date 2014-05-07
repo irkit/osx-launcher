@@ -10,6 +10,7 @@
 
 @interface ILUtils : NSObject
 
++ (NSString*)chompedString: (NSString*)orig;
 + (NSView*)clonedViewOf:(NSView*)original;
 + (id)loadClassFromNib: (Class)class;
 + (id)firstObjectOf:(NSArray *)array meetsBlock:(BOOL (^)(id obj, NSUInteger idx))block;

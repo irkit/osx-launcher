@@ -14,6 +14,7 @@ extern NSString * const kILUSBWatcherNotificationDeviceNameKey;
 extern NSString * const kILUSBWatcherNotificationLocationIDKey;
 extern NSString * const kILUSBWatcherNotificationVendorIDKey;
 extern NSString * const kILUSBWatcherNotificationProductIDKey;
+extern NSString * const kILUSBWatcherNotificationDialinDeviceKey;
 
 @interface ILUSBWatcher : NSObject
 

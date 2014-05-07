@@ -24,10 +24,8 @@
 
 - (void)addSignalMenuItem: (NSMenuItem*)item;
 - (void)addPeripheralMenuItem: (NSMenuItem*)item;
-
-- (void)addUSBMenuItem: (NSMenuItem*)item withLocationId: (NSNumber*)locationId;
-- (void)removeUSBMenuItemWithLocationId:(NSNumber*)locationId;
-- (NSUInteger)numberOfUSBMenuItems;
+- (void)addUSBMenuItem: (NSMenuItem*)item;
+- (void)removeUSBMenuItemAtIndex: (NSUInteger)index;
 
 @end
 
