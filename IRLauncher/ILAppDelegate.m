@@ -18,6 +18,7 @@
 #import "ILConst.h"
 #import "ILMenu.h"
 #import "ILUSBWatcher.h"
+#import "ILUSBConnectedPeripheral.h"
 
 const int kSignalTagOffset     = 1000;
 const int kPeripheralTagOffset = 100;
@@ -25,10 +26,10 @@ const int kUSBTagOffset        = 200;
 static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
 #define kILUSBVendorIRKit     @0x1D50
-#define kILUSBProductLeonardo @0x8036
+#define kILUSBProductIRKit    @0x6085
 
 #define kILUSBVendorArduino   @0x2341
-#define kILUSBProductIRKit    @0x6085
+#define kILUSBProductLeonardo @0x8036
 
 @interface ILAppDelegate ()
 
@@ -36,6 +37,7 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 @property (nonatomic, strong) ILMenuletView *menuletView;
 @property (nonatomic, strong) ILMenu *menu;
 @property (nonatomic, strong) IRSignals *signals;
+@property (nonatomic, strong) NSMutableArray *usbConnectedPeripherals;
 
 @end
 
@@ -92,6 +94,7 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     [IRSearcher sharedInstance].delegate = self;
 
     [self.menu setUSBHeaderTitle: @"IRKits connected via USB (none found)" animating: NO];
+    self.usbConnectedPeripherals = @[].mutableCopy;
 
     [[ILUSBWatcher sharedInstance] startWatchingUSB];
     [[NSNotificationCenter defaultCenter] addObserverForName: kILUSBWatcherNotificationAdded
@@ -105,12 +108,23 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
               [info[ kILUSBWatcherNotificationProductIDKey ] isEqualToNumber: kILUSBProductIRKit]) ||
              ([info [kILUSBWatcherNotificationVendorIDKey ] isEqualToNumber: kILUSBVendorArduino] &&
               [info[ kILUSBWatcherNotificationProductIDKey ] isEqualToNumber: kILUSBProductLeonardo]) ) {
+            ILUSBConnectedPeripheral *peripheral = [[ILUSBConnectedPeripheral alloc] init];
+            peripheral.dialinDevice = info[ kILUSBWatcherNotificationDialinDeviceKey ];
+            peripheral.locationId = info[ kILUSBWatcherNotificationLocationIDKey ];
+            [_self.usbConnectedPeripherals addObject: peripheral];
+
+            NSUInteger index = [_self.usbConnectedPeripherals indexOfObject: peripheral];
             NSMenuItem *usbItem = [[NSMenuItem alloc] init];
-            usbItem.title  = info[ kILUSBWatcherNotificationDeviceNameKey ];
-            usbItem.target = _self;
-            usbItem.action = @selector(confirmUpdate:);
-            [_self.menu addUSBMenuItem: usbItem
-                        withLocationId: info[ kILUSBWatcherNotificationLocationIDKey ]];
+            NSString *title = [NSString stringWithFormat: @"%@ (%@)"
+                               , [ILUtils chompedString: info[ kILUSBWatcherNotificationDeviceNameKey ]]
+                               , peripheral.dialinDevice];
+            ILMenuButtonView *view = [ILUtils loadClassFromNib: [ILMenuButtonView class]];
+            view.delegate = _self;
+            [view.textField setStringValue: title];
+            view.button.title = @"Update Firmware";
+            usbItem.view = view;
+            usbItem.tag = kUSBTagOffset + index;
+            [_self.menu addUSBMenuItem: usbItem];
             [_self.menu setUSBHeaderTitle: @"IRKits connected via USB" animating: NO];
         }
     }];
@@ -120,8 +134,21 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
                                                   usingBlock:^(NSNotification *note) {
         NSDictionary *info = note.userInfo;
         ILLOG( @"removed USB: %@", info );
-        [_self.menu removeUSBMenuItemWithLocationId: info[ kILUSBWatcherNotificationLocationIDKey ]];
-        if ([_self.menu numberOfUSBMenuItems] == 0) {
+        NSNumber *locationId = info[ kILUSBWatcherNotificationLocationIDKey ];
+        ILUSBConnectedPeripheral *peripheral = (ILUSBConnectedPeripheral*)[ILUtils firstObjectOf: _self.usbConnectedPeripherals meetsBlock:^BOOL (id obj, NSUInteger idx) {
+                ILUSBConnectedPeripheral *p = obj;
+                if ([p.locationId isEqualToNumber: locationId]) {
+                    return YES;
+                }
+                return NO;
+            }];
+        if (!peripheral) {
+            return;
+        }
+        NSUInteger index = [_self.usbConnectedPeripherals indexOfObject: peripheral];
+        [_self.usbConnectedPeripherals removeObject: peripheral];
+        [_self.menu removeUSBMenuItemAtIndex: index];
+        if (_self.usbConnectedPeripherals.count == 0) {
             [_self.menu setUSBHeaderTitle: @"IRKits connected via USB (none found)" animating: NO];
         }
     }];
@@ -147,6 +174,9 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 - (void) confirmUpdate: (id)sender {
     ILLOG( @"sender: %@", sender );
 
+    NSUInteger peripheralIndex           = ((NSMenuItem*)sender).tag - kUSBTagOffset;
+    ILUSBConnectedPeripheral *peripheral = (ILUSBConnectedPeripheral*)[self.usbConnectedPeripherals objectAtIndex: peripheralIndex];
+    // TODO confirm
 }
 
 - (IBAction) showHelp: (id)sender {
@@ -166,7 +196,7 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 #pragma mark - ILMenuButtonViewDelegate
 
 - (void) menuButtonView:(ILMenuButtonView *)view didPress: (id)sender {
-    ILLOG_CURRENT_METHOD;
+    ILLOG( @"sender: %@", sender );
 }
 
 #pragma mark - ILMenuDelegate

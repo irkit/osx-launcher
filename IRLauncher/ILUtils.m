@@ -12,6 +12,10 @@
 
 @implementation ILUtils
 
++ (NSString*)chompedString: (NSString*)orig {
+    return [orig stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
 + (NSView*)clonedViewOf:(NSView*)original {
     NSData *data = [NSArchiver archivedDataWithRootObject: original];
     return [NSUnarchiver unarchiveObjectWithData: data];

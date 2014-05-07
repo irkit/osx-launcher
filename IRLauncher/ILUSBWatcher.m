@@ -67,13 +67,15 @@
 #include <IOKit/IOMessage.h>
 #include <IOKit/IOCFPlugIn.h>
 #include <IOKit/usb/IOUSBLib.h>
+#include <IOKit/serial/IOSerialKeys.h>
 
-NSString * const kILUSBWatcherNotificationAdded         = @"ILUSBWatcherAdded";
-NSString * const kILUSBWatcherNotificationRemoved       = @"ILUSBWatcherRemoved";
-NSString * const kILUSBWatcherNotificationDeviceNameKey = @"devicename";
-NSString * const kILUSBWatcherNotificationLocationIDKey = @"locationid";
-NSString * const kILUSBWatcherNotificationVendorIDKey   = @"vendorid";
-NSString * const kILUSBWatcherNotificationProductIDKey  = @"productid";
+NSString * const kILUSBWatcherNotificationAdded           = @"ILUSBWatcherAdded";
+NSString * const kILUSBWatcherNotificationRemoved         = @"ILUSBWatcherRemoved";
+NSString * const kILUSBWatcherNotificationDeviceNameKey   = @"devicename";
+NSString * const kILUSBWatcherNotificationLocationIDKey   = @"locationid";
+NSString * const kILUSBWatcherNotificationVendorIDKey     = @"vendorid";
+NSString * const kILUSBWatcherNotificationProductIDKey    = @"productid";
+NSString * const kILUSBWatcherNotificationDialinDeviceKey = @"dialindevice";
 
 typedef struct ILUSBData {
     io_object_t notification;
@@ -87,6 +89,9 @@ typedef struct ILUSBData {
 static IONotificationPortRef gNotifyPort;
 static io_iterator_t gAddedIter;
 static CFRunLoopRef gRunLoop;
+
+static NSDictionary* scanAndCreatePropertiesForServicesMatchingClassName( io_registry_entry_t service,
+                                                                          NSString *expectedClassName );
 
 //================================================================================================
 //
@@ -248,7 +253,11 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
             ILLOG( @"IOServiceAddInterestNotification returned 0x%08x.\n", kr);
         }
 
+        NSDictionary *properties = scanAndCreatePropertiesForServicesMatchingClassName( usbDevice, @"IOModemSerialStreamSync" );
+        ILLOG( @" properties: %@", properties );
+
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *dialindevice = properties[ @kIODialinDeviceKey ];
             [[NSNotificationCenter defaultCenter] postNotificationName: kILUSBWatcherNotificationAdded
                                                                 object: nil
                                                               userInfo: @{
@@ -256,12 +265,60 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
                  kILUSBWatcherNotificationLocationIDKey: [NSNumber numberWithUnsignedInt: privateDataRef->locationID],
                  kILUSBWatcherNotificationVendorIDKey:   [NSNumber numberWithUnsignedInt: privateDataRef->vendorID],
                  kILUSBWatcherNotificationProductIDKey:  [NSNumber numberWithUnsignedInt: privateDataRef->productID],
+                 kILUSBWatcherNotificationDialinDeviceKey: dialindevice ? dialindevice : [NSNull null],
              }];
         });
 
         // Done with this USB device; release the reference added by IOIteratorNext
         kr = IOObjectRelease(usbDevice);
     }
+}
+
+static NSDictionary* scanAndCreatePropertiesForServicesMatchingClassName( io_registry_entry_t service,
+                                                                          NSString *expectedClassName ) {
+
+    io_registry_entry_t child       = 0;
+    io_registry_entry_t childUpNext = 0;
+    io_iterator_t children          = 0;
+    kern_return_t status;
+    NSDictionary *ret;
+
+    status = IORegistryEntryGetChildIterator(service, kIOServicePlane, &children);
+    if (status != KERN_SUCCESS) {
+        return nil;
+    }
+
+    childUpNext = IOIteratorNext(children);
+
+    io_name_t class_;
+    status = IOObjectGetClass(service, class_);
+    NSString *classname = [NSString stringWithCString: class_ encoding: NSUTF8StringEncoding];
+    // ILLOG( @"classname: %@", classname );
+
+    if ([classname isEqualToString: expectedClassName]) {
+        CFMutableDictionaryRef properties;
+        status = IORegistryEntryCreateCFProperties( childUpNext,
+                                                    &properties,
+                                                    kCFAllocatorDefault,
+                                                    kNilOptions );
+        if (status == KERN_SUCCESS) {
+            ret = (__bridge_transfer NSDictionary*)properties;
+        }
+    }
+    else {
+        // Traverse over the children of this service, til scan returns SUCCESS
+        while (childUpNext && !ret) {
+            child       = childUpNext;
+            childUpNext = IOIteratorNext(children);
+            ret         = scanAndCreatePropertiesForServicesMatchingClassName( child, expectedClassName );
+            IOObjectRelease(child);
+        }
+        if (childUpNext) {
+            IOObjectRelease(childUpNext);
+        }
+    }
+    IOObjectRelease(children);
+    return ret;
 }
 
 @interface ILUSBWatcher ()

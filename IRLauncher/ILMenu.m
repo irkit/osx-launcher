@@ -22,8 +22,7 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
 @property (nonatomic) NSMutableArray *signalMenuItems;
 @property (nonatomic) NSMutableArray *peripheralMenuItems;
-@property (nonatomic) NSMutableDictionary *usbMenuItems;
-@property (nonatomic) NSMutableArray *usbMenuItemsOrders;
+@property (nonatomic) NSMutableArray *usbMenuItems;
 @property (nonatomic) BOOL isVisible;
 
 @end
@@ -38,8 +37,7 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
     _signalMenuItems     = @[].mutableCopy;
     _peripheralMenuItems = @[].mutableCopy;
-    _usbMenuItemsOrders  = @[].mutableCopy;
-    _usbMenuItems        = @{}.mutableCopy;
+    _usbMenuItems        = @[].mutableCopy;
 
     return self;
 }
@@ -74,28 +72,22 @@ const NSInteger kTagQuicksilverIntegration = 50;
     [self insertItem: item atIndex: index + self.numberOfPeripheralMenuItems];
 }
 
-- (void)addUSBMenuItem:(NSMenuItem *)item withLocationId:(NSNumber *)locationId {
-    self.usbMenuItems[ locationId ] = item;
-    [self.usbMenuItemsOrders addObject: item];
+- (void)addUSBMenuItem:(NSMenuItem *)item {
+    ILLOG( @"item: %@", item );
 
+    [_usbMenuItems addObject: item];
     NSUInteger index = [self indexOfItemWithTag: kTagUSB];
     [self insertItem: item atIndex: index + self.numberOfUSBMenuItems];
 }
 
-- (void)removeUSBMenuItemWithLocationId:(NSNumber *)locationId {
-    NSMenuItem *item = self.usbMenuItems[ locationId ];
+- (void)removeUSBMenuItemAtIndex: (NSUInteger)index {
+    NSMenuItem *item = self.usbMenuItems[ index ];
     if (!item) {
         return;
     }
 
-    [self.usbMenuItems removeObjectForKey: locationId];
-    [self.usbMenuItemsOrders removeObject: item];
-
+    [self.usbMenuItems removeObject: item];
     [self removeItem: item];
-}
-
-- (NSUInteger)numberOfUSBMenuItems {
-    return _usbMenuItemsOrders.count;
 }
 
 #pragma mark - Private
@@ -106,6 +98,10 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
 - (NSUInteger)numberOfPeripheralMenuItems {
     return _peripheralMenuItems.count;
+}
+
+- (NSUInteger)numberOfUSBMenuItems {
+    return _usbMenuItems.count;
 }
 
 - (void) setHeaderTitleWithTag: (NSUInteger)tag title:(NSString*)title animating:(BOOL)animating {
@@ -140,11 +136,11 @@ const NSInteger kTagQuicksilverIntegration = 50;
     }
 
     NSMenuItem *quicksilverIntegration = [self itemWithTag: kTagQuicksilverIntegration];
-    if (![quicksilverIntegration.view isKindOfClass: [ILMenuCheckboxView class]]) {
+    if (![quicksilverIntegration.view isKindOfClass: [ILMenuButtonView class]]) {
         ILMenuButtonView *view =[ILUtils loadClassFromNib: [ILMenuButtonView class]];
         view.delegate = self.buttonDelegate;
         [view.textField setStringValue: @"Quicksilver integration"];
-        [view.button setStringValue: @"Install"];
+        view.button.title           = @"Install";
         quicksilverIntegration.view = view;
     }
 
