@@ -7,6 +7,7 @@
 //
 
 #import "ILUtils.h"
+#import "ILLog.h"
 #import <AFNetworking/AFNetworking.h>
 #import "NSFileManager+DirectoryLocations.h"
 
@@ -14,11 +15,6 @@
 
 + (NSString*)chompedString: (NSString*)orig {
     return [orig stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-}
-
-+ (NSView*)clonedViewOf:(NSView*)original {
-    NSData *data = [NSArchiver archivedDataWithRootObject: original];
-    return [NSUnarchiver unarchiveObjectWithData: data];
 }
 
 + (id)loadClassFromNib: (Class)class {

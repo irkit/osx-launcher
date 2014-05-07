@@ -254,7 +254,7 @@ void DeviceAdded(void *refCon, io_iterator_t iterator){
         }
 
         NSDictionary *properties = scanAndCreatePropertiesForServicesMatchingClassName( usbDevice, @"IOModemSerialStreamSync" );
-        ILLOG( @" properties: %@", properties );
+        // ILLOG( @" properties: %@", properties );
 
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *dialindevice = properties[ @kIODialinDeviceKey ];

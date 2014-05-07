@@ -7,6 +7,7 @@
 //
 
 #import "ILMenuletView.h"
+#import "ILLog.h"
 
 @implementation ILMenuletView
 

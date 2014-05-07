@@ -7,6 +7,7 @@
 //
 
 #import "ILVersionChecker.h"
+#import "ILLog.h"
 #import <AFNetworking/AFNetworking.h>
 #import "ILConst.h"
 

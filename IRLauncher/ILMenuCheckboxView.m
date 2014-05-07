@@ -8,6 +8,13 @@
 
 #import "ILMenuCheckboxView.h"
 
+@interface ILMenuCheckboxView ()
+
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *alternateTitle;
+
+@end
+
 @implementation ILMenuCheckboxView
 
 - (id)initWithFrame:(NSRect)frame {
@@ -24,9 +31,35 @@
     // Drawing code here.
 }
 
+- (void)  setTitle:(NSString*)title
+    alternateTitle:(NSString*)alternateTitle
+            action:(void (^)(id sender, NSCellStateValue value))action {
+    self.title          = title;
+    self.alternateTitle = alternateTitle;
+    self.action         = action;
+}
+
+- (void) setState:(NSCellStateValue)state {
+    _state          = state;
+    _checkbox.state = state;
+    if (state == NSOnState) {
+        [_textField setStringValue: _alternateTitle];
+    }
+    else {
+        [_textField setStringValue: _title];
+    }
+}
+
 - (IBAction)checkboxTouched:(id)sender {
     BOOL value = self.checkbox.state == NSOnState;
     [self.delegate menuCheckboxView: self didTouchCheckbox: sender newValue: value];
+
+    if (self.delegate && [self.delegate respondsToSelector: @selector(menuCheckboxView:didTouchCheckbox:newValue:)]) {
+        [self.delegate menuCheckboxView: self didTouchCheckbox: sender newValue: value];
+    }
+    else if (self.action) {
+        self.action( self, value );
+    }
 }
 
 @end
