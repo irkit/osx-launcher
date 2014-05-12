@@ -44,6 +44,7 @@
 		C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C79AF43818FE5FA600814235 /* ILMenuProgressView.m */; };
 		C7B6934818EE63BA00DE7027 /* IRSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934718EE63BA00DE7027 /* IRSignals.m */; };
 		C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */; };
+		C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */; };
 		C7F6C493189A66B600A79261 /* ILUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6C492189A66B600A79261 /* ILUtils.m */; };
 /* End PBXBuildFile section */
 
@@ -133,6 +134,8 @@
 		C7B6934718EE63BA00DE7027 /* IRSignals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSignals.m; path = "../../ios-sdk/IRKit/IRKit/IRSignals.m"; sourceTree = "<group>"; };
 		C7B6934918EE647600DE7027 /* ILSignalsDirectorySearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSignalsDirectorySearcher.h; sourceTree = "<group>"; };
 		C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSignalsDirectorySearcher.m; sourceTree = "<group>"; };
+		C7B6C8C61920AB1B00C13F49 /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
+		C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
 		C7F6C491189A66B600A79261 /* ILUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUtils.h; sourceTree = "<group>"; };
 		C7F6C492189A66B600A79261 /* ILUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,6 +177,8 @@
 			children = (
 				C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */,
 				C71E8998189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.h */,
+				C7B6C8C61920AB1B00C13F49 /* NSString+UUID.h */,
+				C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -496,6 +501,7 @@
 				C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */,
 				C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */,
 				C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */,
+				C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */,
 				C75C537918FFBE42003C397F /* ILMenuButtonView.m in Sources */,
 				C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */,
 				C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */,

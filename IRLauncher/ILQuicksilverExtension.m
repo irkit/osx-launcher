@@ -9,6 +9,7 @@
 #import "ILQuicksilverExtension.h"
 #import "ILLog.h"
 #import "ILUtils.h"
+#import "NSString+UUID.h"
 
 NSString * const kSignalsPath = @"~/.irkit.d/signals";
 
@@ -38,19 +39,76 @@ NSString * const kSignalsPath = @"~/.irkit.d/signals";
     if ([self isCatalogInstalled]) {
         return;
     }
-    NSURL *catalogPath = [self quicksilverCatalogPath];
-    id catalog         = [[NSDictionary alloc] initWithContentsOfURL: catalogPath];
+    NSURL *catalogPath           = [self quicksilverCatalogPath];
+    NSMutableDictionary *catalog = [[NSMutableDictionary alloc] initWithContentsOfURL: catalogPath];
     ILLOG( @"catalog: %@", catalog );
+
+    if (!catalog[ @"customEntries" ]) {
+        catalog[ @"customEntries" ] = @[];
+    }
+    NSMutableArray *customEntries = ((NSArray*)catalog[ @"customEntries" ]).mutableCopy;
+    BOOL modified                 = NO;
+    for (NSUInteger i=0,len=customEntries.count; i<len; i++) {
+        NSDictionary *entry = customEntries[ i ];
+        if ([entry[ @"settings" ][ @"path" ] isEqualToString: kSignalsPath]) {
+            NSMutableDictionary *mutableEntry = entry.mutableCopy;
+            mutableEntry[ @"enabled" ] = @YES;
+            customEntries[ i ]         = mutableEntry;
+            modified                   = YES;
+        }
+    }
+    if (!modified) {
+        NSDictionary *entry = @{
+            @"ID": [NSString uniqueString], // this is how Quicksilver sets IDs; see QSCatalogEntry.m -(NSString*)identifier
+            @"enabled":  @YES,
+            @"name":     @"~/.irkit.d/signals",
+            @"settings": @{
+                @"parser":   @"QSDirectoryParser",
+                @"path":     @"~/.irkit.d/signals",
+                @"skipItem": @YES,
+            },
+            @"source":   @"QSFileSystemObjectSource",
+        };
+        [customEntries addObject: entry];
+    }
+    catalog[ @"customEntries" ] = customEntries;
+    BOOL success = [catalog writeToURL: catalogPath atomically: YES];
+    if (!success) {
+        ILLOG( @"failed to write to %@", catalogPath );
+    }
+}
+
+- (void) uninstallCatalog {
+    if (![self isCatalogInstalled]) {
+        return;
+    }
+    NSURL *catalogPath            = [self quicksilverCatalogPath];
+    NSMutableDictionary *catalog  = [[NSMutableDictionary alloc] initWithContentsOfURL: catalogPath];
+    BOOL modified                 = NO;
+    NSMutableArray *customEntries = ((NSArray*)catalog[ @"customEntries" ]).mutableCopy;
+    for (NSUInteger i=0,len=customEntries.count; i<len; i++) {
+        NSDictionary *entry = customEntries[ i ];
+        if ([entry[ @"settings" ][ @"path" ] isEqualToString: kSignalsPath] &&
+            [entry[ @"enabled" ] boolValue]) {
+            NSMutableDictionary *mutableEntry = entry.mutableCopy;
+            mutableEntry[ @"enabled" ] = @NO;
+            customEntries[ i ]         = mutableEntry;
+            modified                   = YES;
+        }
+    }
+    if (modified) {
+        catalog[ @"customEntries" ] = customEntries;
+        BOOL success = [catalog writeToURL: catalogPath atomically: YES];
+        if (!success) {
+            ILLOG( @"failed to write to %@", catalogPath );
+        }
+    }
 }
 
 - (void) installAction {
     if ([self isActionInstalled]) {
         return;
     }
-}
-
-- (void) uninstallCatalog {
-    // TODO
 }
 
 - (void) uninstallAction {
@@ -64,16 +122,13 @@ NSString * const kSignalsPath = @"~/.irkit.d/signals";
         return NO;
     }
     NSDictionary *entry = [ILUtils firstObjectOf: catalog[ @"customEntries" ]
-                                      meetsBlock: ^BOOL (id obj, NSUInteger idx) {
+                                      meetsBlock: ^BOOL (NSDictionary *obj, NSUInteger idx) {
         NSString *path = obj[ @"settings" ][ @"path" ];
         if ([path isEqualToString: kSignalsPath]) {
             return YES;
         }
         return NO;
     }];
-    if (!entry) {
-        return NO;
-    }
     if ([entry[ @"enabled" ] boolValue]) {
         return YES;
     }

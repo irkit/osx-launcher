@@ -63,16 +63,42 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
                                        action:^(id sender, NSCellStateValue _) {
         ILLOG( @"sender: %@ value: %d", sender, _ );
         if ([[[ILQuicksilverExtension alloc] init] installed]) {
-            [_self showConfirmToUninstall:^(NSModalResponse returnCode) {
+            [_self showConfirmToUninstall:^(NSInteger returnCode) {
                     if (returnCode == NSAlertFirstButtonReturn) {
                         [[[ILQuicksilverExtension alloc] init] uninstall];
+                        [_self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
                     }
                 }];
         }
         else {
-            [_self showConfirmToInstall:^(NSModalResponse returnCode) {
+            [_self showConfirmToInstall:^(NSInteger returnCode) {
                     if (returnCode == NSAlertFirstButtonReturn) {
                         [[[ILQuicksilverExtension alloc] init] install];
+                        [_self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
+                        NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
+                        if (quicksilvers.count) {
+                            [_self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
+                                    NSRunningApplication *q = quicksilvers[ 0 ];
+                                    BOOL success = [q terminate];
+                                    if (!success) {
+                                        ILLOG( @"failed to terminate quicksilver" );
+                                    }
+                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                            NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
+                                            if (quicksilvers.count) {
+                                                ILLOG( @"failed to terminate quicksilver" );
+                                                return;
+                                            }
+                                            BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.blacktree.Quicksilver"
+                                                                                                                options: NSWorkspaceLaunchDefault
+                                                                                         additionalEventParamDescriptor: NULL
+                                                                                                       launchIdentifier: NULL];
+                                            if (!success) {
+                                                ILLOG( @"failed to launch quicksilver" );
+                                            }
+                                        });
+                                }];
+                        }
                     }
                 }];
         }
@@ -202,24 +228,37 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
 #pragma mark - Private confirm methods
 
-- (void) showConfirmToInstall:(void (^)(NSModalResponse returnCode))callback {
+- (void) showConfirmToInstall:(void (^)(NSInteger returnCode))callback {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle: @"OK"]; // right most : NSAlertFirstButtonReturn
     [alert addButtonWithTitle: @"Cancel"]; // 2nd to right : NSAlertSecondButtonReturn
     [alert setMessageText: @"Install Quicksilver Plugin?"];
     [alert setInformativeText: @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths."];
     [alert setAlertStyle: NSWarningAlertStyle];
+    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     NSInteger ret = [alert runModal];
     callback( ret );
 }
 
-- (void) showConfirmToUninstall:(void (^)(NSModalResponse returnCode))callback {
+- (void) showConfirmToUninstall:(void (^)(NSInteger returnCode))callback {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle: @"OK"];
     [alert addButtonWithTitle: @"Cancel"];
     [alert setMessageText: @"Uninstall Quicksilver Plugin?"];
     [alert setInformativeText: @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and remove IRLauncher related entries from it."];
     [alert setAlertStyle: NSWarningAlertStyle];
+    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
+    NSInteger ret = [alert runModal];
+    callback( ret );
+}
+
+- (void) showConfirmToRelaunchQuicksilver:(void (^)(NSInteger returnCode))callback {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle: @"OK"];
+    [alert addButtonWithTitle: @"Cancel"];
+    [alert setMessageText: @"Relaunch Quicksilver?"];
+    [alert setAlertStyle: NSWarningAlertStyle];
+    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     NSInteger ret = [alert runModal];
     callback( ret );
 }
