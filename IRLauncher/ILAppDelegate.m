@@ -46,6 +46,11 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 @implementation ILAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    ILLOG_CURRENT_METHOD;
+
+    NSArray *args = [[NSProcessInfo processInfo] arguments];
+    ILLOG( @"args: %@", args );
+
     __weak typeof(self) _self = self;
     CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
 
