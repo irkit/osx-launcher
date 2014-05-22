@@ -6,6 +6,8 @@
 //  Copyright (c) 2014年 Masakazu Ohtsuka. All rights reserved.
 //
 
+#define ILLOG_DISABLED 1
+
 #import "ILMenuProgressView.h"
 #import "ILLog.h"
 

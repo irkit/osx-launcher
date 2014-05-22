@@ -7,6 +7,10 @@
 //
 
 #import "ILMenu.h"
+
+#define ILLOG_DISABLED 1
+
+#import "ILLog.h"
 #import "ILMenuProgressView.h"
 #import "ILMenuCheckboxView.h"
 #import "ILMenuButtonView.h"
@@ -30,6 +34,7 @@ const NSInteger kTagQuicksilverIntegration = 50;
 @implementation ILMenu
 
 - (instancetype) initWithCoder:(NSCoder *)aDecoder {
+    ILLOG_CURRENT_METHOD;
     self = [super initWithCoder: aDecoder];
     if (!self) { return nil; }
 
@@ -52,6 +57,52 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
 - (void)setUSBHeaderTitle:(NSString*)title animating:(BOOL)animating {
     [self setHeaderTitleWithTag: kTagUSB title: title animating: animating];
+}
+
+- (void)setQuicksilverIntegrationTitle:(NSString*)title
+                        alternateTitle:(NSString*)alternateTitle
+                           buttonTitle:(NSString*)buttonTitle
+                  alternateButtonTitle:(NSString*)alternateButtonTitle
+                                action:(void (^)(id sender, NSCellStateValue value))action {
+    NSMenuItem *quicksilverIntegration = [self itemWithTag: kTagQuicksilverIntegration];
+    ILMenuButtonView *view             = (ILMenuButtonView*)quicksilverIntegration.view;
+    if (![view isKindOfClass: [ILMenuButtonView class]]) {
+        view                        = [ILUtils loadClassFromNib: [ILMenuButtonView class]];
+        quicksilverIntegration.view = view;
+    }
+
+    [view setTitle: title
+           alternateTitle: alternateTitle
+              buttonTitle: buttonTitle
+     alternateButtonTitle: alternateButtonTitle
+                   action: action];
+}
+
+- (void)setQuicksilverIntegrationButtonState:(NSCellStateValue)state {
+    NSMenuItem *quicksilverIntegration = [self itemWithTag: kTagQuicksilverIntegration];
+    ILMenuButtonView *view             = (ILMenuButtonView*)quicksilverIntegration.view;
+    view.state = state;
+}
+
+- (void)setStartAtLoginTitle:(NSString*)title
+              alternateTitle:(NSString*)alternateTitle
+                      action:(void (^)(id sender, NSCellStateValue value))action {
+    NSMenuItem *startAtLogin = [self itemWithTag: kTagStartAtLoginCheckbox];
+    ILMenuCheckboxView *view = (ILMenuCheckboxView*)startAtLogin.view;
+    if (![view isKindOfClass: [ILMenuCheckboxView class]]) {
+        view              =[ILUtils loadClassFromNib: [ILMenuCheckboxView class]];
+        startAtLogin.view = view;
+    }
+
+    [view setTitle: title
+     alternateTitle: alternateTitle
+             action: action];
+}
+
+- (void)setStartAtLoginState:(NSCellStateValue)state {
+    NSMenuItem *startAtLogin = [self itemWithTag: kTagStartAtLoginCheckbox];
+    ILMenuCheckboxView *view = (ILMenuCheckboxView*)startAtLogin.view;
+    view.state = state;
 }
 
 - (void)addSignalMenuItem:(NSMenuItem *)item {
@@ -126,23 +177,6 @@ const NSInteger kTagQuicksilverIntegration = 50;
     [items enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
         [(ILMenuProgressView*)item.view startAnimationIfNeeded];
     }];
-
-    NSMenuItem *startAtLogin = [self itemWithTag: kTagStartAtLoginCheckbox];
-    if (![startAtLogin.view isKindOfClass: [ILMenuCheckboxView class]]) {
-        ILMenuCheckboxView *view =[ILUtils loadClassFromNib: [ILMenuCheckboxView class]];
-        view.delegate = self.checkboxDelegate;
-        [view.textField setStringValue: @"Start at login"];
-        startAtLogin.view = view;
-    }
-
-    NSMenuItem *quicksilverIntegration = [self itemWithTag: kTagQuicksilverIntegration];
-    if (![quicksilverIntegration.view isKindOfClass: [ILMenuButtonView class]]) {
-        ILMenuButtonView *view =[ILUtils loadClassFromNib: [ILMenuButtonView class]];
-        view.delegate = self.buttonDelegate;
-        [view.textField setStringValue: @"Quicksilver integration"];
-        view.button.title           = @"Install";
-        quicksilverIntegration.view = view;
-    }
 
     [self.menuDelegate menuWillOpen: self];
 }

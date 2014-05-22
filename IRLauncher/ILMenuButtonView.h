@@ -15,14 +15,21 @@
 @property (nonatomic, weak) IBOutlet NSButton *button;
 @property (nonatomic, weak) IBOutlet NSTextField *textField;
 @property (nonatomic, weak) id <ILMenuButtonViewDelegate> delegate;
+@property (nonatomic, copy) void (^action)(id sender, NSCellStateValue value);
+@property (nonatomic) NSCellStateValue state;
 
+- (void)        setTitle:(NSString*)title
+          alternateTitle:(NSString*)alternateTitle
+             buttonTitle:(NSString*)buttonTitle
+    alternateButtonTitle:(NSString*)alternateButtonTitle
+                  action:(void (^)(id sender, NSCellStateValue value))action;
 - (IBAction)pressed:(id)sender;
 
 @end
 
 @protocol ILMenuButtonViewDelegate <NSObject>
 
-@required
+@optional
 - (void)menuButtonView:(ILMenuButtonView*)view didPress:(id)sender;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ILSignalsDirectorySearcher.h"
+#import "ILLog.h"
 
 @implementation ILSignalsDirectorySearcher
 

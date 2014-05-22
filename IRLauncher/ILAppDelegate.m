@@ -7,6 +7,7 @@
 //
 
 #import "ILAppDelegate.h"
+#import "ILLog.h"
 #import "ILMenuletView.h"
 #import "ILVersionChecker.h"
 #import "ILUtils.h"
@@ -19,6 +20,7 @@
 #import "ILMenu.h"
 #import "ILUSBWatcher.h"
 #import "ILUSBConnectedPeripheral.h"
+#import "ILQuicksilverExtension.h"
 
 const int kSignalTagOffset     = 1000;
 const int kPeripheralTagOffset = 100;
@@ -44,6 +46,11 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 @implementation ILAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    ILLOG_CURRENT_METHOD;
+
+    NSArray *args = [[NSProcessInfo processInfo] arguments];
+    ILLOG( @"args: %@", args );
+
     __weak typeof(self) _self = self;
     CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
 
@@ -53,8 +60,69 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
     self.menu                  = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
     self.menu.checkboxDelegate = self;
-    self.menu.buttonDelegate   = self;
     self.menu.menuDelegate     = self;
+    [self.menu setQuicksilverIntegrationTitle: @"Quicksilver Integration"
+                               alternateTitle: @"Quicksilver Integration (Installed)"
+                                  buttonTitle: @"Install"
+                         alternateButtonTitle: @"Uninstall"
+                                       action:^(id sender, NSCellStateValue _) {
+        ILLOG( @"sender: %@ value: %d", sender, _ );
+        if ([[[ILQuicksilverExtension alloc] init] installed]) {
+            [_self showConfirmToUninstall:^(NSInteger returnCode) {
+                    if (returnCode == NSAlertFirstButtonReturn) {
+                        [[[ILQuicksilverExtension alloc] init] uninstall];
+                        [_self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
+                    }
+                }];
+        }
+        else {
+            [_self showConfirmToInstall:^(NSInteger returnCode) {
+                    if (returnCode == NSAlertFirstButtonReturn) {
+                        [[[ILQuicksilverExtension alloc] init] install];
+                        [_self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
+                        NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
+                        if (quicksilvers.count) {
+                            [_self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
+                                    NSRunningApplication *q = quicksilvers[ 0 ];
+                                    BOOL success = [q terminate];
+                                    if (!success) {
+                                        ILLOG( @"failed to terminate quicksilver" );
+                                    }
+                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                            NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
+                                            if (quicksilvers.count) {
+                                                ILLOG( @"failed to terminate quicksilver" );
+                                                return;
+                                            }
+                                            BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.blacktree.Quicksilver"
+                                                                                                                options: NSWorkspaceLaunchDefault
+                                                                                         additionalEventParamDescriptor: NULL
+                                                                                                       launchIdentifier: NULL];
+                                            if (!success) {
+                                                ILLOG( @"failed to launch quicksilver" );
+                                            }
+                                        });
+                                }];
+                        }
+                    }
+                }];
+        }
+    }];
+    [self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
+
+    [self.menu setStartAtLoginTitle: @"Start at Login"
+                     alternateTitle: @"Start at Login"
+                             action:^(id sender, NSCellStateValue value) {
+        ILLOG( @"sender: %@ value: %d", sender, value );
+        if (value) {
+            // value: 1 : off -> on
+
+        }
+        else {
+            // value: 0 : on -> off
+        }
+    }];
+    [self.menu setStartAtLoginState: NSOnState];
 
     self.menuletView      = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
     self.menuletView.menu = self.menu;
@@ -93,7 +161,7 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
     [IRSearcher sharedInstance].delegate = self;
 
-    [self.menu setUSBHeaderTitle: @"IRKits connected via USB (none found)" animating: NO];
+    [self.menu setUSBHeaderTitle: @"Connect IRKit via USB to update firmware" animating: NO];
     self.usbConnectedPeripherals = @[].mutableCopy;
 
     [[ILUSBWatcher sharedInstance] startWatchingUSB];
@@ -102,7 +170,7 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
                                                        queue: NULL
                                                   usingBlock:^(NSNotification *note) {
         NSDictionary *info = note.userInfo;
-        ILLOG( @"added USB: %@", info );
+        // ILLOG( @"added USB: %@", info );
 
         if ( ([info[ kILUSBWatcherNotificationVendorIDKey ] isEqualToNumber: kILUSBVendorIRKit] &&
               [info[ kILUSBWatcherNotificationProductIDKey ] isEqualToNumber: kILUSBProductIRKit]) ||
@@ -119,9 +187,13 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
                                , [ILUtils chompedString: info[ kILUSBWatcherNotificationDeviceNameKey ]]
                                , peripheral.dialinDevice];
             ILMenuButtonView *view = [ILUtils loadClassFromNib: [ILMenuButtonView class]];
-            view.delegate = _self;
-            [view.textField setStringValue: title];
-            view.button.title = @"Update Firmware";
+            [view setTitle: title
+                   alternateTitle: title
+                      buttonTitle: @"Update Firmware"
+             alternateButtonTitle: @"Update Firmware"
+                           action:^(id sender, NSCellStateValue value) {
+                    ILLOG( @"will update %@", title );
+                }];
             usbItem.view = view;
             usbItem.tag = kUSBTagOffset + index;
             [_self.menu addUSBMenuItem: usbItem];
@@ -159,6 +231,43 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
 }
 
+#pragma mark - Private confirm methods
+
+- (void) showConfirmToInstall:(void (^)(NSInteger returnCode))callback {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle: @"OK"]; // right most : NSAlertFirstButtonReturn
+    [alert addButtonWithTitle: @"Cancel"]; // 2nd to right : NSAlertSecondButtonReturn
+    [alert setMessageText: @"Install Quicksilver Plugin?"];
+    [alert setInformativeText: @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths."];
+    [alert setAlertStyle: NSWarningAlertStyle];
+    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
+    NSInteger ret = [alert runModal];
+    callback( ret );
+}
+
+- (void) showConfirmToUninstall:(void (^)(NSInteger returnCode))callback {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle: @"OK"];
+    [alert addButtonWithTitle: @"Cancel"];
+    [alert setMessageText: @"Uninstall Quicksilver Plugin?"];
+    [alert setInformativeText: @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and remove IRLauncher related entries from it."];
+    [alert setAlertStyle: NSWarningAlertStyle];
+    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
+    NSInteger ret = [alert runModal];
+    callback( ret );
+}
+
+- (void) showConfirmToRelaunchQuicksilver:(void (^)(NSInteger returnCode))callback {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle: @"OK"];
+    [alert addButtonWithTitle: @"Cancel"];
+    [alert setMessageText: @"Relaunch Quicksilver?"];
+    [alert setAlertStyle: NSWarningAlertStyle];
+    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
+    NSInteger ret = [alert runModal];
+    callback( ret );
+}
+
 #pragma mark - NSMenuItem actions
 
 - (void) send: (id)sender {
@@ -169,14 +278,6 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
     [signal sendWithCompletion:^(NSError *error) {
         ILLOG( @"sent: %@", error );
     }];
-}
-
-- (void) confirmUpdate: (id)sender {
-    ILLOG( @"sender: %@", sender );
-
-    NSUInteger peripheralIndex           = ((NSMenuItem*)sender).tag - kUSBTagOffset;
-    ILUSBConnectedPeripheral *peripheral = (ILUSBConnectedPeripheral*)[self.usbConnectedPeripherals objectAtIndex: peripheralIndex];
-    // TODO confirm
 }
 
 - (IBAction) showHelp: (id)sender {
@@ -191,12 +292,6 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 
 - (void) menuCheckboxView:(ILMenuCheckboxView *)view didTouchCheckbox:(id)sender newValue:(BOOL)onoff {
     ILLOG( @"value: %d", onoff );
-}
-
-#pragma mark - ILMenuButtonViewDelegate
-
-- (void) menuButtonView:(ILMenuButtonView *)view didPress: (id)sender {
-    ILLOG( @"sender: %@", sender );
 }
 
 #pragma mark - ILMenuDelegate

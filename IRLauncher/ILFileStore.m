@@ -7,6 +7,9 @@
 //
 
 #import "ILFileStore.h"
+
+#define ILLOG_DISABLED 1
+
 #import "ILLog.h"
 
 @implementation ILFileStore
