@@ -21,11 +21,13 @@
 #import "ILUSBWatcher.h"
 #import "ILUSBConnectedPeripheral.h"
 #import "ILQuicksilverExtension.h"
+#import "ILSender.h"
 
-const int kSignalTagOffset     = 1000;
-const int kPeripheralTagOffset = 100;
-const int kUSBTagOffset        = 200;
-static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
+const int kSignalTagOffset                             = 1000;
+const int kPeripheralTagOffset                         = 100;
+const int kUSBTagOffset                                = 200;
+static NSString * const kIRKitAPIKey                   = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
+static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.send";
 
 #define kILUSBVendorIRKit     @0x1D50
 #define kILUSBProductIRKit    @0x6085
@@ -48,17 +50,28 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     ILLOG_CURRENT_METHOD;
 
-    NSArray *args          = [[NSProcessInfo processInfo] arguments];
-    NSString *lastArgument = args.lastObject;
-    if ([lastArgument hasPrefix: @"/"] && [[NSFileManager defaultManager] fileExistsAtPath: lastArgument]) {
-        // parse JSON file and send it
-        // [[[ILSender alloc] init] sendFileAtPath: lastArgument];
-
-        // quit if there's already an instance of our app living
-        if ([[NSRunningApplication runningApplicationsWithBundleIdentifier: [[NSBundle mainBundle] bundleIdentifier]] count] > 1) {
+    NSArray *args = [[NSProcessInfo processInfo] arguments];
+    ILLOG( @"args: %@", args );
+    NSString *lastArgument   = (args.count > 1) ? args.lastObject : nil;
+    BOOL isDuplicateInstance = [[NSRunningApplication runningApplicationsWithBundleIdentifier: [[NSBundle mainBundle] bundleIdentifier]] count] > 1;
+    if (lastArgument) {
+        if (isDuplicateInstance) {
+            ILLOG( @"found duplicate, send over to living app" );
+            [self postDistributedNotificationToSendFileAtPath: lastArgument];
             [NSApp terminate: nil];
+            return;
+        }
+        else {
+            // do it by myself
+            [self performSelector: @selector(postDistributedNotificationToSendFileAtPath:)
+                       withObject: lastArgument
+                       afterDelay: 0.1];
         }
     }
+    [[NSDistributedNotificationCenter defaultCenter] addObserver: self
+                                                        selector: @selector(receivedDistributedNotification:)
+                                                            name: nil
+                                                          object: nil];
 
     __weak typeof(self) _self = self;
     CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
@@ -238,6 +251,45 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
     ILLOG( @"hostname: %@ newVersion: %@ currentVersion: %@", hostname, newVersion, currentVersion);
 
+}
+
+#pragma mark - NSDistributedNotification related
+
+- (void)postDistributedNotificationToSendFileAtPath: (NSString*)path {
+    [[NSDistributedNotificationCenter defaultCenter] postNotificationName: kILDistributedNotificationName
+                                                                   object: [[NSBundle mainBundle] bundleIdentifier]
+                                                                 userInfo: @{ @"path": path }
+                                                       deliverImmediately: YES];
+}
+
+- (void)receivedDistributedNotification:(NSNotification*)notification {
+    // ILLOG( @"sender: %@", notification );
+    if ([notification.name isEqualToString: kILDistributedNotificationName]) {
+        NSString *path = notification.userInfo[ @"path" ];
+        ILLOG( @"will send: %@", path );
+        [[[ILSender alloc] init] sendFileAtPath: path completion:^(NSError *error) {
+            ILLOG( @"error: %@", error );
+
+            NSString *message;
+            switch (error.code) {
+            case IRLauncherErrorCodeInvalidFile:
+                message = [NSString stringWithFormat: @"Failed to load file: %@", path];
+                break;
+            case IRLauncherErrorCodeUnsupported:
+                message = @"Unsupported file format";
+                break;
+            default:
+                message = [NSString stringWithFormat: @"Failed to send file: %@ with error: %@", path, error];
+                break;
+            }
+
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert addButtonWithTitle: @"OK"];
+            [alert setMessageText: message];
+            [alert setAlertStyle: NSWarningAlertStyle];
+            [alert runModal];
+        }];
+    }
 }
 
 #pragma mark - Private confirm methods

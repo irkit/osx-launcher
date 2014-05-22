@@ -17,6 +17,8 @@
 #define IRKitErrorDomainHTTP                                  @"irkit.http"
 #define IRLauncherErrorDomain                                 IRKitErrorDomain
 #define IRLauncherErrorCodeInvalidTag                         1
+#define IRLauncherErrorCodeUnsupported                        2
+#define IRLauncherErrorCodeInvalidFile                        3
 
 #define IRKitHTTPStatusCodeUnknown                            999
 
