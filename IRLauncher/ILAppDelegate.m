@@ -48,8 +48,17 @@ static NSString *kIRKitAPIKey  = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     ILLOG_CURRENT_METHOD;
 
-    NSArray *args = [[NSProcessInfo processInfo] arguments];
-    ILLOG( @"args: %@", args );
+    NSArray *args          = [[NSProcessInfo processInfo] arguments];
+    NSString *lastArgument = args.lastObject;
+    if ([lastArgument hasPrefix: @"/"] && [[NSFileManager defaultManager] fileExistsAtPath: lastArgument]) {
+        // parse JSON file and send it
+        // [[[ILSender alloc] init] sendFileAtPath: lastArgument];
+
+        // quit if there's already an instance of our app living
+        if ([[NSRunningApplication runningApplicationsWithBundleIdentifier: [[NSBundle mainBundle] bundleIdentifier]] count] > 1) {
+            [NSApp terminate: nil];
+        }
+    }
 
     __weak typeof(self) _self = self;
     CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
