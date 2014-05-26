@@ -155,15 +155,13 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
     self.menuletView.statusItem = self.item;
 
-    NSString *signalsDirectory = [NSHomeDirectory() stringByAppendingPathComponent: @".irkit.d/signals"];
-    NSURL *signalsURL          = [NSURL fileURLWithPath: signalsDirectory];
-
     self.signals = [[IRSignals alloc] init];
 
     [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
-    [ILSignalsDirectorySearcher findSignalsUnderDirectory: signalsURL completion:^(NSArray *foundSignals) {
+    [ILSignalsDirectorySearcher findSignalsUnderDirectory: [NSURL fileURLWithPath: [ILFileStore signalsDirectory]]
+                                               completion: ^(NSArray *foundSignals) {
         [_self.menu setSignalHeaderTitle: @"Signals" animating: NO];
-        [foundSignals enumerateObjectsUsingBlock:^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
+        [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
                 IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
                 [_self.signals addSignalsObject: signal];
 
@@ -190,7 +188,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     [[NSNotificationCenter defaultCenter] addObserverForName: kILUSBWatcherNotificationAdded
                                                       object: nil
                                                        queue: NULL
-                                                  usingBlock:^(NSNotification *note) {
+                                                  usingBlock: ^(NSNotification *note) {
         NSDictionary *info = note.userInfo;
         // ILLOG( @"added USB: %@", info );
 

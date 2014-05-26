@@ -27,5 +27,4 @@
 #define STATICENDPOINT_BASE                                   @"http://getirkit.com"
 #define APIENDPOINT_BASE                                      @"https://api.getirkit.com"
 
-
 #endif

@@ -10,8 +10,7 @@
 #import "ILLog.h"
 #import "ILUtils.h"
 #import "NSString+UUID.h"
-
-NSString * const kSignalsPath = @"~/.irkit.d/signals";
+#import "ILFileStore.h"
 
 @implementation ILQuicksilverExtension
 
@@ -50,7 +49,7 @@ NSString * const kSignalsPath = @"~/.irkit.d/signals";
     BOOL modified                 = NO;
     for (NSUInteger i=0,len=customEntries.count; i<len; i++) {
         NSDictionary *entry = customEntries[ i ];
-        if ([entry[ @"settings" ][ @"path" ] isEqualToString: kSignalsPath]) {
+        if ([entry[ @"settings" ][ @"path" ] isEqualToString: [ILFileStore signalsDirectory]]) {
             NSMutableDictionary *mutableEntry = entry.mutableCopy;
             mutableEntry[ @"enabled" ] = @YES;
             customEntries[ i ]         = mutableEntry;
@@ -61,10 +60,10 @@ NSString * const kSignalsPath = @"~/.irkit.d/signals";
         NSDictionary *entry = @{
             @"ID": [NSString uniqueString], // this is how Quicksilver sets IDs; see QSCatalogEntry.m -(NSString*)identifier
             @"enabled":  @YES,
-            @"name":     @"~/.irkit.d/signals",
+            @"name":     [ILFileStore signalsDirectory],
             @"settings": @{
                 @"parser":   @"QSDirectoryParser",
-                @"path":     @"~/.irkit.d/signals",
+                @"path":     [ILFileStore signalsDirectory],
                 @"skipItem": @YES,
             },
             @"source":   @"QSFileSystemObjectSource",
@@ -88,7 +87,7 @@ NSString * const kSignalsPath = @"~/.irkit.d/signals";
     NSMutableArray *customEntries = ((NSArray*)catalog[ @"customEntries" ]).mutableCopy;
     for (NSUInteger i=0,len=customEntries.count; i<len; i++) {
         NSDictionary *entry = customEntries[ i ];
-        if ([entry[ @"settings" ][ @"path" ] isEqualToString: kSignalsPath] &&
+        if ([entry[ @"settings" ][ @"path" ] isEqualToString: [ILFileStore signalsDirectory]] &&
             [entry[ @"enabled" ] boolValue]) {
             NSMutableDictionary *mutableEntry = entry.mutableCopy;
             mutableEntry[ @"enabled" ] = @NO;
@@ -124,7 +123,7 @@ NSString * const kSignalsPath = @"~/.irkit.d/signals";
     NSDictionary *entry = [ILUtils firstObjectOf: catalog[ @"customEntries" ]
                                       meetsBlock: ^BOOL (NSDictionary *obj, NSUInteger idx) {
         NSString *path = obj[ @"settings" ][ @"path" ];
-        if ([path isEqualToString: kSignalsPath]) {
+        if ([path isEqualToString: [ILFileStore signalsDirectory]]) {
             return YES;
         }
         return NO;

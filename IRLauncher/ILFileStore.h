@@ -9,10 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "IRPersistentStore.h"
 
+/// Saves key-value data structure under ~/.irkit.d/
 @interface ILFileStore : NSObject<IRPersistentStore>
 
 - (void)storeObject:(id)object forKey:(NSString *)key;
 - (id)objectForKey:(NSString *)key;
 - (void)synchronize;
+
++ (NSString*) configFile;
++ (NSString*) configDirectory;
++ (NSString*) signalsDirectory;
 
 @end
