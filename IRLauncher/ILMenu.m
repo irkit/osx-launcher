@@ -12,7 +12,6 @@
 
 #import "ILLog.h"
 #import "ILMenuProgressView.h"
-#import "ILMenuCheckboxView.h"
 #import "ILMenuButtonView.h"
 #import "ILUtils.h"
 
@@ -57,52 +56,6 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
 - (void)setUSBHeaderTitle:(NSString*)title animating:(BOOL)animating {
     [self setHeaderTitleWithTag: kTagUSB title: title animating: animating];
-}
-
-- (void)setQuicksilverIntegrationTitle:(NSString*)title
-                        alternateTitle:(NSString*)alternateTitle
-                           buttonTitle:(NSString*)buttonTitle
-                  alternateButtonTitle:(NSString*)alternateButtonTitle
-                                action:(void (^)(id sender, NSCellStateValue value))action {
-    NSMenuItem *quicksilverIntegration = [self itemWithTag: kTagQuicksilverIntegration];
-    ILMenuButtonView *view             = (ILMenuButtonView*)quicksilverIntegration.view;
-    if (![view isKindOfClass: [ILMenuButtonView class]]) {
-        view                        = [ILUtils loadClassFromNib: [ILMenuButtonView class]];
-        quicksilverIntegration.view = view;
-    }
-
-    [view setTitle: title
-           alternateTitle: alternateTitle
-              buttonTitle: buttonTitle
-     alternateButtonTitle: alternateButtonTitle
-                   action: action];
-}
-
-- (void)setQuicksilverIntegrationButtonState:(NSCellStateValue)state {
-    NSMenuItem *quicksilverIntegration = [self itemWithTag: kTagQuicksilverIntegration];
-    ILMenuButtonView *view             = (ILMenuButtonView*)quicksilverIntegration.view;
-    view.state = state;
-}
-
-- (void)setStartAtLoginTitle:(NSString*)title
-              alternateTitle:(NSString*)alternateTitle
-                      action:(void (^)(id sender, NSCellStateValue value))action {
-    NSMenuItem *startAtLogin = [self itemWithTag: kTagStartAtLoginCheckbox];
-    ILMenuCheckboxView *view = (ILMenuCheckboxView*)startAtLogin.view;
-    if (![view isKindOfClass: [ILMenuCheckboxView class]]) {
-        view              =[ILUtils loadClassFromNib: [ILMenuCheckboxView class]];
-        startAtLogin.view = view;
-    }
-
-    [view setTitle: title
-     alternateTitle: alternateTitle
-             action: action];
-}
-
-- (void)setStartAtLoginState:(NSCellStateValue)state {
-    NSMenuItem *startAtLogin = [self itemWithTag: kTagStartAtLoginCheckbox];
-    ILMenuCheckboxView *view = (ILMenuCheckboxView*)startAtLogin.view;
-    view.state = state;
 }
 
 - (void)addSignalMenuItem:(NSMenuItem *)item {

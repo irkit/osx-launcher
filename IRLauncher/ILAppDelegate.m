@@ -22,6 +22,7 @@
 #import "ILUSBConnectedPeripheral.h"
 #import "ILQuicksilverExtension.h"
 #import "ILSender.h"
+#import "NSMenuItem+StateAware.h"
 
 const int kSignalTagOffset                             = 1000;
 const int kPeripheralTagOffset                         = 100;
@@ -81,71 +82,19 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     [IRKit setPersistentStore: store];
     [IRKit startWithAPIKey: kIRKitAPIKey];
 
-    self.menu                  = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
-    self.menu.checkboxDelegate = self;
-    self.menu.menuDelegate     = self;
-    [self.menu setQuicksilverIntegrationTitle: @"Quicksilver Integration"
-                               alternateTitle: @"Quicksilver Integration (Installed)"
-                                  buttonTitle: @"Install"
-                         alternateButtonTitle: @"Uninstall"
-                                       action:^(id sender, NSCellStateValue _) {
-        ILLOG( @"sender: %@ value: %d", sender, _ );
-        if ([[[ILQuicksilverExtension alloc] init] installed]) {
-            [_self showConfirmToUninstall:^(NSInteger returnCode) {
-                if (returnCode == NSAlertFirstButtonReturn) {
-                    [[[ILQuicksilverExtension alloc] init] uninstall];
-                    [_self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
-                }
-            }];
-        }
-        else {
-            [_self showConfirmToInstall:^(NSInteger returnCode) {
-                if (returnCode == NSAlertFirstButtonReturn) {
-                    [[[ILQuicksilverExtension alloc] init] install];
-                    [_self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
-                    NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
-                    if (quicksilvers.count) {
-                        [_self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
-                            NSRunningApplication *q = quicksilvers[ 0 ];
-                            BOOL success = [q terminate];
-                            if (!success) {
-                                ILLOG( @"failed to terminate quicksilver" );
-                            }
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
-                                if (quicksilvers.count) {
-                                    ILLOG( @"failed to terminate quicksilver" );
-                                    return;
-                                }
-                                BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.blacktree.Quicksilver"
-                                                                                                    options: NSWorkspaceLaunchDefault
-                                                                             additionalEventParamDescriptor: NULL
-                                                                                           launchIdentifier: NULL];
-                                if (!success) {
-                                    ILLOG( @"failed to launch quicksilver" );
-                                }
-                            });
-                        }];
-                    }
-                }
-            }];
-        }
-    }];
-    [self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
+    self.menu              = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
+    self.menu.menuDelegate = self;
 
-    [self.menu setStartAtLoginTitle: @"Start at Login"
-                     alternateTitle: @"Start at Login"
-                             action:^(id sender, NSCellStateValue value) {
-        ILLOG( @"sender: %@ value: %d", sender, value );
-        if (value) {
-            // value: 1 : off -> on
+    NSMenuItem *quicksilverItem = [self.menu itemWithTag: kTagQuicksilverIntegration];
+    quicksilverItem.action   = @selector(toggleQuicksilverIntegration:);
+    quicksilverItem.onTitle  = @"Quicksilver Integration (installed)";
+    quicksilverItem.offTitle = @"Quicksilver Integration (uninstalled)";
+    quicksilverItem.state    = [[[ILQuicksilverExtension alloc] init] installed];
 
-        }
-        else {
-            // value: 0 : on -> off
-        }
-    }];
-    [self.menu setStartAtLoginState: NSOnState];
+    NSMenuItem *item = [self.menu itemWithTag: kTagStartAtLoginCheckbox];
+    item.title  = @"Start at Login";
+    item.state  = 1 /* start at login? */ ? NSOnState : NSOffState;
+    item.action = @selector(toggleStartAtLogin:);
 
     self.menuletView      = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
     self.menuletView.menu = self.menu;
@@ -343,18 +292,62 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     }];
 }
 
+- (void) toggleStartAtLogin: (id)sender {
+    ILLOG( @"sender: %@", sender );
+}
+
+- (void) toggleQuicksilverIntegration: (id)sender {
+    ILLOG( @"sender: %@", sender );
+    NSMenuItem *item = [self.menu itemWithTag: kTagQuicksilverIntegration];
+
+    if ([[[ILQuicksilverExtension alloc] init] installed]) {
+        [self showConfirmToUninstall:^(NSInteger returnCode) {
+            if (returnCode == NSAlertFirstButtonReturn) {
+                [[[ILQuicksilverExtension alloc] init] uninstall];
+                item.state =[[[ILQuicksilverExtension alloc] init] installed] ? NSOnState : NSOffState;
+            }
+        }];
+    }
+    else {
+        [self showConfirmToInstall:^(NSInteger returnCode) {
+            if (returnCode == NSAlertFirstButtonReturn) {
+                [[[ILQuicksilverExtension alloc] init] install];
+                item.state =[[[ILQuicksilverExtension alloc] init] installed] ? NSOnState : NSOffState;
+                NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
+                if (quicksilvers.count) {
+                    [self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
+                        NSRunningApplication *q = quicksilvers[ 0 ];
+                        BOOL success = [q terminate];
+                        if (!success) {
+                            ILLOG( @"failed to terminate quicksilver" );
+                        }
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
+                            if (quicksilvers.count) {
+                                ILLOG( @"failed to terminate quicksilver" );
+                                return;
+                            }
+                            BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.blacktree.Quicksilver"
+                                                                                                options: NSWorkspaceLaunchDefault
+                                                                         additionalEventParamDescriptor: NULL
+                                                                                       launchIdentifier: NULL];
+                            if (!success) {
+                                ILLOG( @"failed to launch quicksilver" );
+                            }
+                        });
+                    }];
+                }
+            }
+        }];
+    }
+}
+
 - (IBAction) showHelp: (id)sender {
     ILLOG_CURRENT_METHOD;
 }
 
 - (IBAction) terminate: (id)sender {
     [[NSApplication sharedApplication] terminate: sender];
-}
-
-#pragma mark - ILMenuCheckboxViewDelegate
-
-- (void) menuCheckboxView:(ILMenuCheckboxView *)view didTouchCheckbox:(id)sender newValue:(BOOL)onoff {
-    ILLOG( @"value: %d", onoff );
 }
 
 #pragma mark - ILMenuDelegate

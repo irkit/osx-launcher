@@ -7,29 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ILMenuCheckboxView.h"
 #import "ILMenuButtonView.h"
+
+extern const NSInteger kTagSignals;
+extern const NSInteger kTagPeripherals;
+extern const NSInteger kTagUSB;
+extern const NSInteger kTagStartAtLoginCheckbox;
+extern const NSInteger kTagQuicksilverIntegration;
 
 @protocol ILMenuDelegate;
 
 @interface ILMenu : NSMenu<NSMenuDelegate, ILMenuButtonViewDelegate>
 
-@property (nonatomic, weak) id<ILMenuCheckboxViewDelegate> checkboxDelegate;
 @property (nonatomic, weak) id<ILMenuDelegate> menuDelegate;
 
 - (void)setSignalHeaderTitle:(NSString*)title animating:(BOOL)animating;
 - (void)setPeripheralHeaderTitle:(NSString*)title animating:(BOOL)animating;
 - (void)setUSBHeaderTitle:(NSString*)title animating:(BOOL)animating;
-- (void)setQuicksilverIntegrationTitle:(NSString*)title
-                        alternateTitle:(NSString*)alternateTitle
-                           buttonTitle:(NSString*)buttonTitle
-                  alternateButtonTitle:(NSString*)alternateButtonTitle
-                                action:(void (^)(id sender, NSCellStateValue value))action;
-- (void)setQuicksilverIntegrationButtonState:(NSCellStateValue)state;
-- (void)setStartAtLoginTitle:(NSString*)title
-              alternateTitle:(NSString*)alternateTitle
-                      action:(void (^)(id sender, NSCellStateValue value))action;
-- (void)setStartAtLoginState:(NSCellStateValue)state;
 
 - (void)addSignalMenuItem: (NSMenuItem*)item;
 - (void)addPeripheralMenuItem: (NSMenuItem*)item;

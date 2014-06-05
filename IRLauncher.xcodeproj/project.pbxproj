@@ -10,7 +10,6 @@
 		11C9F3851196497CA0BD6036 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1EF2A37F2D4D4C81E28AF5 /* libPods.a */; };
 		C70745B9191A07B400AA7A32 /* ILUSBConnectedPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = C70745B8191A07B400AA7A32 /* ILUSBConnectedPeripheral.m */; };
 		C70745C0191A1D3E00AA7A32 /* ILQuicksilverExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */; };
-		C708913118FFA926007BC304 /* ILMenuCheckboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = C708913018FFA926007BC304 /* ILMenuCheckboxView.m */; };
 		C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C71E8993189F92B7007BC9C4 /* IRSearcher.m */; };
 		C71E8999189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */; };
 		C71F8C3B189A015200298DFA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71F8C3A189A015200298DFA /* Cocoa.framework */; };
@@ -24,6 +23,7 @@
 		C71F8C5B189A015200298DFA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71F8C3A189A015200298DFA /* Cocoa.framework */; };
 		C71F8C63189A015200298DFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C61189A015200298DFA /* InfoPlist.strings */; };
 		C71F8C65189A015200298DFA /* IRLauncherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C64189A015200298DFA /* IRLauncherTests.m */; };
+		C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */ = {isa = PBXBuildFile; fileRef = C729A26A194080950012F40D /* NSMenuItem+StateAware.m */; };
 		C75C537918FFBE42003C397F /* ILMenuButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = C75C537818FFBE42003C397F /* ILMenuButtonView.m */; };
 		C763F69C18ED692C00EAC927 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = C763F69B18ED692C00EAC927 /* Log.m */; };
 		C7647EB118ED5D8200171E7F /* IRPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EAE18ED5D8200171E7F /* IRPeripheral.m */; };
@@ -67,8 +67,6 @@
 		C70745BB191A1CAB00AA7A32 /* ILExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILExtension.h; sourceTree = "<group>"; };
 		C70745BE191A1D3E00AA7A32 /* ILQuicksilverExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ILQuicksilverExtension.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuicksilverExtension.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
-		C708912F18FFA926007BC304 /* ILMenuCheckboxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuCheckboxView.h; sourceTree = "<group>"; };
-		C708913018FFA926007BC304 /* ILMenuCheckboxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenuCheckboxView.m; sourceTree = "<group>"; };
 		C71E8993189F92B7007BC9C4 /* IRSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSearcher.m; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.m"; sourceTree = "<group>"; };
 		C71E8994189F92B7007BC9C4 /* IRSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSearcher.h; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.h"; sourceTree = "<group>"; };
 		C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
@@ -92,6 +90,8 @@
 		C71F8C60189A015200298DFA /* IRLauncherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRLauncherTests-Info.plist"; sourceTree = "<group>"; };
 		C71F8C62189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C71F8C64189A015200298DFA /* IRLauncherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRLauncherTests.m; sourceTree = "<group>"; };
+		C729A269194080950012F40D /* NSMenuItem+StateAware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenuItem+StateAware.h"; sourceTree = "<group>"; };
+		C729A26A194080950012F40D /* NSMenuItem+StateAware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenuItem+StateAware.m"; sourceTree = "<group>"; };
 		C75C537718FFBE42003C397F /* ILMenuButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuButtonView.h; sourceTree = "<group>"; };
 		C75C537818FFBE42003C397F /* ILMenuButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenuButtonView.m; sourceTree = "<group>"; };
 		C763F69A18ED692C00EAC927 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Log.h; path = "../../ios-sdk/IRKit/IRKit/Log.h"; sourceTree = "<group>"; };
@@ -307,10 +307,10 @@
 				C77ECAEC189A41A2006C8338 /* ILMenuletView.m */,
 				C79AF43718FE5FA600814235 /* ILMenuProgressView.h */,
 				C79AF43818FE5FA600814235 /* ILMenuProgressView.m */,
-				C708912F18FFA926007BC304 /* ILMenuCheckboxView.h */,
-				C708913018FFA926007BC304 /* ILMenuCheckboxView.m */,
 				C75C537718FFBE42003C397F /* ILMenuButtonView.h */,
 				C75C537818FFBE42003C397F /* ILMenuButtonView.m */,
+				C729A269194080950012F40D /* NSMenuItem+StateAware.h */,
+				C729A26A194080950012F40D /* NSMenuItem+StateAware.m */,
 			);
 			name = Menulet;
 			sourceTree = "<group>";
@@ -493,7 +493,6 @@
 				C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */,
 				C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */,
 				C7647EB918ED5DD000171E7F /* IRHTTPClient.m in Sources */,
-				C708913118FFA926007BC304 /* ILMenuCheckboxView.m in Sources */,
 				C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */,
 				C781848818ED5F1F007FB4E1 /* IRPeripherals.m in Sources */,
 				C7704E8C1901172700EE32E0 /* ILUSBWatcher.m in Sources */,
@@ -508,6 +507,7 @@
 				C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */,
 				C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */,
 				C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */,
+				C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */,
 				C75C537918FFBE42003C397F /* ILMenuButtonView.m in Sources */,
 				C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */,
 				C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */,
