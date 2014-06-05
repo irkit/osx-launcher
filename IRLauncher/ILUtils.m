@@ -66,20 +66,21 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSString *url                          = [NSString stringWithFormat: @"http://%@/", hostname];
     [manager GET: url parameters: nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        ILLOG(@"JSON: %@", responseObject);
+        // ignore success, we'll receive a 404 response
+        return;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSHTTPURLResponse *res = operation.response;
         NSString* server = res.allHeaderFields[ @"Server" ];
         if (!server) {
+            completion( nil, nil );
             return;
         }
         NSArray* tmp = [server componentsSeparatedByString: @"/"];
         if (tmp.count != 2) {
+            completion( nil, nil );
             return;
         }
         completion( tmp[0], tmp[1] );
-        return;
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ILLOG(@"Error: %@", error);
     }];
 }
 

@@ -41,6 +41,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 @property (nonatomic, strong) ILMenuletView *menuletView;
 @property (nonatomic, strong) ILMenu *menu;
 @property (nonatomic, strong) IRSignals *signals;
+@property (nonatomic, strong) IRPeripherals *peripherals;
 @property (nonatomic, strong) NSMutableArray *usbConnectedPeripherals;
 
 @end
@@ -91,43 +92,43 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
         ILLOG( @"sender: %@ value: %d", sender, _ );
         if ([[[ILQuicksilverExtension alloc] init] installed]) {
             [_self showConfirmToUninstall:^(NSInteger returnCode) {
-                    if (returnCode == NSAlertFirstButtonReturn) {
-                        [[[ILQuicksilverExtension alloc] init] uninstall];
-                        [_self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
-                    }
-                }];
+                if (returnCode == NSAlertFirstButtonReturn) {
+                    [[[ILQuicksilverExtension alloc] init] uninstall];
+                    [_self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
+                }
+            }];
         }
         else {
             [_self showConfirmToInstall:^(NSInteger returnCode) {
-                    if (returnCode == NSAlertFirstButtonReturn) {
-                        [[[ILQuicksilverExtension alloc] init] install];
-                        [_self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
-                        NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
-                        if (quicksilvers.count) {
-                            [_self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
-                                    NSRunningApplication *q = quicksilvers[ 0 ];
-                                    BOOL success = [q terminate];
-                                    if (!success) {
-                                        ILLOG( @"failed to terminate quicksilver" );
-                                    }
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                            NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
-                                            if (quicksilvers.count) {
-                                                ILLOG( @"failed to terminate quicksilver" );
-                                                return;
-                                            }
-                                            BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.blacktree.Quicksilver"
-                                                                                                                options: NSWorkspaceLaunchDefault
-                                                                                         additionalEventParamDescriptor: NULL
-                                                                                                       launchIdentifier: NULL];
-                                            if (!success) {
-                                                ILLOG( @"failed to launch quicksilver" );
-                                            }
-                                        });
-                                }];
-                        }
+                if (returnCode == NSAlertFirstButtonReturn) {
+                    [[[ILQuicksilverExtension alloc] init] install];
+                    [_self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
+                    NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
+                    if (quicksilvers.count) {
+                        [_self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
+                            NSRunningApplication *q = quicksilvers[ 0 ];
+                            BOOL success = [q terminate];
+                            if (!success) {
+                                ILLOG( @"failed to terminate quicksilver" );
+                            }
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
+                                if (quicksilvers.count) {
+                                    ILLOG( @"failed to terminate quicksilver" );
+                                    return;
+                                }
+                                BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.blacktree.Quicksilver"
+                                                                                                    options: NSWorkspaceLaunchDefault
+                                                                             additionalEventParamDescriptor: NULL
+                                                                                           launchIdentifier: NULL];
+                                if (!success) {
+                                    ILLOG( @"failed to launch quicksilver" );
+                                }
+                            });
+                        }];
                     }
-                }];
+                }
+            }];
         }
     }];
     [self.menu setQuicksilverIntegrationButtonState: [[[ILQuicksilverExtension alloc] init] installed]];
@@ -158,24 +159,25 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     self.signals = [[IRSignals alloc] init];
 
     [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
+
     [ILSignalsDirectorySearcher findSignalsUnderDirectory: [NSURL fileURLWithPath: [ILFileStore signalsDirectory]]
                                                completion: ^(NSArray *foundSignals) {
         [_self.menu setSignalHeaderTitle: @"Signals" animating: NO];
         [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
-                IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
-                [_self.signals addSignalsObject: signal];
+            IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
+            [_self.signals addSignalsObject: signal];
 
-                NSUInteger index = [_self.signals indexOfSignal: signal];
-                NSMenuItem *signalItem = [[NSMenuItem alloc] init];
-                signalItem.title  = signal.name;
-                signalItem.target = _self;
-                signalItem.action = @selector(send:);
-                signalItem.tag    = kSignalTagOffset + index;
-                if (index < 10) {
-                    signalItem.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
-                }
-                [_self.menu addSignalMenuItem: signalItem];
-            }];
+            NSUInteger index = [_self.signals indexOfSignal: signal];
+            NSMenuItem *signalItem = [[NSMenuItem alloc] init];
+            signalItem.title  = signal.name;
+            signalItem.target = _self;
+            signalItem.action = @selector(send:);
+            signalItem.tag    = kSignalTagOffset + index;
+            if (index < 10) {
+                signalItem.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
+            }
+            [_self.menu addSignalMenuItem: signalItem];
+        }];
         [self.menu setSignalHeaderTitle: @"Signals" animating: NO];
     }];
 
@@ -190,12 +192,13 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
                                                        queue: NULL
                                                   usingBlock: ^(NSNotification *note) {
         NSDictionary *info = note.userInfo;
-        // ILLOG( @"added USB: %@", info );
 
         if ( ([info[ kILUSBWatcherNotificationVendorIDKey ] isEqualToNumber: kILUSBVendorIRKit] &&
               [info[ kILUSBWatcherNotificationProductIDKey ] isEqualToNumber: kILUSBProductIRKit]) ||
              ([info [kILUSBWatcherNotificationVendorIDKey ] isEqualToNumber: kILUSBVendorArduino] &&
               [info[ kILUSBWatcherNotificationProductIDKey ] isEqualToNumber: kILUSBProductLeonardo]) ) {
+            ILLOG( @"connected USB: %@", info );
+
             ILUSBConnectedPeripheral *peripheral = [[ILUSBConnectedPeripheral alloc] init];
             peripheral.dialinDevice = info[ kILUSBWatcherNotificationDialinDeviceKey ];
             peripheral.locationId = info[ kILUSBWatcherNotificationLocationIDKey ];
@@ -212,8 +215,9 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
                       buttonTitle: @"Update Firmware"
              alternateButtonTitle: @"Update Firmware"
                            action:^(id sender, NSCellStateValue value) {
-                    ILLOG( @"will update %@", title );
-                }];
+                ILLOG( @"will update %@", title );
+            }];
+            view.state = NSOffState;
             usbItem.view = view;
             usbItem.tag = kUSBTagOffset + index;
             [_self.menu addUSBMenuItem: usbItem];
@@ -228,12 +232,12 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
         ILLOG( @"removed USB: %@", info );
         NSNumber *locationId = info[ kILUSBWatcherNotificationLocationIDKey ];
         ILUSBConnectedPeripheral *peripheral = (ILUSBConnectedPeripheral*)[ILUtils firstObjectOf: _self.usbConnectedPeripherals meetsBlock:^BOOL (id obj, NSUInteger idx) {
-                ILUSBConnectedPeripheral *p = obj;
-                if ([p.locationId isEqualToNumber: locationId]) {
-                    return YES;
-                }
-                return NO;
-            }];
+            ILUSBConnectedPeripheral *p = obj;
+            if ([p.locationId isEqualToNumber: locationId]) {
+                return YES;
+            }
+            return NO;
+        }];
         if (!peripheral) {
             return;
         }
@@ -377,19 +381,19 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 - (void) searcher:(IRSearcher *)searcher didResolveService:(NSNetService *)service {
     ILLOG( @"service: %@", service );
 
-    __weak ILAppDelegate *_self = self;
-    NSString *hostname          = service.hostName;
-    [ILUtils getModelNameAndVersion: hostname withCompletion:^(NSString *modelName, NSString *version) {
-        ILLOG(@"modelName: %@, version: %@", modelName, version);
-        if ([modelName isEqualToString: IRKitModelName]) {
-            ILVersionChecker *checker = [[ILVersionChecker alloc] init];
-            [checker checkUpdateForVersion: version foundUpdateBlock:^(NSString *newVersion) {
-                    [_self notifyUpdate: hostname
-                             newVersion: newVersion
-                         currentVersion: version];
-                }];
-        }
-    }];
+    IRPeripherals *peripherals = [IRKit sharedInstance].peripherals;
+
+    NSString *name  = [service.hostName componentsSeparatedByString: @"."][ 0 ];
+    IRPeripheral *p = [peripherals peripheralWithName: name];
+    if (!p) {
+        p = [peripherals registerPeripheralWithName: name];
+        [peripherals save];
+    }
+    if (!p.deviceid) {
+        [p getKeyWithCompletion:^{
+            [peripherals save];
+        }];
+    }
 }
 
 - (void) searcherDidTimeout:(IRSearcher *)searcher {

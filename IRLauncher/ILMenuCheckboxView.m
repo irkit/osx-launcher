@@ -17,20 +17,6 @@
 
 @implementation ILMenuCheckboxView
 
-- (id)initWithFrame:(NSRect)frame {
-    self = [super initWithFrame: frame];
-    if (self) {
-        // Initialization code here.
-    }
-    return self;
-}
-
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect: dirtyRect];
-
-    // Drawing code here.
-}
-
 - (void)  setTitle:(NSString*)title
     alternateTitle:(NSString*)alternateTitle
             action:(void (^)(id sender, NSCellStateValue value))action {

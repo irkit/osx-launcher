@@ -7,6 +7,7 @@
 //
 
 #import "ILFileStore.h"
+#import "IRPeripheral.h"
 
 #define ILLOG_DISABLED 1
 
@@ -52,10 +53,37 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
     [_entity setObject: object forKey: key];
 }
 
+- (void)storePeripherals:(NSDictionary *)object {
+    ILLOG_CURRENT_METHOD;
+
+    NSMutableDictionary *peripherals = @{}.mutableCopy;
+    [object enumerateKeysAndObjectsUsingBlock:^(NSString *key, IRPeripheral *obj, BOOL *stop) {
+        peripherals[ key.lowercaseString ] = obj.asDictionary;
+    }];
+    [_entity setObject: peripherals forKey: @"peripherals"];
+}
+
 - (id)objectForKey:(NSString *)key {
     ILLOG_CURRENT_METHOD;
 
     return [_entity objectForKey: key];
+}
+
+- (NSDictionary*)loadPeripherals {
+    ILLOG_CURRENT_METHOD;
+
+    NSDictionary *peripheralForName  = [self objectForKey: @"peripherals"];
+    NSMutableDictionary *peripherals = @{}.mutableCopy;
+    [peripheralForName enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        IRPeripheral *peripheral = [[IRPeripheral alloc] init];
+        [peripheral inflateFromDictionary: obj];
+        if (!peripheral.hostname) {
+            // TODO show error?
+            return;
+        }
+        peripherals[ peripheral.hostname.lowercaseString ] = peripheral;
+    }];
+    return peripherals;
 }
 
 - (void)synchronize {
