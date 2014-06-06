@@ -95,6 +95,12 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
         [_self.menu setSignalHeaderTitle: @"Signals" animating: NO];
         [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
             IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
+            if (!signal.peripheral) {
+                // skip signals without hostname
+                // TODO somehow indicate that we skipped?
+                return;
+            }
+
             [_self.signals addSignalsObject: signal];
             NSUInteger index = [_self.signals indexOfSignal: signal];
             NSMenuItem *item = [_self menuItemForSignal: signal atIndex: index];
