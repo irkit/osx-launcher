@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern const NSInteger kTagSignals;
+extern const NSInteger kTagLearnSignal;
 extern const NSInteger kTagPeripherals;
 extern const NSInteger kTagStartAtLoginCheckbox;
 extern const NSInteger kTagQuicksilverIntegration;

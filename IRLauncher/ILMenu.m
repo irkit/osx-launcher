@@ -15,6 +15,7 @@
 #import "ILUtils.h"
 
 const NSInteger kTagSignals                = 10;
+const NSInteger kTagLearnSignal            = 15;
 const NSInteger kTagPeripherals            = 20;
 const NSInteger kTagStartAtLoginCheckbox   = 40;
 const NSInteger kTagQuicksilverIntegration = 50;

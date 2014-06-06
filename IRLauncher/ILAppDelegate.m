@@ -12,7 +12,6 @@
 #import "ILVersionChecker.h"
 #import "ILUtils.h"
 #import "ILSignalsDirectorySearcher.h"
-#import "IRSignals.h"
 #import "IRKit.h"
 #import "ILFileStore.h"
 #import "ILMenuProgressView.h"
@@ -21,6 +20,7 @@
 #import "ILQuicksilverExtension.h"
 #import "ILSender.h"
 #import "NSMenuItem+StateAware.h"
+#import "ILNewSignalWindowController.h"
 
 const int kSignalTagOffset                             = 1000;
 const int kPeripheralTagOffset                         = 100;
@@ -33,6 +33,8 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 @property (nonatomic, strong) ILMenuletView *menuletView;
 @property (nonatomic, strong) ILMenu *menu;
 @property (nonatomic, strong) IRSignals *signals;
+
+@property (nonatomic, strong) ILNewSignalWindowController *signalWindowController;
 
 @end
 
@@ -310,12 +312,30 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     }
 }
 
+- (IBAction) learnNewSignal :(id)sender {
+    ILLOG_CURRENT_METHOD;
+
+    ILNewSignalWindowController *c = [[ILNewSignalWindowController alloc] initWithWindowNibName: @"NewSignalWindow"];
+    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
+    [c showWindow: self];
+    c.signalDelegate        = self;
+    _signalWindowController = c; // retain to keep window showing
+}
+
 - (IBAction) showHelp: (id)sender {
     ILLOG_CURRENT_METHOD;
 }
 
 - (IBAction) terminate: (id)sender {
     [[NSApplication sharedApplication] terminate: sender];
+}
+
+#pragma mark - ILNewSignalWindowControllerDelegate
+
+- (void) newSignalWindowController:(ILNewSignalWindowController *)c
+               didFinishWithSignal:(IRSignal *)signal {
+    ILLOG( @"signal: %@", signal );
+    _signalWindowController = nil;
 }
 
 #pragma mark - ILMenuDelegate

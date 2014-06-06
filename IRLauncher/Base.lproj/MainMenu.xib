@@ -47,6 +47,12 @@
                 <menuItem title="Signals" tag="10" enabled="NO" id="Ji8-hp-uI5">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
+                <menuItem title="Learn new signal" tag="15" keyEquivalent="+" id="UZm-kR-efJ">
+                    <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                    <connections>
+                        <action selector="learnNewSignal:" target="-2" id="y8X-I4-zKb"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="PbL-Dn-FCA"/>
                 <menuItem title="IRKits" tag="20" enabled="NO" id="uCB-gE-BaK">
                     <modifierMask key="keyEquivalentModifierMask"/>

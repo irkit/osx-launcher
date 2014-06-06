@@ -37,6 +37,8 @@
 		C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848018ED5F1F007FB4E1 /* IRHTTPJSONOperation.m */; };
 		C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848218ED5F1F007FB4E1 /* IRHTTPOperationQueue.m */; };
 		C781848818ED5F1F007FB4E1 /* IRPeripherals.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848418ED5F1F007FB4E1 /* IRPeripherals.m */; };
+		C789EC9319419D7F00BC8E90 /* NewSignalWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C789EC9119419D7F00BC8E90 /* NewSignalWindow.xib */; };
+		C789EC9619419E1600BC8E90 /* ILNewSignalWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C789EC9519419E1600BC8E90 /* ILNewSignalWindowController.m */; };
 		C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C798A30D18FD3F9100C9994C /* ILFileStore.m */; };
 		C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C79AF43818FE5FA600814235 /* ILMenuProgressView.m */; };
 		C7A7ED6B192DD05E00F86AFF /* ILSender.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A7ED6A192DD05E00F86AFF /* ILSender.m */; };
@@ -116,6 +118,9 @@
 		C781848318ED5F1F007FB4E1 /* IRPeripherals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPeripherals.h; path = "../../ios-sdk/IRKit/IRKit/IRPeripherals.h"; sourceTree = "<group>"; };
 		C781848418ED5F1F007FB4E1 /* IRPeripherals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRPeripherals.m; path = "../../ios-sdk/IRKit/IRKit/IRPeripherals.m"; sourceTree = "<group>"; };
 		C781848918ED5F6C007FB4E1 /* IRPersistentStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPersistentStore.h; path = "../../ios-sdk/IRKit/IRKit/IRPersistentStore.h"; sourceTree = "<group>"; };
+		C789EC9219419D7F00BC8E90 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NewSignalWindow.xib; sourceTree = "<group>"; };
+		C789EC9419419E1600BC8E90 /* ILNewSignalWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILNewSignalWindowController.h; sourceTree = "<group>"; };
+		C789EC9519419E1600BC8E90 /* ILNewSignalWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILNewSignalWindowController.m; sourceTree = "<group>"; };
 		C7965C2018FFB465004FF579 /* ILConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILConst.h; sourceTree = "<group>"; };
 		C7965C2118FFB4A5004FF579 /* IRConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRConst.h; path = IRKit/IRConst.h; sourceTree = "<group>"; };
 		C798A30C18FD3F9100C9994C /* ILFileStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILFileStore.h; sourceTree = "<group>"; };
@@ -240,6 +245,8 @@
 				C7965C2018FFB465004FF579 /* ILConst.h */,
 				C7A7ED69192DD05E00F86AFF /* ILSender.h */,
 				C7A7ED6A192DD05E00F86AFF /* ILSender.m */,
+				C789EC9419419E1600BC8E90 /* ILNewSignalWindowController.h */,
+				C789EC9519419E1600BC8E90 /* ILNewSignalWindowController.m */,
 			);
 			path = IRLauncher;
 			sourceTree = "<group>";
@@ -279,6 +286,7 @@
 		C7766F9B189A4E0F00898267 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C789EC9119419D7F00BC8E90 /* NewSignalWindow.xib */,
 				C71F8C4F189A015200298DFA /* MainMenu.xib */,
 				C71F8C52189A015200298DFA /* Images.xcassets */,
 			);
@@ -416,6 +424,7 @@
 				C71F8C53189A015200298DFA /* Images.xcassets in Resources */,
 				C71F8C4B189A015200298DFA /* Credits.rtf in Resources */,
 				C71F8C51189A015200298DFA /* MainMenu.xib in Resources */,
+				C789EC9319419D7F00BC8E90 /* NewSignalWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +498,7 @@
 				C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */,
 				C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */,
 				C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */,
+				C789EC9619419E1600BC8E90 /* ILNewSignalWindowController.m in Sources */,
 				C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */,
 				C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */,
 				C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */,
@@ -546,6 +556,14 @@
 				C71F8C62189A015200298DFA /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		C789EC9119419D7F00BC8E90 /* NewSignalWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C789EC9219419D7F00BC8E90 /* Base */,
+			);
+			name = NewSignalWindow.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
