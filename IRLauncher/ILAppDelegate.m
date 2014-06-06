@@ -124,8 +124,14 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     // more
 
     NSMenuItem *item;
+
+    item        = [self.menu itemWithTag: kTagLearnSignal];
+    item.action = @selector(learnNewSignal:);
+    item.target = self;
+
     item          = [self.menu itemWithTag: kTagQuicksilverIntegration];
     item.action   = @selector(toggleQuicksilverIntegration:);
+    item.target   = self;
     item.onTitle  = @"Quicksilver Integration (installed)";
     item.offTitle = @"Quicksilver Integration (uninstalled)";
     item.state    = [[[ILQuicksilverExtension alloc] init] installed];
@@ -134,7 +140,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     item.title  = @"Start at Login";
     item.state  = 1 /* start at login? */ ? NSOnState : NSOffState;
     item.action = @selector(toggleStartAtLogin:);
-
+    item.target = self;
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
@@ -336,6 +342,23 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
                didFinishWithSignal:(IRSignal *)signal {
     ILLOG( @"signal: %@", signal );
     _signalWindowController = nil;
+
+    if (signal) {
+
+        // TODO remove after signal name edit introduced
+        signal.name = @"null";
+
+        BOOL saved = [ILFileStore saveSignal: signal];
+        if (!saved) {
+            // ex: file name overwrite cancelled
+            return;
+        }
+
+        [_signals addSignalsObject: signal];
+        NSUInteger index = [_signals indexOfSignal: signal];
+        NSMenuItem *item = [self menuItemForSignal: signal atIndex: index];
+        [_menu addSignalMenuItem: item];
+    }
 }
 
 #pragma mark - ILMenuDelegate

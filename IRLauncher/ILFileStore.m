@@ -112,4 +112,30 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
     return [[self configDirectory] stringByAppendingString: kILSignalsSubDirectory];
 }
 
++ (BOOL) saveSignal:(IRSignal *)signal {
+    if (!signal.name) {
+        // name is required
+        return NO;
+    }
+    NSError *error = nil;
+    NSData *json   = [NSJSONSerialization dataWithJSONObject: signal.asDictionary
+                                                     options: 0
+                                                       error: &error];
+    if (error) {
+        // TODO
+        ILLOG( @"failed to serialize: %@", signal.asDictionary );
+        return NO;
+    }
+    NSString *basename = [NSString stringWithFormat: @"%@.json", signal.name];
+    NSString *file     = [[self signalsDirectory] stringByAppendingPathComponent: basename];
+    // overwrites file
+    BOOL success = [json writeToFile: file atomically: YES];
+    if (!success) {
+        // TODO
+        ILLOG( @"failed to write to: %@", file );
+        return NO;
+    }
+    return YES;
+}
+
 @end
