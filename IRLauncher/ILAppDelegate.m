@@ -287,6 +287,16 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
     NSUInteger signalIndex = ((NSMenuItem*)sender).tag - kSignalTagOffset;
     IRSignal *signal       = (IRSignal*)[self.signals objectInSignalsAtIndex: signalIndex];
+    if (!signal.peripheral) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle: @"OK"];
+        NSString *message = [NSString stringWithFormat: @"Set \"hostname\" key in ~/.irkit.d/signals/%@.json or remove it and re-learn", signal.name];
+        [alert setMessageText: message];
+        [alert setAlertStyle: NSWarningAlertStyle];
+        [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
+        [alert runModal];
+        return;
+    }
     [signal sendWithCompletion:^(NSError *error) {
         ILLOG( @"sent: %@", error );
     }];
