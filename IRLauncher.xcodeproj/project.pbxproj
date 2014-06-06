@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		11C9F3851196497CA0BD6036 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1EF2A37F2D4D4C81E28AF5 /* libPods.a */; };
-		C70745B9191A07B400AA7A32 /* ILUSBConnectedPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = C70745B8191A07B400AA7A32 /* ILUSBConnectedPeripheral.m */; };
 		C70745C0191A1D3E00AA7A32 /* ILQuicksilverExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */; };
 		C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C71E8993189F92B7007BC9C4 /* IRSearcher.m */; };
 		C71E8999189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */; };
@@ -31,7 +30,6 @@
 		C7647EB918ED5DD000171E7F /* IRHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB418ED5DD000171E7F /* IRHTTPClient.m */; };
 		C7647EBA18ED5DD000171E7F /* IRKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB618ED5DD000171E7F /* IRKit.m */; };
 		C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB818ED5DD000171E7F /* IRReachability.m */; };
-		C7704E8C1901172700EE32E0 /* ILUSBWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C7704E8B1901172700EE32E0 /* ILUSBWatcher.m */; };
 		C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* ILVersionChecker.m */; };
 		C7766FA4189A524800898267 /* ILLog.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* ILLog.m */; };
 		C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* ILMenu.m */; };
@@ -62,8 +60,6 @@
 /* Begin PBXFileReference section */
 		5B1EF2A37F2D4D4C81E28AF5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB52621429724E208636A191 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		C70745B7191A07B400AA7A32 /* ILUSBConnectedPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUSBConnectedPeripheral.h; sourceTree = "<group>"; };
-		C70745B8191A07B400AA7A32 /* ILUSBConnectedPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUSBConnectedPeripheral.m; sourceTree = "<group>"; };
 		C70745BB191A1CAB00AA7A32 /* ILExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILExtension.h; sourceTree = "<group>"; };
 		C70745BE191A1D3E00AA7A32 /* ILQuicksilverExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ILQuicksilverExtension.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuicksilverExtension.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
@@ -106,8 +102,6 @@
 		C7647EB618ED5DD000171E7F /* IRKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRKit.m; path = "../../ios-sdk/IRKit/IRKit/IRKit.m"; sourceTree = "<group>"; };
 		C7647EB718ED5DD000171E7F /* IRReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRReachability.h; path = "../../ios-sdk/IRKit/IRKit/IRReachability.h"; sourceTree = "<group>"; };
 		C7647EB818ED5DD000171E7F /* IRReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRReachability.m; path = "../../ios-sdk/IRKit/IRKit/IRReachability.m"; sourceTree = "<group>"; };
-		C7704E8A1901172700EE32E0 /* ILUSBWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUSBWatcher.h; sourceTree = "<group>"; };
-		C7704E8B1901172700EE32E0 /* ILUSBWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUSBWatcher.m; sourceTree = "<group>"; };
 		C7766F9F189A4F5300898267 /* ILVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILVersionChecker.h; sourceTree = "<group>"; };
 		C7766FA0189A4F5300898267 /* ILVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILVersionChecker.m; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* ILLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLog.h; sourceTree = "<group>"; };
@@ -247,10 +241,6 @@
 				C798A30C18FD3F9100C9994C /* ILFileStore.h */,
 				C798A30D18FD3F9100C9994C /* ILFileStore.m */,
 				C7965C2018FFB465004FF579 /* ILConst.h */,
-				C7704E8A1901172700EE32E0 /* ILUSBWatcher.h */,
-				C7704E8B1901172700EE32E0 /* ILUSBWatcher.m */,
-				C70745B7191A07B400AA7A32 /* ILUSBConnectedPeripheral.h */,
-				C70745B8191A07B400AA7A32 /* ILUSBConnectedPeripheral.m */,
 				C7A7ED69192DD05E00F86AFF /* ILSender.h */,
 				C7A7ED6A192DD05E00F86AFF /* ILSender.m */,
 			);
@@ -495,9 +485,7 @@
 				C7647EB918ED5DD000171E7F /* IRHTTPClient.m in Sources */,
 				C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */,
 				C781848818ED5F1F007FB4E1 /* IRPeripherals.m in Sources */,
-				C7704E8C1901172700EE32E0 /* ILUSBWatcher.m in Sources */,
 				C7647EBA18ED5DD000171E7F /* IRKit.m in Sources */,
-				C70745B9191A07B400AA7A32 /* ILUSBConnectedPeripheral.m in Sources */,
 				C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */,
 				C71F8C47189A015200298DFA /* main.m in Sources */,
 				C71F8C4E189A015200298DFA /* ILAppDelegate.m in Sources */,

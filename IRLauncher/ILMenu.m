@@ -15,9 +15,8 @@
 #import "ILMenuButtonView.h"
 #import "ILUtils.h"
 
-const NSInteger kTagSignals                = 10;
-const NSInteger kTagPeripherals            = 20;
-const NSInteger kTagUSB                    = 30;
+const NSInteger kTagSignals     = 10;
+const NSInteger kTagPeripherals = 20;
 const NSInteger kTagStartAtLoginCheckbox   = 40;
 const NSInteger kTagQuicksilverIntegration = 50;
 
@@ -25,7 +24,6 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
 @property (nonatomic) NSMutableArray *signalMenuItems;
 @property (nonatomic) NSMutableArray *peripheralMenuItems;
-@property (nonatomic) NSMutableArray *usbMenuItems;
 @property (nonatomic) BOOL isVisible;
 
 @end
@@ -41,7 +39,7 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
     _signalMenuItems     = @[].mutableCopy;
     _peripheralMenuItems = @[].mutableCopy;
-    _usbMenuItems        = @[].mutableCopy;
+//    _usbMenuItems        = @[].mutableCopy;
 
     return self;
 }
@@ -52,10 +50,6 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
 - (void)setPeripheralHeaderTitle:(NSString*)title animating:(BOOL)animating {
     [self setHeaderTitleWithTag: kTagPeripherals title: title animating: animating];
-}
-
-- (void)setUSBHeaderTitle:(NSString*)title animating:(BOOL)animating {
-    [self setHeaderTitleWithTag: kTagUSB title: title animating: animating];
 }
 
 - (void)addSignalMenuItem:(NSMenuItem *)item {
@@ -76,24 +70,6 @@ const NSInteger kTagQuicksilverIntegration = 50;
     [self insertItem: item atIndex: index + self.numberOfPeripheralMenuItems];
 }
 
-- (void)addUSBMenuItem:(NSMenuItem *)item {
-    ILLOG( @"item: %@", item );
-
-    [_usbMenuItems addObject: item];
-    NSUInteger index = [self indexOfItemWithTag: kTagUSB];
-    [self insertItem: item atIndex: index + self.numberOfUSBMenuItems];
-}
-
-- (void)removeUSBMenuItemAtIndex: (NSUInteger)index {
-    NSMenuItem *item = self.usbMenuItems[ index ];
-    if (!item) {
-        return;
-    }
-
-    [self.usbMenuItems removeObject: item];
-    [self removeItem: item];
-}
-
 #pragma mark - Private
 
 - (NSUInteger)numberOfSignalMenuItems {
@@ -102,10 +78,6 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
 - (NSUInteger)numberOfPeripheralMenuItems {
     return _peripheralMenuItems.count;
-}
-
-- (NSUInteger)numberOfUSBMenuItems {
-    return _usbMenuItems.count;
 }
 
 - (void) setHeaderTitleWithTag: (NSUInteger)tag title:(NSString*)title animating:(BOOL)animating {
@@ -126,7 +98,7 @@ const NSInteger kTagQuicksilverIntegration = 50;
 - (void) menuWillOpen:(NSMenu *)menu {
     self.isVisible = YES;
 
-    NSArray *items = @[ [self itemWithTag: kTagSignals], [self itemWithTag: kTagPeripherals],[self itemWithTag: kTagUSB]];
+    NSArray *items = @[ [self itemWithTag: kTagSignals], [self itemWithTag: kTagPeripherals]];
     [items enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
         [(ILMenuProgressView*)item.view startAnimationIfNeeded];
     }];
@@ -137,7 +109,7 @@ const NSInteger kTagQuicksilverIntegration = 50;
 - (void) menuDidClose:(NSMenu *)menu {
     self.isVisible = NO;
 
-    NSArray *items = @[ [self itemWithTag: kTagSignals], [self itemWithTag: kTagPeripherals],[self itemWithTag: kTagUSB]];
+    NSArray *items = @[ [self itemWithTag: kTagSignals], [self itemWithTag: kTagPeripherals]];
     [items enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
         [(ILMenuProgressView*)item.view stopAnimation];
     }];

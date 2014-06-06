@@ -23,12 +23,9 @@ extern const NSInteger kTagQuicksilverIntegration;
 
 - (void)setSignalHeaderTitle:(NSString*)title animating:(BOOL)animating;
 - (void)setPeripheralHeaderTitle:(NSString*)title animating:(BOOL)animating;
-- (void)setUSBHeaderTitle:(NSString*)title animating:(BOOL)animating;
 
 - (void)addSignalMenuItem: (NSMenuItem*)item;
 - (void)addPeripheralMenuItem: (NSMenuItem*)item;
-- (void)addUSBMenuItem: (NSMenuItem*)item;
-- (void)removeUSBMenuItemAtIndex: (NSUInteger)index;
 
 @end
 
