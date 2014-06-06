@@ -15,8 +15,8 @@
 #import "ILMenuButtonView.h"
 #import "ILUtils.h"
 
-const NSInteger kTagSignals     = 10;
-const NSInteger kTagPeripherals = 20;
+const NSInteger kTagSignals                = 10;
+const NSInteger kTagPeripherals            = 20;
 const NSInteger kTagStartAtLoginCheckbox   = 40;
 const NSInteger kTagQuicksilverIntegration = 50;
 
@@ -39,7 +39,6 @@ const NSInteger kTagQuicksilverIntegration = 50;
 
     _signalMenuItems     = @[].mutableCopy;
     _peripheralMenuItems = @[].mutableCopy;
-//    _usbMenuItems        = @[].mutableCopy;
 
     return self;
 }

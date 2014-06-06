@@ -11,7 +11,6 @@
 
 extern const NSInteger kTagSignals;
 extern const NSInteger kTagPeripherals;
-extern const NSInteger kTagUSB;
 extern const NSInteger kTagStartAtLoginCheckbox;
 extern const NSInteger kTagQuicksilverIntegration;
 

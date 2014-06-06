@@ -29,11 +29,10 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
 @interface ILAppDelegate ()
 
-@property (nonatomic, strong) NSStatusItem *item;
+@property (nonatomic, strong) NSStatusItem *statusItem;
 @property (nonatomic, strong) ILMenuletView *menuletView;
 @property (nonatomic, strong) ILMenu *menu;
 @property (nonatomic, strong) IRSignals *signals;
-@property (nonatomic, strong) IRPeripherals *peripherals;
 
 @end
 
@@ -69,31 +68,23 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
 
     ILFileStore *store = [[ILFileStore alloc] init];
-    [IRKit setPersistentStore: store];
+    [IRKit setPersistentStore: store]; // call before `startWithAPIKey`
     [IRKit startWithAPIKey: kIRKitAPIKey];
 
     self.menu              = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
     self.menu.menuDelegate = self;
 
-    NSMenuItem *quicksilverItem = [self.menu itemWithTag: kTagQuicksilverIntegration];
-    quicksilverItem.action   = @selector(toggleQuicksilverIntegration:);
-    quicksilverItem.onTitle  = @"Quicksilver Integration (installed)";
-    quicksilverItem.offTitle = @"Quicksilver Integration (uninstalled)";
-    quicksilverItem.state    = [[[ILQuicksilverExtension alloc] init] installed];
-
-    NSMenuItem *item = [self.menu itemWithTag: kTagStartAtLoginCheckbox];
-    item.title  = @"Start at Login";
-    item.state  = 1 /* start at login? */ ? NSOnState : NSOffState;
-    item.action = @selector(toggleStartAtLogin:);
-
     self.menuletView      = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
     self.menuletView.menu = self.menu;
 
-    self.item = [[NSStatusBar systemStatusBar] statusItemWithLength: thickness];
-    [self.item setView: self.menuletView];
-    [self.item setHighlightMode: NO];
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: thickness];
+    [self.statusItem setView: self.menuletView];
+    [self.statusItem setHighlightMode: NO];
 
-    self.menuletView.statusItem = self.item;
+    self.menuletView.statusItem = self.statusItem;
+
+    // setup menu items
+    // signals
 
     self.signals = [[IRSignals alloc] init];
 
@@ -105,22 +96,37 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
         [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
             IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
             [_self.signals addSignalsObject: signal];
-
             NSUInteger index = [_self.signals indexOfSignal: signal];
-            NSMenuItem *signalItem = [[NSMenuItem alloc] init];
-            signalItem.title  = signal.name;
-            signalItem.target = _self;
-            signalItem.action = @selector(send:);
-            signalItem.tag    = kSignalTagOffset + index;
-            if (index < 10) {
-                signalItem.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
-            }
-            [_self.menu addSignalMenuItem: signalItem];
+            NSMenuItem *item = [_self menuItemForSignal: signal atIndex: index];
+            [_self.menu addSignalMenuItem: item];
         }];
         [self.menu setSignalHeaderTitle: @"Signals" animating: NO];
     }];
 
+    // peripherals
+
+    NSArray *peripherals = [IRKit sharedInstance].peripherals.peripherals;
+    [peripherals enumerateObjectsUsingBlock:^(IRPeripheral *peripheral, NSUInteger idx, BOOL *stop) {
+        NSMenuItem *item = [_self menuItemForPeripheral: peripheral atIndex: idx];
+        [_self.menu addPeripheralMenuItem: item];
+    }];
+
     [IRSearcher sharedInstance].delegate = self;
+
+    // more
+
+    NSMenuItem *item;
+    item          = [self.menu itemWithTag: kTagQuicksilverIntegration];
+    item.action   = @selector(toggleQuicksilverIntegration:);
+    item.onTitle  = @"Quicksilver Integration (installed)";
+    item.offTitle = @"Quicksilver Integration (uninstalled)";
+    item.state    = [[[ILQuicksilverExtension alloc] init] installed];
+
+    item        = [self.menu itemWithTag: kTagStartAtLoginCheckbox];
+    item.title  = @"Start at Login";
+    item.state  = 1 /* start at login? */ ? NSOnState : NSOffState;
+    item.action = @selector(toggleStartAtLogin:);
+
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
@@ -202,6 +208,28 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     NSInteger ret = [alert runModal];
     callback( ret );
+}
+
+#pragma mark - NSMenuItem factories
+
+- (NSMenuItem*) menuItemForSignal:(IRSignal*)signal atIndex:(NSUInteger)index {
+    NSMenuItem *item = [[NSMenuItem alloc] init];
+    item.title   = signal.name;
+    item.target  = self;
+    item.action  = @selector(send:);
+    item.tag     = kSignalTagOffset + index;
+    item.toolTip = [NSString stringWithFormat: @"Click to send via %@", signal.peripheral.customizedName];
+    if (index < 10) {
+        item.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
+    }
+    return item;
+}
+
+- (NSMenuItem*) menuItemForPeripheral:(IRPeripheral*)peripheral atIndex:(NSUInteger)index {
+    NSMenuItem *item = [[NSMenuItem alloc] init];
+    item.title = [NSString stringWithFormat: @"%@ %@", peripheral.customizedName, peripheral.version];
+    item.tag   = kPeripheralTagOffset + index;
+    return item;
 }
 
 #pragma mark - NSMenuItem actions
@@ -315,6 +343,10 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     if (!p) {
         p = [peripherals registerPeripheralWithName: name];
         [peripherals save];
+
+        NSUInteger index = [peripherals indexOfObject: p];
+        NSMenuItem *item = [self menuItemForPeripheral: p atIndex: index];
+        [self.menu addPeripheralMenuItem: item];
     }
     if (!p.deviceid) {
         [p getKeyWithCompletion:^{
