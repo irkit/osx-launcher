@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ILMenuButtonView.h"
 
 extern const NSInteger kTagSignals;
 extern const NSInteger kTagPeripherals;
@@ -16,7 +15,7 @@ extern const NSInteger kTagQuicksilverIntegration;
 
 @protocol ILMenuDelegate;
 
-@interface ILMenu : NSMenu<NSMenuDelegate, ILMenuButtonViewDelegate>
+@interface ILMenu : NSMenu<NSMenuDelegate>
 
 @property (nonatomic, weak) id<ILMenuDelegate> menuDelegate;
 

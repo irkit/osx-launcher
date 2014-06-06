@@ -8,10 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import "IRSearcher.h"
-#import "ILMenuButtonView.h"
 #import "ILMenu.h"
 
-@interface ILAppDelegate : NSObject <NSApplicationDelegate,IRSearcherDelegate,NSMenuDelegate,ILMenuButtonViewDelegate,ILMenuDelegate>
+@interface ILAppDelegate : NSObject <NSApplicationDelegate,IRSearcherDelegate,NSMenuDelegate,ILMenuDelegate>
 
 - (IBAction) showHelp: (id)sender;
 - (IBAction) terminate: (id)sender;

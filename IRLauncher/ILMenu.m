@@ -12,7 +12,6 @@
 
 #import "ILLog.h"
 #import "ILMenuProgressView.h"
-#import "ILMenuButtonView.h"
 #import "ILUtils.h"
 
 const NSInteger kTagSignals                = 10;
