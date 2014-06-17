@@ -45,9 +45,9 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
     NSArray *args = [[NSProcessInfo processInfo] arguments];
     ILLOG( @"args: %@", args );
-    NSString *lastArgument   = (args.count > 1) ? args.lastObject : nil;
-    BOOL isDuplicateInstance = [[NSRunningApplication runningApplicationsWithBundleIdentifier: [[NSBundle mainBundle] bundleIdentifier]] count] > 1;
+    NSString *lastArgument = (args.count > 1) ? args.lastObject : nil;
     if (lastArgument) {
+        BOOL isDuplicateInstance = [[NSRunningApplication runningApplicationsWithBundleIdentifier: [[NSBundle mainBundle] bundleIdentifier]] count] > 1;
         if (isDuplicateInstance) {
             ILLOG( @"found duplicate, send over to living app" );
             [self postDistributedNotificationToSendFileAtPath: lastArgument];
@@ -96,18 +96,18 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
                                                completion: ^(NSArray *foundSignals) {
         [_self.menu setSignalHeaderTitle: @"Signals" animating: NO];
         [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
-            IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
-            if (!signal.peripheral) {
-                // skip signals without hostname
-                // TODO somehow indicate that we skipped?
-                return;
-            }
+                IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
+                if (!signal.peripheral) {
+                    // skip signals without hostname
+                    // TODO somehow indicate that we skipped?
+                    return;
+                }
 
-            [_self.signals addSignalsObject: signal];
-            NSUInteger index = [_self.signals indexOfSignal: signal];
-            NSMenuItem *item = [_self menuItemForSignal: signal atIndex: index];
-            [_self.menu addSignalMenuItem: item];
-        }];
+                [_self.signals addSignalsObject: signal];
+                NSUInteger index = [_self.signals indexOfSignal: signal];
+                NSMenuItem *item = [_self menuItemForSignal: signal atIndex: index];
+                [_self.menu addSignalMenuItem: item];
+            }];
         [self.menu setSignalHeaderTitle: @"Signals" animating: NO];
     }];
 
@@ -292,26 +292,26 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
                 NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
                 if (quicksilvers.count) {
                     [self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
-                        NSRunningApplication *q = quicksilvers[ 0 ];
-                        BOOL success = [q terminate];
-                        if (!success) {
-                            ILLOG( @"failed to terminate quicksilver" );
-                        }
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
-                            if (quicksilvers.count) {
-                                ILLOG( @"failed to terminate quicksilver" );
-                                return;
-                            }
-                            BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.blacktree.Quicksilver"
-                                                                                                options: NSWorkspaceLaunchDefault
-                                                                         additionalEventParamDescriptor: NULL
-                                                                                       launchIdentifier: NULL];
+                            NSRunningApplication *q = quicksilvers[ 0 ];
+                            BOOL success = [q terminate];
                             if (!success) {
-                                ILLOG( @"failed to launch quicksilver" );
+                                ILLOG( @"failed to terminate quicksilver" );
                             }
-                        });
-                    }];
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                    NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
+                                    if (quicksilvers.count) {
+                                        ILLOG( @"failed to terminate quicksilver" );
+                                        return;
+                                    }
+                                    BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.blacktree.Quicksilver"
+                                                                                                        options: NSWorkspaceLaunchDefault
+                                                                                 additionalEventParamDescriptor: NULL
+                                                                                               launchIdentifier: NULL];
+                                    if (!success) {
+                                        ILLOG( @"failed to launch quicksilver" );
+                                    }
+                                });
+                        }];
                 }
             }
         }];
