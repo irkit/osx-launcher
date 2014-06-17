@@ -20,7 +20,7 @@
 #import "ILQuicksilverExtension.h"
 #import "ILSender.h"
 #import "NSMenuItem+StateAware.h"
-#import "ILNewSignalWindowController.h"
+#import "ILLearnSignalWindowController.h"
 
 const int kSignalTagOffset                             = 1000;
 const int kPeripheralTagOffset                         = 100;
@@ -34,7 +34,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 @property (nonatomic, strong) ILMenu *menu;
 @property (nonatomic, strong) IRSignals *signals;
 
-@property (nonatomic, strong) ILNewSignalWindowController *signalWindowController;
+@property (nonatomic, strong) ILLearnSignalWindowController *signalWindowController;
 
 @end
 
@@ -321,7 +321,11 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 - (IBAction) learnNewSignal :(id)sender {
     ILLOG_CURRENT_METHOD;
 
-    ILNewSignalWindowController *c = [[ILNewSignalWindowController alloc] initWithWindowNibName: @"NewSignalWindow"];
+    NSEvent *event   = [NSApp currentEvent];
+    NSPoint location = [event locationInWindow];
+    // TODO show window near mouse pointer
+
+    ILLearnSignalWindowController *c = [[ILLearnSignalWindowController alloc] init];
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     [c showWindow: self];
     c.signalDelegate        = self;
@@ -336,12 +340,18 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     [[NSApplication sharedApplication] terminate: sender];
 }
 
-#pragma mark - ILNewSignalWindowControllerDelegate
+#pragma mark - ILLearnSignalWindowControllerDelegate
 
-- (void) newSignalWindowController:(ILNewSignalWindowController *)c
-               didFinishWithSignal:(IRSignal *)signal {
+- (void) learnSignalWindowController:(ILLearnSignalWindowController*)c
+                 didFinishWithSignal:(IRSignal*)signal
+                           withError:(NSError *)error {
     ILLOG( @"signal: %@", signal );
     _signalWindowController = nil;
+
+    if (error) {
+        // TODO alert? or notification?
+        return;
+    }
 
     if (signal) {
 

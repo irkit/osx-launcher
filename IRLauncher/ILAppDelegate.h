@@ -9,9 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "IRSearcher.h"
 #import "ILMenu.h"
-#import "ILNewSignalWindowController.h"
+#import "ILLearnSignalWindowController.h"
 
-@interface ILAppDelegate : NSObject <NSApplicationDelegate,IRSearcherDelegate,NSMenuDelegate,ILMenuDelegate,ILNewSignalWindowControllerDelegate>
+@interface ILAppDelegate : NSObject <NSApplicationDelegate,IRSearcherDelegate,NSMenuDelegate,ILMenuDelegate,ILLearnSignalWindowControllerDelegate>
 
 - (IBAction) learnNewSignal :(id)sender;
 - (IBAction) showHelp: (id)sender;
