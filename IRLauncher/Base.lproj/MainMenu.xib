@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="14A261i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ILAppDelegate">
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
             <connections>
                 <outlet property="delegate" destination="494" id="495"/>
             </connections>
@@ -50,7 +50,7 @@
                 <menuItem title="Learn new signal" tag="15" keyEquivalent="+" id="UZm-kR-efJ">
                     <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                     <connections>
-                        <action selector="learnNewSignal:" target="-2" id="y8X-I4-zKb"/>
+                        <action selector="learnNewSignal:" target="494" id="AQQ-a5-HoP"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="PbL-Dn-FCA"/>
@@ -68,13 +68,13 @@
                 <menuItem title="Help" id="iUC-AZ-yDI">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="showHelp:" target="-2" id="pc7-ZW-KUi"/>
+                        <action selector="showHelp:" target="494" id="MfC-bo-Gyp"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="hRv-Uy-a1b"/>
                 <menuItem title="Quit IRLauncher" keyEquivalent="q" id="aX7-vm-frd">
                     <connections>
-                        <action selector="terminate:" target="-2" id="al7-dm-93C"/>
+                        <action selector="terminate:" target="494" id="N4C-ra-J4o"/>
                     </connections>
                 </menuItem>
             </items>
