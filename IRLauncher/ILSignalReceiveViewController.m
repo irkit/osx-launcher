@@ -26,15 +26,17 @@
     ILLOG_CURRENT_METHOD;
     [super loadView];
 
+    [self.progressIndicator startAnimation: nil];
+
     __weak typeof(self) _self = self;
     _waiter                   = [IRHTTPClient waitForSignalWithCompletion:^(NSHTTPURLResponse *res, IRSignal *signal, NSError *error) {
         if (error) {
             ILLOG( @"error: %@", error );
-            [_self.delegate signalReceiveViewController: self didReceiveSignal: nil withError: error];
+            [_self.delegate signalReceiveViewController: _self didReceiveSignal: nil withError: error];
             return;
         }
         if (signal) {
-            [_self.delegate signalReceiveViewController: self didReceiveSignal: signal withError: nil];
+            [_self.delegate signalReceiveViewController: _self didReceiveSignal: signal withError: nil];
         }
     }];
 }
@@ -48,6 +50,11 @@
     ILLOG_CURRENT_METHOD;
 
     [_delegate signalReceiveViewController: self didReceiveSignal: signal withError: nil];
+}
+
+- (IBAction) debugButtonPressed: (id)sender {
+    ILLOG_CURRENT_METHOD;
+    [_delegate signalReceiveViewController: self didReceiveSignal: nil withError: nil];
 }
 
 @end

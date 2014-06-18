@@ -29,7 +29,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 @interface ILAppDelegate ()
 
 @property (nonatomic, strong) NSStatusItem *statusItem;
-@property (nonatomic, strong) ILMenu *menu;
 @property (nonatomic, strong) IRSignals *signals;
 
 @property (nonatomic, strong) ILLearnSignalWindowController *signalWindowController;
@@ -70,13 +69,14 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     [IRKit setPersistentStore: store]; // call before `startWithAPIKey`
     [IRKit startWithAPIKey: kIRKitAPIKey];
 
-    self.menu              = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
+    // setup menu
+
     self.menu.menuDelegate = self;
 
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: 30.];
     [self.statusItem setHighlightMode: YES];
-    [self.statusItem setImage: [NSImage imageNamed: @""]]; // TODO
-    [self.statusItem setAlternateImage: [NSImage imageNamed: @""]];
+    [self.statusItem setImage: [NSImage imageNamed: @"StatusBarIcon_111"]]; // TODO
+    [self.statusItem setAlternateImage: [NSImage imageNamed: @"StatusBarIcon_111"]];
     self.statusItem.menu = self.menu;
 
     // setup menu items
@@ -140,6 +140,30 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
     ILLOG( @"hostname: %@ newVersion: %@ currentVersion: %@", hostname, newVersion, currentVersion);
 
+}
+
+- (instancetype) init {
+    ILLOG_CURRENT_METHOD;
+    self = [super init];
+    if (!self) { return nil; }
+    return self;
+}
+
+- (void) awakeFromNib {
+    ILLOG_CURRENT_METHOD;
+}
+
+- (void) dealloc {
+    ILLOG_CURRENT_METHOD;
+}
+
+- (void) refreshTitleOfMenuItem: (NSMenuItem*)item withPeripheral:(IRPeripheral*)peripheral {
+    if (peripheral.version) {
+        item.title = [NSString stringWithFormat: @"%@ %@", peripheral.customizedName, peripheral.version];
+    }
+    else {
+        item.title = [NSString stringWithFormat: @"%@", peripheral.customizedName];
+    }
 }
 
 #pragma mark - NSDistributedNotification related
@@ -234,9 +258,15 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 }
 
 - (NSMenuItem*) menuItemForPeripheral:(IRPeripheral*)peripheral atIndex:(NSUInteger)index {
+    NSInteger tag   = kPeripheralTagOffset + index;
+    NSMenuItem *ret = [self.menu itemWithTag: tag];
+    if (ret) {
+        return ret;
+    }
+
     NSMenuItem *item = [[NSMenuItem alloc] init];
-    item.title = [NSString stringWithFormat: @"%@ %@", peripheral.customizedName, peripheral.version];
-    item.tag   = kPeripheralTagOffset + index;
+    [self refreshTitleOfMenuItem: item withPeripheral: peripheral];
+    item.tag = tag;
     return item;
 }
 
@@ -315,11 +345,26 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 - (IBAction) learnNewSignal :(id)sender {
     ILLOG_CURRENT_METHOD;
 
-    NSEvent *event   = [NSApp currentEvent];
-    NSPoint location = [event locationInWindow];
-    // TODO show window near mouse pointer
+    NSEvent *event        = [NSApp currentEvent];
+    NSPoint location      = [event locationInWindow];
+    NSPoint pointInScreen = [NSEvent mouseLocation];
+    ILLOG( @"locationInWindow: %@, screen: %@", NSStringFromPoint(location), NSStringFromPoint(pointInScreen));
 
-    ILLearnSignalWindowController *c = [[ILLearnSignalWindowController alloc] init];
+    if (pointInScreen.x + 640 > [NSScreen mainScreen].frame.size.width) {
+        pointInScreen.x = [NSScreen mainScreen].frame.size.width - 640;
+    }
+    if (pointInScreen.y + 360 > [NSScreen mainScreen].frame.size.height) {
+        pointInScreen.y = [NSScreen mainScreen].frame.size.height - 360;
+    }
+    NSRect rect = {
+        { pointInScreen.x, pointInScreen.y },
+        { 640, 360 }
+    };
+    NSWindow *window = [[NSWindow alloc] initWithContentRect: rect
+                                                   styleMask: NSTitledWindowMask | NSClosableWindowMask
+                                                     backing: NSBackingStoreBuffered
+                                                       defer: NO];
+    ILLearnSignalWindowController *c = [[ILLearnSignalWindowController alloc] initWithWindow: window];
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     [c showWindow: self];
     c.signalDelegate        = self;
@@ -339,7 +384,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 - (void) learnSignalWindowController:(ILLearnSignalWindowController*)c
                  didFinishWithSignal:(IRSignal*)signal
                            withError:(NSError *)error {
-    ILLOG( @"signal: %@", signal );
+    ILLOG( @"signal: %@, error: %@", signal, error );
     _signalWindowController = nil;
 
     if (error) {
@@ -402,7 +447,13 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
         [self.menu addPeripheralMenuItem: item];
     }
     if (!p.deviceid) {
+        __weak typeof(self) _self = self;
+        __weak typeof(p) _p       = p;
         [p getKeyWithCompletion:^{
+            IRPeripherals *peripherals = [IRKit sharedInstance].peripherals;
+            NSUInteger index = [peripherals indexOfObject: _p];
+            NSMenuItem *item = [_self menuItemForPeripheral: _p atIndex: index];
+            [_self refreshTitleOfMenuItem: item withPeripheral: _p];
             [peripherals save];
         }];
     }
