@@ -157,6 +157,15 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     ILLOG_CURRENT_METHOD;
 }
 
+- (void) refreshTitleOfMenuItem: (NSMenuItem*)item withPeripheral:(IRPeripheral*)peripheral {
+    if (peripheral.version) {
+        item.title = [NSString stringWithFormat: @"%@ %@", peripheral.customizedName, peripheral.version];
+    }
+    else {
+        item.title = [NSString stringWithFormat: @"%@", peripheral.customizedName];
+    }
+}
+
 #pragma mark - NSDistributedNotification related
 
 - (void)postDistributedNotificationToSendFileAtPath: (NSString*)path {
@@ -249,9 +258,15 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 }
 
 - (NSMenuItem*) menuItemForPeripheral:(IRPeripheral*)peripheral atIndex:(NSUInteger)index {
+    NSInteger tag   = kPeripheralTagOffset + index;
+    NSMenuItem *ret = [self.menu itemWithTag: tag];
+    if (ret) {
+        return ret;
+    }
+
     NSMenuItem *item = [[NSMenuItem alloc] init];
-    item.title = [NSString stringWithFormat: @"%@ %@", peripheral.customizedName, peripheral.version];
-    item.tag   = kPeripheralTagOffset + index;
+    [self refreshTitleOfMenuItem: item withPeripheral: peripheral];
+    item.tag = tag;
     return item;
 }
 
@@ -432,7 +447,13 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
         [self.menu addPeripheralMenuItem: item];
     }
     if (!p.deviceid) {
+        __weak typeof(self) _self = self;
+        __weak typeof(p) _p       = p;
         [p getKeyWithCompletion:^{
+            IRPeripherals *peripherals = [IRKit sharedInstance].peripherals;
+            NSUInteger index = [peripherals indexOfObject: _p];
+            NSMenuItem *item = [_self menuItemForPeripheral: _p atIndex: index];
+            [_self refreshTitleOfMenuItem: item withPeripheral: _p];
             [peripherals save];
         }];
     }
