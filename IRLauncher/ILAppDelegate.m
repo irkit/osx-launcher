@@ -315,11 +315,26 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 - (IBAction) learnNewSignal :(id)sender {
     ILLOG_CURRENT_METHOD;
 
-    NSEvent *event   = [NSApp currentEvent];
-    NSPoint location = [event locationInWindow];
-    // TODO show window near mouse pointer
+    NSEvent *event        = [NSApp currentEvent];
+    NSPoint location      = [event locationInWindow];
+    NSPoint pointInScreen = [NSEvent mouseLocation];
+    ILLOG( @"locationInWindow: %@, screen: %@", NSStringFromPoint(location), NSStringFromPoint(pointInScreen));
 
-    ILLearnSignalWindowController *c = [[ILLearnSignalWindowController alloc] init];
+    if (pointInScreen.x + 640 > [NSScreen mainScreen].frame.size.width) {
+        pointInScreen.x = [NSScreen mainScreen].frame.size.width - 640;
+    }
+    if (pointInScreen.y + 360 > [NSScreen mainScreen].frame.size.height) {
+        pointInScreen.y = [NSScreen mainScreen].frame.size.height - 360;
+    }
+    NSRect rect = {
+        { pointInScreen.x, pointInScreen.y },
+        { 640, 360 }
+    };
+    NSWindow *window = [[NSWindow alloc] initWithContentRect: rect
+                                                   styleMask: NSTitledWindowMask | NSClosableWindowMask
+                                                     backing: NSBackingStoreBuffered
+                                                       defer: NO];
+    ILLearnSignalWindowController *c = [[ILLearnSignalWindowController alloc] initWithWindow: window];
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     [c showWindow: self];
     c.signalDelegate        = self;

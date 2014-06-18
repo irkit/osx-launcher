@@ -19,19 +19,12 @@
 
 @implementation ILLearnSignalWindowController
 
-- (id)init {
-    self = [super init];
+- (id)initWithWindow:(NSWindow *)window {
+    ILLOG_CURRENT_METHOD;
+    self = [super initWithWindow: window];
     if (self) {
-        NSRect rect = {
-            { 0, 0 },
-            { 640, 360 }
-        };
-        self.window = [[NSWindow alloc] initWithContentRect: rect
-                                                  styleMask: NSTitledWindowMask | NSClosableWindowMask
-                                                    backing: NSBackingStoreBuffered
-                                                      defer: NO];
-        self.window.delegate = self;
-        [self.window.contentView addSubview: [[NSView alloc] initWithFrame: NSMakeRect(0, 0, 0, 0)]];
+        window.delegate = self;
+        [window.contentView addSubview: [[NSView alloc] initWithFrame: NSMakeRect(0, 0, 0, 0)]];
         ILSignalReceiveViewController *c = [[ILSignalReceiveViewController alloc] initWithNibName: @"ILSignalReceiveView" bundle: nil];
         c.delegate = self;
         [self animateToViewController: c];
@@ -61,13 +54,11 @@
     NSView *nextView    = c.view;
 
     NSRect nextFrame = [self.window frameRectForContentRect: nextView.frame];
-    NSSize newSize   = nextFrame.size;
 
     NSRect frame = [self.window frame];
-    frame.origin.y -= (newSize.height - frame.size.height);
+    frame.origin.y -= (nextFrame.size.height - frame.size.height);
     frame.size      = nextFrame.size;
 
-    // Using an animation grouping because we may be changing the duration
     [NSAnimationContext beginGrouping];
 
     // Call the animator instead of the view / window directly
