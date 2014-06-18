@@ -26,7 +26,8 @@
         window.delegate = self;
         [window.contentView addSubview: [[NSView alloc] initWithFrame: NSMakeRect(0, 0, 0, 0)]];
         ILSignalReceiveViewController *c = [[ILSignalReceiveViewController alloc] initWithNibName: @"ILSignalReceiveView" bundle: nil];
-        c.delegate = self;
+        c.delegate         = self;
+        _currentController = c;
         [self animateToViewController: c];
     }
     return self;

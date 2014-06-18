@@ -8,7 +8,7 @@
             <connections>
                 <outlet property="debugButton" destination="tXh-4D-Gv6" id="2l9-ta-FvD"/>
                 <outlet property="progressIndicator" destination="Zmi-w0-ob1" id="1oU-y1-AGW"/>
-                <outlet property="view" destination="kGj-3l-NjZ" id="Ybu-kz-AGx"/>
+                <outlet property="view" destination="kGj-3l-NjZ" id="6Dj-N1-OzB"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -72,7 +72,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="debugButtonPressed:" target="-2" id="rFo-of-ILJ"/>
+                        <action selector="debugButtonPressed:" target="-2" id="xyp-XK-qHj"/>
                     </connections>
                 </button>
             </subviews>

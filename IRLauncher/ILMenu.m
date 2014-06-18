@@ -82,7 +82,7 @@ const NSInteger kTagQuicksilverIntegration = 50;
 - (void) setHeaderTitleWithTag: (NSUInteger)tag title:(NSString*)title animating:(BOOL)animating {
     NSMenuItem *item = [self itemWithTag: tag];
     if (![item.view isKindOfClass: [ILMenuProgressView class]]) {
-        item.view = [ILUtils loadClassFromNib: [ILMenuProgressView class]];
+        item.view = [ILUtils loadClassNamed: @"ILMenuProgressView"];
     }
     ILMenuProgressView *view = (ILMenuProgressView*)item.view;
     view.animating = animating;

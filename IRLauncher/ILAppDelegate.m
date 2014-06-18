@@ -29,7 +29,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 @interface ILAppDelegate ()
 
 @property (nonatomic, strong) NSStatusItem *statusItem;
-@property (nonatomic, strong) ILMenu *menu;
 @property (nonatomic, strong) IRSignals *signals;
 
 @property (nonatomic, strong) ILLearnSignalWindowController *signalWindowController;
@@ -70,7 +69,8 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     [IRKit setPersistentStore: store]; // call before `startWithAPIKey`
     [IRKit startWithAPIKey: kIRKitAPIKey];
 
-    self.menu              = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
+    // setup menu
+
     self.menu.menuDelegate = self;
 
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: 30.];
@@ -140,6 +140,21 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
     ILLOG( @"hostname: %@ newVersion: %@ currentVersion: %@", hostname, newVersion, currentVersion);
 
+}
+
+- (instancetype) init {
+    ILLOG_CURRENT_METHOD;
+    self = [super init];
+    if (!self) { return nil; }
+    return self;
+}
+
+- (void) awakeFromNib {
+    ILLOG_CURRENT_METHOD;
+}
+
+- (void) dealloc {
+    ILLOG_CURRENT_METHOD;
 }
 
 #pragma mark - NSDistributedNotification related
@@ -354,7 +369,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 - (void) learnSignalWindowController:(ILLearnSignalWindowController*)c
                  didFinishWithSignal:(IRSignal*)signal
                            withError:(NSError *)error {
-    ILLOG( @"signal: %@", signal );
+    ILLOG( @"signal: %@, error: %@", signal, error );
     _signalWindowController = nil;
 
     if (error) {

@@ -17,12 +17,12 @@
     return [orig stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
-+ (id)loadClassFromNib: (Class)class {
++ (id)loadClassNamed: (NSString*)className {
     NSArray *nibEntries = @[];
-    NSNib *nib          = [[NSNib alloc] initWithNibNamed: @"MainMenu" bundle: [NSBundle mainBundle]];
+    NSNib *nib          = [[NSNib alloc] initWithNibNamed: className bundle: [NSBundle mainBundle]];
     [nib instantiateWithOwner: nil topLevelObjects: &nibEntries];
     return [ILUtils firstObjectOf: nibEntries meetsBlock:^BOOL (id obj, NSUInteger idx) {
-        if ([obj isKindOfClass: class]) {
+        if ([obj isKindOfClass: NSClassFromString(className)]) {
             return YES;
         }
         return NO;
