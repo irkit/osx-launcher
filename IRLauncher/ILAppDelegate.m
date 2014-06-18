@@ -8,7 +8,6 @@
 
 #import "ILAppDelegate.h"
 #import "ILLog.h"
-#import "ILMenuletView.h"
 #import "ILVersionChecker.h"
 #import "ILUtils.h"
 #import "ILSignalsDirectorySearcher.h"
@@ -30,7 +29,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 @interface ILAppDelegate ()
 
 @property (nonatomic, strong) NSStatusItem *statusItem;
-@property (nonatomic, strong) ILMenuletView *menuletView;
 @property (nonatomic, strong) ILMenu *menu;
 @property (nonatomic, strong) IRSignals *signals;
 
@@ -67,7 +65,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
                                                           object: nil];
 
     __weak typeof(self) _self = self;
-    CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
 
     ILFileStore *store = [[ILFileStore alloc] init];
     [IRKit setPersistentStore: store]; // call before `startWithAPIKey`
@@ -76,14 +73,11 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     self.menu              = (ILMenu*)[ILUtils loadClassFromNib: [ILMenu class]];
     self.menu.menuDelegate = self;
 
-    self.menuletView      = [[ILMenuletView alloc] initWithFrame: (NSRect){.size={thickness, thickness}}];
-    self.menuletView.menu = self.menu;
-
-    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: thickness];
-    [self.statusItem setView: self.menuletView];
-    [self.statusItem setHighlightMode: NO];
-
-    self.menuletView.statusItem = self.statusItem;
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: 30.];
+    [self.statusItem setHighlightMode: YES];
+    [self.statusItem setImage: [NSImage imageNamed: @""]]; // TODO
+    [self.statusItem setAlternateImage: [NSImage imageNamed: @""]];
+    self.statusItem.menu = self.menu;
 
     // setup menu items
     // signals
