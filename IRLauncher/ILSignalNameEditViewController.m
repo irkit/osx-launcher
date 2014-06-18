@@ -20,6 +20,10 @@
     ILLOG_CURRENT_METHOD;
 }
 
+- (void) dealloc {
+    ILLOG_CURRENT_METHOD;
+}
+
 - (void) loadView {
     ILLOG_CURRENT_METHOD;
     [super loadView];

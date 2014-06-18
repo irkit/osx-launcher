@@ -15,6 +15,8 @@
 
 @property (nonatomic, weak) id<ILSignalReceiveViewControllerDelegate> delegate;
 
+@property (nonatomic, weak) IBOutlet NSButton *debugButton;
+
 @end
 
 @protocol ILSignalReceiveViewControllerDelegate <NSObject>

@@ -75,8 +75,8 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: 30.];
     [self.statusItem setHighlightMode: YES];
-    [self.statusItem setImage: [NSImage imageNamed: @""]]; // TODO
-    [self.statusItem setAlternateImage: [NSImage imageNamed: @""]];
+    [self.statusItem setImage: [NSImage imageNamed: @"StatusBarIcon_111"]]; // TODO
+    [self.statusItem setAlternateImage: [NSImage imageNamed: @"StatusBarIcon_111"]];
     self.statusItem.menu = self.menu;
 
     // setup menu items

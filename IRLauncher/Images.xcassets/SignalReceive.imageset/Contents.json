@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "icon_256x256.png"
+      "filename" : "icon_gui_irkit.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "icon_256x256@2x.png"
+      "filename" : "icon_gui_irkit@2x.png"
     }
   ],
   "info" : {

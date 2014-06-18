@@ -31,10 +31,10 @@
                                                     backing: NSBackingStoreBuffered
                                                       defer: NO];
         self.window.delegate = self;
+        [self.window.contentView addSubview: [[NSView alloc] initWithFrame: NSMakeRect(0, 0, 0, 0)]];
         ILSignalReceiveViewController *c = [[ILSignalReceiveViewController alloc] initWithNibName: @"ILSignalReceiveView" bundle: nil];
-        c.delegate              = self;
-        _currentController      = c;
-        self.window.contentView = c.view;
+        c.delegate = self;
+        [self animateToViewController: c];
     }
     return self;
 }
@@ -51,17 +51,42 @@
                                        withError: NULL];
 }
 
+#pragma mark - Private
+
+- (void) animateToViewController:(NSViewController*)c {
+    _currentController = c;
+
+    NSView *contentView = self.window.contentView;
+    NSView *currentView = contentView.subviews[ 0 ];
+    NSView *nextView    = c.view;
+
+    NSRect nextFrame = [self.window frameRectForContentRect: nextView.frame];
+    NSSize newSize   = nextFrame.size;
+
+    NSRect frame = [self.window frame];
+    frame.origin.y -= (newSize.height - frame.size.height);
+    frame.size      = nextFrame.size;
+
+    // Using an animation grouping because we may be changing the duration
+    [NSAnimationContext beginGrouping];
+
+    // Call the animator instead of the view / window directly
+    [[contentView animator] replaceSubview: currentView with: nextView];
+    [[self.window animator] setFrame: frame display: YES];
+
+    [NSAnimationContext endGrouping];
+}
+
 #pragma mark - ILSignalReceiveViewControllerDelegate
 
 - (void) signalReceiveViewController:(ILSignalReceiveViewController*)c didReceiveSignal:(IRSignal*)signal withError:(NSError *)error {
     ILLOG( @"signal: %@", signal );
 
-    if (signal) {
+    if (signal || 1) {
         ILSignalNameEditViewController *c = [[ILSignalNameEditViewController alloc] initWithNibName: @"ILSignalNameEditView" bundle: nil];
-        c.delegate              = self;
-        c.signal                = signal;
-        _currentController      = c;
-        self.window.contentView = c.view;
+        c.delegate = self;
+        c.signal   = signal;
+        [self animateToViewController: c];
         return;
     }
     if (error) {
@@ -88,9 +113,8 @@
         return;
     }
     ILSignalReceiveViewController *c = [[ILSignalReceiveViewController alloc] initWithNibName: @"ILSignalReceiveView" bundle: nil];
-    c.delegate              = self;
-    _currentController      = c;
-    self.window.contentView = c.view;
+    c.delegate = self;
+    [self animateToViewController: c];
 }
 
 @end

@@ -50,4 +50,9 @@
     [_delegate signalReceiveViewController: self didReceiveSignal: signal withError: nil];
 }
 
+- (IBAction) debugButtonPressed: (id)sender {
+    ILLOG_CURRENT_METHOD;
+    [_delegate signalReceiveViewController: self didReceiveSignal: nil withError: nil];
+}
+
 @end

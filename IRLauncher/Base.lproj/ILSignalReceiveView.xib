@@ -6,35 +6,43 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ILSignalReceiveViewController">
             <connections>
+                <outlet property="debugButton" destination="tXh-4D-Gv6" id="2l9-ta-FvD"/>
                 <outlet property="view" destination="kGj-3l-NjZ" id="Ybu-kz-AGx"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
         <view id="kGj-3l-NjZ">
-            <rect key="frame" x="0.0" y="0.0" width="640" height="360"/>
+            <rect key="frame" x="0.0" y="0.0" width="640" height="400"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mtb-ue-wlt">
-                    <rect key="frame" x="278" y="280" width="289" height="26"/>
+                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mtb-ue-wlt">
+                    <rect key="frame" x="270" y="310" width="330" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="326" id="LnQ-G6-ALu"/>
+                    </constraints>
                     <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Learn IR signal" usesSingleLineMode="YES" id="Ml2-ta-cpa">
                         <font key="font" metaFont="systemBold" size="18"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RzW-df-QNn">
-                    <rect key="frame" x="290" y="197" width="289" height="70"/>
+                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RzW-df-QNn">
+                    <rect key="frame" x="270" y="228" width="330" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="326" id="Xxb-10-8lM"/>
+                        <constraint firstAttribute="height" constant="70" id="kPA-RK-zIq"/>
+                    </constraints>
                     <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Place your plain old remote towards IRKit and press it's button shortly" id="kUZ-2n-VPf">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fY2-eT-JAv">
-                    <rect key="frame" x="302" y="54" width="113" height="20"/>
+                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fY2-eT-JAv">
+                    <rect key="frame" x="294" y="67" width="95" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="信号の入力待ち" usesSingleLineMode="YES" id="Q0z-lp-Jfn">
                         <font key="font" metaFont="system"/>
@@ -43,26 +51,45 @@
                     </textFieldCell>
                 </textField>
                 <imageView appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="56o-EU-bfc">
-                    <rect key="frame" x="-60" y="30" width="300" height="300"/>
+                    <rect key="frame" x="0.0" y="43" width="230" height="315"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="AQx-Fu-lvN"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="b2w-eD-yvV"/>
+                        <constraint firstAttribute="height" constant="315" id="AQx-Fu-lvN"/>
+                        <constraint firstAttribute="width" constant="230" id="b2w-eD-yvV"/>
                     </constraints>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NewSignalWindowImage" id="fcq-mg-ejY"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="SignalReceive" id="fcq-mg-ejY"/>
                 </imageView>
-                <progressIndicator appearanceType="aqua" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Zmi-w0-ob1">
-                    <rect key="frame" x="280" y="56" width="16" height="16"/>
+                <progressIndicator appearanceType="aqua" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Zmi-w0-ob1">
+                    <rect key="frame" x="272" y="66" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
+                <button appearanceType="aqua" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tXh-4D-Gv6">
+                    <rect key="frame" x="544" y="13" width="82" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="t9W-5H-VkN">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="debugButtonPressed:" target="-2" id="rFo-of-ILJ"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="56o-EU-bfc" firstAttribute="leading" secondItem="kGj-3l-NjZ" secondAttribute="leading" constant="-60" id="R0P-7e-VeO"/>
-                <constraint firstAttribute="centerY" secondItem="56o-EU-bfc" secondAttribute="centerY" id="R2x-0A-6Qm"/>
+                <constraint firstItem="RzW-df-QNn" firstAttribute="leading" secondItem="kGj-3l-NjZ" secondAttribute="leading" constant="272" id="8y3-De-JgM"/>
+                <constraint firstAttribute="centerY" secondItem="56o-EU-bfc" secondAttribute="centerY" id="Bb2-fC-aNb"/>
+                <constraint firstItem="Zmi-w0-ob1" firstAttribute="leading" secondItem="kGj-3l-NjZ" secondAttribute="leading" constant="272" id="HBu-Qc-mbG"/>
+                <constraint firstItem="fY2-eT-JAv" firstAttribute="leading" secondItem="Zmi-w0-ob1" secondAttribute="trailing" constant="8" id="OPF-ZN-ojU"/>
+                <constraint firstItem="fY2-eT-JAv" firstAttribute="top" secondItem="kGj-3l-NjZ" secondAttribute="top" constant="316" id="PMW-Tr-hr9"/>
+                <constraint firstItem="56o-EU-bfc" firstAttribute="leading" secondItem="kGj-3l-NjZ" secondAttribute="leading" id="R0P-7e-VeO"/>
+                <constraint firstItem="RzW-df-QNn" firstAttribute="top" secondItem="kGj-3l-NjZ" secondAttribute="top" constant="102" id="Rz1-4R-TyB"/>
+                <constraint firstItem="mtb-ue-wlt" firstAttribute="top" secondItem="kGj-3l-NjZ" secondAttribute="top" constant="68" id="WnZ-Do-o9Q"/>
+                <constraint firstItem="Zmi-w0-ob1" firstAttribute="top" secondItem="kGj-3l-NjZ" secondAttribute="top" constant="318" id="eFa-sc-AU4"/>
+                <constraint firstItem="mtb-ue-wlt" firstAttribute="leading" secondItem="kGj-3l-NjZ" secondAttribute="leading" constant="272" id="lSm-Gp-EfZ"/>
             </constraints>
         </view>
     </objects>
     <resources>
-        <image name="NewSignalWindowImage" width="256" height="256"/>
+        <image name="SignalReceive" width="230" height="315"/>
     </resources>
 </document>
