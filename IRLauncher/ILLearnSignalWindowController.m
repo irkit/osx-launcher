@@ -14,6 +14,7 @@
 @interface ILLearnSignalWindowController ()
 
 @property (nonatomic, strong) NSViewController *currentController;
+@property (nonatomic, strong) id escapeKeyMonitor;
 
 @end
 
@@ -29,12 +30,27 @@
         c.delegate         = self;
         _currentController = c;
         [self animateToViewController: c];
+
+        __weak typeof(self) _self = self;
+        _escapeKeyMonitor         = [NSEvent addLocalMonitorForEventsMatchingMask: NSKeyUpMask
+                                                                          handler:^NSEvent *(NSEvent *event) {
+            ILLOG( @"keyup: %@", event );
+            if (event.window != _self.window) {
+                return event;
+            }
+            if (event.keyCode == 53) { // escape key
+                [_self handleEscapeKey];
+                return nil;
+            }
+            return event;
+        }];
     }
     return self;
 }
 
 - (void)dealloc {
     ILLOG_CURRENT_METHOD;
+    [NSEvent removeMonitor: _escapeKeyMonitor];
 }
 
 - (void) windowDidResignKey: (NSNotification*) notification {
@@ -46,6 +62,14 @@
 }
 
 #pragma mark - Private
+
+- (void) handleEscapeKey {
+    ILLOG_CURRENT_METHOD;
+
+    [_signalDelegate learnSignalWindowController: self
+                             didFinishWithSignal: nil
+                                       withError: NULL];
+}
 
 - (void) animateToViewController:(NSViewController*)c {
     _currentController = c;
