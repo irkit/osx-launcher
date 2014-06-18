@@ -26,6 +26,8 @@
     ILLOG_CURRENT_METHOD;
     [super loadView];
 
+    [self.progressIndicator startAnimation: self];
+
     __weak typeof(self) _self = self;
     _waiter                   = [IRHTTPClient waitForSignalWithCompletion:^(NSHTTPURLResponse *res, IRSignal *signal, NSError *error) {
         if (error) {

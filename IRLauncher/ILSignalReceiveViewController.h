@@ -15,6 +15,7 @@
 
 @property (nonatomic, weak) id<ILSignalReceiveViewControllerDelegate> delegate;
 
+@property (nonatomic, weak) IBOutlet NSProgressIndicator *progressIndicator;
 @property (nonatomic, weak) IBOutlet NSButton *debugButton;
 
 @end
