@@ -111,6 +111,10 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
         [[[ILSender alloc] init] sendFileAtPath: path completion:^(NSError *error) {
             ILLOG( @"error: %@", error );
 
+            if (!error) {
+                return;
+            }
+
             NSString *message;
             switch (error.code) {
             case IRLauncherErrorCodeInvalidFile:
