@@ -11,6 +11,15 @@
 #import "IRKit.h"
 #import "ILMenuProgressView.h"
 #import "ILUtils.h"
+#import "ILSignalsDirectorySearcher.h"
+#import "ILFileStore.h"
+
+@interface ILMenuDataSource ()
+
+@property (nonatomic) BOOL searchingForSignals;
+@property (nonatomic) IRSignals *signals;
+
+@end
 
 @implementation ILMenuDataSource
 
@@ -31,6 +40,54 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     return self;
 }
 
+- (void) searchForSignals {
+    ILLOG_CURRENT_METHOD;
+
+    _searchingForSignals = YES;
+
+    [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
+                                                        object: self
+                                                      userInfo: @{
+         kMOSectionedMenuItemSectionKey: @0
+     }];
+
+    __weak typeof(self) _self = self;
+    [ILSignalsDirectorySearcher findSignalsUnderDirectory: [NSURL fileURLWithPath: [ILFileStore signalsDirectory]]
+                                               completion: ^(NSArray *foundSignals) {
+
+        _self.searchingForSignals = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
+                                                            object: _self
+                                                          userInfo: @{
+             kMOSectionedMenuItemSectionKey: @0
+         }];
+
+        [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
+                IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
+                if (!signal.peripheral) {
+                    // skip signals without hostname
+                    // TODO somehow indicate that we skipped?
+                    return;
+                }
+
+                [_self.signals addSignalsObject: signal];
+                NSUInteger index = [_self.signals indexOfSignal: signal];
+
+                [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemAdded
+                                                                    object: _self
+                                                                  userInfo: @{
+                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index inSection: 0]
+                 }];
+            }];
+    }];
+}
+
+- (NSArray*) signalsWithPeripheral {
+    return [_signals.signals filteredArrayUsingPredicate: [NSPredicate predicateWithBlock:^BOOL (id evaluatedObject, NSDictionary *bindings) {
+            return !!((IRSignal*)evaluatedObject).peripheral;
+        }]];
+}
+
 #pragma mark - MOSectionedMenuDataSource
 
 - (NSUInteger)numberOfSectionsInSectionedMenu:(MOSectionedMenu*)menu {
@@ -41,7 +98,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     switch (sectionIndex) {
     case ILMenuSectionIndexSignals:
     {
-        return _signals.countOfSignals;
+        return [self signalsWithPeripheral].count;
     }
     break;
     case ILMenuSectionIndexPeripherals:
@@ -98,69 +155,9 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 }
 
 - (NSMenuItem*)sectionedMenu:(MOSectionedMenu*)menu itemForIndexPath:(MOIndexPath*)indexPath {
-    switch (indexPath.section) {
-    case ILMenuSectionIndexSignals:
-    {
-        IRSignal *signal = [_signals objectAtIndex: indexPath.item];
-        return [self menuItemForSignal: signal atIndex: indexPath.item];
-    }
-    break;
-    case ILMenuSectionIndexPeripherals:
-    {
-        IRPeripheral *peripheral = [[IRKit sharedInstance].peripherals objectAtIndex: indexPath.item];
-        return [self menuItemForPeripheral: peripheral atIndex: indexPath.item];
-    }
-    break;
-    case ILMenuSectionIndexOptions:
-    {
-        NSMenuItem *item;
-        switch (indexPath.item) {
-        case 0:
-        {
-            NSMenuItem *item = [[NSMenuItem alloc] init];
-            item.title  = @"Start at Login";
-            item.target = self;
-            item.action = @selector(toggleStartAtLogin:);
-            return item;
-        }
-        break;
-        case 1:
-        default:
-        {
-            NSMenuItem *item = [[NSMenuItem alloc] init];
-            item.title  = @"Quicksilver Integration";
-            item.target = self;
-            item.action = @selector(toggleQuicksilverIntegration:);
-            return item;
-        }
-        break;
-        }
-        return item;
-
-    }
-    break;
-    case ILMenuSectionIndexHelp:
-    {
-        NSMenuItem *item = [[NSMenuItem alloc] init];
-        item.title  = @"Help";
-        item.target = self;
-        item.action = @selector(showHelp:);
-        return item;
-    }
-    break;
-    case ILMenuSectionIndexQuit:
-    {
-        NSMenuItem *item = [[NSMenuItem alloc] init];
-        item.title  = @"Quit IRLauncher";
-        item.target = self;
-        item.action = @selector(terminate:);
-        return item;
-    }
-    break;
-    default:
-        NSAssert(0, @"can't come here");
-        return 0;
-    }
+    NSMenuItem *item = [[NSMenuItem alloc] init];
+    [self sectionedMenu: menu updateItem: item atIndexPath: indexPath];
+    return item;
 }
 
 - (NSMenuItem*)sectionedMenu:(MOSectionedMenu*)menu headerItemForSection:(NSUInteger)sectionIndex {
@@ -201,7 +198,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
             item.view = [ILUtils loadClassNamed: @"ILMenuProgressView"];
         }
         ILMenuProgressView *view = (ILMenuProgressView*)item.view;
-        if (YES) {
+        if (_searchingForSignals) {
             view.animating = YES;
             [view.textField setStringValue: @"Signals (Searching...)"];
         }
@@ -238,7 +235,57 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 }
 
 - (void)sectionedMenu:(MOSectionedMenu *)menu updateItem:(NSMenuItem *)item atIndexPath:(MOIndexPath *)indexPath {
-
+    switch (indexPath.section) {
+    case ILMenuSectionIndexSignals:
+    {
+        IRSignal *signal = [[self signalsWithPeripheral] objectAtIndex: indexPath.item];
+        [self updateItem: item withSignal: signal atIndex: indexPath.item];
+    }
+    break;
+    case ILMenuSectionIndexPeripherals:
+    {
+        IRPeripheral *peripheral = [[IRKit sharedInstance].peripherals objectAtIndex: indexPath.item];
+        [self updateItem: item withPeripheral: peripheral atIndex: indexPath.item];
+    }
+    break;
+    case ILMenuSectionIndexOptions:
+    {
+        switch (indexPath.item) {
+        case 0:
+        {
+            item.title  = @"Start at Login";
+            item.target = self;
+            item.action = @selector(toggleStartAtLogin:);
+        }
+        break;
+        case 1:
+        default:
+        {
+            item.title  = @"Quicksilver Integration";
+            item.target = self;
+            item.action = @selector(toggleQuicksilverIntegration:);
+        }
+        break;
+        }
+    }
+    break;
+    case ILMenuSectionIndexHelp:
+    {
+        item.title  = @"Help";
+        item.target = self;
+        item.action = @selector(showHelp:);
+    }
+    break;
+    case ILMenuSectionIndexQuit:
+    {
+        item.title  = @"Quit IRLauncher";
+        item.target = self;
+        item.action = @selector(terminate:);
+    }
+    break;
+    default:
+        NSAssert(0, @"can't come here");
+    }
 }
 
 - (void) menuWillOpen:(NSMenu *)menu {
@@ -255,37 +302,23 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 
 #pragma mark - NSMenuItem factories
 
-- (NSMenuItem*) menuItemForSignal:(IRSignal*)signal atIndex:(NSUInteger)index {
-    NSMenuItem *item = [[NSMenuItem alloc] init];
-    item.title  = signal.name;
-    item.target = self;
-    item.action = @selector(send:);
-    // item.tag     = kSignalTagOffset + index;
+- (void) updateItem:(NSMenuItem*)item withSignal:(IRSignal*)signal atIndex:(NSUInteger)index {
+    item.title   = signal.name;
+    item.target  = self;
+    item.action  = @selector(send:);
     item.toolTip = [NSString stringWithFormat: @"Click to send via %@", signal.peripheral.customizedName];
     if (index < 10) {
         item.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
     }
-    return item;
 }
 
-- (NSMenuItem*) menuItemForPeripheral:(IRPeripheral*)peripheral atIndex:(NSUInteger)index {
-//    NSInteger tag   = kPeripheralTagOffset + index;
-//    NSMenuItem *ret = [self.menu itemWithTag: tag];
-//    if (ret) {
-//        return ret;
-//    }
-//
-    NSMenuItem *item = [[NSMenuItem alloc] init];
-    item.title = [self menuItemTitleForPeripheral: peripheral];
-//    [self refreshTitleOfMenuItem: item withPeripheral: peripheral];
-    return item;
-}
-
-- (NSString*) menuItemTitleForPeripheral:(IRPeripheral*)peripheral {
+- (void) updateItem:(NSMenuItem*)item withPeripheral:(IRPeripheral*)peripheral atIndex:(NSUInteger)index {
     if (peripheral.version) {
-        return [NSString stringWithFormat: @"%@ %@", peripheral.customizedName, peripheral.version];
+        item.title = [NSString stringWithFormat: @"%@ %@", peripheral.customizedName, peripheral.version];
     }
-    return [NSString stringWithFormat: @"%@", peripheral.customizedName];
+    else {
+        item.title = [NSString stringWithFormat: @"%@", peripheral.customizedName];
+    }
 }
 
 #pragma mark - NSMenuItem Actions
@@ -294,7 +327,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     ILLOG( @"sender: %@", sender );
 
     NSUInteger signalIndex = 0; // ((NSMenuItem*)sender).tag - kSignalTagOffset;
-    IRSignal *signal       = (IRSignal*)[self.signals objectInSignalsAtIndex: signalIndex];
+    IRSignal *signal       = (IRSignal*)[[self signalsWithPeripheral] objectAtIndex: signalIndex];
     if (!signal.peripheral) {
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle: @"OK"];
@@ -405,7 +438,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
                                                         object: self
                                                       userInfo: @{
-         kMOSectionedMenuItemUpdatedSectionKey: @1
+         kMOSectionedMenuItemSectionKey: @1
      }];
 }
 
@@ -421,18 +454,24 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
         [peripherals save];
 
         NSUInteger index = [peripherals indexOfObject: p];
-        //        NSMenuItem *item = [self menuItemForPeripheral: p atIndex: index];
-        //        [self.menu addPeripheralMenuItem: item];
+        [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemAdded
+                                                            object: self
+                                                          userInfo: @{
+             kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index inSection: 1]
+         }];
     }
     if (!p.deviceid) {
         __weak typeof(self) _self = self;
-        __weak typeof(p) _p       = p;
+        __weak typeof(p)    _p    = p;
         [p getKeyWithCompletion:^{
             IRPeripherals *peripherals = [IRKit sharedInstance].peripherals;
             NSUInteger index = [peripherals indexOfObject: _p];
-            //            NSMenuItem *item = [_self menuItemForPeripheral: _p atIndex: index];
-            //            [_self refreshTitleOfMenuItem: item withPeripheral: _p];
-            //            [peripherals save];
+            [peripherals save];
+            [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
+                                                                object: _self
+                                                              userInfo: @{
+                 kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index inSection: 1]
+             }];
         }];
     }
 }
@@ -443,7 +482,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
                                                         object: self
                                                       userInfo: @{
-         kMOSectionedMenuItemUpdatedSectionKey: @1
+         kMOSectionedMenuItemSectionKey: @1
      }];
 
     [[IRSearcher sharedInstance] startSearchingAfterTimeInterval: 5. forTimeInterval: 5.];

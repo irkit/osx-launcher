@@ -76,7 +76,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     ILMenuDataSource *dataSource = [[ILMenuDataSource alloc] init];
     dataSource.signals            = _signals;
     self.sectionedMenu.dataSource = dataSource;
-    // self.menu.menuDelegate = self;
 
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: 30.];
     [self.statusItem setHighlightMode: YES];
@@ -88,58 +87,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     // signals
 
     self.signals = [[IRSignals alloc] init];
-
-    // [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
-
-//    [ILSignalsDirectorySearcher findSignalsUnderDirectory: [NSURL fileURLWithPath: [ILFileStore signalsDirectory]]
-//                                               completion: ^(NSArray *foundSignals) {
-//        [_self.menu setSignalHeaderTitle: @"Signals" animating: NO];
-//        [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
-//                IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
-//                if (!signal.peripheral) {
-//                    // skip signals without hostname
-//                    // TODO somehow indicate that we skipped?
-//                    return;
-//                }
-//
-//                [_self.signals addSignalsObject: signal];
-//                NSUInteger index = [_self.signals indexOfSignal: signal];
-//                NSMenuItem *item = [_self menuItemForSignal: signal atIndex: index];
-//                [_self.menu addSignalMenuItem: item];
-//            }];
-//        [self.menu setSignalHeaderTitle: @"Signals" animating: NO];
-//    }];
-
-    // peripherals
-
-//    NSArray *peripherals = [IRKit sharedInstance].peripherals.peripherals;
-//    [peripherals enumerateObjectsUsingBlock:^(IRPeripheral *peripheral, NSUInteger idx, BOOL *stop) {
-//        NSMenuItem *item = [_self menuItemForPeripheral: peripheral atIndex: idx];
-//        [_self.menu addPeripheralMenuItem: item];
-//    }];
-
-//    [IRSearcher sharedInstance].delegate = self;
-
-    // more
-
-//    NSMenuItem *item;
-//
-//    item        = [self.menu itemWithTag: kTagLearnSignal];
-//    item.action = @selector(learnNewSignal:);
-//    item.target = self;
-//
-//    item          = [self.menu itemWithTag: kTagQuicksilverIntegration];
-//    item.action   = @selector(toggleQuicksilverIntegration:);
-//    item.target   = self;
-//    item.onTitle  = @"Quicksilver Integration (installed)";
-//    item.offTitle = @"Quicksilver Integration (uninstalled)";
-//    item.state    = [[[ILQuicksilverExtension alloc] init] installed];
-//
-//    item        = [self.menu itemWithTag: kTagStartAtLoginCheckbox];
-//    item.title  = @"Start at Login";
-//    item.state  = 1 /* start at login? */ ? NSOnState : NSOffState;
-//    item.action = @selector(toggleStartAtLogin:);
-//    item.target = self;
+    [dataSource searchForSignals];
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
@@ -160,15 +108,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
 - (void) dealloc {
     ILLOG_CURRENT_METHOD;
-}
-
-- (void) refreshTitleOfMenuItem: (NSMenuItem*)item withPeripheral:(IRPeripheral*)peripheral {
-    if (peripheral.version) {
-        item.title = [NSString stringWithFormat: @"%@ %@", peripheral.customizedName, peripheral.version];
-    }
-    else {
-        item.title = [NSString stringWithFormat: @"%@", peripheral.customizedName];
-    }
 }
 
 #pragma mark - NSDistributedNotification related

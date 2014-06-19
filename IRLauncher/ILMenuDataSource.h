@@ -16,6 +16,7 @@
         IRSearcherDelegate
         >
 
-@property (nonatomic) IRSignals *signals;
+- (void) setSignals:(IRSignals *)signals;
+- (void) searchForSignals;
 
 @end

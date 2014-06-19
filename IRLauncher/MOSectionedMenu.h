@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kMOSectionedMenuItemAdded;
 extern NSString * const kMOSectionedMenuItemUpdated;
 extern NSString * const kMOSectionedMenuItemHeaderUpdated;
-extern NSString * const kMOSectionedMenuItemUpdatedSectionKey;
-extern NSString * const kMOSectionedMenuItemUpdatedIndexPathKey;
+extern NSString * const kMOSectionedMenuItemSectionKey;
+extern NSString * const kMOSectionedMenuItemIndexPathKey;
 
 @interface MOIndexPath : NSObject
 

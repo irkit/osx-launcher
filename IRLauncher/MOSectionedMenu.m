@@ -9,14 +9,16 @@
 #import "MOSectionedMenu.h"
 #import "ILLog.h"
 
-NSString * const kMOSectionedMenuItemUpdated             = @"kMOSectionedMenuItemUpdated";
-NSString * const kMOSectionedMenuItemHeaderUpdated       = @"kMOSectionedMenuItemHeaderUpdated";
-NSString * const kMOSectionedMenuItemUpdatedSectionKey   = @"kMOSectionedMenuItemUpdatedSectionKey";
-NSString * const kMOSectionedMenuItemUpdatedIndexPathKey = @"kMOSectionedMenuItemUpdatedIndexPathKey";
+NSString * const kMOSectionedMenuItemAdded         = @"kMOSectionedMenuItemAdded";
+NSString * const kMOSectionedMenuItemUpdated       = @"kMOSectionedMenuItemUpdated";
+NSString * const kMOSectionedMenuItemHeaderUpdated = @"kMOSectionedMenuItemHeaderUpdated";
+NSString * const kMOSectionedMenuItemSectionKey    = @"kMOSectionedMenuItemSectionKey";
+NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndexPathKey";
 
 @interface MOSectionedMenu ()
 
 @property (nonatomic) BOOL initialized;
+@property (nonatomic) BOOL opened;
 
 @end
 
@@ -46,13 +48,50 @@ NSString * const kMOSectionedMenuItemUpdatedIndexPathKey = @"kMOSectionedMenuIte
                                                       object: dataSource
                                                        queue: nil
                                                   usingBlock:^(NSNotification *note) {
-        NSUInteger section = [note.userInfo[ kMOSectionedMenuItemUpdatedSectionKey ] unsignedIntegerValue];
+        if (!_self.initialized || !_self.opened) {
+            // don't try to update menu if it's not initialized yet
+            return;
+        }
+
+        NSUInteger section = [note.userInfo[ kMOSectionedMenuItemSectionKey ] unsignedIntegerValue];
         if ([_self.dataSource respondsToSelector: @selector(sectionedMenu:updateHeaderItem:inSection:)]) {
             NSMenuItem *header = [self headerItemForSection: section];
             [_self.dataSource sectionedMenu: _self
                            updateHeaderItem: header
                                   inSection: section];
         }
+    }];
+    [[NSNotificationCenter defaultCenter] addObserverForName: kMOSectionedMenuItemAdded
+                                                      object: dataSource
+                                                       queue: nil
+                                                  usingBlock:^(NSNotification *note) {
+        if (!_self.initialized || !_self.opened) {
+            // don't try to update menu if it's not initialized yet
+            return;
+        }
+
+        MOIndexPath *indexPath = note.userInfo[ kMOSectionedMenuItemIndexPathKey ];
+        NSMenuItem *item = [_self.dataSource sectionedMenu: _self
+                                          itemForIndexPath: indexPath ];
+        NSUInteger index = [self indexOfItemAtIndexPath: indexPath];
+        [_self.menu insertItem: item
+                       atIndex: index];
+    }];
+    [[NSNotificationCenter defaultCenter] addObserverForName: kMOSectionedMenuItemUpdated
+                                                      object: dataSource
+                                                       queue: nil
+                                                  usingBlock:^(NSNotification *note) {
+        if (!_self.initialized || !_self.opened) {
+            // don't try to update menu if it's not initialized yet
+            return;
+        }
+
+        MOIndexPath *indexPath = note.userInfo[ kMOSectionedMenuItemIndexPathKey ];
+        NSMenuItem *item = [_self.dataSource sectionedMenu: _self
+                                          itemForIndexPath: indexPath ];
+        [_self.dataSource sectionedMenu: _self
+                             updateItem: item
+                            atIndexPath: indexPath];
     }];
 }
 
@@ -134,9 +173,6 @@ NSString * const kMOSectionedMenuItemUpdatedIndexPathKey = @"kMOSectionedMenuIte
 
 #pragma mark - Private
 
-- (void) addMenuItemUpdateObserver {
-
-}
 
 #pragma mark - NSMenuDelegate methods
 
@@ -173,12 +209,14 @@ NSString * const kMOSectionedMenuItemUpdatedIndexPathKey = @"kMOSectionedMenuIte
 }
 
 - (void) menuWillOpen:(NSMenu *)menu {
+    _opened = YES;
     if ([self.dataSource respondsToSelector: @selector(menuWillOpen:)]) {
         [self.dataSource menuWillOpen: menu];
     }
 }
 
 - (void) menuDidClose:(NSMenu *)menu {
+    _opened = NO;
     if ([self.dataSource respondsToSelector: @selector(menuDidClose:)]) {
         [self.dataSource menuDidClose: menu];
     }

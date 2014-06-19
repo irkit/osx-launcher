@@ -11,6 +11,6 @@
 #import "ILMenu.h"
 #import "ILLearnSignalWindowController.h"
 
-@interface ILAppDelegate : NSObject <NSApplicationDelegate,IRSearcherDelegate,NSMenuDelegate,ILMenuDelegate,ILLearnSignalWindowControllerDelegate>
+@interface ILAppDelegate : NSObject <NSApplicationDelegate,ILLearnSignalWindowControllerDelegate>
 
 @end
