@@ -42,6 +42,8 @@
 }
 
 - (void) stopAnimation {
+    ILLOG_CURRENT_METHOD;
+
     NSProgressIndicator *indicator = self.indicator;
     [indicator performSelector: @selector(stopAnimation:)
                     withObject: nil
