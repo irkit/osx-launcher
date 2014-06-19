@@ -37,7 +37,6 @@
 		C77AFB561952ADFC002ED79A /* NSObject+SFObservers.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB501952ADFC002ED79A /* NSObject+SFObservers.m */; };
 		C77AFB571952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB531952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m */; };
 		C77CC8D7194FE70800622994 /* ILSignalNameEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */; };
-		C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* ILMenu.m */; };
 		C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C781847E18ED5F1F007FB4E1 /* IRHelper.m */; };
 		C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848018ED5F1F007FB4E1 /* IRHTTPJSONOperation.m */; };
 		C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848218ED5F1F007FB4E1 /* IRHTTPOperationQueue.m */; };
@@ -125,8 +124,6 @@
 		C77AFB531952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SFExecuteOnDealloc.m"; sourceTree = "<group>"; };
 		C77AFB541952ADFC002ED79A /* SFObservers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFObservers.h; sourceTree = "<group>"; };
 		C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILSignalNameEditView.xib; sourceTree = "<group>"; };
-		C77ECAE9189A41A2006C8338 /* ILMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenu.h; sourceTree = "<group>"; };
-		C77ECAEA189A41A2006C8338 /* ILMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenu.m; sourceTree = "<group>"; };
 		C781847D18ED5F1F007FB4E1 /* IRHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHelper.h; path = "../../ios-sdk/IRKit/IRKit/IRHelper.h"; sourceTree = "<group>"; };
 		C781847E18ED5F1F007FB4E1 /* IRHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHelper.m; path = "../../ios-sdk/IRKit/IRKit/IRHelper.m"; sourceTree = "<group>"; };
 		C781847F18ED5F1F007FB4E1 /* IRHTTPJSONOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHTTPJSONOperation.h; path = "../../ios-sdk/IRKit/IRKit/IRHTTPJSONOperation.h"; sourceTree = "<group>"; };
@@ -318,8 +315,6 @@
 		C7766F9D189A4E9B00898267 /* Menulet */ = {
 			isa = PBXGroup;
 			children = (
-				C77ECAE9189A41A2006C8338 /* ILMenu.h */,
-				C77ECAEA189A41A2006C8338 /* ILMenu.m */,
 				C79AF43718FE5FA600814235 /* ILMenuProgressView.h */,
 				C79AF43818FE5FA600814235 /* ILMenuProgressView.m */,
 				C7F32CB019516DED00601842 /* ILMenuProgressView.xib */,
@@ -560,7 +555,6 @@
 				C763F69C18ED692C00EAC927 /* Log.m in Sources */,
 				C764C1C719527E5B003410B6 /* MOSectionedMenu.m in Sources */,
 				C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */,
-				C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */,
 				C7647EB918ED5DD000171E7F /* IRHTTPClient.m in Sources */,
 				C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */,
 				C781848818ED5F1F007FB4E1 /* IRPeripherals.m in Sources */,

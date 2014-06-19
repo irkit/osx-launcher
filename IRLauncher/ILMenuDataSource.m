@@ -13,11 +13,13 @@
 #import "ILUtils.h"
 #import "ILSignalsDirectorySearcher.h"
 #import "ILFileStore.h"
+#import "ILLearnSignalWindowController.h"
 
 @interface ILMenuDataSource ()
 
 @property (nonatomic) BOOL searchingForSignals;
 @property (nonatomic) IRSignals *signals;
+@property (nonatomic) ILLearnSignalWindowController *signalWindowController;
 
 @end
 
@@ -346,6 +348,8 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 - (void) learnNewSignal :(id)sender {
     ILLOG_CURRENT_METHOD;
 
+    // TODO alert if we haven't setup any IRKit
+
     NSEvent *event        = [NSApp currentEvent];
     NSPoint location      = [event locationInWindow];
     NSPoint pointInScreen = [NSEvent mouseLocation];
@@ -365,11 +369,11 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
                                                    styleMask: NSTitledWindowMask | NSClosableWindowMask
                                                      backing: NSBackingStoreBuffered
                                                        defer: NO];
-//    ILLearnSignalWindowController *c = [[ILLearnSignalWindowController alloc] initWithWindow: window];
-//    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
-//    [c showWindow: self];
-//    c.signalDelegate        = self;
-//    _signalWindowController = c; // retain to keep window showing
+    ILLearnSignalWindowController *c = [[ILLearnSignalWindowController alloc] initWithWindow: window];
+    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
+    [c showWindow: self];
+    c.signalDelegate        = self;
+    _signalWindowController = c; // retain to keep window showing
 }
 
 - (void) toggleStartAtLogin: (id)sender {
@@ -486,6 +490,37 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
      }];
 
     [[IRSearcher sharedInstance] startSearchingAfterTimeInterval: 5. forTimeInterval: 5.];
+}
+
+
+#pragma mark - ILLearnSignalWindowControllerDelegate
+
+- (void) learnSignalWindowController:(ILLearnSignalWindowController*)c
+                 didFinishWithSignal:(IRSignal*)signal
+                           withError:(NSError *)error {
+    ILLOG( @"signal: %@, error: %@", signal, error );
+    _signalWindowController = nil;
+
+    if (error) {
+        // TODO alert? or notification?
+        return;
+    }
+
+    if (signal) {
+        BOOL saved = [ILFileStore saveSignal: signal];
+        if (!saved) {
+            // ex: file name overwrite cancelled
+            return;
+        }
+
+        [_signals addSignalsObject: signal];
+        NSUInteger index = [_signals indexOfSignal: signal];
+        [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemAdded
+                                                            object: self
+                                                          userInfo: @{
+             kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index inSection: 0]
+         }];
+    }
 }
 
 @end

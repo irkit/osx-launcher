@@ -10,10 +10,12 @@
 #import "MOSectionedMenu.h"
 #import "IRSignals.h"
 #import "IRSearcher.h"
+#import "ILLearnSignalWindowController.h"
 
 @interface ILMenuDataSource : NSObject<
         MOSectionedMenuDataSource,
-        IRSearcherDelegate
+        IRSearcherDelegate,
+        ILLearnSignalWindowControllerDelegate
         >
 
 - (void) setSignals:(IRSignals *)signals;

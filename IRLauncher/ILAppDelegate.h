@@ -7,10 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "IRSearcher.h"
-#import "ILMenu.h"
-#import "ILLearnSignalWindowController.h"
 
-@interface ILAppDelegate : NSObject <NSApplicationDelegate,ILLearnSignalWindowControllerDelegate>
+@interface ILAppDelegate : NSObject <NSApplicationDelegate>
 
 @end

@@ -8,20 +8,12 @@
 
 #import "ILAppDelegate.h"
 #import "ILLog.h"
-#import "ILVersionChecker.h"
-#import "ILUtils.h"
-#import "ILSignalsDirectorySearcher.h"
-#import "IRKit.h"
-#import "ILFileStore.h"
-#import "ILMenuProgressView.h"
-#import "ILConst.h"
-#import "ILMenu.h"
-#import "ILQuicksilverExtension.h"
-#import "ILSender.h"
-#import "NSMenuItem+StateAware.h"
-#import "ILLearnSignalWindowController.h"
 #import "MOSectionedMenu.h"
+#import "IRSignals.h"
 #import "ILMenuDataSource.h"
+#import "ILFileStore.h"
+#import "ILSender.h"
+#import "ILConst.h"
 
 const int kSignalTagOffset                             = 1000;
 const int kPeripheralTagOffset                         = 100;
@@ -33,8 +25,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 @property (nonatomic, strong) MOSectionedMenu *sectionedMenu;
 @property (nonatomic, strong) NSStatusItem *statusItem;
 @property (nonatomic, strong) IRSignals *signals;
-
-@property (nonatomic, strong) ILLearnSignalWindowController *signalWindowController;
 
 @end
 
@@ -72,22 +62,16 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
     // setup menu
 
-    self.sectionedMenu = [[MOSectionedMenu alloc] init];
     ILMenuDataSource *dataSource = [[ILMenuDataSource alloc] init];
-    dataSource.signals            = _signals;
-    self.sectionedMenu.dataSource = dataSource;
+    dataSource.signals        = _signals;
+    _sectionedMenu.dataSource = dataSource;
+    [dataSource searchForSignals];
 
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: 30.];
     [self.statusItem setHighlightMode: YES];
     [self.statusItem setImage: [NSImage imageNamed: @"StatusBarIcon_111"]]; // TODO
     [self.statusItem setAlternateImage: [NSImage imageNamed: @"StatusBarIcon_111"]];
     self.statusItem.menu = self.sectionedMenu.menu;
-
-    // setup menu items
-    // signals
-
-    self.signals = [[IRSignals alloc] init];
-    [dataSource searchForSignals];
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
@@ -99,6 +83,10 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     ILLOG_CURRENT_METHOD;
     self = [super init];
     if (!self) { return nil; }
+
+    _signals       = [[IRSignals alloc] init];
+    _sectionedMenu = [[MOSectionedMenu alloc] init];
+
     return self;
 }
 
@@ -184,37 +172,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     NSInteger ret = [alert runModal];
     callback( ret );
-}
-
-#pragma mark - ILLearnSignalWindowControllerDelegate
-
-- (void) learnSignalWindowController:(ILLearnSignalWindowController*)c
-                 didFinishWithSignal:(IRSignal*)signal
-                           withError:(NSError *)error {
-    ILLOG( @"signal: %@, error: %@", signal, error );
-    _signalWindowController = nil;
-
-    if (error) {
-        // TODO alert? or notification?
-        return;
-    }
-
-    if (signal) {
-
-        // TODO remove after signal name edit introduced
-        signal.name = @"null";
-
-        BOOL saved = [ILFileStore saveSignal: signal];
-        if (!saved) {
-            // ex: file name overwrite cancelled
-            return;
-        }
-
-        [_signals addSignalsObject: signal];
-        NSUInteger index = [_signals indexOfSignal: signal];
-//        NSMenuItem *item = [self menuItemForSignal: signal atIndex: index];
-//        [_menu addSignalMenuItem: item];
-    }
 }
 
 @end
