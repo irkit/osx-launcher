@@ -250,7 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				C77AFB4B1952ADE5002ED79A /* Dependencies */,
-				C78918E1194FE8A50075C36E /* NewSignalWindow */,
+				C78918E1194FE8A50075C36E /* LearnSignalWindow */,
 				C70745BA191A1C7D00AA7A32 /* Extensions */,
 				C71E8996189FA05F007BC9C4 /* Categories */,
 				C7FD7F88189CFC9600EF0906 /* IRKit */,
@@ -365,7 +365,7 @@
 			path = SFExecuteOnDealloc;
 			sourceTree = "<group>";
 		};
-		C78918E1194FE8A50075C36E /* NewSignalWindow */ = {
+		C78918E1194FE8A50075C36E /* LearnSignalWindow */ = {
 			isa = PBXGroup;
 			children = (
 				C7B2069D194FF4BB001646DD /* ILLearnSignalWindowController.h */,
@@ -377,7 +377,7 @@
 				C78918DF194FE89A0075C36E /* ILSignalNameEditViewController.m */,
 				C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */,
 			);
-			name = NewSignalWindow;
+			name = LearnSignalWindow;
 			sourceTree = "<group>";
 		};
 		C7FD7F88189CFC9600EF0906 /* IRKit */ = {
