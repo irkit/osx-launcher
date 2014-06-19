@@ -6,17 +6,14 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
             <connections>
-                <outlet property="delegate" destination="494" id="495"/>
+                <outlet property="delegate" destination="494" id="G00-32-rxg"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <customObject id="494" customClass="ILAppDelegate">
-            <connections>
-                <outlet property="menu" destination="nVI-uD-uLB" id="xMy-nM-r38"/>
-            </connections>
-        </customObject>
+        <customObject id="494" customClass="ILAppDelegate"/>
         <customObject id="420" customClass="NSFontManager"/>
+        <customObject id="Isw-LZ-kYI" customClass="MOSectionedMenu"/>
         <menu id="nVI-uD-uLB" customClass="ILMenu">
             <items>
                 <menuItem title="Signals" tag="10" enabled="NO" id="Ji8-hp-uI5">
@@ -24,9 +21,6 @@
                 </menuItem>
                 <menuItem title="Learn new signal" tag="15" keyEquivalent="+" id="UZm-kR-efJ">
                     <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
-                    <connections>
-                        <action selector="learnNewSignal:" target="494" id="AQQ-a5-HoP"/>
-                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="PbL-Dn-FCA"/>
                 <menuItem title="IRKits" tag="20" enabled="NO" id="uCB-gE-BaK">
@@ -42,16 +36,9 @@
                 <menuItem isSeparatorItem="YES" id="n4q-lY-mQ3"/>
                 <menuItem title="Help" id="iUC-AZ-yDI">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="showHelp:" target="494" id="MfC-bo-Gyp"/>
-                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="hRv-Uy-a1b"/>
-                <menuItem title="Quit IRLauncher" keyEquivalent="q" id="aX7-vm-frd">
-                    <connections>
-                        <action selector="terminate:" target="494" id="N4C-ra-J4o"/>
-                    </connections>
-                </menuItem>
+                <menuItem title="Quit IRLauncher" keyEquivalent="q" id="aX7-vm-frd"/>
             </items>
         </menu>
     </objects>

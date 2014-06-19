@@ -20,6 +20,8 @@
 #import "ILSender.h"
 #import "NSMenuItem+StateAware.h"
 #import "ILLearnSignalWindowController.h"
+#import "MOSectionedMenu.h"
+#import "ILMenuDataSource.h"
 
 const int kSignalTagOffset                             = 1000;
 const int kPeripheralTagOffset                         = 100;
@@ -28,6 +30,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
 @interface ILAppDelegate ()
 
+@property (nonatomic, strong) MOSectionedMenu *sectionedMenu;
 @property (nonatomic, strong) NSStatusItem *statusItem;
 @property (nonatomic, strong) IRSignals *signals;
 
@@ -63,78 +66,80 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
                                                             name: nil
                                                           object: nil];
 
-    __weak typeof(self) _self = self;
-
     ILFileStore *store = [[ILFileStore alloc] init];
     [IRKit setPersistentStore: store]; // call before `startWithAPIKey`
     [IRKit startWithAPIKey: kIRKitAPIKey];
 
     // setup menu
 
-    self.menu.menuDelegate = self;
+    self.sectionedMenu = [[MOSectionedMenu alloc] init];
+    ILMenuDataSource *dataSource = [[ILMenuDataSource alloc] init];
+    dataSource.signals            = _signals;
+    self.sectionedMenu.dataSource = dataSource;
+    // self.menu.menuDelegate = self;
 
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: 30.];
     [self.statusItem setHighlightMode: YES];
     [self.statusItem setImage: [NSImage imageNamed: @"StatusBarIcon_111"]]; // TODO
     [self.statusItem setAlternateImage: [NSImage imageNamed: @"StatusBarIcon_111"]];
-    self.statusItem.menu = self.menu;
+    self.statusItem.menu = self.sectionedMenu.menu;
 
     // setup menu items
     // signals
 
     self.signals = [[IRSignals alloc] init];
 
-    [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
+    // [self.menu setSignalHeaderTitle: @"Signals (Searching...)" animating: YES];
 
-    [ILSignalsDirectorySearcher findSignalsUnderDirectory: [NSURL fileURLWithPath: [ILFileStore signalsDirectory]]
-                                               completion: ^(NSArray *foundSignals) {
-        [_self.menu setSignalHeaderTitle: @"Signals" animating: NO];
-        [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
-                IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
-                if (!signal.peripheral) {
-                    // skip signals without hostname
-                    // TODO somehow indicate that we skipped?
-                    return;
-                }
-
-                [_self.signals addSignalsObject: signal];
-                NSUInteger index = [_self.signals indexOfSignal: signal];
-                NSMenuItem *item = [_self menuItemForSignal: signal atIndex: index];
-                [_self.menu addSignalMenuItem: item];
-            }];
-        [self.menu setSignalHeaderTitle: @"Signals" animating: NO];
-    }];
+//    [ILSignalsDirectorySearcher findSignalsUnderDirectory: [NSURL fileURLWithPath: [ILFileStore signalsDirectory]]
+//                                               completion: ^(NSArray *foundSignals) {
+//        [_self.menu setSignalHeaderTitle: @"Signals" animating: NO];
+//        [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
+//                IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
+//                if (!signal.peripheral) {
+//                    // skip signals without hostname
+//                    // TODO somehow indicate that we skipped?
+//                    return;
+//                }
+//
+//                [_self.signals addSignalsObject: signal];
+//                NSUInteger index = [_self.signals indexOfSignal: signal];
+//                NSMenuItem *item = [_self menuItemForSignal: signal atIndex: index];
+//                [_self.menu addSignalMenuItem: item];
+//            }];
+//        [self.menu setSignalHeaderTitle: @"Signals" animating: NO];
+//    }];
 
     // peripherals
 
-    NSArray *peripherals = [IRKit sharedInstance].peripherals.peripherals;
-    [peripherals enumerateObjectsUsingBlock:^(IRPeripheral *peripheral, NSUInteger idx, BOOL *stop) {
-        NSMenuItem *item = [_self menuItemForPeripheral: peripheral atIndex: idx];
-        [_self.menu addPeripheralMenuItem: item];
-    }];
+//    NSArray *peripherals = [IRKit sharedInstance].peripherals.peripherals;
+//    [peripherals enumerateObjectsUsingBlock:^(IRPeripheral *peripheral, NSUInteger idx, BOOL *stop) {
+//        NSMenuItem *item = [_self menuItemForPeripheral: peripheral atIndex: idx];
+//        [_self.menu addPeripheralMenuItem: item];
+//    }];
 
     [IRSearcher sharedInstance].delegate = self;
 
     // more
 
-    NSMenuItem *item;
-
-    item        = [self.menu itemWithTag: kTagLearnSignal];
-    item.action = @selector(learnNewSignal:);
-    item.target = self;
-
-    item          = [self.menu itemWithTag: kTagQuicksilverIntegration];
-    item.action   = @selector(toggleQuicksilverIntegration:);
-    item.target   = self;
-    item.onTitle  = @"Quicksilver Integration (installed)";
-    item.offTitle = @"Quicksilver Integration (uninstalled)";
-    item.state    = [[[ILQuicksilverExtension alloc] init] installed];
-
-    item        = [self.menu itemWithTag: kTagStartAtLoginCheckbox];
-    item.title  = @"Start at Login";
-    item.state  = 1 /* start at login? */ ? NSOnState : NSOffState;
-    item.action = @selector(toggleStartAtLogin:);
-    item.target = self;
+//    NSMenuItem *item;
+//
+//    item        = [self.menu itemWithTag: kTagLearnSignal];
+//    item.action = @selector(learnNewSignal:);
+//    item.target = self;
+//
+//    item          = [self.menu itemWithTag: kTagQuicksilverIntegration];
+//    item.action   = @selector(toggleQuicksilverIntegration:);
+//    item.target   = self;
+//    item.onTitle  = @"Quicksilver Integration (installed)";
+//    item.offTitle = @"Quicksilver Integration (uninstalled)";
+//    item.state    = [[[ILQuicksilverExtension alloc] init] installed];
+//
+//    item        = [self.menu itemWithTag: kTagStartAtLoginCheckbox];
+//    item.title  = @"Start at Login";
+//    item.state  = 1 /* start at login? */ ? NSOnState : NSOffState;
+//    item.action = @selector(toggleStartAtLogin:);
+//    item.target = self;
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
@@ -242,143 +247,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     callback( ret );
 }
 
-#pragma mark - NSMenuItem factories
-
-- (NSMenuItem*) menuItemForSignal:(IRSignal*)signal atIndex:(NSUInteger)index {
-    NSMenuItem *item = [[NSMenuItem alloc] init];
-    item.title   = signal.name;
-    item.target  = self;
-    item.action  = @selector(send:);
-    item.tag     = kSignalTagOffset + index;
-    item.toolTip = [NSString stringWithFormat: @"Click to send via %@", signal.peripheral.customizedName];
-    if (index < 10) {
-        item.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
-    }
-    return item;
-}
-
-- (NSMenuItem*) menuItemForPeripheral:(IRPeripheral*)peripheral atIndex:(NSUInteger)index {
-    NSInteger tag   = kPeripheralTagOffset + index;
-    NSMenuItem *ret = [self.menu itemWithTag: tag];
-    if (ret) {
-        return ret;
-    }
-
-    NSMenuItem *item = [[NSMenuItem alloc] init];
-    [self refreshTitleOfMenuItem: item withPeripheral: peripheral];
-    item.tag = tag;
-    return item;
-}
-
-#pragma mark - NSMenuItem actions
-
-- (void) send: (id)sender {
-    ILLOG( @"sender: %@", sender );
-
-    NSUInteger signalIndex = ((NSMenuItem*)sender).tag - kSignalTagOffset;
-    IRSignal *signal       = (IRSignal*)[self.signals objectInSignalsAtIndex: signalIndex];
-    if (!signal.peripheral) {
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle: @"OK"];
-        NSString *message = [NSString stringWithFormat: @"Set \"hostname\" key in ~/.irkit.d/signals/%@.json or remove it and re-learn", signal.name];
-        [alert setMessageText: message];
-        [alert setAlertStyle: NSWarningAlertStyle];
-        [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
-        [alert runModal];
-        return;
-    }
-    [signal sendWithCompletion:^(NSError *error) {
-        ILLOG( @"sent: %@", error );
-    }];
-}
-
-- (void) toggleStartAtLogin: (id)sender {
-    ILLOG( @"sender: %@", sender );
-}
-
-- (void) toggleQuicksilverIntegration: (id)sender {
-    ILLOG( @"sender: %@", sender );
-    NSMenuItem *item = [self.menu itemWithTag: kTagQuicksilverIntegration];
-
-    if ([[[ILQuicksilverExtension alloc] init] installed]) {
-        [self showConfirmToUninstall:^(NSInteger returnCode) {
-            if (returnCode == NSAlertFirstButtonReturn) {
-                [[[ILQuicksilverExtension alloc] init] uninstall];
-                item.state =[[[ILQuicksilverExtension alloc] init] installed] ? NSOnState : NSOffState;
-            }
-        }];
-    }
-    else {
-        [self showConfirmToInstall:^(NSInteger returnCode) {
-            if (returnCode == NSAlertFirstButtonReturn) {
-                [[[ILQuicksilverExtension alloc] init] install];
-                item.state =[[[ILQuicksilverExtension alloc] init] installed] ? NSOnState : NSOffState;
-                NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
-                if (quicksilvers.count) {
-                    [self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
-                            NSRunningApplication *q = quicksilvers[ 0 ];
-                            BOOL success = [q terminate];
-                            if (!success) {
-                                ILLOG( @"failed to terminate quicksilver" );
-                            }
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                    NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
-                                    if (quicksilvers.count) {
-                                        ILLOG( @"failed to terminate quicksilver" );
-                                        return;
-                                    }
-                                    BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.blacktree.Quicksilver"
-                                                                                                        options: NSWorkspaceLaunchDefault
-                                                                                 additionalEventParamDescriptor: NULL
-                                                                                               launchIdentifier: NULL];
-                                    if (!success) {
-                                        ILLOG( @"failed to launch quicksilver" );
-                                    }
-                                });
-                        }];
-                }
-            }
-        }];
-    }
-}
-
-- (IBAction) learnNewSignal :(id)sender {
-    ILLOG_CURRENT_METHOD;
-
-    NSEvent *event        = [NSApp currentEvent];
-    NSPoint location      = [event locationInWindow];
-    NSPoint pointInScreen = [NSEvent mouseLocation];
-    ILLOG( @"locationInWindow: %@, screen: %@", NSStringFromPoint(location), NSStringFromPoint(pointInScreen));
-
-    if (pointInScreen.x + 640 > [NSScreen mainScreen].frame.size.width) {
-        pointInScreen.x = [NSScreen mainScreen].frame.size.width - 640;
-    }
-    if (pointInScreen.y + 360 > [NSScreen mainScreen].frame.size.height) {
-        pointInScreen.y = [NSScreen mainScreen].frame.size.height - 360;
-    }
-    NSRect rect = {
-        { pointInScreen.x, pointInScreen.y },
-        { 640, 360 }
-    };
-    NSWindow *window = [[NSWindow alloc] initWithContentRect: rect
-                                                   styleMask: NSTitledWindowMask | NSClosableWindowMask
-                                                     backing: NSBackingStoreBuffered
-                                                       defer: NO];
-    ILLearnSignalWindowController *c = [[ILLearnSignalWindowController alloc] initWithWindow: window];
-    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
-    [c showWindow: self];
-    c.signalDelegate        = self;
-    _signalWindowController = c; // retain to keep window showing
-}
-
-- (IBAction) showHelp: (id)sender {
-    ILLOG_CURRENT_METHOD;
-}
-
-- (IBAction) terminate: (id)sender {
-    [[NSApplication sharedApplication] terminate: sender];
-}
-
 #pragma mark - ILLearnSignalWindowControllerDelegate
 
 - (void) learnSignalWindowController:(ILLearnSignalWindowController*)c
@@ -405,8 +273,8 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
         [_signals addSignalsObject: signal];
         NSUInteger index = [_signals indexOfSignal: signal];
-        NSMenuItem *item = [self menuItemForSignal: signal atIndex: index];
-        [_menu addSignalMenuItem: item];
+//        NSMenuItem *item = [self menuItemForSignal: signal atIndex: index];
+//        [_menu addSignalMenuItem: item];
     }
 }
 
@@ -428,7 +296,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 - (void) searcherWillStartSearching:(IRSearcher *)searcher {
     ILLOG_CURRENT_METHOD;
 
-    [_menu setPeripheralHeaderTitle: @"IRKits (Searching...)" animating: YES];
+    // [_menu setPeripheralHeaderTitle: @"IRKits (Searching...)" animating: YES];
 }
 
 - (void) searcher:(IRSearcher *)searcher didResolveService:(NSNetService *)service {
@@ -443,8 +311,8 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
         [peripherals save];
 
         NSUInteger index = [peripherals indexOfObject: p];
-        NSMenuItem *item = [self menuItemForPeripheral: p atIndex: index];
-        [self.menu addPeripheralMenuItem: item];
+//        NSMenuItem *item = [self menuItemForPeripheral: p atIndex: index];
+//        [self.menu addPeripheralMenuItem: item];
     }
     if (!p.deviceid) {
         __weak typeof(self) _self = self;
@@ -452,16 +320,16 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
         [p getKeyWithCompletion:^{
             IRPeripherals *peripherals = [IRKit sharedInstance].peripherals;
             NSUInteger index = [peripherals indexOfObject: _p];
-            NSMenuItem *item = [_self menuItemForPeripheral: _p atIndex: index];
-            [_self refreshTitleOfMenuItem: item withPeripheral: _p];
-            [peripherals save];
+//            NSMenuItem *item = [_self menuItemForPeripheral: _p atIndex: index];
+//            [_self refreshTitleOfMenuItem: item withPeripheral: _p];
+//            [peripherals save];
         }];
     }
 }
 
 - (void) searcherDidTimeout:(IRSearcher *)searcher {
     ILLOG_CURRENT_METHOD;
-    [self.menu setPeripheralHeaderTitle: @"IRKits" animating: NO];
+    // [self.menu setPeripheralHeaderTitle: @"IRKits" animating: NO];
     [[IRSearcher sharedInstance] startSearchingAfterTimeInterval: 5. forTimeInterval: 5.];
 }
 

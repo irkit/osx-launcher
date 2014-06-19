@@ -29,8 +29,10 @@
 		C7647EB918ED5DD000171E7F /* IRHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB418ED5DD000171E7F /* IRHTTPClient.m */; };
 		C7647EBA18ED5DD000171E7F /* IRKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB618ED5DD000171E7F /* IRKit.m */; };
 		C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB818ED5DD000171E7F /* IRReachability.m */; };
+		C764C1C719527E5B003410B6 /* MOSectionedMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C764C1C619527E5B003410B6 /* MOSectionedMenu.m */; };
 		C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* ILVersionChecker.m */; };
 		C7766FA4189A524800898267 /* ILLog.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* ILLog.m */; };
+		C77AFB4719528218002ED79A /* ILMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB4619528218002ED79A /* ILMenuDataSource.m */; };
 		C77CC8D7194FE70800622994 /* ILSignalNameEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */; };
 		C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* ILMenu.m */; };
 		C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C781847E18ED5F1F007FB4E1 /* IRHelper.m */; };
@@ -104,10 +106,14 @@
 		C7647EB618ED5DD000171E7F /* IRKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRKit.m; path = "../../ios-sdk/IRKit/IRKit/IRKit.m"; sourceTree = "<group>"; };
 		C7647EB718ED5DD000171E7F /* IRReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRReachability.h; path = "../../ios-sdk/IRKit/IRKit/IRReachability.h"; sourceTree = "<group>"; };
 		C7647EB818ED5DD000171E7F /* IRReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRReachability.m; path = "../../ios-sdk/IRKit/IRKit/IRReachability.m"; sourceTree = "<group>"; };
+		C764C1C519527E5B003410B6 /* MOSectionedMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOSectionedMenu.h; sourceTree = "<group>"; };
+		C764C1C619527E5B003410B6 /* MOSectionedMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOSectionedMenu.m; sourceTree = "<group>"; };
 		C7766F9F189A4F5300898267 /* ILVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILVersionChecker.h; sourceTree = "<group>"; };
 		C7766FA0189A4F5300898267 /* ILVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILVersionChecker.m; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* ILLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLog.h; sourceTree = "<group>"; };
 		C7766FA3189A524800898267 /* ILLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILLog.m; sourceTree = "<group>"; };
+		C77AFB4519528218002ED79A /* ILMenuDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuDataSource.h; sourceTree = "<group>"; };
+		C77AFB4619528218002ED79A /* ILMenuDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenuDataSource.m; sourceTree = "<group>"; };
 		C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILSignalNameEditView.xib; sourceTree = "<group>"; };
 		C77ECAE9189A41A2006C8338 /* ILMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenu.h; sourceTree = "<group>"; };
 		C77ECAEA189A41A2006C8338 /* ILMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenu.m; sourceTree = "<group>"; };
@@ -308,6 +314,10 @@
 				C7F32CB019516DED00601842 /* ILMenuProgressView.xib */,
 				C729A269194080950012F40D /* NSMenuItem+StateAware.h */,
 				C729A26A194080950012F40D /* NSMenuItem+StateAware.m */,
+				C764C1C519527E5B003410B6 /* MOSectionedMenu.h */,
+				C764C1C619527E5B003410B6 /* MOSectionedMenu.m */,
+				C77AFB4519528218002ED79A /* ILMenuDataSource.h */,
+				C77AFB4619528218002ED79A /* ILMenuDataSource.m */,
 			);
 			name = Menulet;
 			sourceTree = "<group>";
@@ -500,10 +510,12 @@
 				C7647EB118ED5D8200171E7F /* IRPeripheral.m in Sources */,
 				C7766FA4189A524800898267 /* ILLog.m in Sources */,
 				C7647EB218ED5D8200171E7F /* IRSignal.m in Sources */,
+				C77AFB4719528218002ED79A /* ILMenuDataSource.m in Sources */,
 				C7B6934818EE63BA00DE7027 /* IRSignals.m in Sources */,
 				C71E8999189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m in Sources */,
 				C7F6C493189A66B600A79261 /* ILUtils.m in Sources */,
 				C763F69C18ED692C00EAC927 /* Log.m in Sources */,
+				C764C1C719527E5B003410B6 /* MOSectionedMenu.m in Sources */,
 				C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */,
 				C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */,
 				C7647EB918ED5DD000171E7F /* IRHTTPClient.m in Sources */,
