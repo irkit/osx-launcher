@@ -29,7 +29,8 @@
 }
 
 - (BOOL) installed {
-    return [self isCatalogInstalled] && [self isActionInstalled];
+    BOOL ret = [self isCatalogInstalled] && [self isActionInstalled];
+    return ret;
 }
 
 #pragma mark - Private

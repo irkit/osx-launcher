@@ -137,41 +137,4 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     }
 }
 
-#pragma mark - Private confirm methods
-
-- (void) showConfirmToInstall:(void (^)(NSInteger returnCode))callback {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle: @"OK"]; // right most : NSAlertFirstButtonReturn
-    [alert addButtonWithTitle: @"Cancel"]; // 2nd to right : NSAlertSecondButtonReturn
-    [alert setMessageText: @"Install Quicksilver Plugin?"];
-    [alert setInformativeText: @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths."];
-    [alert setAlertStyle: NSWarningAlertStyle];
-    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
-    NSInteger ret = [alert runModal];
-    callback( ret );
-}
-
-- (void) showConfirmToUninstall:(void (^)(NSInteger returnCode))callback {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle: @"OK"];
-    [alert addButtonWithTitle: @"Cancel"];
-    [alert setMessageText: @"Uninstall Quicksilver Plugin?"];
-    [alert setInformativeText: @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and remove IRLauncher related entries from it."];
-    [alert setAlertStyle: NSWarningAlertStyle];
-    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
-    NSInteger ret = [alert runModal];
-    callback( ret );
-}
-
-- (void) showConfirmToRelaunchQuicksilver:(void (^)(NSInteger returnCode))callback {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle: @"OK"];
-    [alert addButtonWithTitle: @"Cancel"];
-    [alert setMessageText: @"Relaunch Quicksilver?"];
-    [alert setAlertStyle: NSWarningAlertStyle];
-    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
-    NSInteger ret = [alert runModal];
-    callback( ret );
-}
-
 @end

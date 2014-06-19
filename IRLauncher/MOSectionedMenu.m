@@ -48,7 +48,7 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
                                                       object: dataSource
                                                        queue: nil
                                                   usingBlock:^(NSNotification *note) {
-        if (!_self.initialized || !_self.opened) {
+        if (!_self.initialized) {
             // don't try to update menu if it's not initialized yet
             return;
         }
@@ -65,7 +65,7 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
                                                       object: dataSource
                                                        queue: nil
                                                   usingBlock:^(NSNotification *note) {
-        if (!_self.initialized || !_self.opened) {
+        if (!_self.initialized) {
             // don't try to update menu if it's not initialized yet
             return;
         }
@@ -81,14 +81,13 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
                                                       object: dataSource
                                                        queue: nil
                                                   usingBlock:^(NSNotification *note) {
-        if (!_self.initialized || !_self.opened) {
+        if (!_self.initialized) {
             // don't try to update menu if it's not initialized yet
             return;
         }
 
         MOIndexPath *indexPath = note.userInfo[ kMOSectionedMenuItemIndexPathKey ];
-        NSMenuItem *item = [_self.dataSource sectionedMenu: _self
-                                          itemForIndexPath: indexPath ];
+        NSMenuItem *item = [self itemAtIndexPath: indexPath];
         [_self.dataSource sectionedMenu: _self
                              updateItem: item
                             atIndexPath: indexPath];
