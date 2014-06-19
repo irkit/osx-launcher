@@ -9,6 +9,8 @@
 #import "ILMenuDataSource.h"
 #import "ILLog.h"
 #import "IRKit.h"
+#import "ILMenuProgressView.h"
+#import "ILUtils.h"
 
 @implementation ILMenuDataSource
 
@@ -19,6 +21,15 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     ILMenuSectionIndexHelp        = 3,
     ILMenuSectionIndexQuit        = 4
 };
+
+- (instancetype) init {
+    self = [super init];
+    if (!self) { return nil; }
+
+    [IRSearcher sharedInstance].delegate = self;
+
+    return self;
+}
 
 #pragma mark - MOSectionedMenuDataSource
 
@@ -155,16 +166,10 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 - (NSMenuItem*)sectionedMenu:(MOSectionedMenu*)menu headerItemForSection:(NSUInteger)sectionIndex {
     switch (sectionIndex) {
     case ILMenuSectionIndexSignals:
-    {
-        NSMenuItem *item = [[NSMenuItem alloc] init];
-        item.title = @"Signals";
-        return item;
-    }
-    break;
     case ILMenuSectionIndexPeripherals:
     {
         NSMenuItem *item = [[NSMenuItem alloc] init];
-        item.title = @"IRKits";
+        [self sectionedMenu: menu updateHeaderItem: item inSection: sectionIndex];
         return item;
     }
     break;
@@ -186,6 +191,66 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     item.action        = @selector(learnNewSignal:);
     item.keyEquivalent = @"+";
     return item;
+}
+
+- (void)sectionedMenu:(MOSectionedMenu *)menu updateHeaderItem:(NSMenuItem *)item inSection:(NSUInteger)sectionIndex {
+    switch (sectionIndex) {
+    case ILMenuSectionIndexSignals:
+    {
+        if (![item.view isKindOfClass: [ILMenuProgressView class]]) {
+            item.view = [ILUtils loadClassNamed: @"ILMenuProgressView"];
+        }
+        ILMenuProgressView *view = (ILMenuProgressView*)item.view;
+        if (YES) {
+            view.animating = YES;
+            [view.textField setStringValue: @"Signals (Searching...)"];
+        }
+        else {
+            view.animating = NO;
+            [view.textField setStringValue: @"Signals"];
+        }
+        [view startAnimationIfNeeded];
+    }
+    break;
+    case ILMenuSectionIndexPeripherals:
+    {
+        if (![item.view isKindOfClass: [ILMenuProgressView class]]) {
+            item.view = [ILUtils loadClassNamed: @"ILMenuProgressView"];
+        }
+        ILMenuProgressView *view = (ILMenuProgressView*)item.view;
+        if ([IRSearcher sharedInstance].searching) {
+            view.animating = YES;
+            [view.textField setStringValue: @"IRKits (Searching...)"];
+        }
+        else {
+            view.animating = NO;
+            [view.textField setStringValue: @"IRKits"];
+        }
+        [view startAnimationIfNeeded];
+    }
+    break;
+    default:
+        break;
+    }
+}
+
+- (void)sectionedMenu:(MOSectionedMenu *)menu updateFooterItem:(NSMenuItem *)item inSection:(NSUInteger)sectionIndex {
+}
+
+- (void)sectionedMenu:(MOSectionedMenu *)menu updateItem:(NSMenuItem *)item atIndexPath:(MOIndexPath *)indexPath {
+
+}
+
+- (void) menuWillOpen:(NSMenu *)menu {
+    ILLOG_CURRENT_METHOD;
+
+    [[IRSearcher sharedInstance] startSearchingForTimeInterval: 5.];
+}
+
+- (void) menuDidClose:(NSMenu *)menu {
+    ILLOG_CURRENT_METHOD;
+
+    [[IRSearcher sharedInstance] stop];
 }
 
 #pragma mark - NSMenuItem factories
@@ -245,7 +310,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     }];
 }
 
-- (IBAction) learnNewSignal :(id)sender {
+- (void) learnNewSignal :(id)sender {
     ILLOG_CURRENT_METHOD;
 
     NSEvent *event        = [NSApp currentEvent];
@@ -324,12 +389,64 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 //    }
 }
 
-- (IBAction) showHelp: (id)sender {
+- (void) showHelp: (id)sender {
     ILLOG_CURRENT_METHOD;
 }
 
-- (IBAction) terminate: (id)sender {
+- (void) terminate: (id)sender {
     [[NSApplication sharedApplication] terminate: sender];
+}
+
+#pragma mark - IRSearcherDelegate
+
+- (void) searcherWillStartSearching:(IRSearcher *)searcher {
+    ILLOG_CURRENT_METHOD;
+
+    [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
+                                                        object: self
+                                                      userInfo: @{
+         kMOSectionedMenuItemUpdatedSectionKey: @1
+     }];
+}
+
+- (void) searcher:(IRSearcher *)searcher didResolveService:(NSNetService *)service {
+    ILLOG( @"service: %@", service );
+
+    IRPeripherals *peripherals = [IRKit sharedInstance].peripherals;
+
+    NSString *name  = [service.hostName componentsSeparatedByString: @"."][ 0 ];
+    IRPeripheral *p = [peripherals peripheralWithName: name];
+    if (!p) {
+        p = [peripherals registerPeripheralWithName: name];
+        [peripherals save];
+
+        NSUInteger index = [peripherals indexOfObject: p];
+        //        NSMenuItem *item = [self menuItemForPeripheral: p atIndex: index];
+        //        [self.menu addPeripheralMenuItem: item];
+    }
+    if (!p.deviceid) {
+        __weak typeof(self) _self = self;
+        __weak typeof(p) _p       = p;
+        [p getKeyWithCompletion:^{
+            IRPeripherals *peripherals = [IRKit sharedInstance].peripherals;
+            NSUInteger index = [peripherals indexOfObject: _p];
+            //            NSMenuItem *item = [_self menuItemForPeripheral: _p atIndex: index];
+            //            [_self refreshTitleOfMenuItem: item withPeripheral: _p];
+            //            [peripherals save];
+        }];
+    }
+}
+
+- (void) searcherDidTimeout:(IRSearcher *)searcher {
+    ILLOG_CURRENT_METHOD;
+
+    [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
+                                                        object: self
+                                                      userInfo: @{
+         kMOSectionedMenuItemUpdatedSectionKey: @1
+     }];
+
+    [[IRSearcher sharedInstance] startSearchingAfterTimeInterval: 5. forTimeInterval: 5.];
 }
 
 @end

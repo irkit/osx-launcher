@@ -33,6 +33,9 @@
 		C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* ILVersionChecker.m */; };
 		C7766FA4189A524800898267 /* ILLog.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* ILLog.m */; };
 		C77AFB4719528218002ED79A /* ILMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB4619528218002ED79A /* ILMenuDataSource.m */; };
+		C77AFB551952ADFC002ED79A /* NSNotificationCenter+SFObservers.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB4E1952ADFC002ED79A /* NSNotificationCenter+SFObservers.m */; };
+		C77AFB561952ADFC002ED79A /* NSObject+SFObservers.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB501952ADFC002ED79A /* NSObject+SFObservers.m */; };
+		C77AFB571952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB531952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m */; };
 		C77CC8D7194FE70800622994 /* ILSignalNameEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */; };
 		C77ECAF2189A41A2006C8338 /* ILMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C77ECAEA189A41A2006C8338 /* ILMenu.m */; };
 		C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C781847E18ED5F1F007FB4E1 /* IRHelper.m */; };
@@ -114,6 +117,13 @@
 		C7766FA3189A524800898267 /* ILLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILLog.m; sourceTree = "<group>"; };
 		C77AFB4519528218002ED79A /* ILMenuDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuDataSource.h; sourceTree = "<group>"; };
 		C77AFB4619528218002ED79A /* ILMenuDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenuDataSource.m; sourceTree = "<group>"; };
+		C77AFB4D1952ADFC002ED79A /* NSNotificationCenter+SFObservers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+SFObservers.h"; sourceTree = "<group>"; };
+		C77AFB4E1952ADFC002ED79A /* NSNotificationCenter+SFObservers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+SFObservers.m"; sourceTree = "<group>"; };
+		C77AFB4F1952ADFC002ED79A /* NSObject+SFObservers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SFObservers.h"; sourceTree = "<group>"; };
+		C77AFB501952ADFC002ED79A /* NSObject+SFObservers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SFObservers.m"; sourceTree = "<group>"; };
+		C77AFB521952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SFExecuteOnDealloc.h"; sourceTree = "<group>"; };
+		C77AFB531952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SFExecuteOnDealloc.m"; sourceTree = "<group>"; };
+		C77AFB541952ADFC002ED79A /* SFObservers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFObservers.h; sourceTree = "<group>"; };
 		C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILSignalNameEditView.xib; sourceTree = "<group>"; };
 		C77ECAE9189A41A2006C8338 /* ILMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenu.h; sourceTree = "<group>"; };
 		C77ECAEA189A41A2006C8338 /* ILMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenu.m; sourceTree = "<group>"; };
@@ -239,6 +249,7 @@
 		C71F8C40189A015200298DFA /* IRLauncher */ = {
 			isa = PBXGroup;
 			children = (
+				C77AFB4B1952ADE5002ED79A /* Dependencies */,
 				C78918E1194FE8A50075C36E /* NewSignalWindow */,
 				C70745BA191A1C7D00AA7A32 /* Extensions */,
 				C71E8996189FA05F007BC9C4 /* Categories */,
@@ -320,6 +331,38 @@
 				C77AFB4619528218002ED79A /* ILMenuDataSource.m */,
 			);
 			name = Menulet;
+			sourceTree = "<group>";
+		};
+		C77AFB4B1952ADE5002ED79A /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				C77AFB4C1952ADFC002ED79A /* SFObservers */,
+			);
+			name = Dependencies;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		C77AFB4C1952ADFC002ED79A /* SFObservers */ = {
+			isa = PBXGroup;
+			children = (
+				C77AFB4D1952ADFC002ED79A /* NSNotificationCenter+SFObservers.h */,
+				C77AFB4E1952ADFC002ED79A /* NSNotificationCenter+SFObservers.m */,
+				C77AFB4F1952ADFC002ED79A /* NSObject+SFObservers.h */,
+				C77AFB501952ADFC002ED79A /* NSObject+SFObservers.m */,
+				C77AFB511952ADFC002ED79A /* SFExecuteOnDealloc */,
+				C77AFB541952ADFC002ED79A /* SFObservers.h */,
+			);
+			name = SFObservers;
+			path = IRLauncher/SFObservers;
+			sourceTree = "<group>";
+		};
+		C77AFB511952ADFC002ED79A /* SFExecuteOnDealloc */ = {
+			isa = PBXGroup;
+			children = (
+				C77AFB521952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.h */,
+				C77AFB531952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m */,
+			);
+			path = SFExecuteOnDealloc;
 			sourceTree = "<group>";
 		};
 		C78918E1194FE8A50075C36E /* NewSignalWindow */ = {
@@ -525,6 +568,7 @@
 				C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */,
 				C71F8C47189A015200298DFA /* main.m in Sources */,
 				C78918E0194FE89A0075C36E /* ILSignalNameEditViewController.m in Sources */,
+				C77AFB571952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m in Sources */,
 				C71F8C4E189A015200298DFA /* ILAppDelegate.m in Sources */,
 				C70745C0191A1D3E00AA7A32 /* ILQuicksilverExtension.m in Sources */,
 				C7A7ED6B192DD05E00F86AFF /* ILSender.m in Sources */,
@@ -532,9 +576,11 @@
 				C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */,
 				C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */,
 				C789EC9619419E1600BC8E90 /* ILSignalReceiveViewController.m in Sources */,
+				C77AFB551952ADFC002ED79A /* NSNotificationCenter+SFObservers.m in Sources */,
 				C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */,
 				C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */,
 				C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */,
+				C77AFB561952ADFC002ED79A /* NSObject+SFObservers.m in Sources */,
 				C7B206A0194FF4BB001646DD /* ILLearnSignalWindowController.m in Sources */,
 				C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */,
 				C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */,

@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kMOSectionedMenuItemUpdated;
+extern NSString * const kMOSectionedMenuItemHeaderUpdated;
+extern NSString * const kMOSectionedMenuItemUpdatedSectionKey;
+extern NSString * const kMOSectionedMenuItemUpdatedIndexPathKey;
+
 @interface MOIndexPath : NSObject
 
 + (MOIndexPath*)indexPathForItem:(NSUInteger)item inSection:(NSUInteger)section;
@@ -33,7 +38,7 @@
 
 @end
 
-@protocol MOSectionedMenuDataSource <NSObject>
+@protocol MOSectionedMenuDataSource <NSMenuDelegate>
 
 - (NSUInteger)numberOfSectionsInSectionedMenu:(MOSectionedMenu*)menu;
 - (BOOL)sectionedMenu:(MOSectionedMenu*)menu hasHeaderForSection:(NSUInteger)sectionIndex;
@@ -42,5 +47,9 @@
 - (NSMenuItem*)sectionedMenu:(MOSectionedMenu*)menu itemForIndexPath:(MOIndexPath*)indexPath;
 - (NSMenuItem*)sectionedMenu:(MOSectionedMenu*)menu headerItemForSection:(NSUInteger)sectionIndex;
 - (NSMenuItem*)sectionedMenu:(MOSectionedMenu*)menu footerItemForSection:(NSUInteger)sectionIndex;
+
+- (void)sectionedMenu:(MOSectionedMenu *)menu updateHeaderItem:(NSMenuItem*)item inSection:(NSUInteger)sectionIndex;
+- (void)sectionedMenu:(MOSectionedMenu *)menu updateFooterItem:(NSMenuItem *)item inSection:(NSUInteger)sectionIndex;
+- (void)sectionedMenu:(MOSectionedMenu *)menu updateItem:(NSMenuItem *)item atIndexPath:(MOIndexPath*)indexPath;
 
 @end

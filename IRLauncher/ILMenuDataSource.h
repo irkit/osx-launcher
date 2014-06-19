@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "MOSectionedMenu.h"
 #import "IRSignals.h"
+#import "IRSearcher.h"
 
-@interface ILMenuDataSource : NSObject<MOSectionedMenuDataSource>
+@interface ILMenuDataSource : NSObject<
+        MOSectionedMenuDataSource,
+        IRSearcherDelegate
+        >
 
 @property (nonatomic) IRSignals *signals;
 

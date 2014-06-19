@@ -118,7 +118,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 //        [_self.menu addPeripheralMenuItem: item];
 //    }];
 
-    [IRSearcher sharedInstance].delegate = self;
+//    [IRSearcher sharedInstance].delegate = self;
 
     // more
 
@@ -276,61 +276,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 //        NSMenuItem *item = [self menuItemForSignal: signal atIndex: index];
 //        [_menu addSignalMenuItem: item];
     }
-}
-
-#pragma mark - ILMenuDelegate
-
-- (void) menuWillOpen:(ILMenu *)menu {
-    ILLOG_CURRENT_METHOD;
-    [[IRSearcher sharedInstance] startSearchingForTimeInterval: 5.];
-}
-
-- (void) menuDidClose:(ILMenu *)menu {
-    ILLOG_CURRENT_METHOD;
-
-    [[IRSearcher sharedInstance] stop];
-}
-
-#pragma mark - IRSearcherDelegate
-
-- (void) searcherWillStartSearching:(IRSearcher *)searcher {
-    ILLOG_CURRENT_METHOD;
-
-    // [_menu setPeripheralHeaderTitle: @"IRKits (Searching...)" animating: YES];
-}
-
-- (void) searcher:(IRSearcher *)searcher didResolveService:(NSNetService *)service {
-    ILLOG( @"service: %@", service );
-
-    IRPeripherals *peripherals = [IRKit sharedInstance].peripherals;
-
-    NSString *name  = [service.hostName componentsSeparatedByString: @"."][ 0 ];
-    IRPeripheral *p = [peripherals peripheralWithName: name];
-    if (!p) {
-        p = [peripherals registerPeripheralWithName: name];
-        [peripherals save];
-
-        NSUInteger index = [peripherals indexOfObject: p];
-//        NSMenuItem *item = [self menuItemForPeripheral: p atIndex: index];
-//        [self.menu addPeripheralMenuItem: item];
-    }
-    if (!p.deviceid) {
-        __weak typeof(self) _self = self;
-        __weak typeof(p) _p       = p;
-        [p getKeyWithCompletion:^{
-            IRPeripherals *peripherals = [IRKit sharedInstance].peripherals;
-            NSUInteger index = [peripherals indexOfObject: _p];
-//            NSMenuItem *item = [_self menuItemForPeripheral: _p atIndex: index];
-//            [_self refreshTitleOfMenuItem: item withPeripheral: _p];
-//            [peripherals save];
-        }];
-    }
-}
-
-- (void) searcherDidTimeout:(IRSearcher *)searcher {
-    ILLOG_CURRENT_METHOD;
-    // [self.menu setPeripheralHeaderTitle: @"IRKits" animating: NO];
-    [[IRSearcher sharedInstance] startSearchingAfterTimeInterval: 5. forTimeInterval: 5.];
 }
 
 @end
