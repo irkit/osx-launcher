@@ -14,6 +14,7 @@
 #import "ILFileStore.h"
 #import "ILSender.h"
 #import "ILConst.h"
+#import "ILStatusItem.h"
 
 const int kSignalTagOffset                             = 1000;
 const int kPeripheralTagOffset                         = 100;
@@ -23,7 +24,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 @interface ILAppDelegate ()
 
 @property (nonatomic, strong) MOSectionedMenu *sectionedMenu;
-@property (nonatomic, strong) NSStatusItem *statusItem;
+@property (nonatomic, strong) ILStatusItem *statusItem;
 @property (nonatomic, strong) IRSignals *signals;
 
 @end
@@ -59,19 +60,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     ILFileStore *store = [[ILFileStore alloc] init];
     [IRKit setPersistentStore: store]; // call before `startWithAPIKey`
     [IRKit startWithAPIKey: kIRKitAPIKey];
-
-    // setup menu
-
-    ILMenuDataSource *dataSource = [[ILMenuDataSource alloc] init];
-    dataSource.signals        = _signals;
-    _sectionedMenu.dataSource = dataSource;
-    [dataSource searchForSignals];
-
-    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: 30.];
-    [self.statusItem setHighlightMode: YES];
-    [self.statusItem setImage: [NSImage imageNamed: @"StatusBarIcon_111"]]; // TODO
-    [self.statusItem setAlternateImage: [NSImage imageNamed: @"StatusBarIcon_111"]];
-    self.statusItem.menu = self.sectionedMenu.menu;
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
@@ -84,8 +72,16 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     self = [super init];
     if (!self) { return nil; }
 
-    _signals       = [[IRSignals alloc] init];
+    _signals = [[IRSignals alloc] init];
+
     _sectionedMenu = [[MOSectionedMenu alloc] init];
+    ILMenuDataSource *dataSource = [[ILMenuDataSource alloc] init];
+    _sectionedMenu.dataSource = dataSource;
+    dataSource.signals        = _signals;
+    [dataSource searchForSignals];
+
+    _statusItem      = [[ILStatusItem alloc] init];
+    _statusItem.menu = _sectionedMenu.menu;
 
     return self;
 }
