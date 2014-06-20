@@ -24,7 +24,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 @interface ILAppDelegate ()
 
 @property (nonatomic, strong) MOSectionedMenu *sectionedMenu;
-@property (nonatomic, strong) ILStatusItem *statusItem;
+@property (nonatomic, strong) MOAnimatingStatusItem *statusItem;
 @property (nonatomic, strong) IRSignals *signals;
 
 @end
@@ -80,8 +80,8 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     dataSource.signals        = _signals;
     [dataSource searchForSignals];
 
-    _statusItem      = [[ILStatusItem alloc] init];
-    _statusItem.menu = _sectionedMenu.menu;
+    _statusItem                 = [[ILStatusItem alloc] init];
+    _statusItem.statusItem.menu = _sectionedMenu.menu;
 
     return self;
 }
@@ -108,6 +108,9 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     if ([notification.name isEqualToString: kILDistributedNotificationName]) {
         NSString *path = notification.userInfo[ @"path" ];
         ILLOG( @"will send: %@", path );
+
+        [_statusItem startAnimating];
+
         [[[ILSender alloc] init] sendFileAtPath: path completion:^(NSError *error) {
             ILLOG( @"error: %@", error );
 
