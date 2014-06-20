@@ -20,6 +20,10 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
 @property (nonatomic) BOOL initialized;
 @property (nonatomic) BOOL opened;
 
+@property (nonatomic) id itemHeaderUpdatedObserver;
+@property (nonatomic) id itemAddedObserver;
+@property (nonatomic) id itemUpdatedObserver;
+
 @end
 
 @implementation MOSectionedMenu
@@ -38,16 +42,25 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
 
 - (void) dealloc {
     ILLOG_CURRENT_METHOD;
+    [self removeObservers];
 }
 
 - (void) setDataSource:(id<MOSectionedMenuDataSource>)dataSource {
+    if (_dataSource) {
+        [self removeObservers];
+    }
+
     _dataSource = dataSource;
 
-    __weak typeof(self) _self = self;
-    [[NSNotificationCenter defaultCenter] addObserverForName: kMOSectionedMenuItemHeaderUpdated
-                                                      object: dataSource
-                                                       queue: nil
-                                                  usingBlock:^(NSNotification *note) {
+    if (!dataSource) {
+        return;
+    }
+
+    __weak typeof(self) _self  = self;
+    _itemHeaderUpdatedObserver = [[NSNotificationCenter defaultCenter] addObserverForName: kMOSectionedMenuItemHeaderUpdated
+                                                                                   object: dataSource
+                                                                                    queue: nil
+                                                                               usingBlock:^(NSNotification *note) {
         if (!_self.initialized) {
             // don't try to update menu if it's not initialized yet
             return;
@@ -61,10 +74,10 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
                                   inSection: section];
         }
     }];
-    [[NSNotificationCenter defaultCenter] addObserverForName: kMOSectionedMenuItemAdded
-                                                      object: dataSource
-                                                       queue: nil
-                                                  usingBlock:^(NSNotification *note) {
+    _itemAddedObserver = [[NSNotificationCenter defaultCenter] addObserverForName: kMOSectionedMenuItemAdded
+                                                                           object: dataSource
+                                                                            queue: nil
+                                                                       usingBlock:^(NSNotification *note) {
         if (!_self.initialized) {
             // don't try to update menu if it's not initialized yet
             return;
@@ -77,10 +90,10 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
         [_self.menu insertItem: item
                        atIndex: index];
     }];
-    [[NSNotificationCenter defaultCenter] addObserverForName: kMOSectionedMenuItemUpdated
-                                                      object: dataSource
-                                                       queue: nil
-                                                  usingBlock:^(NSNotification *note) {
+    _itemUpdatedObserver = [[NSNotificationCenter defaultCenter] addObserverForName: kMOSectionedMenuItemUpdated
+                                                                             object: dataSource
+                                                                              queue: nil
+                                                                         usingBlock:^(NSNotification *note) {
         if (!_self.initialized) {
             // don't try to update menu if it's not initialized yet
             return;
@@ -172,6 +185,11 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
 
 #pragma mark - Private
 
+- (void) removeObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver: _itemHeaderUpdatedObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver: _itemAddedObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver: _itemUpdatedObserver];
+}
 
 #pragma mark - NSMenuDelegate methods
 
