@@ -358,12 +358,19 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 - (void) learnNewSignal :(id)sender {
     ILLOG_CURRENT_METHOD;
 
-    // TODO alert if we haven't setup any IRKit
+    if (![IRKit sharedInstance].peripherals.countOfReadyPeripherals) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle: @"OK"];
+        NSString *message = @"No IRKit found in the same Wi-Fi network.\nPlease setup IRKit and connect it to the same network.";
+        [alert setMessageText: message];
+        [alert setAlertStyle: NSWarningAlertStyle];
+        [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
+        [alert runModal];
+        return;
+    }
 
-    NSEvent *event        = [NSApp currentEvent];
-    NSPoint location      = [event locationInWindow];
     NSPoint pointInScreen = [NSEvent mouseLocation];
-    ILLOG( @"locationInWindow: %@, screen: %@", NSStringFromPoint(location), NSStringFromPoint(pointInScreen));
+    ILLOG( @"pointInScreen: %@", NSStringFromPoint(pointInScreen));
 
     if (pointInScreen.x + 640 > [NSScreen mainScreen].frame.size.width) {
         pointInScreen.x = [NSScreen mainScreen].frame.size.width - 640;
