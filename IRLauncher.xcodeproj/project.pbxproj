@@ -23,6 +23,7 @@
 		C71F8C63189A015200298DFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C61189A015200298DFA /* InfoPlist.strings */; };
 		C71F8C65189A015200298DFA /* IRLauncherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C64189A015200298DFA /* IRLauncherTests.m */; };
 		C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */ = {isa = PBXBuildFile; fileRef = C729A26A194080950012F40D /* NSMenuItem+StateAware.m */; };
+		C738EC001953D6F1006A7B6D /* ILStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C738EBFF1953D6F1006A7B6D /* ILStatusItem.m */; };
 		C763F69C18ED692C00EAC927 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = C763F69B18ED692C00EAC927 /* Log.m */; };
 		C7647EB118ED5D8200171E7F /* IRPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EAE18ED5D8200171E7F /* IRPeripheral.m */; };
 		C7647EB218ED5D8200171E7F /* IRSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB018ED5D8200171E7F /* IRSignal.m */; };
@@ -36,7 +37,7 @@
 		C77AFB551952ADFC002ED79A /* NSNotificationCenter+SFObservers.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB4E1952ADFC002ED79A /* NSNotificationCenter+SFObservers.m */; };
 		C77AFB561952ADFC002ED79A /* NSObject+SFObservers.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB501952ADFC002ED79A /* NSObject+SFObservers.m */; };
 		C77AFB571952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB531952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m */; };
-		C77AFB5A1952DCD6002ED79A /* ILStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB591952DCD6002ED79A /* ILStatusItem.m */; };
+		C77AFB5A1952DCD6002ED79A /* MOAnimatingStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB591952DCD6002ED79A /* MOAnimatingStatusItem.m */; };
 		C77CC8D7194FE70800622994 /* ILSignalNameEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */; };
 		C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C781847E18ED5F1F007FB4E1 /* IRHelper.m */; };
 		C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848018ED5F1F007FB4E1 /* IRHTTPJSONOperation.m */; };
@@ -97,6 +98,8 @@
 		C71F8C64189A015200298DFA /* IRLauncherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRLauncherTests.m; sourceTree = "<group>"; };
 		C729A269194080950012F40D /* NSMenuItem+StateAware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenuItem+StateAware.h"; sourceTree = "<group>"; };
 		C729A26A194080950012F40D /* NSMenuItem+StateAware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenuItem+StateAware.m"; sourceTree = "<group>"; };
+		C738EBFE1953D6F1006A7B6D /* ILStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILStatusItem.h; sourceTree = "<group>"; };
+		C738EBFF1953D6F1006A7B6D /* ILStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILStatusItem.m; sourceTree = "<group>"; };
 		C763F69A18ED692C00EAC927 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Log.h; path = "../../ios-sdk/IRKit/IRKit/Log.h"; sourceTree = "<group>"; };
 		C763F69B18ED692C00EAC927 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Log.m; path = "../../ios-sdk/IRKit/IRKit/Log.m"; sourceTree = "<group>"; };
 		C7647EAD18ED5D8200171E7F /* IRPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPeripheral.h; path = "../../ios-sdk/IRKit/IRKit/IRPeripheral.h"; sourceTree = "<group>"; };
@@ -124,8 +127,8 @@
 		C77AFB521952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SFExecuteOnDealloc.h"; sourceTree = "<group>"; };
 		C77AFB531952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SFExecuteOnDealloc.m"; sourceTree = "<group>"; };
 		C77AFB541952ADFC002ED79A /* SFObservers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFObservers.h; sourceTree = "<group>"; };
-		C77AFB581952DCD6002ED79A /* ILStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILStatusItem.h; sourceTree = "<group>"; };
-		C77AFB591952DCD6002ED79A /* ILStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILStatusItem.m; sourceTree = "<group>"; };
+		C77AFB581952DCD6002ED79A /* MOAnimatingStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAnimatingStatusItem.h; sourceTree = "<group>"; };
+		C77AFB591952DCD6002ED79A /* MOAnimatingStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAnimatingStatusItem.m; sourceTree = "<group>"; };
 		C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILSignalNameEditView.xib; sourceTree = "<group>"; };
 		C781847D18ED5F1F007FB4E1 /* IRHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHelper.h; path = "../../ios-sdk/IRKit/IRKit/IRHelper.h"; sourceTree = "<group>"; };
 		C781847E18ED5F1F007FB4E1 /* IRHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHelper.m; path = "../../ios-sdk/IRKit/IRKit/IRHelper.m"; sourceTree = "<group>"; };
@@ -327,8 +330,10 @@
 				C764C1C619527E5B003410B6 /* MOSectionedMenu.m */,
 				C77AFB4519528218002ED79A /* ILMenuDataSource.h */,
 				C77AFB4619528218002ED79A /* ILMenuDataSource.m */,
-				C77AFB581952DCD6002ED79A /* ILStatusItem.h */,
-				C77AFB591952DCD6002ED79A /* ILStatusItem.m */,
+				C77AFB581952DCD6002ED79A /* MOAnimatingStatusItem.h */,
+				C77AFB591952DCD6002ED79A /* MOAnimatingStatusItem.m */,
+				C738EBFE1953D6F1006A7B6D /* ILStatusItem.h */,
+				C738EBFF1953D6F1006A7B6D /* ILStatusItem.m */,
 			);
 			name = Menulet;
 			sourceTree = "<group>";
@@ -569,7 +574,7 @@
 				C78918E0194FE89A0075C36E /* ILSignalNameEditViewController.m in Sources */,
 				C77AFB571952ADFC002ED79A /* NSObject+SFExecuteOnDealloc.m in Sources */,
 				C71F8C4E189A015200298DFA /* ILAppDelegate.m in Sources */,
-				C77AFB5A1952DCD6002ED79A /* ILStatusItem.m in Sources */,
+				C77AFB5A1952DCD6002ED79A /* MOAnimatingStatusItem.m in Sources */,
 				C70745C0191A1D3E00AA7A32 /* ILQuicksilverExtension.m in Sources */,
 				C7A7ED6B192DD05E00F86AFF /* ILSender.m in Sources */,
 				C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */,
@@ -584,6 +589,7 @@
 				C7B206A0194FF4BB001646DD /* ILLearnSignalWindowController.m in Sources */,
 				C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */,
 				C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */,
+				C738EC001953D6F1006A7B6D /* ILStatusItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
