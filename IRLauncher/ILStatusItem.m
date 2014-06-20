@@ -14,7 +14,7 @@
     self = [super init];
     if (self) {
         self.image           = [NSImage imageNamed: @"StatusBarIcon_111"];
-        self.alternateImage  = [NSImage imageNamed: @"StatusBarIcon_111"];
+        self.alternateImage  = [NSImage imageNamed: @"StatusBarIconAlt"];
         self.animationImages = @[
             [NSImage imageNamed: @"StatusBarIcon_100"],
             [NSImage imageNamed: @"StatusBarIcon_010"],
