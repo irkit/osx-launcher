@@ -57,6 +57,12 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
                                                             name: nil
                                                           object: nil];
 
+    // Initialize statusItem in 1 process only.
+    // We don't want another statusItem to show and immediately disappear,
+    // when duplicate process launches and terminates.
+    _statusItem                 = [[ILStatusItem alloc] init];
+    _statusItem.statusItem.menu = _sectionedMenu.menu;
+
     ILFileStore *store = [[ILFileStore alloc] init];
     [IRKit setPersistentStore: store]; // call before `startWithAPIKey`
     [IRKit startWithAPIKey: kIRKitAPIKey];
@@ -79,9 +85,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     _sectionedMenu.dataSource = dataSource;
     dataSource.signals        = _signals;
     [dataSource searchForSignals];
-
-    _statusItem                 = [[ILStatusItem alloc] init];
-    _statusItem.statusItem.menu = _sectionedMenu.menu;
 
     return self;
 }
