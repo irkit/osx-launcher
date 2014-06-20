@@ -80,7 +80,8 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
     _signals = [[IRSignals alloc] init];
 
-    _sectionedMenu = [[MOSectionedMenu alloc] init];
+    _sectionedMenu                       = [[MOSectionedMenu alloc] init];
+    _sectionedMenu.menu.autoenablesItems = NO; // enable calling menuItem setEnabled:
     ILMenuDataSource *dataSource = [[ILMenuDataSource alloc] init];
     _sectionedMenu.dataSource = dataSource;
     dataSource.signals        = _signals;

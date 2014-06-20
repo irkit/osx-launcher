@@ -329,6 +329,8 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     else {
         item.title = [NSString stringWithFormat: @"%@", peripheral.customizedName];
     }
+    // You can't click IRKit menuItem, it doesn't do anything
+    [item setEnabled: NO];
 }
 
 #pragma mark - NSMenuItem Actions
