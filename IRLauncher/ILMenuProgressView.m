@@ -31,10 +31,10 @@
 
     if (self.animating) {
         NSProgressIndicator *indicator = self.indicator;
-        [indicator performSelector: @selector(startAnimation:)
-                        withObject: nil
-                        afterDelay: 0.0
-                           inModes: [NSArray arrayWithObject: NSEventTrackingRunLoopMode]];
+        // magic to keep indicator animating
+        [indicator setHidden: YES];
+        [indicator setHidden: NO];
+        [indicator startAnimation: self];
     }
     else {
         [self stopAnimation];
@@ -45,10 +45,7 @@
     ILLOG_CURRENT_METHOD;
 
     NSProgressIndicator *indicator = self.indicator;
-    [indicator performSelector: @selector(stopAnimation:)
-                    withObject: nil
-                    afterDelay: 0.0
-                       inModes: [NSArray arrayWithObject: NSEventTrackingRunLoopMode]];
+    [indicator stopAnimation: self];
 }
 
 @end
