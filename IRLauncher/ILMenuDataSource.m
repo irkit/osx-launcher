@@ -526,6 +526,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
                  didFinishWithSignal:(IRSignal*)signal
                            withError:(NSError *)error {
     ILLOG( @"signal: %@, error: %@", signal, error );
+    [_signalWindowController close];
     _signalWindowController = nil;
 
     if (error) {

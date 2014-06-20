@@ -35,6 +35,10 @@
         _escapeKeyMonitor         = [NSEvent addLocalMonitorForEventsMatchingMask: NSKeyUpMask
                                                                           handler:^NSEvent *(NSEvent *event) {
             ILLOG( @"keyup: %@", event );
+            if (![_self shouldCloseOnDeactivate]) {
+                // Only close if we're in signal receive view
+                return event;
+            }
             if (event.window != _self.window) {
                 return event;
             }
@@ -56,12 +60,24 @@
 - (void) windowDidResignKey: (NSNotification*) notification {
     ILLOG_CURRENT_METHOD;
 
+    if (![self shouldCloseOnDeactivate]) {
+        return;
+    }
+
     [_signalDelegate learnSignalWindowController: self
                              didFinishWithSignal: nil
                                        withError: NULL];
 }
 
 #pragma mark - Private
+
+- (BOOL) shouldCloseOnDeactivate {
+    if ([self.currentController isKindOfClass: [ILSignalReceiveViewController class]]) {
+        // Only close if we're in signal receive view
+        return YES;
+    }
+    return NO;
+}
 
 - (void) handleEscapeKey {
     ILLOG_CURRENT_METHOD;
