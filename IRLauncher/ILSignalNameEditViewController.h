@@ -16,7 +16,8 @@
 @property (nonatomic, weak) id<ILSignalNameEditViewControllerDelegate> delegate;
 @property (nonatomic, strong) IRSignal *signal;
 
-@property (nonatomic, weak) IBOutlet NSTextField *textField;
+@property (nonatomic, weak) IBOutlet NSTextField *inputTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *guideTextField;
 @property (nonatomic, weak) IBOutlet NSButton *saveButton;
 @property (nonatomic, weak) IBOutlet NSButton *cancelButton;
 

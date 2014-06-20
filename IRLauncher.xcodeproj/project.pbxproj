@@ -50,6 +50,8 @@
 		C7B6934818EE63BA00DE7027 /* IRSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934718EE63BA00DE7027 /* IRSignals.m */; };
 		C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */; };
 		C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */; };
+		C7BA33EB1954288400B9247B /* MIT-License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C7BA33E81954288400B9247B /* MIT-License.rtf */; };
+		C7BA33EC1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BA33EA1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m */; };
 		C7F32CB119516DED00601842 /* ILMenuProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7F32CB019516DED00601842 /* ILMenuProgressView.xib */; };
 		C7F6C493189A66B600A79261 /* ILUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6C492189A66B600A79261 /* ILUtils.m */; };
 /* End PBXBuildFile section */
@@ -150,6 +152,9 @@
 		C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSignalsDirectorySearcher.m; sourceTree = "<group>"; };
 		C7B6C8C61920AB1B00C13F49 /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
 		C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
+		C7BA33E81954288400B9247B /* MIT-License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "MIT-License.rtf"; sourceTree = "<group>"; };
+		C7BA33E91954288400B9247B /* RSVerticallyCenteredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVerticallyCenteredTextFieldCell.h; sourceTree = "<group>"; };
+		C7BA33EA1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVerticallyCenteredTextFieldCell.m; sourceTree = "<group>"; };
 		C7F32CB019516DED00601842 /* ILMenuProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILMenuProgressView.xib; sourceTree = "<group>"; };
 		C7F6C491189A66B600A79261 /* ILUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUtils.h; sourceTree = "<group>"; };
 		C7F6C492189A66B600A79261 /* ILUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUtils.m; sourceTree = "<group>"; };
@@ -242,6 +247,7 @@
 		C71F8C40189A015200298DFA /* IRLauncher */ = {
 			isa = PBXGroup;
 			children = (
+				C7BA33E61954288400B9247B /* Dependencies */,
 				C78918E1194FE8A50075C36E /* LearnSignalWindow */,
 				C70745BA191A1C7D00AA7A32 /* Extensions */,
 				C71E8996189FA05F007BC9C4 /* Categories */,
@@ -340,6 +346,24 @@
 				C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */,
 			);
 			name = LearnSignalWindow;
+			sourceTree = "<group>";
+		};
+		C7BA33E61954288400B9247B /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				C7BA33E71954288400B9247B /* RSVerticallyCenteredTextFieldCell */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		C7BA33E71954288400B9247B /* RSVerticallyCenteredTextFieldCell */ = {
+			isa = PBXGroup;
+			children = (
+				C7BA33E81954288400B9247B /* MIT-License.rtf */,
+				C7BA33E91954288400B9247B /* RSVerticallyCenteredTextFieldCell.h */,
+				C7BA33EA1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m */,
+			);
+			path = RSVerticallyCenteredTextFieldCell;
 			sourceTree = "<group>";
 		};
 		C7FD7F88189CFC9600EF0906 /* IRKit */ = {
@@ -457,6 +481,7 @@
 				C71F8C45189A015200298DFA /* InfoPlist.strings in Resources */,
 				C71F8C53189A015200298DFA /* Images.xcassets in Resources */,
 				C71F8C4B189A015200298DFA /* Credits.rtf in Resources */,
+				C7BA33EB1954288400B9247B /* MIT-License.rtf in Resources */,
 				C7F32CB119516DED00601842 /* ILMenuProgressView.xib in Resources */,
 				C71F8C51189A015200298DFA /* MainMenu.xib in Resources */,
 				C789EC9319419D7F00BC8E90 /* ILSignalReceiveView.xib in Resources */,
@@ -524,6 +549,7 @@
 				C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */,
 				C7647EB918ED5DD000171E7F /* IRHTTPClient.m in Sources */,
 				C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */,
+				C7BA33EC1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m in Sources */,
 				C781848818ED5F1F007FB4E1 /* IRPeripherals.m in Sources */,
 				C7647EBA18ED5DD000171E7F /* IRKit.m in Sources */,
 				C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */,
