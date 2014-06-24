@@ -13,6 +13,7 @@
 
 #import "ILLog.h"
 #import "ILConst.h"
+#import <sys/xattr.h>
 
 static NSString * const kILConfigDirectory     = @".irkit.d/";
 static NSString * const kILSignalsSubDirectory = @"signals/";
@@ -135,7 +136,33 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
         ILLOG( @"failed to write to: %@", file );
         return NO;
     }
+
+    [self setSignalExtendedAttributesToFile: file];
+
     return YES;
+}
+
+#pragma mark - Private
+
++ (int)setSignalExtendedAttributesToFile:(NSString*)file {
+    NSString *finderInfoFile   = [[NSBundle mainBundle] pathForResource:@"FinderInfo"   ofType:@"dat"];
+    NSString *resourceForkFile = [[NSBundle mainBundle] pathForResource:@"ResourceFork" ofType:@"dat"];
+    NSData *finderInfo   = [NSData dataWithContentsOfFile:finderInfoFile];
+    NSData *resourceFork = [NSData dataWithContentsOfFile:resourceForkFile];
+
+    int result;
+    result = setxattr([file fileSystemRepresentation], XATTR_FINDERINFO_NAME, finderInfo.bytes, finderInfo.length, 0, 0);
+    if (result != 0) {
+        perror("setxattr finderinfo");
+        return result;
+    }
+    result = setxattr([file fileSystemRepresentation], XATTR_RESOURCEFORK_NAME, resourceFork.bytes, resourceFork.length, 0, 0);
+    if (result != 0) {
+        perror("setxattr resourcefork");
+        return result;
+    }
+
+    return result;
 }
 
 @end
