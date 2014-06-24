@@ -118,12 +118,12 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
         return NO;
     }
     NSError *error = nil;
-    NSData *json   = [NSJSONSerialization dataWithJSONObject: signal.asDictionary
+    NSData *json   = [NSJSONSerialization dataWithJSONObject: signal.asSendableDictionary
                                                      options: 0
                                                        error: &error];
     if (error) {
         // TODO
-        ILLOG( @"failed to serialize: %@", signal.asDictionary );
+        ILLOG( @"failed to serialize: %@", signal.asSendableDictionary );
         return NO;
     }
     NSString *basename = [NSString stringWithFormat: @"%@.json", signal.name];
