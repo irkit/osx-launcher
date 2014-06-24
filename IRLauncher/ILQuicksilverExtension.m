@@ -9,10 +9,24 @@
 #import "ILQuicksilverExtension.h"
 #import "ILLog.h"
 #import "ILUtils.h"
-#import "NSString+UUID.h"
+#import "NSString+UUID.h" // uniqueString
 #import "ILFileStore.h"
 
+static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
+
 @implementation ILQuicksilverExtension
+
+- (NSString*) title {
+    return @"Quicksilver";
+}
+
+- (NSString*) installInformativeText {
+    return @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths.";
+}
+
+- (NSString*) uninstallInformativeText {
+    return @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and remove IRLauncher related entries from it.";
+}
 
 - (void) install {
     ILLOG_CURRENT_METHOD;
@@ -31,6 +45,37 @@
 - (BOOL) installed {
     BOOL ret = [self isCatalogInstalled] && [self isActionInstalled];
     return ret;
+}
+
+- (void) didFinishInstallation {
+    NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: kILQuicksilverBundleIdentifier];
+    if (quicksilvers.count) {
+        [self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
+            NSRunningApplication *q = quicksilvers[ 0 ];
+            BOOL success = [q terminate];
+            if (!success) {
+                ILLOG( @"failed to terminate quicksilver" );
+            }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: kILQuicksilverBundleIdentifier];
+                    if (quicksilvers.count) {
+                        ILLOG( @"failed to terminate quicksilver" );
+                        return;
+                    }
+                    BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: kILQuicksilverBundleIdentifier
+                                                                                        options: NSWorkspaceLaunchDefault
+                                                                 additionalEventParamDescriptor: NULL
+                                                                               launchIdentifier: NULL];
+                    if (!success) {
+                        ILLOG( @"failed to launch quicksilver" );
+                    }
+                });
+        }];
+    }
+}
+
+- (void) didLearnSignal {
+    [self didFinishInstallation];
 }
 
 #pragma mark - Private
@@ -150,6 +195,17 @@
     NSURL *applicationSupportDirectory = [[NSFileManager defaultManager] URLsForDirectory: NSApplicationSupportDirectory
                                                                                 inDomains: NSUserDomainMask][ 0 ];
     return [applicationSupportDirectory URLByAppendingPathComponent: @"Quicksilver/Actions/IRSender.scpt"];
+}
+
+- (void) showConfirmToRelaunchQuicksilver:(void (^)(NSInteger returnCode))callback {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle: @"OK"];
+    [alert addButtonWithTitle: @"Cancel"];
+    [alert setMessageText: @"Relaunch Quicksilver?"];
+    [alert setAlertStyle: NSWarningAlertStyle];
+    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
+    NSInteger ret = [alert runModal];
+    callback( ret );
 }
 
 @end

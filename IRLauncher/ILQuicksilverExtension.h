@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ILExtension.h"
+#import "ILLauncherExtension.h"
 
-@interface ILQuicksilverExtension : NSObject<ILExtension>
+@interface ILQuicksilverExtension : NSObject<ILLauncherExtension>
 
 @end

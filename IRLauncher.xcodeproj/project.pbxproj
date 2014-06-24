@@ -71,7 +71,7 @@
 /* Begin PBXFileReference section */
 		5B1EF2A37F2D4D4C81E28AF5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB52621429724E208636A191 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		C70745BB191A1CAB00AA7A32 /* ILExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILExtension.h; sourceTree = "<group>"; };
+		C70745BB191A1CAB00AA7A32 /* ILLauncherExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLauncherExtension.h; sourceTree = "<group>"; };
 		C70745BE191A1D3E00AA7A32 /* ILQuicksilverExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ILQuicksilverExtension.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuicksilverExtension.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		C71E8993189F92B7007BC9C4 /* IRSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSearcher.m; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.m"; sourceTree = "<group>"; };
@@ -186,14 +186,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C70745BA191A1C7D00AA7A32 /* Extensions */ = {
+		C70745BA191A1C7D00AA7A32 /* LauncherExtensions */ = {
 			isa = PBXGroup;
 			children = (
 				C70745BE191A1D3E00AA7A32 /* ILQuicksilverExtension.h */,
 				C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */,
-				C70745BB191A1CAB00AA7A32 /* ILExtension.h */,
+				C70745BB191A1CAB00AA7A32 /* ILLauncherExtension.h */,
 			);
-			name = Extensions;
+			name = LauncherExtensions;
 			sourceTree = "<group>";
 		};
 		C71E8996189FA05F007BC9C4 /* Categories */ = {
@@ -254,7 +254,7 @@
 				C7D218E719598720004AD675 /* Attributes */,
 				C7BA33E61954288400B9247B /* Dependencies */,
 				C78918E1194FE8A50075C36E /* LearnSignalWindow */,
-				C70745BA191A1C7D00AA7A32 /* Extensions */,
+				C70745BA191A1C7D00AA7A32 /* LauncherExtensions */,
 				C71E8996189FA05F007BC9C4 /* Categories */,
 				C7FD7F88189CFC9600EF0906 /* IRKit */,
 				C7766F9D189A4E9B00898267 /* Menulet */,

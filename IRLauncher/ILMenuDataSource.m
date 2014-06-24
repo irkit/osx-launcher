@@ -14,13 +14,21 @@
 #import "ILSignalsDirectorySearcher.h"
 #import "ILFileStore.h"
 #import "ILLearnSignalWindowController.h"
+#import "NSMenuItem+StateAware.h"
+
+// Launcher Extensions
+#import "ILLauncherExtension.h"
 #import "ILQuicksilverExtension.h"
+// Add other extension headers here!
+
+static const NSInteger kLauncherExtensionTagOffset = 10000;
 
 @interface ILMenuDataSource ()
 
 @property (nonatomic) BOOL searchingForSignals;
 @property (nonatomic) IRSignals *signals;
 @property (nonatomic) ILLearnSignalWindowController *signalWindowController;
+@property (nonatomic) NSArray *launcherExtensions;
 
 @end
 
@@ -34,15 +42,16 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     ILMenuSectionIndexQuit        = 4
 };
 
-typedef NS_ENUM (NSUInteger,ILMenuOptionItemIndex) {
-    ILMenuOptionItemIndexQuicksilver = 0
-};
-
 - (instancetype) init {
     self = [super init];
     if (!self) { return nil; }
 
     [IRSearcher sharedInstance].delegate = self;
+
+    self.launcherExtensions = @[
+        [[ILQuicksilverExtension alloc] init],
+        // Add more here!!
+                              ];
 
     return self;
 }
@@ -55,7 +64,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionItemIndex) {
     [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
                                                         object: self
                                                       userInfo: @{
-         kMOSectionedMenuItemSectionKey: @0
+         kMOSectionedMenuItemSectionKey: @(ILMenuSectionIndexSignals)
      }];
 
     __weak typeof(self) _self = self;
@@ -66,7 +75,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionItemIndex) {
         [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
                                                             object: _self
                                                           userInfo: @{
-             kMOSectionedMenuItemSectionKey: @0
+             kMOSectionedMenuItemSectionKey: @(ILMenuSectionIndexSignals)
          }];
 
         [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
@@ -83,7 +92,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionItemIndex) {
                 [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemAdded
                                                                     object: _self
                                                                   userInfo: @{
-                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index inSection: 0]
+                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index inSection: ILMenuSectionIndexSignals]
                  }];
             }];
     }];
@@ -258,14 +267,16 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionItemIndex) {
     case ILMenuSectionIndexOptions:
     {
         switch (indexPath.item) {
-        case ILMenuOptionItemIndexQuicksilver:
         default:
         {
-            item.title  = @"Quicksilver Integration";
-            item.target = self;
-            item.action = @selector(toggleQuicksilverIntegration:);
-            BOOL installed = [[[ILQuicksilverExtension alloc] init] installed];
+            id<ILLauncherExtension> extension = _launcherExtensions[ indexPath.item ];
+            item.onTitle  = [NSString stringWithFormat: @"%@ Extension (installed)",extension.title];
+            item.offTitle = [NSString stringWithFormat: @"%@ Extension (not installed)", extension.title];
+            item.target   = self;
+            item.action   = @selector(toggleExtensionInstallation:);
+            BOOL installed = [extension installed];
             item.state = installed ? NSOnState : NSOffState;
+            item.tag   = kLauncherExtensionTagOffset + indexPath.item;
             ILLOG( @"item: %@ installed: %d", item, installed );
         }
         break;
@@ -393,56 +404,38 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionItemIndex) {
     ILLOG( @"sender: %@", sender );
 }
 
-- (void) toggleQuicksilverIntegration: (id)sender {
+- (void) toggleExtensionInstallation: (id)sender {
     ILLOG( @"sender: %@", sender );
 
-    if ([[[ILQuicksilverExtension alloc] init] installed]) {
-        [self showConfirmToUninstall:^(NSInteger returnCode) {
+    NSInteger extensionIndex          = ((NSMenuItem*)sender).tag - kLauncherExtensionTagOffset;
+    id<ILLauncherExtension> extension = _launcherExtensions[ extensionIndex ];
+
+    if ([extension installed]) {
+        [self showConfirmToUninstallExtension: extension completion:^(NSInteger returnCode) {
             if (returnCode == NSAlertFirstButtonReturn) {
-                [[[ILQuicksilverExtension alloc] init] uninstall];
+                [extension uninstall];
                 [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
                                                                     object: self
                                                                   userInfo: @{
-                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: ILMenuOptionItemIndexQuicksilver
+                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: extensionIndex
                                                                            inSection: ILMenuSectionIndexOptions]
                  }];
             }
         }];
     }
     else {
-        [self showConfirmToInstall:^(NSInteger returnCode) {
+        [self showConfirmToInstallExtension: extension completion:^(NSInteger returnCode) {
             if (returnCode == NSAlertFirstButtonReturn) {
-                [[[ILQuicksilverExtension alloc] init] install];
+                [extension install];
                 [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
                                                                     object: self
                                                                   userInfo: @{
-                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: ILMenuOptionItemIndexQuicksilver
+                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: extensionIndex
                                                                            inSection: ILMenuSectionIndexOptions]
                  }];
 
-                NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
-                if (quicksilvers.count) {
-                    [self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
-                            NSRunningApplication *q = quicksilvers[ 0 ];
-                            BOOL success = [q terminate];
-                            if (!success) {
-                                ILLOG( @"failed to terminate quicksilver" );
-                            }
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                    NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
-                                    if (quicksilvers.count) {
-                                        ILLOG( @"failed to terminate quicksilver" );
-                                        return;
-                                    }
-                                    BOOL success = [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.blacktree.Quicksilver"
-                                                                                                        options: NSWorkspaceLaunchDefault
-                                                                                 additionalEventParamDescriptor: NULL
-                                                                                               launchIdentifier: NULL];
-                                    if (!success) {
-                                        ILLOG( @"failed to launch quicksilver" );
-                                    }
-                                });
-                        }];
+                if ([extension respondsToSelector: @selector(didFinishInstallation)]) {
+                    [extension didFinishInstallation];
                 }
             }
         }];
@@ -544,42 +537,38 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionItemIndex) {
         [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemAdded
                                                             object: self
                                                           userInfo: @{
-             kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index inSection: 0]
+             kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index
+                                                                   inSection: ILMenuSectionIndexSignals]
          }];
+
+        for (id<ILLauncherExtension> extension in _launcherExtensions) {
+            if ([extension respondsToSelector: @selector(didLearnSignal)]) {
+                [extension didLearnSignal];
+            }
+        }
     }
 }
 
 #pragma mark - Private confirm methods
 
-- (void) showConfirmToInstall:(void (^)(NSInteger returnCode))callback {
+- (void) showConfirmToInstallExtension:(id<ILLauncherExtension>)extension completion:(void (^)(NSInteger returnCode))callback {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle: @"OK"]; // right most : NSAlertFirstButtonReturn
     [alert addButtonWithTitle: @"Cancel"]; // 2nd to right : NSAlertSecondButtonReturn
-    [alert setMessageText: @"Install Quicksilver Plugin?"];
-    [alert setInformativeText: @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths."];
+    [alert setMessageText: [NSString stringWithFormat: @"Install %@ Extension?", extension.title]];
+    [alert setInformativeText: extension.installInformativeText];
     [alert setAlertStyle: NSWarningAlertStyle];
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     NSInteger ret = [alert runModal];
     callback( ret );
 }
 
-- (void) showConfirmToUninstall:(void (^)(NSInteger returnCode))callback {
+- (void) showConfirmToUninstallExtension:(id<ILLauncherExtension>)extension completion:(void (^)(NSInteger returnCode))callback {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle: @"OK"];
     [alert addButtonWithTitle: @"Cancel"];
-    [alert setMessageText: @"Uninstall Quicksilver Plugin?"];
-    [alert setInformativeText: @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and remove IRLauncher related entries from it."];
-    [alert setAlertStyle: NSWarningAlertStyle];
-    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
-    NSInteger ret = [alert runModal];
-    callback( ret );
-}
-
-- (void) showConfirmToRelaunchQuicksilver:(void (^)(NSInteger returnCode))callback {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle: @"OK"];
-    [alert addButtonWithTitle: @"Cancel"];
-    [alert setMessageText: @"Relaunch Quicksilver?"];
+    [alert setMessageText: [NSString stringWithFormat: @"Uninstall %@ Extension?", extension.title]];
+    [alert setInformativeText: extension.uninstallInformativeText];
     [alert setAlertStyle: NSWarningAlertStyle];
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     NSInteger ret = [alert runModal];
