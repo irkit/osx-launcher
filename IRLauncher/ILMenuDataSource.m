@@ -316,6 +316,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     item.title   = signal.name;
     item.target  = self;
     item.action  = @selector(send:);
+    item.tag     = index;
     item.toolTip = [NSString stringWithFormat: @"Click to send via %@", signal.peripheral.customizedName];
     if (index < 10) {
         item.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
@@ -338,7 +339,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 - (void) send: (id)sender {
     ILLOG( @"sender: %@", sender );
 
-    NSUInteger signalIndex = 0; // ((NSMenuItem*)sender).tag - kSignalTagOffset;
+    NSUInteger signalIndex = ((NSMenuItem*)sender).tag;
     IRSignal *signal       = (IRSignal*)[[self signalsWithPeripheral] objectAtIndex: signalIndex];
     if (!signal.peripheral) {
         NSAlert *alert = [[NSAlert alloc] init];
