@@ -34,6 +34,10 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     ILMenuSectionIndexQuit        = 4
 };
 
+typedef NS_ENUM (NSUInteger,ILMenuOptionItemIndex) {
+    ILMenuOptionItemIndexQuicksilver = 0
+};
+
 - (instancetype) init {
     self = [super init];
     if (!self) { return nil; }
@@ -111,7 +115,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     break;
     case ILMenuSectionIndexOptions:
     {
-        return 2;
+        return 1;
     }
     break;
     case ILMenuSectionIndexHelp:
@@ -254,16 +258,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     case ILMenuSectionIndexOptions:
     {
         switch (indexPath.item) {
-        case 0:
-        {
-            item.title  = @"Start at Login";
-            item.target = self;
-            item.action = @selector(toggleStartAtLogin:);
-            item.state  = NSOnState;
-        }
-        break;
-
-        case 1:
+        case ILMenuOptionItemIndexQuicksilver:
         default:
         {
             item.title  = @"Quicksilver Integration";
@@ -408,7 +403,8 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
                 [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
                                                                     object: self
                                                                   userInfo: @{
-                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: 1 inSection: ILMenuSectionIndexOptions]
+                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: ILMenuOptionItemIndexQuicksilver
+                                                                           inSection: ILMenuSectionIndexOptions]
                  }];
             }
         }];
@@ -420,7 +416,8 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
                 [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
                                                                     object: self
                                                                   userInfo: @{
-                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: 1 inSection: ILMenuSectionIndexOptions]
+                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: ILMenuOptionItemIndexQuicksilver
+                                                                           inSection: ILMenuSectionIndexOptions]
                  }];
 
                 NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: @"com.blacktree.Quicksilver"];
