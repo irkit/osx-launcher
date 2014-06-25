@@ -20,6 +20,7 @@ const int kSignalTagOffset                             = 1000;
 const int kPeripheralTagOffset                         = 100;
 static NSString * const kIRKitAPIKey                   = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.send";
+NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotification";
 
 @interface ILAppDelegate ()
 
@@ -33,6 +34,7 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     ILLOG_CURRENT_METHOD;
+    __weak typeof(self) _self = self;
 
     NSArray *args = [[NSProcessInfo processInfo] arguments];
     ILLOG( @"args: %@", args );
@@ -56,6 +58,13 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
                                                         selector: @selector(receivedDistributedNotification:)
                                                             name: nil
                                                           object: nil];
+    [[NSNotificationCenter defaultCenter] addObserverForName: ILWillSendSignalNotification
+                                                      object: nil
+                                                       queue: nil
+                                                  usingBlock:^(NSNotification *note) {
+        ILLOG( @"will send" );
+        [_self.statusItem startAnimating];
+    }];
 
     // Initialize statusItem in 1 process only.
     // We don't want another statusItem to show and immediately disappear,
@@ -112,8 +121,6 @@ static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.
     if ([notification.name isEqualToString: kILDistributedNotificationName]) {
         NSString *path = notification.userInfo[ @"path" ];
         ILLOG( @"will send: %@", path );
-
-        [_statusItem startAnimating];
 
         [[[ILSender alloc] init] sendFileAtPath: path completion:^(NSError *error) {
             ILLOG( @"error: %@", error );

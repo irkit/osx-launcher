@@ -38,6 +38,11 @@
     if ([signalObject isKindOfClass: [NSDictionary class]]) {
         IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalObject];
         if (signal.peripheral) {
+
+            [[NSNotificationCenter defaultCenter] postNotificationName: ILWillSendSignalNotification
+                                                                object: self
+                                                              userInfo: @{ @"signal": signal }];
+
             [signal sendWithCompletion:^(NSError *error) {
                 ILLOG( @"sent with error: %@", error );
                 completion(error);

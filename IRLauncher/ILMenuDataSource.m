@@ -15,6 +15,7 @@
 #import "ILFileStore.h"
 #import "ILLearnSignalWindowController.h"
 #import "NSMenuItem+StateAware.h"
+#import "ILConst.h"
 
 // Launcher Extensions
 #import "ILLauncherExtension.h"
@@ -357,6 +358,11 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
         [alert runModal];
         return;
     }
+
+    [[NSNotificationCenter defaultCenter] postNotificationName: ILWillSendSignalNotification
+                                                        object: self
+                                                      userInfo: @{ @"signal": signal }];
+
     [signal sendWithCompletion:^(NSError *error) {
         ILLOG( @"sent: %@", error );
     }];
