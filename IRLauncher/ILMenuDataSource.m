@@ -542,8 +542,10 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
          }];
 
         for (id<ILLauncherExtension> extension in _launcherExtensions) {
-            if ([extension respondsToSelector: @selector(didLearnSignal)]) {
-                [extension didLearnSignal];
+            if ([extension installed]) {
+                if ([extension respondsToSelector: @selector(didLearnSignal)]) {
+                    [extension didLearnSignal];
+                }
             }
         }
     }
