@@ -6,21 +6,22 @@
 //  Copyright (c) 2014年 Masakazu Ohtsuka. All rights reserved.
 //
 
-#import "ILVersionChecker.h"
+#import "MOGithubReleaseChecker.h"
 #import "ILLog.h"
 #import <AFNetworking/AFNetworking.h>
-#import "ILConst.h"
 
-@interface ILVersionChecker ()
+@interface MOGithubReleaseChecker ()
 
 @end
 
-@implementation ILVersionChecker
+@implementation MOGithubReleaseChecker
 
-- (instancetype) init {
+- (instancetype) initWithUserName:(NSString*)userName repositoryName:(NSString*)repositoryName {
     self = [super init];
     if (!self) { return nil; }
 
+    _userName       = userName;
+    _repositoryName = repositoryName;
 
     return self;
 }
@@ -29,7 +30,10 @@
     ILLOG( @"currentVersion: %@", currentVersion );
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET: @"https://api.github.com/repos/irkit/device/releases" parameters: nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *endpoint                     = [NSString stringWithFormat: @"https://api.github.com/repos/%@/%@/releases", _userName, _repositoryName];
+    [manager GET: endpoint
+      parameters: nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *tag = ((NSArray*)responseObject)[ 0 ];
         ILLOG( @"tag: %@", tag );
 

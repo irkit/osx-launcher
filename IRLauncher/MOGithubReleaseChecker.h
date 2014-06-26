@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ILVersionChecker : NSObject
+@interface MOGithubReleaseChecker : NSObject
 
+@property (nonatomic, copy) NSString *userName;
+@property (nonatomic, copy) NSString *repositoryName;
+
+- (instancetype) initWithUserName:(NSString*)userName repositoryName:(NSString*)repositoryName;
 - (void)checkUpdateForVersion:(NSString*)currentVersion foundUpdateBlock:(void (^)(NSString *newVersion))completion;
 
 @end

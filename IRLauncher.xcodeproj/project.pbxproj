@@ -31,7 +31,7 @@
 		C7647EBA18ED5DD000171E7F /* IRKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB618ED5DD000171E7F /* IRKit.m */; };
 		C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB818ED5DD000171E7F /* IRReachability.m */; };
 		C764C1C719527E5B003410B6 /* MOSectionedMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C764C1C619527E5B003410B6 /* MOSectionedMenu.m */; };
-		C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* ILVersionChecker.m */; };
+		C7766FA1189A4F5300898267 /* MOGithubReleaseChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* MOGithubReleaseChecker.m */; };
 		C7766FA4189A524800898267 /* ILLog.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* ILLog.m */; };
 		C77AFB4719528218002ED79A /* ILMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB4619528218002ED79A /* ILMenuDataSource.m */; };
 		C77AFB5A1952DCD6002ED79A /* MOAnimatingStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB591952DCD6002ED79A /* MOAnimatingStatusItem.m */; };
@@ -115,8 +115,8 @@
 		C7647EB818ED5DD000171E7F /* IRReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRReachability.m; path = "../../ios-sdk/IRKit/IRKit/IRReachability.m"; sourceTree = "<group>"; };
 		C764C1C519527E5B003410B6 /* MOSectionedMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOSectionedMenu.h; sourceTree = "<group>"; };
 		C764C1C619527E5B003410B6 /* MOSectionedMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOSectionedMenu.m; sourceTree = "<group>"; };
-		C7766F9F189A4F5300898267 /* ILVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILVersionChecker.h; sourceTree = "<group>"; };
-		C7766FA0189A4F5300898267 /* ILVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILVersionChecker.m; sourceTree = "<group>"; };
+		C7766F9F189A4F5300898267 /* MOGithubReleaseChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOGithubReleaseChecker.h; sourceTree = "<group>"; };
+		C7766FA0189A4F5300898267 /* MOGithubReleaseChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOGithubReleaseChecker.m; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* ILLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLog.h; sourceTree = "<group>"; };
 		C7766FA3189A524800898267 /* ILLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILLog.m; sourceTree = "<group>"; };
 		C77AFB4519528218002ED79A /* ILMenuDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuDataSource.h; sourceTree = "<group>"; };
@@ -260,8 +260,8 @@
 				C7766F9D189A4E9B00898267 /* Menulet */,
 				C7766F9B189A4E0F00898267 /* Resources */,
 				C71F8C41189A015200298DFA /* Supporting Files */,
-				C7766F9F189A4F5300898267 /* ILVersionChecker.h */,
-				C7766FA0189A4F5300898267 /* ILVersionChecker.m */,
+				C7766F9F189A4F5300898267 /* MOGithubReleaseChecker.h */,
+				C7766FA0189A4F5300898267 /* MOGithubReleaseChecker.m */,
 				C71F8C4C189A015200298DFA /* ILAppDelegate.h */,
 				C71F8C4D189A015200298DFA /* ILAppDelegate.m */,
 				C7F6C491189A66B600A79261 /* ILUtils.h */,
@@ -575,7 +575,7 @@
 				C77AFB5A1952DCD6002ED79A /* MOAnimatingStatusItem.m in Sources */,
 				C70745C0191A1D3E00AA7A32 /* ILQuicksilverExtension.m in Sources */,
 				C7A7ED6B192DD05E00F86AFF /* ILSender.m in Sources */,
-				C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */,
+				C7766FA1189A4F5300898267 /* MOGithubReleaseChecker.m in Sources */,
 				C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */,
 				C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */,
 				C789EC9619419E1600BC8E90 /* ILSignalReceiveViewController.m in Sources */,

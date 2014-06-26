@@ -15,6 +15,7 @@
 #import "ILSender.h"
 #import "ILConst.h"
 #import "ILStatusItem.h"
+#import "MOGithubReleaseChecker.h"
 
 const int kSignalTagOffset                             = 1000;
 const int kPeripheralTagOffset                         = 100;
@@ -27,6 +28,7 @@ NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotif
 @property (nonatomic, strong) MOSectionedMenu *sectionedMenu;
 @property (nonatomic, strong) MOAnimatingStatusItem *statusItem;
 @property (nonatomic, strong) IRSignals *signals;
+@property (nonatomic, strong) MOGithubReleaseChecker *releaseChecker;
 
 @end
 
@@ -75,6 +77,12 @@ NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotif
     ILFileStore *store = [[ILFileStore alloc] init];
     [IRKit setPersistentStore: store]; // call before `startWithAPIKey`
     [IRKit startWithAPIKey: kIRKitAPIKey];
+
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleVersion"];
+    _releaseChecker = [[MOGithubReleaseChecker alloc] initWithUserName: @"irkit" repositoryName: @"launcher-macos"];
+    [_releaseChecker checkUpdateForVersion: version foundUpdateBlock:^(NSString *newVersion) {
+        // TODO
+    }];
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
