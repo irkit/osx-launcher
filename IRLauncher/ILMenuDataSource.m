@@ -11,11 +11,11 @@
 #import "IRKit.h"
 #import "ILMenuProgressView.h"
 #import "ILUtils.h"
-#import "ILSignalsDirectorySearcher.h"
 #import "ILFileStore.h"
 #import "ILLearnSignalWindowController.h"
 #import "NSMenuItem+StateAware.h"
 #import "ILConst.h"
+#import "IRSignals+FileStore.h"
 
 // Launcher Extensions
 #import "ILLauncherExtension.h"
@@ -61,7 +61,6 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     ILLOG_CURRENT_METHOD;
 
     _searchingForSignals = YES;
-
     [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
                                                         object: self
                                                       userInfo: @{
@@ -69,33 +68,19 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
      }];
 
     __weak typeof(self) _self = self;
-    [ILSignalsDirectorySearcher findSignalsUnderDirectory: [NSURL fileURLWithPath: [ILFileStore signalsDirectory]]
-                                               completion: ^(NSArray *foundSignals) {
-
+    [_signals loadFromFilesUnderDirectory: [ILFileStore signalsDirectory] completion:^(NSError *error) {
+        ILLOG( @"loaded" );
         _self.searchingForSignals = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
                                                             object: _self
                                                           userInfo: @{
              kMOSectionedMenuItemSectionKey: @(ILMenuSectionIndexSignals)
          }];
-
-        [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
-                IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
-                if (!signal.peripheral) {
-                    // skip signals without hostname
-                    // TODO somehow indicate that we skipped?
-                    return;
-                }
-
-                [_self.signals addSignalsObject: signal];
-                NSUInteger index = [_self.signals indexOfSignal: signal];
-
-                [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemAdded
-                                                                    object: _self
-                                                                  userInfo: @{
-                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index inSection: ILMenuSectionIndexSignals]
-                 }];
-            }];
+        [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemsAdded
+                                                            object: _self
+                                                          userInfo: @{
+             kMOSectionedMenuItemSectionKey: @(ILMenuSectionIndexSignals)
+         }];
     }];
 }
 
@@ -466,7 +451,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
                                                         object: self
                                                       userInfo: @{
-         kMOSectionedMenuItemSectionKey: @1
+         kMOSectionedMenuItemSectionKey: @(ILMenuSectionIndexPeripherals)
      }];
 }
 
@@ -510,7 +495,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
                                                         object: self
                                                       userInfo: @{
-         kMOSectionedMenuItemSectionKey: @1
+         kMOSectionedMenuItemSectionKey: @(ILMenuSectionIndexPeripherals)
      }];
 
     [[IRSearcher sharedInstance] startSearchingAfterTimeInterval: 5. forTimeInterval: 5.];
