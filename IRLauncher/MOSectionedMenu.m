@@ -10,6 +10,7 @@
 #import "ILLog.h"
 
 NSString * const kMOSectionedMenuItemAdded         = @"kMOSectionedMenuItemAdded";
+NSString * const kMOSectionedMenuItemsAdded        = @"kMOSectionedMenuItemsAdded";
 NSString * const kMOSectionedMenuItemUpdated       = @"kMOSectionedMenuItemUpdated";
 NSString * const kMOSectionedMenuItemHeaderUpdated = @"kMOSectionedMenuItemHeaderUpdated";
 NSString * const kMOSectionedMenuItemSectionKey    = @"kMOSectionedMenuItemSectionKey";
@@ -22,6 +23,7 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
 
 @property (nonatomic) id itemHeaderUpdatedObserver;
 @property (nonatomic) id itemAddedObserver;
+@property (nonatomic) id itemsAddedObserver;
 @property (nonatomic) id itemUpdatedObserver;
 
 @end
@@ -89,6 +91,22 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
         NSUInteger index = [self indexOfItemAtIndexPath: indexPath];
         [_self.menu insertItem: item
                        atIndex: index];
+    }];
+    _itemsAddedObserver = [[NSNotificationCenter defaultCenter] addObserverForName: kMOSectionedMenuItemsAdded
+                                                                            object: dataSource
+                                                                             queue: nil
+                                                                        usingBlock:^(NSNotification *note) {
+        if (!_self.initialized) {
+            // don't try to update menu if it's not initialized yet
+            return;
+        }
+
+        // TODO refresh updated section only
+
+        // refresh all menu items
+        [_self.menu removeAllItems];
+        _self.initialized = 0;
+        [_self menuNeedsUpdate: _self.menu];
     }];
     _itemUpdatedObserver = [[NSNotificationCenter defaultCenter] addObserverForName: kMOSectionedMenuItemUpdated
                                                                              object: dataSource
@@ -188,7 +206,26 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
 - (void) removeObservers {
     [[NSNotificationCenter defaultCenter] removeObserver: _itemHeaderUpdatedObserver];
     [[NSNotificationCenter defaultCenter] removeObserver: _itemAddedObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver: _itemsAddedObserver];
     [[NSNotificationCenter defaultCenter] removeObserver: _itemUpdatedObserver];
+}
+
+- (void) addItemsInSection: (NSUInteger)section {
+    if ([self.dataSource respondsToSelector: @selector(sectionedMenu:hasHeaderForSection:)] &&
+        [self.dataSource sectionedMenu: self hasHeaderForSection: section]) {
+        NSMenuItem *item = [self.dataSource sectionedMenu: self headerItemForSection: section];
+        [_menu addItem: item];
+    }
+    for (NSUInteger item=0; item<[self.dataSource sectionedMenu: self numberOfItemsInSection: section]; item++) {
+        MOIndexPath *p   = [MOIndexPath indexPathForItem: item inSection: section];
+        NSMenuItem *item = [self.dataSource sectionedMenu: self itemForIndexPath: p];
+        [_menu addItem: item];
+    }
+    if ([self.dataSource respondsToSelector: @selector(sectionedMenu:hasFooterForSection:)] &&
+        [self.dataSource sectionedMenu: self hasFooterForSection: section]) {
+        NSMenuItem *item = [self.dataSource sectionedMenu: self footerItemForSection: section];
+        [_menu addItem: item];
+    }
 }
 
 #pragma mark - NSMenuDelegate methods
@@ -202,21 +239,7 @@ NSString * const kMOSectionedMenuItemIndexPathKey  = @"kMOSectionedMenuItemIndex
 
     NSUInteger numberOfSections =[self.dataSource numberOfSectionsInSectionedMenu: self];
     for (NSUInteger section=0; section<numberOfSections; section++) {
-        if ([self.dataSource respondsToSelector: @selector(sectionedMenu:hasHeaderForSection:)] &&
-            [self.dataSource sectionedMenu: self hasHeaderForSection: section]) {
-            NSMenuItem *item = [self.dataSource sectionedMenu: self headerItemForSection: section];
-            [_menu addItem: item];
-        }
-        for (NSUInteger item=0; item<[self.dataSource sectionedMenu: self numberOfItemsInSection: section]; item++) {
-            MOIndexPath *p   = [MOIndexPath indexPathForItem: item inSection: section];
-            NSMenuItem *item = [self.dataSource sectionedMenu: self itemForIndexPath: p];
-            [_menu addItem: item];
-        }
-        if ([self.dataSource respondsToSelector: @selector(sectionedMenu:hasFooterForSection:)] &&
-            [self.dataSource sectionedMenu: self hasFooterForSection: section]) {
-            NSMenuItem *item = [self.dataSource sectionedMenu: self footerItemForSection: section];
-            [_menu addItem: item];
-        }
+        [self addItemsInSection: section];
 
         if (_separated && (section != numberOfSections)) {
             NSMenuItem *item = [NSMenuItem separatorItem];

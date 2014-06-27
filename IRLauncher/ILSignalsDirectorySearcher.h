@@ -10,6 +10,6 @@
 
 @interface ILSignalsDirectorySearcher : NSObject
 
-+ (void) findSignalsUnderDirectory: (NSURL*)signalsURL completion: (void (^)(NSArray *foundSignals)) completion;
++ (void) findSignalsUnderDirectory: (NSURL*)signalsURL completion: (void (^)(NSArray *foundSignals, NSError *error)) completion;
 
 @end

@@ -11,7 +11,7 @@
 
 @implementation ILSignalsDirectorySearcher
 
-+ (void) findSignalsUnderDirectory: (NSURL*)signalsURL completion: (void (^)(NSArray *foundSignals)) completion {
++ (void) findSignalsUnderDirectory: (NSURL*)signalsURL completion: (void (^)(NSArray *foundSignals, NSError *error)) completion {
     ILLOG( @"signalsURL: %@", signalsURL );
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -22,11 +22,14 @@
         // Enumerate the directory (specified elsewhere in your code)
         // Request the two properties the method uses, name and isDirectory
         // Ignore hidden files
-        // The errorHandler: parameter is set to nil. Typically you'd want to present a panel
         NSArray *fileURLs = [manager contentsOfDirectoryAtURL: signalsURL
                                    includingPropertiesForKeys: @[ NSURLNameKey, NSURLIsDirectoryKey ]
                                                       options: NSDirectoryEnumerationSkipsHiddenFiles|NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsPackageDescendants
                                                         error: &error];
+        if (error) {
+            completion( nil, error );
+            return;
+        }
 
         // Enumerate the dirEnumerator results, each value is stored in allURLs
         for (NSURL *fileURL in fileURLs) {
@@ -52,7 +55,7 @@
         }
 
         dispatch_async( dispatch_get_main_queue(), ^{
-                completion( ret );
+                completion( ret, nil );
             });
     });
 }

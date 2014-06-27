@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const kMOSectionedMenuItemAdded;
+extern NSString * const kMOSectionedMenuItemsAdded;
 extern NSString * const kMOSectionedMenuItemUpdated;
 extern NSString * const kMOSectionedMenuItemHeaderUpdated;
 extern NSString * const kMOSectionedMenuItemSectionKey;
