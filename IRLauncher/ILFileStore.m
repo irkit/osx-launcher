@@ -127,6 +127,13 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
         ILLOG( @"failed to serialize: %@", signal.asSendableDictionary );
         return NO;
     }
+
+    // We'll deal with errors when write fails
+    [[NSFileManager defaultManager] createDirectoryAtPath: [self signalsDirectory]
+                              withIntermediateDirectories: YES
+                                               attributes: nil
+                                                    error: nil];
+
     NSString *basename = [NSString stringWithFormat: @"%@.json", signal.name];
     NSString *file     = [[self signalsDirectory] stringByAppendingPathComponent: basename];
     // overwrites file
@@ -145,10 +152,10 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
 #pragma mark - Private
 
 + (int)setSignalExtendedAttributesToFile:(NSString*)file {
-    NSString *finderInfoFile   = [[NSBundle mainBundle] pathForResource:@"FinderInfo"   ofType:@"dat"];
-    NSString *resourceForkFile = [[NSBundle mainBundle] pathForResource:@"ResourceFork" ofType:@"dat"];
-    NSData *finderInfo   = [NSData dataWithContentsOfFile:finderInfoFile];
-    NSData *resourceFork = [NSData dataWithContentsOfFile:resourceForkFile];
+    NSString *finderInfoFile   = [[NSBundle mainBundle] pathForResource: @"FinderInfo"   ofType: @"dat"];
+    NSString *resourceForkFile = [[NSBundle mainBundle] pathForResource: @"ResourceFork" ofType: @"dat"];
+    NSData *finderInfo         = [NSData dataWithContentsOfFile: finderInfoFile];
+    NSData *resourceFork       = [NSData dataWithContentsOfFile: resourceForkFile];
 
     int result;
     result = setxattr([file fileSystemRepresentation], XATTR_FINDERINFO_NAME, finderInfo.bytes, finderInfo.length, 0, 0);
