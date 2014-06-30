@@ -13,9 +13,6 @@
 + (NSString*)chompedString: (NSString*)orig;
 + (id)loadClassNamed:(NSString*)className;
 + (id)firstObjectOf:(NSArray *)array meetsBlock:(BOOL (^)(id obj, NSUInteger idx))block;
-+ (NSURL*) URLPathForVersion: (NSString*) versionString;
-+ (void) downloadAssetURL: (NSURL*) assetURL toPathURL: (NSURL*) pathURL completion: (void (^)(NSError*)) completion;
 + (void) getModelNameAndVersion:(NSString*) hostname withCompletion:(void (^)(NSString *modelName, NSString *version)) completion;
-+ (BOOL) releasedVersionString:(NSString*) releaseVersionString isNewerThanPeripheralVersion: (NSString*)peripheralVersion;
 
 @end

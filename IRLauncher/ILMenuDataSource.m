@@ -16,6 +16,7 @@
 #import "ILLearnSignalWindowController.h"
 #import "NSMenuItem+StateAware.h"
 #import "ILConst.h"
+#import "ILApplicationUpdater.h"
 
 // Launcher Extensions
 #import "ILLauncherExtension.h"
@@ -41,6 +42,11 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     ILMenuSectionIndexOptions     = 2,
     ILMenuSectionIndexHelp        = 3,
     ILMenuSectionIndexQuit        = 4
+};
+
+typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
+    ILMenuOptionsItemIndexQuicksilver = 0,
+    ILMenuOptionsItemIndexAutoUpdate  = 1
 };
 
 - (instancetype) init {
@@ -125,7 +131,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     break;
     case ILMenuSectionIndexOptions:
     {
-        return 1;
+        return 2;
     }
     break;
     case ILMenuSectionIndexHelp:
@@ -268,6 +274,16 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     case ILMenuSectionIndexOptions:
     {
         switch (indexPath.item) {
+        case ILMenuOptionsItemIndexQuicksilver:
+        {
+            item.title  = @"Auto Update";
+            item.target = self;
+            item.action = @selector(toggleAutoUpdate:);
+            item.state  = [ILApplicationUpdater sharedInstance].enabled;
+        }
+        break;
+
+        case ILMenuOptionsItemIndexAutoUpdate:
         default:
         {
             id<ILLauncherExtension> extension = _launcherExtensions[ indexPath.item ];
@@ -406,7 +422,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     _signalWindowController = c; // retain to keep window showing
 }
 
-- (void) toggleStartAtLogin: (id)sender {
+- (void) toggleAutoUpdate: (id)sender {
     ILLOG( @"sender: %@", sender );
 }
 

@@ -40,28 +40,6 @@
     return result;
 }
 
-+ (NSURL*) URLPathForVersion: (NSString*) versionString {
-    NSString *directory = [[NSFileManager defaultManager] applicationSupportDirectory];
-    NSURL *directoryURL = [NSURL fileURLWithPath: directory];
-    return [directoryURL URLByAppendingPathComponent: versionString];
-}
-
-+ (void) downloadAssetURL: (NSURL*) assetURL toPathURL: (NSURL*) pathURL completion: (void (^)(NSError*)) completion {
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager             = [[AFURLSessionManager alloc] initWithSessionConfiguration: configuration];
-
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: assetURL];
-    [request setValue: @"application/octet-stream" forHTTPHeaderField: @"Content-Type"];
-
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest: request progress: nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        return pathURL;
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        ILLOG(@"File downloaded to: %@", filePath);
-        completion(error);
-    }];
-    [downloadTask resume];
-}
-
 + (void) getModelNameAndVersion:(NSString*) hostname withCompletion:(void (^)(NSString *modelName, NSString *version))completion {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSString *url                          = [NSString stringWithFormat: @"http://%@/", hostname];
@@ -82,26 +60,6 @@
         }
         completion( tmp[0], tmp[1] );
     }];
-}
-
-+ (BOOL) releasedVersionString:(NSString*) releaseVersionString isNewerThanPeripheralVersion: (NSString*)peripheralVersion {
-    ILLOG( @"releaseVersion: %@ peripheralVersion: %@", releaseVersionString, peripheralVersion);
-
-    NSArray *releaseVersionParts    = [[releaseVersionString substringFromIndex: 1] componentsSeparatedByString: @"."];
-    NSArray *peripheralVersionParts = [peripheralVersion componentsSeparatedByString: @"."];
-    if (releaseVersionParts[0] > peripheralVersionParts[0]) {
-        return YES; // new major version
-    }
-    if ((releaseVersionParts[0] == peripheralVersionParts[0]) &&
-        (releaseVersionParts[1] > peripheralVersionParts[1])) {
-        return YES; // new minor version
-    }
-    if ((releaseVersionParts[0] == peripheralVersionParts[0]) &&
-        (releaseVersionParts[1] == peripheralVersionParts[1]) &&
-        (releaseVersionParts[2] == peripheralVersionParts[2])) {
-        return YES; // new bugfix version
-    }
-    return NO;
 }
 
 @end

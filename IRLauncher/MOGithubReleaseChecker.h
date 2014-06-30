@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+/// Check github release for a new update
 @interface MOGithubReleaseChecker : NSObject
 
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *repositoryName;
 
 - (instancetype) initWithUserName:(NSString*)userName repositoryName:(NSString*)repositoryName;
-- (void)checkUpdateForVersion:(NSString*)currentVersion foundUpdateBlock:(void (^)(NSString *newVersion))completion;
+- (void)checkForVersionNewerThanVersion:(NSString*)currentVersion
+                      downloadDirectory:(NSString*)downloadDirectory
+                 foundNewerVersionBlock:(void (^)(NSString *newVersion, NSString *releaseInformation, NSURL *downloadedArchive, NSError *error))completion;
 
 @end

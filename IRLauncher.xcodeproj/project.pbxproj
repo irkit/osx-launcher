@@ -52,8 +52,11 @@
 		C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */; };
 		C7BA33EB1954288400B9247B /* MIT-License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C7BA33E81954288400B9247B /* MIT-License.rtf */; };
 		C7BA33EC1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BA33EA1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m */; };
+		C7CA5460195EA73000B2F6B2 /* install-update.sh in Resources */ = {isa = PBXBuildFile; fileRef = C7CA545F195EA73000B2F6B2 /* install-update.sh */; };
+		C7CA5463195EA87D00B2F6B2 /* MOApplicationUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CA5462195EA87D00B2F6B2 /* MOApplicationUpdater.m */; };
 		C7D218EA19598720004AD675 /* FinderInfo.dat in Resources */ = {isa = PBXBuildFile; fileRef = C7D218E819598720004AD675 /* FinderInfo.dat */; };
 		C7D218EB19598720004AD675 /* ResourceFork.dat in Resources */ = {isa = PBXBuildFile; fileRef = C7D218E919598720004AD675 /* ResourceFork.dat */; };
+		C7E5555819615B7700485045 /* ILApplicationUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E5555719615B7700485045 /* ILApplicationUpdater.m */; };
 		C7F32CB119516DED00601842 /* ILMenuProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7F32CB019516DED00601842 /* ILMenuProgressView.xib */; };
 		C7F6C493189A66B600A79261 /* ILUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6C492189A66B600A79261 /* ILUtils.m */; };
 /* End PBXBuildFile section */
@@ -157,8 +160,13 @@
 		C7BA33E81954288400B9247B /* MIT-License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "MIT-License.rtf"; sourceTree = "<group>"; };
 		C7BA33E91954288400B9247B /* RSVerticallyCenteredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVerticallyCenteredTextFieldCell.h; sourceTree = "<group>"; };
 		C7BA33EA1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVerticallyCenteredTextFieldCell.m; sourceTree = "<group>"; };
+		C7CA545F195EA73000B2F6B2 /* install-update.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "install-update.sh"; sourceTree = "<group>"; };
+		C7CA5461195EA87D00B2F6B2 /* MOApplicationUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOApplicationUpdater.h; sourceTree = "<group>"; };
+		C7CA5462195EA87D00B2F6B2 /* MOApplicationUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOApplicationUpdater.m; sourceTree = "<group>"; };
 		C7D218E819598720004AD675 /* FinderInfo.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = FinderInfo.dat; sourceTree = "<group>"; };
 		C7D218E919598720004AD675 /* ResourceFork.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ResourceFork.dat; sourceTree = "<group>"; };
+		C7E5555619615B7700485045 /* ILApplicationUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILApplicationUpdater.h; sourceTree = "<group>"; };
+		C7E5555719615B7700485045 /* ILApplicationUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILApplicationUpdater.m; sourceTree = "<group>"; };
 		C7F32CB019516DED00601842 /* ILMenuProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILMenuProgressView.xib; sourceTree = "<group>"; };
 		C7F6C491189A66B600A79261 /* ILUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUtils.h; sourceTree = "<group>"; };
 		C7F6C492189A66B600A79261 /* ILUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUtils.m; sourceTree = "<group>"; };
@@ -251,6 +259,7 @@
 		C71F8C40189A015200298DFA /* IRLauncher */ = {
 			isa = PBXGroup;
 			children = (
+				C7CA545E195EA73000B2F6B2 /* Scripts */,
 				C7D218E719598720004AD675 /* Attributes */,
 				C7BA33E61954288400B9247B /* Dependencies */,
 				C78918E1194FE8A50075C36E /* LearnSignalWindow */,
@@ -262,6 +271,8 @@
 				C71F8C41189A015200298DFA /* Supporting Files */,
 				C7766F9F189A4F5300898267 /* MOGithubReleaseChecker.h */,
 				C7766FA0189A4F5300898267 /* MOGithubReleaseChecker.m */,
+				C7CA5461195EA87D00B2F6B2 /* MOApplicationUpdater.h */,
+				C7CA5462195EA87D00B2F6B2 /* MOApplicationUpdater.m */,
 				C71F8C4C189A015200298DFA /* ILAppDelegate.h */,
 				C71F8C4D189A015200298DFA /* ILAppDelegate.m */,
 				C7F6C491189A66B600A79261 /* ILUtils.h */,
@@ -273,6 +284,8 @@
 				C7965C2018FFB465004FF579 /* ILConst.h */,
 				C7A7ED69192DD05E00F86AFF /* ILSender.h */,
 				C7A7ED6A192DD05E00F86AFF /* ILSender.m */,
+				C7E5555619615B7700485045 /* ILApplicationUpdater.h */,
+				C7E5555719615B7700485045 /* ILApplicationUpdater.m */,
 			);
 			path = IRLauncher;
 			sourceTree = "<group>";
@@ -369,6 +382,14 @@
 				C7BA33EA1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m */,
 			);
 			path = RSVerticallyCenteredTextFieldCell;
+			sourceTree = "<group>";
+		};
+		C7CA545E195EA73000B2F6B2 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				C7CA545F195EA73000B2F6B2 /* install-update.sh */,
+			);
+			path = Scripts;
 			sourceTree = "<group>";
 		};
 		C7D218E719598720004AD675 /* Attributes */ = {
@@ -495,6 +516,7 @@
 				C7D218EB19598720004AD675 /* ResourceFork.dat in Resources */,
 				C7D218EA19598720004AD675 /* FinderInfo.dat in Resources */,
 				C71F8C45189A015200298DFA /* InfoPlist.strings in Resources */,
+				C7CA5460195EA73000B2F6B2 /* install-update.sh in Resources */,
 				C71F8C53189A015200298DFA /* Images.xcassets in Resources */,
 				C71F8C4B189A015200298DFA /* Credits.rtf in Resources */,
 				C7BA33EB1954288400B9247B /* MIT-License.rtf in Resources */,
@@ -561,6 +583,7 @@
 				C71E8999189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m in Sources */,
 				C7F6C493189A66B600A79261 /* ILUtils.m in Sources */,
 				C763F69C18ED692C00EAC927 /* Log.m in Sources */,
+				C7CA5463195EA87D00B2F6B2 /* MOApplicationUpdater.m in Sources */,
 				C764C1C719527E5B003410B6 /* MOSectionedMenu.m in Sources */,
 				C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */,
 				C7647EB918ED5DD000171E7F /* IRHTTPClient.m in Sources */,
@@ -583,6 +606,7 @@
 				C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */,
 				C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */,
 				C7B206A0194FF4BB001646DD /* ILLearnSignalWindowController.m in Sources */,
+				C7E5555819615B7700485045 /* ILApplicationUpdater.m in Sources */,
 				C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */,
 				C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */,
 				C738EC001953D6F1006A7B6D /* ILStatusItem.m in Sources */,

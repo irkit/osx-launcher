@@ -15,10 +15,8 @@
 #import "ILSender.h"
 #import "ILConst.h"
 #import "ILStatusItem.h"
-#import "MOGithubReleaseChecker.h"
+#import "ILApplicationUpdater.h"
 
-const int kSignalTagOffset                             = 1000;
-const int kPeripheralTagOffset                         = 100;
 static NSString * const kIRKitAPIKey                   = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.send";
 NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotification";
@@ -28,7 +26,7 @@ NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotif
 @property (nonatomic, strong) MOSectionedMenu *sectionedMenu;
 @property (nonatomic, strong) MOAnimatingStatusItem *statusItem;
 @property (nonatomic, strong) IRSignals *signals;
-@property (nonatomic, strong) MOGithubReleaseChecker *releaseChecker;
+@property (nonatomic, strong) ILApplicationUpdater *updater;
 
 @end
 
@@ -78,11 +76,11 @@ NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotif
     [IRKit setPersistentStore: store]; // call before `startWithAPIKey`
     [IRKit startWithAPIKey: kIRKitAPIKey];
 
-    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleVersion"];
-    _releaseChecker = [[MOGithubReleaseChecker alloc] initWithUserName: @"irkit" repositoryName: @"launcher-macos"];
-    [_releaseChecker checkUpdateForVersion: version foundUpdateBlock:^(NSString *newVersion) {
-        // TODO
-    }];
+    // automatically download, unarchive, update
+    _updater = [[ILApplicationUpdater alloc] init];
+    if([_updater enabled]) {
+        [_updater run];
+    }
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
