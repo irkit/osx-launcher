@@ -15,18 +15,23 @@ PODS:
   - AFNetworking/Reachability (2.1.0)
   - AFNetworking/Security (2.1.0)
   - AFNetworking/Serialization (2.1.0)
+  - AutoUpdater (1.0.0)
   - ISHTTPOperation (1.2.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.1.0)
+  - AutoUpdater (from `~/proj/CocoaAutoUpdater`)
   - ISHTTPOperation (from `~/src/github.com/ishkawa/ISHTTPOperation`)
 
 EXTERNAL SOURCES:
+  AutoUpdater:
+    :path: ~/proj/CocoaAutoUpdater
   ISHTTPOperation:
     :path: ~/src/github.com/ishkawa/ISHTTPOperation
 
 SPEC CHECKSUMS:
   AFNetworking: 7c33510b46f994bc75b75c6e63c1d83414ca40f2
+  AutoUpdater: 3ecebc0dbfa8653a09ef5941b63b65df2040ac8b
   ISHTTPOperation: e3cae0f1047973202c1a7d8ffc996e610c58dfbf
 
 COCOAPODS: 0.33.1
