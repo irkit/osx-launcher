@@ -5,6 +5,9 @@
       location = "group:IRLauncher.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:AutoUpdater/AutoUpdater.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
