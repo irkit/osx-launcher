@@ -8,14 +8,15 @@
 
 #import "ILLog.h"
 #import "ILApplicationUpdater.h"
-#import "MOGithubReleaseChecker.h"
-#import "MOApplicationUpdater.h"
+#import <AutoUpdater/AUAutoUpdater.h>
+#import <AutoUpdater/AUGithubReleaseChecker.h>
 
 static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
 
 @interface ILApplicationUpdater ()
 
-@property (nonatomic) MOGithubReleaseChecker *releaseChecker;
+@property (nonatomic) AUGithubReleaseChecker *releaseChecker;
+@property (nonatomic) AUAutoUpdater *updater;
 
 @end
 
@@ -42,12 +43,13 @@ static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
 - (void) run {
     NSString *version           = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     NSString *downloadDirectory = [[NSBundle mainBundle] bundlePath];
-    _releaseChecker = [[MOGithubReleaseChecker alloc] initWithUserName: @"mash" repositoryName: @"-----------------"]; // irkit/launcher-macos
+    _releaseChecker = [[AUGithubReleaseChecker alloc] initWithUserName: @"mash" repositoryName: @"-----------------"]; // irkit/launcher-macos
     [_releaseChecker checkForVersionNewerThanVersion: version
                                    downloadDirectory: downloadDirectory
-                              foundNewerVersionBlock: ^(NSString *newVersion, NSString *releaseInformation, NSURL *downloadedArchive, NSError *error) {
-        if (newVersion && downloadedArchive && !error && [self enabled]) {
-            [[[MOApplicationUpdater alloc] initWithArchiveURL: downloadedArchive] run];
+                              foundNewerVersionBlock: ^(NSString *newVersion, NSString *releaseInformation, NSURL *unarchivedPath, NSError *error) {
+        if (newVersion && unarchivedPath && !error && [self enabled]) {
+            _updater = [[AUAutoUpdater alloc] initWithSourcePath: unarchivedPath];
+            [_updater run];
         }
     }];
 }
