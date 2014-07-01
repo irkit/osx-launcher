@@ -45,8 +45,8 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 };
 
 typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
-    ILMenuOptionsItemIndexQuicksilver = 0,
-    ILMenuOptionsItemIndexAutoUpdate  = 1
+    ILMenuOptionsItemIndexAutoUpdate  = 0,
+    ILMenuOptionsItemIndexQuicksilver = 1,
 };
 
 - (instancetype) init {
@@ -274,7 +274,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     case ILMenuSectionIndexOptions:
     {
         switch (indexPath.item) {
-        case ILMenuOptionsItemIndexQuicksilver:
+        case ILMenuOptionsItemIndexAutoUpdate:
         {
             item.title  = @"Auto Update";
             item.target = self;
@@ -283,10 +283,10 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         }
         break;
 
-        case ILMenuOptionsItemIndexAutoUpdate:
+        case ILMenuOptionsItemIndexQuicksilver:
         default:
         {
-            id<ILLauncherExtension> extension = _launcherExtensions[ indexPath.item ];
+            id<ILLauncherExtension> extension = _launcherExtensions[ indexPath.item - 1 ];
             item.onTitle  = [NSString stringWithFormat: @"%@ Extension (installed)",extension.title];
             item.offTitle = [NSString stringWithFormat: @"%@ Extension (not installed)", extension.title];
             item.target   = self;

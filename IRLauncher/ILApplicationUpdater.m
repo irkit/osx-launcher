@@ -10,6 +10,7 @@
 #import "ILApplicationUpdater.h"
 #import <AutoUpdater/AUAutoUpdater.h>
 #import <AutoUpdater/AUGithubReleaseChecker.h>
+#import <AutoUpdater/AUZipUnarchiver.h>
 
 static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
 
@@ -43,10 +44,11 @@ static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
 - (void) run {
     NSString *version           = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     NSString *downloadDirectory = [[NSBundle mainBundle] bundlePath];
-    _releaseChecker = [[AUGithubReleaseChecker alloc] initWithUserName: @"mash" repositoryName: @"-----------------"]; // irkit/launcher-macos
+    _releaseChecker            = [[AUGithubReleaseChecker alloc] initWithUserName: @"mash" repositoryName: @"-----------------"]; // irkit/launcher-macos
+    _releaseChecker.unarchiver = [[AUZipUnarchiver alloc] init];
     [_releaseChecker checkForVersionNewerThanVersion: version
-                                   downloadDirectory: downloadDirectory
-                              foundNewerVersionBlock: ^(NSString *newVersion, NSString *releaseInformation, NSURL *unarchivedPath, NSError *error) {
+                                       downloadDirectory: downloadDirectory
+                                  foundNewerVersionBlock: ^(NSString *newVersion, NSString *releaseInformation, NSURL *unarchivedPath, NSError *error) {
         if (newVersion && unarchivedPath && !error && [self enabled]) {
             _updater = [[AUAutoUpdater alloc] initWithSourcePath: unarchivedPath];
             [_updater run];
