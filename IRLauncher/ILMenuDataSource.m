@@ -426,6 +426,14 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     ILLOG( @"sender: %@", sender );
     ILApplicationUpdater *updater = [ILApplicationUpdater sharedInstance];
     [updater enable: !updater.enabled];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
+                                                        object: self
+                                                      userInfo: @{
+         kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: ILMenuOptionsItemIndexAutoUpdate
+                                                               inSection: ILMenuSectionIndexOptions]
+     }];
+
     if ([updater enabled]) {
         [updater runAndExit];
     }
