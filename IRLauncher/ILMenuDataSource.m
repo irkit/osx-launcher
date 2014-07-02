@@ -424,6 +424,11 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 
 - (void) toggleAutoUpdate: (id)sender {
     ILLOG( @"sender: %@", sender );
+    ILApplicationUpdater *updater = [ILApplicationUpdater sharedInstance];
+    [updater enable: !updater.enabled];
+    if ([updater enabled]) {
+        [updater run];
+    }
 }
 
 - (void) toggleExtensionInstallation: (id)sender {
