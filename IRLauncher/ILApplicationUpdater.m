@@ -14,12 +14,15 @@
 #import <AutoUpdater/AUZipUnarchiver.h>
 #import <AutoUpdater/AUCodeSignValidator.h>
 
-static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
+static NSString * const kILUserDefaultsAutoUpdateKey  = @"autoupdate";
+static NSString * const kILUserDefaultsLastCheckedKey = @"lastchecked";
+static const NSTimeInterval checkInterval             = 24 * 60 * 60;
 
 @interface ILApplicationUpdater ()
 
 @property (nonatomic) AUUpdateChecker *checker;
 @property (nonatomic) AUUpdater *updater;
+@property (nonatomic) NSTimer *checkTimer;
 
 @end
 
@@ -35,8 +38,23 @@ static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
     return instance;
 }
 
+- (void) startPeriodicCheck {
+    if ([self enabled]) {
+        [self startCheckTimer];
+        [_checkTimer fire];
+    }
+}
+
 - (void) enable: (BOOL)val {
     [[NSUserDefaults standardUserDefaults] setBool: val forKey: kILUserDefaultsAutoUpdateKey];
+
+    if (val) {
+        [self startCheckTimer];
+    }
+    else {
+        [_checkTimer invalidate];
+        _checkTimer = nil;
+    }
 }
 
 - (BOOL) enabled {
@@ -57,6 +75,25 @@ static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
             [[NSRunningApplication currentApplication] terminate];
         }
     }];
+}
+
+#pragma mark - Timer related
+
+- (void) startCheckTimer {
+    if (_checkTimer) {
+        [_checkTimer invalidate];
+    }
+    _checkTimer = [NSTimer scheduledTimerWithTimeInterval: checkInterval
+                                                   target: self
+                                                 selector: @selector(periodicCheck:)
+                                                 userInfo: nil
+                                                  repeats: YES];
+}
+
+- (void) periodicCheck:(NSTimer*) timer {
+    if ([self enabled]) {
+        [self runAndExit];
+    }
 }
 
 @end

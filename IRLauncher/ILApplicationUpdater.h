@@ -11,6 +11,7 @@
 @interface ILApplicationUpdater : NSObject
 
 + (instancetype) sharedInstance;
+- (void) startPeriodicCheck;
 - (void) enable: (BOOL)val;
 - (BOOL) enabled;
 - (void) runAndExit;

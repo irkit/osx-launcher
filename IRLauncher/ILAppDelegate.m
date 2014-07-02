@@ -78,9 +78,7 @@ NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotif
 
     // automatically download, unarchive, update
     _updater = [[ILApplicationUpdater alloc] init];
-    if([_updater enabled]) {
-        [_updater runAndExit];
-    }
+    [_updater startPeriodicCheck];
 }
 
 - (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
