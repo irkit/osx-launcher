@@ -9,7 +9,6 @@
 #import "ILUtils.h"
 #import "ILLog.h"
 #import <AFNetworking/AFNetworking.h>
-#import "NSFileManager+DirectoryLocations.h"
 
 @implementation ILUtils
 
