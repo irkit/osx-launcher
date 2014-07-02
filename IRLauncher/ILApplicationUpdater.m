@@ -8,16 +8,17 @@
 
 #import "ILLog.h"
 #import "ILApplicationUpdater.h"
-#import <AutoUpdater/AUAutoUpdater.h>
-#import <AutoUpdater/AUGithubReleaseChecker.h>
+#import <AutoUpdater/AUUpdater.h>
+#import <AUtoupdater/AUUpdateChecker.h>
+#import <AutoUpdater/AUGithubReleaseFetcher.h>
 #import <AutoUpdater/AUZipUnarchiver.h>
 
 static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
 
 @interface ILApplicationUpdater ()
 
-@property (nonatomic) AUGithubReleaseChecker *releaseChecker;
-@property (nonatomic) AUAutoUpdater *updater;
+@property (nonatomic) AUUpdateChecker *checker;
+@property (nonatomic) AUUpdater *updater;
 
 @end
 
@@ -41,17 +42,27 @@ static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
     return [[NSUserDefaults standardUserDefaults] boolForKey: kILUserDefaultsAutoUpdateKey];
 }
 
-- (void) run {
-    NSString *version           = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-    NSString *downloadDirectory = [[NSBundle mainBundle] bundlePath];
-    _releaseChecker            = [[AUGithubReleaseChecker alloc] initWithUserName: @"mash" repositoryName: @"-----------------"]; // irkit/launcher-macos
-    _releaseChecker.unarchiver = [[AUZipUnarchiver alloc] init];
-    [_releaseChecker checkForVersionNewerThanVersion: version
-                                       downloadDirectory: downloadDirectory
-                                  foundNewerVersionBlock: ^(NSString *newVersion, NSString *releaseInformation, NSURL *unarchivedPath, NSError *error) {
-        if (newVersion && unarchivedPath && !error && [self enabled]) {
-            _updater = [[AUAutoUpdater alloc] initWithSourcePath: unarchivedPath];
+- (void) runAndExit {
+    NSString *version               = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    AUGithubReleaseFetcher *fetcher = [[AUGithubReleaseFetcher alloc] initWithUserName: @"mash" repositoryName: @"-----------------"]; // irkit/launcher-macos
+    _checker = [[AUUpdateChecker alloc] initWithFetcher: fetcher
+                                             unarchiver: [[AUZipUnarchiver alloc] init]
+                                             validators: @[]];
+    [_checker checkForVersionNewerThanVersion: version
+                       foundNewerVersionBlock:^(NSDictionary *releaseInformation, NSURL *unarchivedPath, NSError *error) {
+        if (releaseInformation && unarchivedPath && !error && [self enabled]) {
+            // we zipped IRLauncher.app and uploaded IRLauncher.app.zip to github
+            NSString *appname = [[NSBundle mainBundle].bundlePath lastPathComponent];
+            NSURL *sourceBundlePath = [unarchivedPath URLByAppendingPathComponent: appname];
+
+            if (![[NSFileManager defaultManager] fileExistsAtPath: sourceBundlePath.path]) {
+                ILLOG( @"Unarchived asset but %@ not found", sourceBundlePath );
+                return;
+            }
+
+            _updater = [[AUUpdater alloc] initWithSourcePath: sourceBundlePath];
             [_updater run];
+            [[NSRunningApplication currentApplication] terminate];
         }
     }];
 }

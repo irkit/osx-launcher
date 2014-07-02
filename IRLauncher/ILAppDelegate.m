@@ -79,7 +79,7 @@ NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotif
     // automatically download, unarchive, update
     _updater = [[ILApplicationUpdater alloc] init];
     if([_updater enabled]) {
-        [_updater run];
+        [_updater runAndExit];
     }
 }
 

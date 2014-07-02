@@ -427,7 +427,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     ILApplicationUpdater *updater = [ILApplicationUpdater sharedInstance];
     [updater enable: !updater.enabled];
     if ([updater enabled]) {
-        [updater run];
+        [updater runAndExit];
     }
 }
 

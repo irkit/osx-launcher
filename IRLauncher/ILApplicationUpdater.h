@@ -13,6 +13,6 @@
 + (instancetype) sharedInstance;
 - (void) enable: (BOOL)val;
 - (BOOL) enabled;
-- (void) run;
+- (void) runAndExit;
 
 @end
