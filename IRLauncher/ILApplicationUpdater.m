@@ -12,6 +12,7 @@
 #import <AUtoupdater/AUUpdateChecker.h>
 #import <AutoUpdater/AUGithubReleaseFetcher.h>
 #import <AutoUpdater/AUZipUnarchiver.h>
+#import <AutoUpdater/AUCodeSignValidator.h>
 
 static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
 
@@ -47,20 +48,11 @@ static NSString * const kILUserDefaultsAutoUpdateKey = @"autoupdate";
     AUGithubReleaseFetcher *fetcher = [[AUGithubReleaseFetcher alloc] initWithUserName: @"mash" repositoryName: @"-----------------"]; // irkit/launcher-macos
     _checker = [[AUUpdateChecker alloc] initWithFetcher: fetcher
                                              unarchiver: [[AUZipUnarchiver alloc] init]
-                                             validators: @[]];
+                                             validators: @[ [[AUCodeSignValidator alloc] init] ]];
     [_checker checkForVersionNewerThanVersion: version
-                       foundNewerVersionBlock:^(NSDictionary *releaseInformation, NSURL *unarchivedPath, NSError *error) {
-        if (releaseInformation && unarchivedPath && !error && [self enabled]) {
-            // we zipped IRLauncher.app and uploaded IRLauncher.app.zip to github
-            NSString *appname = [[NSBundle mainBundle].bundlePath lastPathComponent];
-            NSURL *sourceBundlePath = [unarchivedPath URLByAppendingPathComponent: appname];
-
-            if (![[NSFileManager defaultManager] fileExistsAtPath: sourceBundlePath.path]) {
-                ILLOG( @"Unarchived asset but %@ not found", sourceBundlePath );
-                return;
-            }
-
-            _updater = [[AUUpdater alloc] initWithSourcePath: sourceBundlePath];
+                       foundNewerVersionBlock:^(NSDictionary *releaseInformation, NSURL *unarchivedBundlePath, NSError *error) {
+        if (releaseInformation && unarchivedBundlePath && !error && [self enabled]) {
+            _updater = [[AUUpdater alloc] initWithSourcePath: unarchivedBundlePath];
             [_updater run];
             [[NSRunningApplication currentApplication] terminate];
         }
