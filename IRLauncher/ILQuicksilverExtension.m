@@ -32,14 +32,12 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
     ILLOG_CURRENT_METHOD;
 
     [self installCatalog];
-    [self installAction];
 }
 
 - (void) uninstall {
     ILLOG_CURRENT_METHOD;
 
     [self uninstallCatalog];
-    [self uninstallAction];
 }
 
 - (BOOL) installed {
@@ -148,16 +146,6 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
             ILLOG( @"failed to write to %@", catalogPath );
         }
     }
-}
-
-- (void) installAction {
-    if ([self isActionInstalled]) {
-        return;
-    }
-}
-
-- (void) uninstallAction {
-    // TODO
 }
 
 - (BOOL) isCatalogInstalled {

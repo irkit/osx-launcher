@@ -22,8 +22,14 @@
         [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
                 IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
                 if (!signal.peripheral) {
-                    // skip signals without hostname
-                    // TODO somehow indicate that we skipped?
+                    // Skip signals without hostname.
+                    // TODO remove alert when implementing "Send from all IRKit devices" feature.
+                    NSString *message = [NSString stringWithFormat: @"Error in %@: \"hostname\" key required.", signalInfo[@"name"] ];
+                    NSAlert *alert = [[NSAlert alloc] init];
+                    [alert addButtonWithTitle: @"OK"];
+                    [alert setMessageText: message];
+                    [alert setAlertStyle: NSWarningAlertStyle];
+                    [alert runModal];
                     return;
                 }
                 [self addSignalsObject: signal];

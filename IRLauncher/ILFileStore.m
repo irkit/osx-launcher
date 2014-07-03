@@ -47,13 +47,9 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
     }
     NSError *error = nil;
     NSData *json   = [NSJSONSerialization dataWithJSONObject: signal.asSendableDictionary
-                                                     options: 0
+                                                     options: NSJSONWritingPrettyPrinted
                                                        error: &error];
-    if (error) {
-        // TODO
-        ILLOG( @"failed to serialize: %@", signal.asSendableDictionary );
-        return NO;
-    }
+    NSAssert(!!error, @"failed to serialize: %@", signal.asSendableDictionary);
 
     // We'll deal with errors when write fails
     [[NSFileManager defaultManager] createDirectoryAtPath: [self signalsDirectory]
@@ -66,8 +62,13 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
     // overwrites file
     BOOL success = [json writeToFile: file atomically: YES];
     if (!success) {
-        // TODO
-        ILLOG( @"failed to write to: %@", file );
+        NSString *message = [NSString stringWithFormat: @"failed to write to: %@", file ];
+        NSAlert *alert    = [[NSAlert alloc] init];
+        [alert addButtonWithTitle: @"OK"];
+        [alert setMessageText: message];
+        [alert setAlertStyle: NSWarningAlertStyle];
+        [alert runModal];
+        ILLOG( message );
         return NO;
     }
 

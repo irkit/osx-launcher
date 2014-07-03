@@ -542,7 +542,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     _signalWindowController = nil;
 
     if (error) {
-        // TODO alert? or notification?
+        // Currently, no errors are expected.
         return;
     }
 
