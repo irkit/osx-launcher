@@ -23,7 +23,9 @@
 #import "ILQuicksilverExtension.h"
 // Add other extension headers here!
 
-static const NSInteger kLauncherExtensionTagOffset = 10000;
+static const NSInteger kILLauncherExtensionTagOffset = 10000;
+static NSString * const kILSupportWebSite            = @"http://github.com/irkit/macos-launcher/issues";
+static NSString * const kILOpenSourceWebSite         = @"http://github.com/irkit/macos-launcher";
 
 @interface ILMenuDataSource ()
 
@@ -42,6 +44,11 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     ILMenuSectionIndexOptions     = 2,
     ILMenuSectionIndexHelp        = 3,
     ILMenuSectionIndexQuit        = 4
+};
+
+typedef NS_ENUM (NSUInteger,ILMenuHelpItemIndex) {
+    ILMenuHelpItemIndexOpenSource = 0,
+    ILMenuHelpItemIndexSupport    = 1,
 };
 
 typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
@@ -122,7 +129,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     break;
     case ILMenuSectionIndexHelp:
     {
-        return 1;
+        return 2;
     }
     break;
     case ILMenuSectionIndexQuit:
@@ -279,7 +286,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
             item.action   = @selector(toggleExtensionInstallation:);
             BOOL installed = [extension installed];
             item.state = installed ? NSOnState : NSOffState;
-            item.tag   = kLauncherExtensionTagOffset + indexPath.item;
+            item.tag   = kILLauncherExtensionTagOffset + indexPath.item;
             ILLOG( @"item: %@ installed: %d", item, installed );
         }
         break;
@@ -288,9 +295,23 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     break;
     case ILMenuSectionIndexHelp:
     {
-        item.title  = @"Help";
-        item.target = self;
-        item.action = @selector(showHelp:);
+        switch (indexPath.item) {
+        case ILMenuHelpItemIndexOpenSource:
+        {
+            item.title  = @"Open Source";
+            item.target = self;
+            item.action = @selector(showOpenSource:);
+        }
+        break;
+        case ILMenuHelpItemIndexSupport:
+        default:
+        {
+            item.title  = @"Support";
+            item.target = self;
+            item.action = @selector(showHelp:);
+        }
+        break;
+        }
     }
     break;
     case ILMenuSectionIndexQuit:
@@ -428,7 +449,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 - (void) toggleExtensionInstallation: (id)sender {
     ILLOG( @"sender: %@", sender );
 
-    NSInteger extensionIndex          = ((NSMenuItem*)sender).tag - kLauncherExtensionTagOffset;
+    NSInteger extensionIndex          = ((NSMenuItem*)sender).tag - kILLauncherExtensionTagOffset;
     id<ILLauncherExtension> extension = _launcherExtensions[ extensionIndex ];
 
     if ([extension installed]) {
@@ -463,8 +484,16 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     }
 }
 
+- (void) showOpenSource: (id)sender {
+    ILLOG_CURRENT_METHOD;
+
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: kILOpenSourceWebSite]];
+}
+
 - (void) showHelp: (id)sender {
     ILLOG_CURRENT_METHOD;
+
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: kILSupportWebSite]];
 }
 
 - (void) terminate: (id)sender {
