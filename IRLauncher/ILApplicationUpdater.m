@@ -73,8 +73,8 @@ static const NSTimeInterval kIdleInterval             = 60;
                        foundNewerVersionBlock:^(NSDictionary *releaseInformation, NSURL *unarchivedBundlePath, NSError *error) {
         if (releaseInformation && unarchivedBundlePath && !error && [self enabled]) {
             _updater = [[AUUpdater alloc] initWithSourcePath: unarchivedBundlePath];
-            [_updater run];
-            [[NSRunningApplication currentApplication] terminate];
+            [_updater runWithArgumentsForRelaunchedApplication: releaseInformation];
+            [NSApp terminate: nil];
         }
     }];
 }

@@ -16,10 +16,11 @@
 #import "ILConst.h"
 #import "ILStatusItem.h"
 #import "ILApplicationUpdater.h"
+#import <AutoUpdater/AUUpdater.h>
 
 static NSString * const kIRKitAPIKey                   = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.send";
-NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotification";
+NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotification";
 
 @interface ILAppDelegate ()
 
@@ -38,27 +39,42 @@ NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotif
 
     NSArray *args = [[NSProcessInfo processInfo] arguments];
     ILLOG( @"args: %@", args );
-    NSString *lastArgument = (args.count > 1) ? args.lastObject : nil;
-    if (lastArgument) {
+
+    NSString *signalFilePath = (args.count == 2) ? args[ 1 ] : nil;
+    if (signalFilePath) {
+        // ex: launched using Quicksilver
         BOOL isDuplicateInstance = [[NSRunningApplication runningApplicationsWithBundleIdentifier: [[NSBundle mainBundle] bundleIdentifier]] count] > 1;
         if (isDuplicateInstance) {
-            ILLOG( @"found duplicate, send over to living app" );
-            [self postDistributedNotificationToSendFileAtPath: lastArgument];
+            ILLOG( @"found duplicate, send over to living app" ); // to animate status bar icon
+            [self postDistributedNotificationToSendFileAtPath: signalFilePath];
             [NSApp terminate: nil];
             return;
         }
         else {
             // do it by myself
             [self performSelector: @selector(postDistributedNotificationToSendFileAtPath:)
-                       withObject: lastArgument
-                       afterDelay: 0.1];
+                       withObject: signalFilePath
+                       afterDelay: 0.];
         }
+    }
+    else if ([AUUpdater didRelaunch]) {
+        // relaunched using AutoUpdater.app
+        NSDictionary *releaseInformation = [AUUpdater releaseInformation];
+
+        NSUserNotification *notification = [[NSUserNotification alloc] init];
+        notification.title             = [NSString stringWithFormat: @"Updated to version %@",releaseInformation[ kAUReleaseInformationNewVersionKey ]];
+        notification.actionButtonTitle = @"Check release notes";
+        notification.userInfo          = releaseInformation;
+
+        NSUserNotificationCenter *center = [NSUserNotificationCenter defaultUserNotificationCenter];
+        center.delegate = self;
+        [center deliverNotification: notification];
     }
     [[NSDistributedNotificationCenter defaultCenter] addObserver: self
                                                         selector: @selector(receivedDistributedNotification:)
                                                             name: nil
                                                           object: nil];
-    [[NSNotificationCenter defaultCenter] addObserverForName: ILWillSendSignalNotification
+    [[NSNotificationCenter defaultCenter] addObserverForName: kILWillSendSignalNotification
                                                       object: nil
                                                        queue: nil
                                                   usingBlock:^(NSNotification *note) {
@@ -79,11 +95,6 @@ NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotif
     // automatically download, unarchive, update
     _updater = [[ILApplicationUpdater alloc] init];
     [_updater startPeriodicCheck];
-}
-
-- (void) notifyUpdate:(NSString*)hostname newVersion:(NSString*)newVersion currentVersion:(NSString*)currentVersion {
-    ILLOG( @"hostname: %@ newVersion: %@ currentVersion: %@", hostname, newVersion, currentVersion);
-
 }
 
 - (instancetype) init {
@@ -109,6 +120,16 @@ NSString * const ILWillSendSignalNotification          = @"ILWillSendSignalNotif
 
 - (void) dealloc {
     ILLOG_CURRENT_METHOD;
+}
+
+#pragma mark - NSUserNotificationCenterDelegate
+
+- (void)userNotificationCenter:(NSUserNotificationCenter *)center
+       didActivateNotification:(NSUserNotification *)notification {
+    ILLOG( @"notification: %@", notification );
+
+    NSString *url = notification.userInfo[ kAUReleaseInformationURLKey ];
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: url]];
 }
 
 #pragma mark - NSDistributedNotification related

@@ -39,7 +39,7 @@
         IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalObject];
         if (signal.peripheral) {
 
-            [[NSNotificationCenter defaultCenter] postNotificationName: ILWillSendSignalNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName: kILWillSendSignalNotification
                                                                 object: self
                                                               userInfo: @{ @"signal": signal }];
 

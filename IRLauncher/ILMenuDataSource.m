@@ -76,7 +76,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 
     __weak typeof(self) _self = self;
     [ILSignalsDirectorySearcher findSignalsUnderDirectory: [NSURL fileURLWithPath: [ILFileStore signalsDirectory]]
-                                               completion: ^(NSArray *foundSignals) {
+                                               completion:^(NSArray *foundSignals) {
 
         _self.searchingForSignals = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
@@ -85,7 +85,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
              kMOSectionedMenuItemSectionKey: @(ILMenuSectionIndexSignals)
          }];
 
-        [foundSignals enumerateObjectsUsingBlock: ^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
+        [foundSignals enumerateObjectsUsingBlock:^(NSDictionary *signalInfo, NSUInteger idx, BOOL *stop) {
                 IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalInfo];
                 if (!signal.peripheral) {
                     // skip signals without hostname
@@ -375,7 +375,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         return;
     }
 
-    [[NSNotificationCenter defaultCenter] postNotificationName: ILWillSendSignalNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName: kILWillSendSignalNotification
                                                         object: self
                                                       userInfo: @{ @"signal": signal }];
 
