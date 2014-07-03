@@ -11,7 +11,6 @@
 #import "MOSectionedMenu.h"
 #import "IRSignals.h"
 #import "ILMenuDataSource.h"
-#import "ILFileStore.h"
 #import "ILSender.h"
 #import "ILConst.h"
 #import "ILStatusItem.h"
@@ -88,8 +87,6 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     _statusItem                 = [[ILStatusItem alloc] init];
     _statusItem.statusItem.menu = _sectionedMenu.menu;
 
-    ILFileStore *store = [[ILFileStore alloc] init];
-    [IRKit setPersistentStore: store]; // call before `startWithAPIKey`
     [IRKit startWithAPIKey: kIRKitAPIKey];
 
     // automatically download, unarchive, update
