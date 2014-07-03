@@ -16,6 +16,7 @@
 #import "NSMenuItem+StateAware.h"
 #import "ILConst.h"
 #import "IRSignals+FileStore.h"
+#import "ILApplicationUpdater.h"
 
 // Launcher Extensions
 #import "ILLauncherExtension.h"
@@ -41,6 +42,11 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     ILMenuSectionIndexOptions     = 2,
     ILMenuSectionIndexHelp        = 3,
     ILMenuSectionIndexQuit        = 4
+};
+
+typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
+    ILMenuOptionsItemIndexAutoUpdate  = 0,
+    ILMenuOptionsItemIndexQuicksilver = 1,
 };
 
 - (instancetype) init {
@@ -70,6 +76,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     __weak typeof(self) _self = self;
     [_signals loadFromFilesUnderDirectory: [ILFileStore signalsDirectory] completion:^(NSError *error) {
         ILLOG( @"loaded" );
+
         _self.searchingForSignals = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemHeaderUpdated
                                                             object: _self
@@ -110,7 +117,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     break;
     case ILMenuSectionIndexOptions:
     {
-        return 1;
+        return 2;
     }
     break;
     case ILMenuSectionIndexHelp:
@@ -253,9 +260,19 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     case ILMenuSectionIndexOptions:
     {
         switch (indexPath.item) {
+        case ILMenuOptionsItemIndexAutoUpdate:
+        {
+            item.title  = @"Auto Update";
+            item.target = self;
+            item.action = @selector(toggleAutoUpdate:);
+            item.state  = [ILApplicationUpdater sharedInstance].enabled;
+        }
+        break;
+
+        case ILMenuOptionsItemIndexQuicksilver:
         default:
         {
-            id<ILLauncherExtension> extension = _launcherExtensions[ indexPath.item ];
+            id<ILLauncherExtension> extension = _launcherExtensions[ indexPath.item - 1 ];
             item.onTitle  = [NSString stringWithFormat: @"%@ Extension (installed)",extension.title];
             item.offTitle = [NSString stringWithFormat: @"%@ Extension (not installed)", extension.title];
             item.target   = self;
@@ -344,7 +361,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
         return;
     }
 
-    [[NSNotificationCenter defaultCenter] postNotificationName: ILWillSendSignalNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName: kILWillSendSignalNotification
                                                         object: self
                                                       userInfo: @{ @"signal": signal }];
 
@@ -391,8 +408,21 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
     _signalWindowController = c; // retain to keep window showing
 }
 
-- (void) toggleStartAtLogin: (id)sender {
+- (void) toggleAutoUpdate: (id)sender {
     ILLOG( @"sender: %@", sender );
+    ILApplicationUpdater *updater = [ILApplicationUpdater sharedInstance];
+    [updater enable: !updater.enabled];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
+                                                        object: self
+                                                      userInfo: @{
+         kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: ILMenuOptionsItemIndexAutoUpdate
+                                                               inSection: ILMenuSectionIndexOptions]
+     }];
+
+    if ([updater enabled]) {
+        [updater runAndExit];
+    }
 }
 
 - (void) toggleExtensionInstallation: (id)sender {

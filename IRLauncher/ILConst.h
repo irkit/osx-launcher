@@ -29,6 +29,9 @@
 
 #pragma mark - Notifications
 
-extern NSString * const ILWillSendSignalNotification;
+extern NSString * const kILWillSendSignalNotification;
+
+#pragma mark - NSUserDefaults
+
 
 #endif

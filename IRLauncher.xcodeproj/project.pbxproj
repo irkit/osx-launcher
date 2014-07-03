@@ -10,11 +10,9 @@
 		11C9F3851196497CA0BD6036 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1EF2A37F2D4D4C81E28AF5 /* libPods.a */; };
 		C70745C0191A1D3E00AA7A32 /* ILQuicksilverExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */; };
 		C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C71E8993189F92B7007BC9C4 /* IRSearcher.m */; };
-		C71E8999189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */; };
 		C71F8C3B189A015200298DFA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71F8C3A189A015200298DFA /* Cocoa.framework */; };
 		C71F8C45189A015200298DFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C43189A015200298DFA /* InfoPlist.strings */; };
 		C71F8C47189A015200298DFA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C46189A015200298DFA /* main.m */; };
-		C71F8C4B189A015200298DFA /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C49189A015200298DFA /* Credits.rtf */; };
 		C71F8C4E189A015200298DFA /* ILAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C4D189A015200298DFA /* ILAppDelegate.m */; };
 		C71F8C51189A015200298DFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C4F189A015200298DFA /* MainMenu.xib */; };
 		C71F8C53189A015200298DFA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C52189A015200298DFA /* Images.xcassets */; };
@@ -25,6 +23,7 @@
 		C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */ = {isa = PBXBuildFile; fileRef = C729A26A194080950012F40D /* NSMenuItem+StateAware.m */; };
 		C738EC001953D6F1006A7B6D /* ILStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C738EBFF1953D6F1006A7B6D /* ILStatusItem.m */; };
 		C74DFB5C195D7707007C8956 /* IRSignals+FileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C74DFB5B195D7707007C8956 /* IRSignals+FileStore.m */; };
+		C73F2D0C1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m in Sources */ = {isa = PBXBuildFile; fileRef = C73F2D0B1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m */; };
 		C763F69C18ED692C00EAC927 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = C763F69B18ED692C00EAC927 /* Log.m */; };
 		C7647EB118ED5D8200171E7F /* IRPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EAE18ED5D8200171E7F /* IRPeripheral.m */; };
 		C7647EB218ED5D8200171E7F /* IRSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB018ED5D8200171E7F /* IRSignal.m */; };
@@ -32,7 +31,6 @@
 		C7647EBA18ED5DD000171E7F /* IRKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB618ED5DD000171E7F /* IRKit.m */; };
 		C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB818ED5DD000171E7F /* IRReachability.m */; };
 		C764C1C719527E5B003410B6 /* MOSectionedMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C764C1C619527E5B003410B6 /* MOSectionedMenu.m */; };
-		C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA0189A4F5300898267 /* ILVersionChecker.m */; };
 		C7766FA4189A524800898267 /* ILLog.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* ILLog.m */; };
 		C77AFB4719528218002ED79A /* ILMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB4619528218002ED79A /* ILMenuDataSource.m */; };
 		C77AFB5A1952DCD6002ED79A /* MOAnimatingStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB591952DCD6002ED79A /* MOAnimatingStatusItem.m */; };
@@ -51,10 +49,9 @@
 		C7B6934818EE63BA00DE7027 /* IRSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934718EE63BA00DE7027 /* IRSignals.m */; };
 		C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */; };
 		C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */; };
-		C7BA33EB1954288400B9247B /* MIT-License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C7BA33E81954288400B9247B /* MIT-License.rtf */; };
-		C7BA33EC1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BA33EA1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m */; };
 		C7D218EA19598720004AD675 /* FinderInfo.dat in Resources */ = {isa = PBXBuildFile; fileRef = C7D218E819598720004AD675 /* FinderInfo.dat */; };
 		C7D218EB19598720004AD675 /* ResourceFork.dat in Resources */ = {isa = PBXBuildFile; fileRef = C7D218E919598720004AD675 /* ResourceFork.dat */; };
+		C7E5555819615B7700485045 /* ILApplicationUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E5555719615B7700485045 /* ILApplicationUpdater.m */; };
 		C7F32CB119516DED00601842 /* ILMenuProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7F32CB019516DED00601842 /* ILMenuProgressView.xib */; };
 		C7F6C493189A66B600A79261 /* ILUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6C492189A66B600A79261 /* ILUtils.m */; };
 /* End PBXBuildFile section */
@@ -77,8 +74,6 @@
 		C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuicksilverExtension.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		C71E8993189F92B7007BC9C4 /* IRSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSearcher.m; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.m"; sourceTree = "<group>"; };
 		C71E8994189F92B7007BC9C4 /* IRSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSearcher.h; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.h"; sourceTree = "<group>"; };
-		C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
-		C71E8998189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
 		C71F8C37189A015200298DFA /* IRLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71F8C3A189A015200298DFA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C71F8C3D189A015200298DFA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -88,7 +83,6 @@
 		C71F8C44189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C71F8C46189A015200298DFA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C71F8C48189A015200298DFA /* IRLauncher-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRLauncher-Prefix.pch"; sourceTree = "<group>"; };
-		C71F8C4A189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		C71F8C4C189A015200298DFA /* ILAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILAppDelegate.h; sourceTree = "<group>"; };
 		C71F8C4D189A015200298DFA /* ILAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ILAppDelegate.m; sourceTree = "<group>"; };
 		C71F8C50189A015200298DFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -104,6 +98,8 @@
 		C738EBFF1953D6F1006A7B6D /* ILStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILStatusItem.m; sourceTree = "<group>"; };
 		C74DFB5A195D7707007C8956 /* IRSignals+FileStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRSignals+FileStore.h"; sourceTree = "<group>"; };
 		C74DFB5B195D7707007C8956 /* IRSignals+FileStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRSignals+FileStore.m"; sourceTree = "<group>"; };
+		C73F2D0A1964EA8700B9AC53 /* NSObject-PerformWhenIdle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject-PerformWhenIdle.h"; sourceTree = "<group>"; };
+		C73F2D0B1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject-PerformWhenIdle.m"; sourceTree = "<group>"; };
 		C763F69A18ED692C00EAC927 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Log.h; path = "../../ios-sdk/IRKit/IRKit/Log.h"; sourceTree = "<group>"; };
 		C763F69B18ED692C00EAC927 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Log.m; path = "../../ios-sdk/IRKit/IRKit/Log.m"; sourceTree = "<group>"; };
 		C7647EAD18ED5D8200171E7F /* IRPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPeripheral.h; path = "../../ios-sdk/IRKit/IRKit/IRPeripheral.h"; sourceTree = "<group>"; };
@@ -118,8 +114,6 @@
 		C7647EB818ED5DD000171E7F /* IRReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRReachability.m; path = "../../ios-sdk/IRKit/IRKit/IRReachability.m"; sourceTree = "<group>"; };
 		C764C1C519527E5B003410B6 /* MOSectionedMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOSectionedMenu.h; sourceTree = "<group>"; };
 		C764C1C619527E5B003410B6 /* MOSectionedMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOSectionedMenu.m; sourceTree = "<group>"; };
-		C7766F9F189A4F5300898267 /* ILVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILVersionChecker.h; sourceTree = "<group>"; };
-		C7766FA0189A4F5300898267 /* ILVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILVersionChecker.m; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* ILLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLog.h; sourceTree = "<group>"; };
 		C7766FA3189A524800898267 /* ILLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILLog.m; sourceTree = "<group>"; };
 		C77AFB4519528218002ED79A /* ILMenuDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuDataSource.h; sourceTree = "<group>"; };
@@ -157,11 +151,10 @@
 		C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSignalsDirectorySearcher.m; sourceTree = "<group>"; };
 		C7B6C8C61920AB1B00C13F49 /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
 		C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
-		C7BA33E81954288400B9247B /* MIT-License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "MIT-License.rtf"; sourceTree = "<group>"; };
-		C7BA33E91954288400B9247B /* RSVerticallyCenteredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVerticallyCenteredTextFieldCell.h; sourceTree = "<group>"; };
-		C7BA33EA1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVerticallyCenteredTextFieldCell.m; sourceTree = "<group>"; };
 		C7D218E819598720004AD675 /* FinderInfo.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = FinderInfo.dat; sourceTree = "<group>"; };
 		C7D218E919598720004AD675 /* ResourceFork.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ResourceFork.dat; sourceTree = "<group>"; };
+		C7E5555619615B7700485045 /* ILApplicationUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILApplicationUpdater.h; sourceTree = "<group>"; };
+		C7E5555719615B7700485045 /* ILApplicationUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILApplicationUpdater.m; sourceTree = "<group>"; };
 		C7F32CB019516DED00601842 /* ILMenuProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILMenuProgressView.xib; sourceTree = "<group>"; };
 		C7F6C491189A66B600A79261 /* ILUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUtils.h; sourceTree = "<group>"; };
 		C7F6C492189A66B600A79261 /* ILUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUtils.m; sourceTree = "<group>"; };
@@ -202,8 +195,6 @@
 		C71E8996189FA05F007BC9C4 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				C71E8997189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m */,
-				C71E8998189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.h */,
 				C7B6C8C61920AB1B00C13F49 /* NSString+UUID.h */,
 				C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */,
 				C74DFB5A195D7707007C8956 /* IRSignals+FileStore.h */,
@@ -265,8 +256,6 @@
 				C7766F9D189A4E9B00898267 /* Menulet */,
 				C7766F9B189A4E0F00898267 /* Resources */,
 				C71F8C41189A015200298DFA /* Supporting Files */,
-				C7766F9F189A4F5300898267 /* ILVersionChecker.h */,
-				C7766FA0189A4F5300898267 /* ILVersionChecker.m */,
 				C71F8C4C189A015200298DFA /* ILAppDelegate.h */,
 				C71F8C4D189A015200298DFA /* ILAppDelegate.m */,
 				C7F6C491189A66B600A79261 /* ILUtils.h */,
@@ -278,6 +267,8 @@
 				C7965C2018FFB465004FF579 /* ILConst.h */,
 				C7A7ED69192DD05E00F86AFF /* ILSender.h */,
 				C7A7ED6A192DD05E00F86AFF /* ILSender.m */,
+				C7E5555619615B7700485045 /* ILApplicationUpdater.h */,
+				C7E5555719615B7700485045 /* ILApplicationUpdater.m */,
 			);
 			path = IRLauncher;
 			sourceTree = "<group>";
@@ -291,7 +282,6 @@
 				C71F8C43189A015200298DFA /* InfoPlist.strings */,
 				C71F8C46189A015200298DFA /* main.m */,
 				C71F8C48189A015200298DFA /* IRLauncher-Prefix.pch */,
-				C71F8C49189A015200298DFA /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -361,19 +351,10 @@
 		C7BA33E61954288400B9247B /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				C7BA33E71954288400B9247B /* RSVerticallyCenteredTextFieldCell */,
+				C73F2D0A1964EA8700B9AC53 /* NSObject-PerformWhenIdle.h */,
+				C73F2D0B1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m */,
 			);
 			path = Dependencies;
-			sourceTree = "<group>";
-		};
-		C7BA33E71954288400B9247B /* RSVerticallyCenteredTextFieldCell */ = {
-			isa = PBXGroup;
-			children = (
-				C7BA33E81954288400B9247B /* MIT-License.rtf */,
-				C7BA33E91954288400B9247B /* RSVerticallyCenteredTextFieldCell.h */,
-				C7BA33EA1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m */,
-			);
-			path = RSVerticallyCenteredTextFieldCell;
 			sourceTree = "<group>";
 		};
 		C7D218E719598720004AD675 /* Attributes */ = {
@@ -501,8 +482,6 @@
 				C7D218EA19598720004AD675 /* FinderInfo.dat in Resources */,
 				C71F8C45189A015200298DFA /* InfoPlist.strings in Resources */,
 				C71F8C53189A015200298DFA /* Images.xcassets in Resources */,
-				C71F8C4B189A015200298DFA /* Credits.rtf in Resources */,
-				C7BA33EB1954288400B9247B /* MIT-License.rtf in Resources */,
 				C7F32CB119516DED00601842 /* ILMenuProgressView.xib in Resources */,
 				C71F8C51189A015200298DFA /* MainMenu.xib in Resources */,
 				C789EC9319419D7F00BC8E90 /* ILSignalReceiveView.xib in Resources */,
@@ -563,14 +542,13 @@
 				C7647EB218ED5D8200171E7F /* IRSignal.m in Sources */,
 				C77AFB4719528218002ED79A /* ILMenuDataSource.m in Sources */,
 				C7B6934818EE63BA00DE7027 /* IRSignals.m in Sources */,
-				C71E8999189FA06C007BC9C4 /* NSFileManager+DirectoryLocations.m in Sources */,
+				C73F2D0C1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m in Sources */,
 				C7F6C493189A66B600A79261 /* ILUtils.m in Sources */,
 				C763F69C18ED692C00EAC927 /* Log.m in Sources */,
 				C764C1C719527E5B003410B6 /* MOSectionedMenu.m in Sources */,
 				C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */,
 				C7647EB918ED5DD000171E7F /* IRHTTPClient.m in Sources */,
 				C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */,
-				C7BA33EC1954288400B9247B /* RSVerticallyCenteredTextFieldCell.m in Sources */,
 				C781848818ED5F1F007FB4E1 /* IRPeripherals.m in Sources */,
 				C7647EBA18ED5DD000171E7F /* IRKit.m in Sources */,
 				C71E8995189F92B7007BC9C4 /* IRSearcher.m in Sources */,
@@ -581,7 +559,6 @@
 				C77AFB5A1952DCD6002ED79A /* MOAnimatingStatusItem.m in Sources */,
 				C70745C0191A1D3E00AA7A32 /* ILQuicksilverExtension.m in Sources */,
 				C7A7ED6B192DD05E00F86AFF /* ILSender.m in Sources */,
-				C7766FA1189A4F5300898267 /* ILVersionChecker.m in Sources */,
 				C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */,
 				C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */,
 				C789EC9619419E1600BC8E90 /* ILSignalReceiveViewController.m in Sources */,
@@ -589,6 +566,7 @@
 				C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */,
 				C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */,
 				C7B206A0194FF4BB001646DD /* ILLearnSignalWindowController.m in Sources */,
+				C7E5555819615B7700485045 /* ILApplicationUpdater.m in Sources */,
 				C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */,
 				C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */,
 				C738EC001953D6F1006A7B6D /* ILStatusItem.m in Sources */,
@@ -620,14 +598,6 @@
 				C71F8C44189A015200298DFA /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C71F8C49189A015200298DFA /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C71F8C4A189A015200298DFA /* en */,
-			);
-			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
 		C71F8C4F189A015200298DFA /* MainMenu.xib */ = {
