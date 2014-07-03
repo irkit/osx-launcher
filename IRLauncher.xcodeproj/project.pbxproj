@@ -13,7 +13,6 @@
 		C71F8C3B189A015200298DFA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71F8C3A189A015200298DFA /* Cocoa.framework */; };
 		C71F8C45189A015200298DFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C43189A015200298DFA /* InfoPlist.strings */; };
 		C71F8C47189A015200298DFA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C46189A015200298DFA /* main.m */; };
-		C71F8C4B189A015200298DFA /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C49189A015200298DFA /* Credits.rtf */; };
 		C71F8C4E189A015200298DFA /* ILAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C4D189A015200298DFA /* ILAppDelegate.m */; };
 		C71F8C51189A015200298DFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C4F189A015200298DFA /* MainMenu.xib */; };
 		C71F8C53189A015200298DFA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C71F8C52189A015200298DFA /* Images.xcassets */; };
@@ -23,6 +22,7 @@
 		C71F8C65189A015200298DFA /* IRLauncherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C64189A015200298DFA /* IRLauncherTests.m */; };
 		C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */ = {isa = PBXBuildFile; fileRef = C729A26A194080950012F40D /* NSMenuItem+StateAware.m */; };
 		C738EC001953D6F1006A7B6D /* ILStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C738EBFF1953D6F1006A7B6D /* ILStatusItem.m */; };
+		C73F2D0C1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m in Sources */ = {isa = PBXBuildFile; fileRef = C73F2D0B1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m */; };
 		C763F69C18ED692C00EAC927 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = C763F69B18ED692C00EAC927 /* Log.m */; };
 		C7647EB118ED5D8200171E7F /* IRPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EAE18ED5D8200171E7F /* IRPeripheral.m */; };
 		C7647EB218ED5D8200171E7F /* IRSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB018ED5D8200171E7F /* IRSignal.m */; };
@@ -82,7 +82,6 @@
 		C71F8C44189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C71F8C46189A015200298DFA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C71F8C48189A015200298DFA /* IRLauncher-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRLauncher-Prefix.pch"; sourceTree = "<group>"; };
-		C71F8C4A189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		C71F8C4C189A015200298DFA /* ILAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILAppDelegate.h; sourceTree = "<group>"; };
 		C71F8C4D189A015200298DFA /* ILAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ILAppDelegate.m; sourceTree = "<group>"; };
 		C71F8C50189A015200298DFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -96,6 +95,8 @@
 		C729A26A194080950012F40D /* NSMenuItem+StateAware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenuItem+StateAware.m"; sourceTree = "<group>"; };
 		C738EBFE1953D6F1006A7B6D /* ILStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILStatusItem.h; sourceTree = "<group>"; };
 		C738EBFF1953D6F1006A7B6D /* ILStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILStatusItem.m; sourceTree = "<group>"; };
+		C73F2D0A1964EA8700B9AC53 /* NSObject-PerformWhenIdle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject-PerformWhenIdle.h"; sourceTree = "<group>"; };
+		C73F2D0B1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject-PerformWhenIdle.m"; sourceTree = "<group>"; };
 		C763F69A18ED692C00EAC927 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Log.h; path = "../../ios-sdk/IRKit/IRKit/Log.h"; sourceTree = "<group>"; };
 		C763F69B18ED692C00EAC927 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Log.m; path = "../../ios-sdk/IRKit/IRKit/Log.m"; sourceTree = "<group>"; };
 		C7647EAD18ED5D8200171E7F /* IRPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPeripheral.h; path = "../../ios-sdk/IRKit/IRKit/IRPeripheral.h"; sourceTree = "<group>"; };
@@ -276,7 +277,6 @@
 				C71F8C43189A015200298DFA /* InfoPlist.strings */,
 				C71F8C46189A015200298DFA /* main.m */,
 				C71F8C48189A015200298DFA /* IRLauncher-Prefix.pch */,
-				C71F8C49189A015200298DFA /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -346,6 +346,8 @@
 		C7BA33E61954288400B9247B /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				C73F2D0A1964EA8700B9AC53 /* NSObject-PerformWhenIdle.h */,
+				C73F2D0B1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -475,7 +477,6 @@
 				C7D218EA19598720004AD675 /* FinderInfo.dat in Resources */,
 				C71F8C45189A015200298DFA /* InfoPlist.strings in Resources */,
 				C71F8C53189A015200298DFA /* Images.xcassets in Resources */,
-				C71F8C4B189A015200298DFA /* Credits.rtf in Resources */,
 				C7F32CB119516DED00601842 /* ILMenuProgressView.xib in Resources */,
 				C71F8C51189A015200298DFA /* MainMenu.xib in Resources */,
 				C789EC9319419D7F00BC8E90 /* ILSignalReceiveView.xib in Resources */,
@@ -536,6 +537,7 @@
 				C7647EB218ED5D8200171E7F /* IRSignal.m in Sources */,
 				C77AFB4719528218002ED79A /* ILMenuDataSource.m in Sources */,
 				C7B6934818EE63BA00DE7027 /* IRSignals.m in Sources */,
+				C73F2D0C1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m in Sources */,
 				C7F6C493189A66B600A79261 /* ILUtils.m in Sources */,
 				C763F69C18ED692C00EAC927 /* Log.m in Sources */,
 				C764C1C719527E5B003410B6 /* MOSectionedMenu.m in Sources */,
@@ -590,14 +592,6 @@
 				C71F8C44189A015200298DFA /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C71F8C49189A015200298DFA /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C71F8C4A189A015200298DFA /* en */,
-			);
-			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
 		C71F8C4F189A015200298DFA /* MainMenu.xib */ = {

@@ -13,10 +13,12 @@
 #import <AutoUpdater/AUGithubReleaseFetcher.h>
 #import <AutoUpdater/AUZipUnarchiver.h>
 #import <AutoUpdater/AUCodeSignValidator.h>
+#import "NSObject-PerformWhenIdle.h"
 
 static NSString * const kILUserDefaultsAutoUpdateKey  = @"autoupdate";
 static NSString * const kILUserDefaultsLastCheckedKey = @"lastchecked";
-static const NSTimeInterval checkInterval             = 24 * 60 * 60;
+static const NSTimeInterval kCheckInterval            = 24 * 60 * 60;
+static const NSTimeInterval kIdleInterval             = 60;
 
 @interface ILApplicationUpdater ()
 
@@ -83,7 +85,7 @@ static const NSTimeInterval checkInterval             = 24 * 60 * 60;
     if (_checkTimer) {
         [_checkTimer invalidate];
     }
-    _checkTimer = [NSTimer scheduledTimerWithTimeInterval: checkInterval
+    _checkTimer = [NSTimer scheduledTimerWithTimeInterval: kCheckInterval
                                                    target: self
                                                  selector: @selector(periodicCheck:)
                                                  userInfo: nil
@@ -92,7 +94,11 @@ static const NSTimeInterval checkInterval             = 24 * 60 * 60;
 
 - (void) periodicCheck:(NSTimer*) timer {
     if ([self enabled]) {
-        [self runAndExit];
+        // Delay til idle detected
+        // User might want to use our app after a long idle, just before auto updating and exiting, but forget that.
+        [self performSelector: @selector(runAndExit)
+                   withObject: nil
+          afterSystemIdleTime: kIdleInterval];
     }
 }
 
