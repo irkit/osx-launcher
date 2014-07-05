@@ -13,6 +13,5 @@
 + (NSString*)chompedString: (NSString*)orig;
 + (id)loadClassNamed:(NSString*)className;
 + (id)firstObjectOf:(NSArray *)array meetsBlock:(BOOL (^)(id obj, NSUInteger idx))block;
-+ (void) getModelNameAndVersion:(NSString*) hostname withCompletion:(void (^)(NSString *modelName, NSString *version)) completion;
 
 @end

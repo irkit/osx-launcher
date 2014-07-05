@@ -8,7 +8,6 @@
 
 #import "ILUtils.h"
 #import "ILLog.h"
-#import <AFNetworking/AFNetworking.h>
 
 @implementation ILUtils
 
@@ -37,28 +36,6 @@
         }
     }];
     return result;
-}
-
-+ (void) getModelNameAndVersion:(NSString*) hostname withCompletion:(void (^)(NSString *modelName, NSString *version))completion {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSString *url                          = [NSString stringWithFormat: @"http://%@/", hostname];
-    [manager GET: url parameters: nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // ignore success, we'll receive a 404 response
-        return;
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSHTTPURLResponse *res = operation.response;
-        NSString* server = res.allHeaderFields[ @"Server" ];
-        if (!server) {
-            completion( nil, nil );
-            return;
-        }
-        NSArray* tmp = [server componentsSeparatedByString: @"/"];
-        if (tmp.count != 2) {
-            completion( nil, nil );
-            return;
-        }
-        completion( tmp[0], tmp[1] );
-    }];
 }
 
 @end
