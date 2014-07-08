@@ -46,6 +46,7 @@
 		C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C79AF43818FE5FA600814235 /* ILMenuProgressView.m */; };
 		C7A7ED6B192DD05E00F86AFF /* ILSender.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A7ED6A192DD05E00F86AFF /* ILSender.m */; };
 		C7AB5EB0196BCEA800F8751A /* IRUserDefaultsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C7AB5EAF196BCEA800F8751A /* IRUserDefaultsStore.m */; };
+		C7AB5EAD196BCAA700F8751A /* ILAlfredExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C7AB5EAC196BCAA700F8751A /* ILAlfredExtension.m */; };
 		C7B206A0194FF4BB001646DD /* ILLearnSignalWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B2069E194FF4BB001646DD /* ILLearnSignalWindowController.m */; };
 		C7B6934818EE63BA00DE7027 /* IRSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934718EE63BA00DE7027 /* IRSignals.m */; };
 		C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */; };
@@ -146,6 +147,8 @@
 		C7A7ED6A192DD05E00F86AFF /* ILSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSender.m; sourceTree = "<group>"; };
 		C7AB5EAE196BCEA800F8751A /* IRUserDefaultsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRUserDefaultsStore.h; path = Dependencies/IRKit/IRKit/IRKit/IRUserDefaultsStore.h; sourceTree = SOURCE_ROOT; };
 		C7AB5EAF196BCEA800F8751A /* IRUserDefaultsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRUserDefaultsStore.m; path = Dependencies/IRKit/IRKit/IRKit/IRUserDefaultsStore.m; sourceTree = SOURCE_ROOT; };
+		C7AB5EAB196BCAA700F8751A /* ILAlfredExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILAlfredExtension.h; sourceTree = "<group>"; };
+		C7AB5EAC196BCAA700F8751A /* ILAlfredExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILAlfredExtension.m; sourceTree = "<group>"; };
 		C7B2069D194FF4BB001646DD /* ILLearnSignalWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLearnSignalWindowController.h; sourceTree = "<group>"; };
 		C7B2069E194FF4BB001646DD /* ILLearnSignalWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILLearnSignalWindowController.m; sourceTree = "<group>"; };
 		C7B6934618EE63BA00DE7027 /* IRSignals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSignals.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRSignals.h; sourceTree = "<group>"; };
@@ -188,6 +191,8 @@
 		C70745BA191A1C7D00AA7A32 /* LauncherExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				C7AB5EAB196BCAA700F8751A /* ILAlfredExtension.h */,
+				C7AB5EAC196BCAA700F8751A /* ILAlfredExtension.m */,
 				C70745BE191A1D3E00AA7A32 /* ILQuicksilverExtension.h */,
 				C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */,
 				C70745BB191A1CAB00AA7A32 /* ILLauncherExtension.h */,
@@ -574,6 +579,7 @@
 				C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */,
 				C7B206A0194FF4BB001646DD /* ILLearnSignalWindowController.m in Sources */,
 				C7E5555819615B7700485045 /* ILApplicationUpdater.m in Sources */,
+				C7AB5EAD196BCAA700F8751A /* ILAlfredExtension.m in Sources */,
 				C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */,
 				C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */,
 				C738EC001953D6F1006A7B6D /* ILStatusItem.m in Sources */,

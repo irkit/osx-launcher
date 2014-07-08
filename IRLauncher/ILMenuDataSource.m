@@ -21,6 +21,7 @@
 // Launcher Extensions
 #import "ILLauncherExtension.h"
 #import "ILQuicksilverExtension.h"
+#import "ILAlfredExtension.h"
 // Add other extension headers here!
 
 static const NSInteger kILLauncherExtensionTagOffset = 10000;
@@ -52,8 +53,7 @@ typedef NS_ENUM (NSUInteger,ILMenuHelpItemIndex) {
 };
 
 typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
-    ILMenuOptionsItemIndexAutoUpdate  = 0,
-    ILMenuOptionsItemIndexQuicksilver = 1,
+    ILMenuOptionsItemIndexAutoUpdate = 0,
 };
 
 - (instancetype) init {
@@ -64,6 +64,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 
     self.launcherExtensions = @[
         [[ILQuicksilverExtension alloc] init],
+        [[ILAlfredExtension alloc] init],
         // Add more here!!
                               ];
 
@@ -124,7 +125,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     break;
     case ILMenuSectionIndexOptions:
     {
-        return 2;
+        return 1 + _launcherExtensions.count;
     }
     break;
     case ILMenuSectionIndexHelp:
@@ -276,7 +277,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         }
         break;
 
-        case ILMenuOptionsItemIndexQuicksilver:
+        // extensions
         default:
         {
             id<ILLauncherExtension> extension = _launcherExtensions[ indexPath.item - 1 ];
