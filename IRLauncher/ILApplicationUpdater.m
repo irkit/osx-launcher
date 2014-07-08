@@ -8,11 +8,11 @@
 
 #import "ILLog.h"
 #import "ILApplicationUpdater.h"
-#import <AutoUpdater/AUUpdater.h>
-#import <AUtoupdater/AUUpdateChecker.h>
-#import <AutoUpdater/AUGithubReleaseFetcher.h>
-#import <AutoUpdater/AUZipUnarchiver.h>
-#import <AutoUpdater/AUCodeSignValidator.h>
+#import <MOAutoUpdater/MOUpdater.h>
+#import <MOAutoUpdater/MOUpdateChecker.h>
+#import <MOAutoUpdater/MOGithubReleaseFetcher.h>
+#import <MOAutoUpdater/MOZipUnarchiver.h>
+#import <MOAutoUpdater/MOCodeSignValidator.h>
 #import "NSObject-PerformWhenIdle.h"
 
 static NSString * const kILUserDefaultsAutoUpdateKey  = @"autoupdate";
@@ -22,8 +22,8 @@ static const NSTimeInterval kIdleInterval             = 60;
 
 @interface ILApplicationUpdater ()
 
-@property (nonatomic) AUUpdateChecker *checker;
-@property (nonatomic) AUUpdater *updater;
+@property (nonatomic) MOUpdateChecker *checker;
+@property (nonatomic) MOUpdater *updater;
 @property (nonatomic) NSTimer *checkTimer;
 
 @end
@@ -65,14 +65,14 @@ static const NSTimeInterval kIdleInterval             = 60;
 
 - (void) runAndExit {
     NSString *version               = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-    AUGithubReleaseFetcher *fetcher = [[AUGithubReleaseFetcher alloc] initWithUserName: @"mash" repositoryName: @"-----------------"]; // irkit/launcher-macos
-    _checker = [[AUUpdateChecker alloc] initWithFetcher: fetcher
-                                             unarchiver: [[AUZipUnarchiver alloc] init]
-                                             validators: @[ [[AUCodeSignValidator alloc] init] ]];
+    MOGithubReleaseFetcher *fetcher = [[MOGithubReleaseFetcher alloc] initWithUserName: @"mash" repositoryName: @"-----------------"]; // irkit/launcher-macos
+    _checker = [[MOUpdateChecker alloc] initWithFetcher: fetcher
+                                             unarchiver: [[MOZipUnarchiver alloc] init]
+                                             validators: @[ [[MOCodeSignValidator alloc] init] ]];
     [_checker checkForVersionNewerThanVersion: version
                        foundNewerVersionBlock:^(NSDictionary *releaseInformation, NSURL *unarchivedBundlePath, NSError *error) {
         if (releaseInformation && unarchivedBundlePath && !error && [self enabled]) {
-            _updater = [[AUUpdater alloc] initWithSourcePath: unarchivedBundlePath];
+            _updater = [[MOUpdater alloc] initWithSourcePath: unarchivedBundlePath];
             [_updater runWithArgumentsForRelaunchedApplication: releaseInformation];
             [NSApp terminate: nil];
         }

@@ -1,6 +1,6 @@
 platform :osx, "10.9"
 pod 'ISHTTPOperation' , :path => '~/src/github.com/ishkawa/ISHTTPOperation' # for IRKit
-pod 'AutoUpdater', :path => '~/proj/CocoaAutoUpdater'
+pod 'MOAutoUpdater', :git => 'git@github.com:mash/MOAutoUpdater.git'
 workspace 'IRLauncher'
 xcodeproj 'IRLauncher'
 

@@ -15,7 +15,7 @@
 #import "ILConst.h"
 #import "ILStatusItem.h"
 #import "ILApplicationUpdater.h"
-#import <AutoUpdater/AUUpdater.h>
+#import <MOAutoUpdater/MOUpdater.h>
 
 static NSString * const kIRKitAPIKey                   = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
 static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.send";
@@ -61,12 +61,12 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
 
     }
 
-    if ([AUUpdater didRelaunch]) {
+    if ([MOUpdater didRelaunch]) {
         // relaunched using AutoUpdater.app
-        NSDictionary *releaseInformation = [AUUpdater releaseInformation];
+        NSDictionary *releaseInformation = [MOUpdater releaseInformation];
 
         NSUserNotification *notification = [[NSUserNotification alloc] init];
-        notification.title             = [NSString stringWithFormat: @"Updated to version %@",releaseInformation[ kAUReleaseInformationNewVersionKey ]];
+        notification.title             = [NSString stringWithFormat: @"Updated to version %@",releaseInformation[ kMOReleaseInformationNewVersionKey ]];
         notification.actionButtonTitle = @"Check release notes";
         notification.userInfo          = releaseInformation;
 
@@ -131,7 +131,7 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
        didActivateNotification:(NSUserNotification *)notification {
     ILLOG( @"notification: %@", notification );
 
-    NSString *url = notification.userInfo[ kAUReleaseInformationURLKey ];
+    NSString *url = notification.userInfo[ kMOReleaseInformationURLKey ];
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: url]];
 }
 
