@@ -40,23 +40,28 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     ILLOG( @"args: %@", args );
 
     NSString *signalFilePath = (args.count == 2) ? args[ 1 ] : nil;
-    if (signalFilePath) {
+
+    BOOL isDuplicateInstance = [[NSRunningApplication runningApplicationsWithBundleIdentifier: [[NSBundle mainBundle] bundleIdentifier]] count] > 1;
+    if (isDuplicateInstance) {
+        ILLOG( @"found duplicate" );
+
         // ex: launched using Quicksilver
-        BOOL isDuplicateInstance = [[NSRunningApplication runningApplicationsWithBundleIdentifier: [[NSBundle mainBundle] bundleIdentifier]] count] > 1;
-        if (isDuplicateInstance) {
-            ILLOG( @"found duplicate, send over to living app" ); // to animate status bar icon
+        if (signalFilePath) {
+            // send using living app, to animate status bar icon
             [self postDistributedNotificationToSendFileAtPath: signalFilePath];
-            [NSApp terminate: nil];
-            return;
         }
-        else {
-            // do it by myself
-            [self performSelector: @selector(postDistributedNotificationToSendFileAtPath:)
-                       withObject: signalFilePath
-                       afterDelay: 0.];
-        }
+        [NSApp terminate: nil];
+        return;
     }
-    else if ([AUUpdater didRelaunch]) {
+    else if (signalFilePath) {
+        // do it by myself
+        [self performSelector: @selector(postDistributedNotificationToSendFileAtPath:)
+                   withObject: signalFilePath
+                   afterDelay: 0.];
+
+    }
+
+    if ([AUUpdater didRelaunch]) {
         // relaunched using AutoUpdater.app
         NSDictionary *releaseInformation = [AUUpdater releaseInformation];
 
@@ -69,6 +74,7 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
         center.delegate = self;
         [center deliverNotification: notification];
     }
+
     [[NSDistributedNotificationCenter defaultCenter] addObserver: self
                                                         selector: @selector(receivedDistributedNotification:)
                                                             name: nil
