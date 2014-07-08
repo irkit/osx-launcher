@@ -1,0 +1,3 @@
+[submodule "Dependencies/IRKit"]
+	path = Dependencies/IRKit
+	url = git@github.com:irkit/ios-sdk.git

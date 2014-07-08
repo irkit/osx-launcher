@@ -22,8 +22,8 @@
 		C71F8C65189A015200298DFA /* IRLauncherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F8C64189A015200298DFA /* IRLauncherTests.m */; };
 		C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */ = {isa = PBXBuildFile; fileRef = C729A26A194080950012F40D /* NSMenuItem+StateAware.m */; };
 		C738EC001953D6F1006A7B6D /* ILStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C738EBFF1953D6F1006A7B6D /* ILStatusItem.m */; };
-		C74DFB5C195D7707007C8956 /* IRSignals+FileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C74DFB5B195D7707007C8956 /* IRSignals+FileStore.m */; };
 		C73F2D0C1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m in Sources */ = {isa = PBXBuildFile; fileRef = C73F2D0B1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m */; };
+		C74DFB5C195D7707007C8956 /* IRSignals+FileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C74DFB5B195D7707007C8956 /* IRSignals+FileStore.m */; };
 		C763F69C18ED692C00EAC927 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = C763F69B18ED692C00EAC927 /* Log.m */; };
 		C7647EB118ED5D8200171E7F /* IRPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EAE18ED5D8200171E7F /* IRPeripheral.m */; };
 		C7647EB218ED5D8200171E7F /* IRSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB018ED5D8200171E7F /* IRSignal.m */; };
@@ -72,8 +72,8 @@
 		C70745BB191A1CAB00AA7A32 /* ILLauncherExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLauncherExtension.h; sourceTree = "<group>"; };
 		C70745BE191A1D3E00AA7A32 /* ILQuicksilverExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ILQuicksilverExtension.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuicksilverExtension.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
-		C71E8993189F92B7007BC9C4 /* IRSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSearcher.m; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.m"; sourceTree = "<group>"; };
-		C71E8994189F92B7007BC9C4 /* IRSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSearcher.h; path = "../../ios-sdk/IRKit/IRKit/IRSearcher.h"; sourceTree = "<group>"; };
+		C71E8993189F92B7007BC9C4 /* IRSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSearcher.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRSearcher.m; sourceTree = "<group>"; };
+		C71E8994189F92B7007BC9C4 /* IRSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSearcher.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRSearcher.h; sourceTree = "<group>"; };
 		C71F8C37189A015200298DFA /* IRLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71F8C3A189A015200298DFA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C71F8C3D189A015200298DFA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -96,22 +96,22 @@
 		C729A26A194080950012F40D /* NSMenuItem+StateAware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenuItem+StateAware.m"; sourceTree = "<group>"; };
 		C738EBFE1953D6F1006A7B6D /* ILStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILStatusItem.h; sourceTree = "<group>"; };
 		C738EBFF1953D6F1006A7B6D /* ILStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILStatusItem.m; sourceTree = "<group>"; };
-		C74DFB5A195D7707007C8956 /* IRSignals+FileStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRSignals+FileStore.h"; sourceTree = "<group>"; };
-		C74DFB5B195D7707007C8956 /* IRSignals+FileStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRSignals+FileStore.m"; sourceTree = "<group>"; };
 		C73F2D0A1964EA8700B9AC53 /* NSObject-PerformWhenIdle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject-PerformWhenIdle.h"; sourceTree = "<group>"; };
 		C73F2D0B1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject-PerformWhenIdle.m"; sourceTree = "<group>"; };
-		C763F69A18ED692C00EAC927 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Log.h; path = "../../ios-sdk/IRKit/IRKit/Log.h"; sourceTree = "<group>"; };
-		C763F69B18ED692C00EAC927 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Log.m; path = "../../ios-sdk/IRKit/IRKit/Log.m"; sourceTree = "<group>"; };
-		C7647EAD18ED5D8200171E7F /* IRPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPeripheral.h; path = "../../ios-sdk/IRKit/IRKit/IRPeripheral.h"; sourceTree = "<group>"; };
-		C7647EAE18ED5D8200171E7F /* IRPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRPeripheral.m; path = "../../ios-sdk/IRKit/IRKit/IRPeripheral.m"; sourceTree = "<group>"; };
-		C7647EAF18ED5D8200171E7F /* IRSignal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSignal.h; path = "../../ios-sdk/IRKit/IRKit/IRSignal.h"; sourceTree = "<group>"; };
-		C7647EB018ED5D8200171E7F /* IRSignal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSignal.m; path = "../../ios-sdk/IRKit/IRKit/IRSignal.m"; sourceTree = "<group>"; };
-		C7647EB318ED5DD000171E7F /* IRHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHTTPClient.h; path = "../../ios-sdk/IRKit/IRKit/IRHTTPClient.h"; sourceTree = "<group>"; };
-		C7647EB418ED5DD000171E7F /* IRHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHTTPClient.m; path = "../../ios-sdk/IRKit/IRKit/IRHTTPClient.m"; sourceTree = "<group>"; };
-		C7647EB518ED5DD000171E7F /* IRKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRKit.h; path = "../../ios-sdk/IRKit/IRKit/IRKit.h"; sourceTree = "<group>"; };
-		C7647EB618ED5DD000171E7F /* IRKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRKit.m; path = "../../ios-sdk/IRKit/IRKit/IRKit.m"; sourceTree = "<group>"; };
-		C7647EB718ED5DD000171E7F /* IRReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRReachability.h; path = "../../ios-sdk/IRKit/IRKit/IRReachability.h"; sourceTree = "<group>"; };
-		C7647EB818ED5DD000171E7F /* IRReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRReachability.m; path = "../../ios-sdk/IRKit/IRKit/IRReachability.m"; sourceTree = "<group>"; };
+		C74DFB5A195D7707007C8956 /* IRSignals+FileStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRSignals+FileStore.h"; sourceTree = "<group>"; };
+		C74DFB5B195D7707007C8956 /* IRSignals+FileStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRSignals+FileStore.m"; sourceTree = "<group>"; };
+		C763F69A18ED692C00EAC927 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Log.h; path = ../Dependencies/IRKit/IRKit/IRKit/Log.h; sourceTree = "<group>"; };
+		C763F69B18ED692C00EAC927 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Log.m; path = ../Dependencies/IRKit/IRKit/IRKit/Log.m; sourceTree = "<group>"; };
+		C7647EAD18ED5D8200171E7F /* IRPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPeripheral.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRPeripheral.h; sourceTree = "<group>"; };
+		C7647EAE18ED5D8200171E7F /* IRPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRPeripheral.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRPeripheral.m; sourceTree = "<group>"; };
+		C7647EAF18ED5D8200171E7F /* IRSignal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSignal.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRSignal.h; sourceTree = "<group>"; };
+		C7647EB018ED5D8200171E7F /* IRSignal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSignal.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRSignal.m; sourceTree = "<group>"; };
+		C7647EB318ED5DD000171E7F /* IRHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHTTPClient.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRHTTPClient.h; sourceTree = "<group>"; };
+		C7647EB418ED5DD000171E7F /* IRHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHTTPClient.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRHTTPClient.m; sourceTree = "<group>"; };
+		C7647EB518ED5DD000171E7F /* IRKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRKit.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRKit.h; sourceTree = "<group>"; };
+		C7647EB618ED5DD000171E7F /* IRKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRKit.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRKit.m; sourceTree = "<group>"; };
+		C7647EB718ED5DD000171E7F /* IRReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRReachability.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRReachability.h; sourceTree = "<group>"; };
+		C7647EB818ED5DD000171E7F /* IRReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRReachability.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRReachability.m; sourceTree = "<group>"; };
 		C764C1C519527E5B003410B6 /* MOSectionedMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOSectionedMenu.h; sourceTree = "<group>"; };
 		C764C1C619527E5B003410B6 /* MOSectionedMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOSectionedMenu.m; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* ILLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLog.h; sourceTree = "<group>"; };
@@ -121,15 +121,15 @@
 		C77AFB581952DCD6002ED79A /* MOAnimatingStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAnimatingStatusItem.h; sourceTree = "<group>"; };
 		C77AFB591952DCD6002ED79A /* MOAnimatingStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAnimatingStatusItem.m; sourceTree = "<group>"; };
 		C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILSignalNameEditView.xib; sourceTree = "<group>"; };
-		C781847D18ED5F1F007FB4E1 /* IRHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHelper.h; path = "../../ios-sdk/IRKit/IRKit/IRHelper.h"; sourceTree = "<group>"; };
-		C781847E18ED5F1F007FB4E1 /* IRHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHelper.m; path = "../../ios-sdk/IRKit/IRKit/IRHelper.m"; sourceTree = "<group>"; };
-		C781847F18ED5F1F007FB4E1 /* IRHTTPJSONOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHTTPJSONOperation.h; path = "../../ios-sdk/IRKit/IRKit/IRHTTPJSONOperation.h"; sourceTree = "<group>"; };
-		C781848018ED5F1F007FB4E1 /* IRHTTPJSONOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHTTPJSONOperation.m; path = "../../ios-sdk/IRKit/IRKit/IRHTTPJSONOperation.m"; sourceTree = "<group>"; };
-		C781848118ED5F1F007FB4E1 /* IRHTTPOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHTTPOperationQueue.h; path = "../../ios-sdk/IRKit/IRKit/IRHTTPOperationQueue.h"; sourceTree = "<group>"; };
-		C781848218ED5F1F007FB4E1 /* IRHTTPOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHTTPOperationQueue.m; path = "../../ios-sdk/IRKit/IRKit/IRHTTPOperationQueue.m"; sourceTree = "<group>"; };
-		C781848318ED5F1F007FB4E1 /* IRPeripherals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPeripherals.h; path = "../../ios-sdk/IRKit/IRKit/IRPeripherals.h"; sourceTree = "<group>"; };
-		C781848418ED5F1F007FB4E1 /* IRPeripherals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRPeripherals.m; path = "../../ios-sdk/IRKit/IRKit/IRPeripherals.m"; sourceTree = "<group>"; };
-		C781848918ED5F6C007FB4E1 /* IRPersistentStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPersistentStore.h; path = "../../ios-sdk/IRKit/IRKit/IRPersistentStore.h"; sourceTree = "<group>"; };
+		C781847D18ED5F1F007FB4E1 /* IRHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHelper.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRHelper.h; sourceTree = "<group>"; };
+		C781847E18ED5F1F007FB4E1 /* IRHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHelper.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRHelper.m; sourceTree = "<group>"; };
+		C781847F18ED5F1F007FB4E1 /* IRHTTPJSONOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHTTPJSONOperation.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRHTTPJSONOperation.h; sourceTree = "<group>"; };
+		C781848018ED5F1F007FB4E1 /* IRHTTPJSONOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHTTPJSONOperation.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRHTTPJSONOperation.m; sourceTree = "<group>"; };
+		C781848118ED5F1F007FB4E1 /* IRHTTPOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHTTPOperationQueue.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRHTTPOperationQueue.h; sourceTree = "<group>"; };
+		C781848218ED5F1F007FB4E1 /* IRHTTPOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHTTPOperationQueue.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRHTTPOperationQueue.m; sourceTree = "<group>"; };
+		C781848318ED5F1F007FB4E1 /* IRPeripherals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPeripherals.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRPeripherals.h; sourceTree = "<group>"; };
+		C781848418ED5F1F007FB4E1 /* IRPeripherals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRPeripherals.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRPeripherals.m; sourceTree = "<group>"; };
+		C781848918ED5F6C007FB4E1 /* IRPersistentStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRPersistentStore.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRPersistentStore.h; sourceTree = "<group>"; };
 		C78918DE194FE89A0075C36E /* ILSignalNameEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSignalNameEditViewController.h; sourceTree = "<group>"; };
 		C78918DF194FE89A0075C36E /* ILSignalNameEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSignalNameEditViewController.m; sourceTree = "<group>"; };
 		C789EC9219419D7F00BC8E90 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ILSignalReceiveView.xib; sourceTree = "<group>"; };
@@ -145,8 +145,8 @@
 		C7A7ED6A192DD05E00F86AFF /* ILSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSender.m; sourceTree = "<group>"; };
 		C7B2069D194FF4BB001646DD /* ILLearnSignalWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLearnSignalWindowController.h; sourceTree = "<group>"; };
 		C7B2069E194FF4BB001646DD /* ILLearnSignalWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILLearnSignalWindowController.m; sourceTree = "<group>"; };
-		C7B6934618EE63BA00DE7027 /* IRSignals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSignals.h; path = "../../ios-sdk/IRKit/IRKit/IRSignals.h"; sourceTree = "<group>"; };
-		C7B6934718EE63BA00DE7027 /* IRSignals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSignals.m; path = "../../ios-sdk/IRKit/IRKit/IRSignals.m"; sourceTree = "<group>"; };
+		C7B6934618EE63BA00DE7027 /* IRSignals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSignals.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRSignals.h; sourceTree = "<group>"; };
+		C7B6934718EE63BA00DE7027 /* IRSignals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSignals.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRSignals.m; sourceTree = "<group>"; };
 		C7B6934918EE647600DE7027 /* ILSignalsDirectorySearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSignalsDirectorySearcher.h; sourceTree = "<group>"; };
 		C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSignalsDirectorySearcher.m; sourceTree = "<group>"; };
 		C7B6C8C61920AB1B00C13F49 /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
@@ -252,7 +252,6 @@
 				C78918E1194FE8A50075C36E /* LearnSignalWindow */,
 				C70745BA191A1C7D00AA7A32 /* LauncherExtensions */,
 				C71E8996189FA05F007BC9C4 /* Categories */,
-				C7FD7F88189CFC9600EF0906 /* IRKit */,
 				C7766F9D189A4E9B00898267 /* Menulet */,
 				C7766F9B189A4E0F00898267 /* Resources */,
 				C71F8C41189A015200298DFA /* Supporting Files */,
@@ -351,6 +350,7 @@
 		C7BA33E61954288400B9247B /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				C7FD7F88189CFC9600EF0906 /* IRKit */,
 				C73F2D0A1964EA8700B9AC53 /* NSObject-PerformWhenIdle.h */,
 				C73F2D0B1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m */,
 			);
@@ -397,6 +397,7 @@
 				C7965C2118FFB4A5004FF579 /* IRConst.h */,
 			);
 			name = IRKit;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
