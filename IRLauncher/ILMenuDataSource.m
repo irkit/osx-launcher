@@ -21,6 +21,7 @@
 // Launcher Extensions
 #import "ILLauncherExtension.h"
 #import "ILQuicksilverExtension.h"
+#import "ILAlfredExtension.h"
 // Add other extension headers here!
 
 static const NSInteger kILLauncherExtensionTagOffset = 10000;
@@ -52,8 +53,7 @@ typedef NS_ENUM (NSUInteger,ILMenuHelpItemIndex) {
 };
 
 typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
-    ILMenuOptionsItemIndexAutoUpdate  = 0,
-    ILMenuOptionsItemIndexQuicksilver = 1,
+    ILMenuOptionsItemIndexAutoUpdate = 0,
 };
 
 - (instancetype) init {
@@ -64,6 +64,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 
     self.launcherExtensions = @[
         [[ILQuicksilverExtension alloc] init],
+        [[ILAlfredExtension alloc] init],
         // Add more here!!
                               ];
 
@@ -124,7 +125,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     break;
     case ILMenuSectionIndexOptions:
     {
-        return 2;
+        return 1 + _launcherExtensions.count;
     }
     break;
     case ILMenuSectionIndexHelp:
@@ -276,18 +277,14 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         }
         break;
 
-        case ILMenuOptionsItemIndexQuicksilver:
+        // extensions
         default:
         {
             id<ILLauncherExtension> extension = _launcherExtensions[ indexPath.item - 1 ];
-            item.onTitle  = [NSString stringWithFormat: @"%@ Extension (installed)",extension.title];
-            item.offTitle = [NSString stringWithFormat: @"%@ Extension (not installed)", extension.title];
-            item.target   = self;
-            item.action   = @selector(toggleExtensionInstallation:);
-            BOOL installed = [extension installed];
-            item.state = installed ? NSOnState : NSOffState;
-            item.tag   = kILLauncherExtensionTagOffset + indexPath.item;
-            ILLOG( @"item: %@ installed: %d", item, installed );
+            item.title  = [NSString stringWithFormat: @"Install %@ Extension",extension.title];
+            item.target = self;
+            item.action = @selector(toggleExtensionInstallation:);
+            item.tag    = kILLauncherExtensionTagOffset + indexPath.item - 1;
         }
         break;
         }
@@ -452,36 +449,21 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     NSInteger extensionIndex          = ((NSMenuItem*)sender).tag - kILLauncherExtensionTagOffset;
     id<ILLauncherExtension> extension = _launcherExtensions[ extensionIndex ];
 
-    if ([extension installed]) {
-        [self showConfirmToUninstallExtension: extension completion:^(NSInteger returnCode) {
-            if (returnCode == NSAlertFirstButtonReturn) {
-                [extension uninstall];
-                [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
-                                                                    object: self
-                                                                  userInfo: @{
-                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: extensionIndex
-                                                                           inSection: ILMenuSectionIndexOptions]
-                 }];
-            }
-        }];
-    }
-    else {
-        [self showConfirmToInstallExtension: extension completion:^(NSInteger returnCode) {
-            if (returnCode == NSAlertFirstButtonReturn) {
-                [extension install];
-                [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
-                                                                    object: self
-                                                                  userInfo: @{
-                     kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: extensionIndex
-                                                                           inSection: ILMenuSectionIndexOptions]
-                 }];
+    [self showConfirmToInstallExtension: extension completion:^(NSInteger returnCode) {
+        if (returnCode == NSAlertFirstButtonReturn) {
+            [extension install];
+            [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
+                                                                object: self
+                                                              userInfo: @{
+                 kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: extensionIndex
+                                                                       inSection: ILMenuSectionIndexOptions]
+             }];
 
-                if ([extension respondsToSelector: @selector(didFinishInstallation)]) {
-                    [extension didFinishInstallation];
-                }
+            if ([extension respondsToSelector: @selector(didFinishInstallation)]) {
+                [extension didFinishInstallation];
             }
-        }];
-    }
+        }
+    }];
 }
 
 - (void) showOpenSource: (id)sender {
@@ -592,7 +574,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
          }];
 
         for (id<ILLauncherExtension> extension in _launcherExtensions) {
-            if ([extension installed]) {
+            if ([extension respondsToSelector: @selector(installed)] && [extension installed]) {
                 if ([extension respondsToSelector: @selector(didLearnSignal)]) {
                     [extension didLearnSignal];
                 }
@@ -609,18 +591,6 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     [alert addButtonWithTitle: @"Cancel"]; // 2nd to right : NSAlertSecondButtonReturn
     [alert setMessageText: [NSString stringWithFormat: @"Install %@ Extension?", extension.title]];
     [alert setInformativeText: extension.installInformativeText];
-    [alert setAlertStyle: NSWarningAlertStyle];
-    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
-    NSInteger ret = [alert runModal];
-    callback( ret );
-}
-
-- (void) showConfirmToUninstallExtension:(id<ILLauncherExtension>)extension completion:(void (^)(NSInteger returnCode))callback {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle: @"OK"];
-    [alert addButtonWithTitle: @"Cancel"];
-    [alert setMessageText: [NSString stringWithFormat: @"Uninstall %@ Extension?", extension.title]];
-    [alert setInformativeText: extension.uninstallInformativeText];
     [alert setAlertStyle: NSWarningAlertStyle];
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     NSInteger ret = [alert runModal];

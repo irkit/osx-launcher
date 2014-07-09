@@ -62,7 +62,7 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     }
 
     if ([MOUpdater didRelaunch]) {
-        // relaunched using AutoUpdater.app
+        // relaunched using Updater.app
         NSDictionary *releaseInformation = [MOUpdater releaseInformation];
 
         NSUserNotification *notification = [[NSUserNotification alloc] init];
