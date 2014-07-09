@@ -15,7 +15,7 @@
 // I feel the "Uninstall Quicksilver/Alfred Extension" feature too hacky/dangerous
 // and too hard to support for a long period,
 // thus decided not to implement it.
-// Installing Quicksilver extension already seems going to far.
+// Installing Quicksilver extension already seems going too far.
 
 @required
 /// Used in various places

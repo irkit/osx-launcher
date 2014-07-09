@@ -79,17 +79,15 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
         catalog[ @"customEntries" ] = @[];
     }
     NSMutableArray *customEntries = ((NSArray*)catalog[ @"customEntries" ]).mutableCopy;
-    BOOL modified                 = NO;
-    for (NSUInteger i=0,len=customEntries.count; i<len; i++) {
-        NSDictionary *entry = customEntries[ i ];
-        if ([entry[ @"settings" ][ @"path" ] isEqualToString: [ILFileStore signalsDirectory]]) {
-            NSMutableDictionary *mutableEntry = entry.mutableCopy;
-            mutableEntry[ @"enabled" ] = @YES;
-            customEntries[ i ]         = mutableEntry;
-            modified                   = YES;
-        }
+
+    NSDictionary *foundEntry = [self findSignalsCustomEntry: catalog];
+    if (foundEntry) {
+        NSUInteger index                  = [customEntries indexOfObject: foundEntry];
+        NSMutableDictionary *mutableEntry = foundEntry.mutableCopy;
+        mutableEntry[ @"enabled" ] = @YES;
+        [customEntries replaceObjectAtIndex: index withObject: mutableEntry];
     }
-    if (!modified) {
+    else {
         NSDictionary *entry = @{
             @"ID": [NSString uniqueString], // this is how Quicksilver sets IDs; see QSCatalogEntry.m -(NSString*)identifier
             @"enabled":  @YES,
@@ -103,6 +101,7 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
         };
         [customEntries addObject: entry];
     }
+
     catalog[ @"customEntries" ] = customEntries;
     BOOL success = [catalog writeToURL: catalogPath atomically: YES];
     if (!success) {
@@ -116,6 +115,14 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
     if (!catalog) {
         return NO;
     }
+    NSDictionary *entry = [self findSignalsCustomEntry: catalog];
+    if (entry && [entry[ @"enabled" ] boolValue]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (id) findSignalsCustomEntry: (id)catalog {
     NSDictionary *entry = [ILUtils firstObjectOf: catalog[ @"customEntries" ]
                                       meetsBlock: ^BOOL (NSDictionary *obj, NSUInteger idx) {
         NSString *path = obj[ @"settings" ][ @"path" ];
@@ -124,10 +131,7 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
         }
         return NO;
     }];
-    if ([entry[ @"enabled" ] boolValue]) {
-        return YES;
-    }
-    return NO;
+    return entry;
 }
 
 - (NSURL*) quicksilverCatalogPath {
