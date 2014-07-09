@@ -23,7 +23,9 @@
 }
 
 - (void) install {
-
+    NSBundle *bundle             = [NSBundle mainBundle];
+    NSString *extensionInstaller = [bundle pathForResource: @"Send IR signal" ofType: @"alfredworkflow"];
+    [[NSWorkspace sharedWorkspace] openFile: extensionInstaller];
 }
 
 - (void) uninstall {

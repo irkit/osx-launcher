@@ -287,7 +287,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
             item.action   = @selector(toggleExtensionInstallation:);
             BOOL installed = [extension installed];
             item.state = installed ? NSOnState : NSOffState;
-            item.tag   = kILLauncherExtensionTagOffset + indexPath.item;
+            item.tag   = kILLauncherExtensionTagOffset + indexPath.item - 1;
             ILLOG( @"item: %@ installed: %d", item, installed );
         }
         break;
