@@ -19,7 +19,7 @@
 }
 
 - (NSString*) uninstallInformativeText {
-    return @"I will remove \"Send IR signal.alfredworkflow\"";
+    return @"I will launch Alfred Preferences window for you, please uninstall \"Send IR signal\" workflow by yourself";
 }
 
 - (void) install {
@@ -29,11 +29,14 @@
 }
 
 - (void) uninstall {
-    // TODO Alfred can change directory for preferences
-
+    [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier: @"com.runningwithcrayons.Alfred-Preferences"
+                                                         options: NSWorkspaceLaunchDefault
+                                  additionalEventParamDescriptor: NULL
+                                                launchIdentifier: NULL];
 }
 
 - (BOOL) installed {
+    // Check workflow directories under "~/Library/Application Support/Alfred 2/Alfred.alfredpreferences/workflows/" and find one with our bundleid
     return NO;
 }
 
