@@ -10,24 +10,27 @@
 
 @protocol ILLauncherExtension <NSObject>
 
+// Since Alfred 2 can move it's preferences directory to a user defined place,
+// even if we can read ~/Library/Preferences and detect that,
+// I feel the "Uninstall Quicksilver/Alfred Extension" feature too hacky/dangerous
+// and too hard to support for a long period,
+// thus decided not to implement it.
+// Installing Quicksilver extension already seems going to far.
+
 @required
 /// Used in various places
 /// ex: Status bar, Install confirm alert title,..
 - (NSString*) title;
 /// Informative text in alert to confirm user we're going to install this extension (apply changes to your file system)
 - (NSString*) installInformativeText;
-/// Informative text in alert to confirm user we're going to uninstall this extension.
-- (NSString*) uninstallInformativeText;
 /// Do modify file system to install extension.
 /// Launcher should somehow start to index JSON files under ~/.irkit.d/signals/ ,
 /// and open IRLauncher.app passing the JSON file path as an argument.
 - (void) install;
-/// Do modify file system to uninstall extension.
-- (void) uninstall;
-/// Return if extension is installed
-- (BOOL) installed;
 
 @optional
+/// Return if extension is installed
+- (BOOL) installed;
 /// Optionally called after install finished.
 /// You might want to relaunch launcher app to start indexing.
 - (void) didFinishInstallation;

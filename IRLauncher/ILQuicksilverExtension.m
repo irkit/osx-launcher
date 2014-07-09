@@ -24,25 +24,14 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
     return @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths.";
 }
 
-- (NSString*) uninstallInformativeText {
-    return @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and remove IRLauncher related entries from it.";
-}
-
 - (void) install {
     ILLOG_CURRENT_METHOD;
 
     [self installCatalog];
 }
 
-- (void) uninstall {
-    ILLOG_CURRENT_METHOD;
-
-    [self uninstallCatalog];
-}
-
 - (BOOL) installed {
-    BOOL ret = [self isCatalogInstalled] && [self isActionInstalled];
-    return ret;
+    return [self isCatalogInstalled];
 }
 
 - (void) didFinishInstallation {
@@ -121,33 +110,6 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
     }
 }
 
-- (void) uninstallCatalog {
-    if (![self isCatalogInstalled]) {
-        return;
-    }
-    NSURL *catalogPath            = [self quicksilverCatalogPath];
-    NSMutableDictionary *catalog  = [[NSMutableDictionary alloc] initWithContentsOfURL: catalogPath];
-    BOOL modified                 = NO;
-    NSMutableArray *customEntries = ((NSArray*)catalog[ @"customEntries" ]).mutableCopy;
-    for (NSUInteger i=0,len=customEntries.count; i<len; i++) {
-        NSDictionary *entry = customEntries[ i ];
-        if ([entry[ @"settings" ][ @"path" ] isEqualToString: [ILFileStore signalsDirectory]] &&
-            [entry[ @"enabled" ] boolValue]) {
-            NSMutableDictionary *mutableEntry = entry.mutableCopy;
-            mutableEntry[ @"enabled" ] = @NO;
-            customEntries[ i ]         = mutableEntry;
-            modified                   = YES;
-        }
-    }
-    if (modified) {
-        catalog[ @"customEntries" ] = customEntries;
-        BOOL success = [catalog writeToURL: catalogPath atomically: YES];
-        if (!success) {
-            ILLOG( @"failed to write to %@", catalogPath );
-        }
-    }
-}
-
 - (BOOL) isCatalogInstalled {
     NSURL *catalogPath = [self quicksilverCatalogPath];
     id catalog         = [[NSDictionary alloc] initWithContentsOfURL: catalogPath];
@@ -168,21 +130,10 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
     return NO;
 }
 
-- (BOOL) isActionInstalled {
-    NSURL *senderPath = [self senderPath];
-    return [senderPath checkResourceIsReachableAndReturnError: NULL];
-}
-
 - (NSURL*) quicksilverCatalogPath {
     NSURL *applicationSupportDirectory = [[NSFileManager defaultManager] URLsForDirectory: NSApplicationSupportDirectory
                                                                                 inDomains: NSUserDomainMask][ 0 ];
     return [applicationSupportDirectory URLByAppendingPathComponent: @"Quicksilver/Catalog.plist"];
-}
-
-- (NSURL*) senderPath {
-    NSURL *applicationSupportDirectory = [[NSFileManager defaultManager] URLsForDirectory: NSApplicationSupportDirectory
-                                                                                inDomains: NSUserDomainMask][ 0 ];
-    return [applicationSupportDirectory URLByAppendingPathComponent: @"Quicksilver/Actions/IRSender.scpt"];
 }
 
 - (void) showConfirmToRelaunchQuicksilver:(void (^)(NSInteger returnCode))callback {
