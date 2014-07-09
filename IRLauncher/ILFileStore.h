@@ -12,7 +12,6 @@
 /// Saves key-value data structure under ~/.irkit.d/
 @interface ILFileStore : NSObject
 
-+ (NSString*) configFile;
 + (NSString*) configDirectory;
 + (NSString*) signalsDirectory;
 + (BOOL) saveSignal: (IRSignal*) signal;

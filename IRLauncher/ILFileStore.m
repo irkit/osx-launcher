@@ -28,10 +28,6 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
 
 #pragma mark - Class methods
 
-+ (NSString*) configFile {
-    return [[self configDirectory] stringByAppendingString: @"config.json"];
-}
-
 + (NSString*) configDirectory {
     return [NSHomeDirectory() stringByAppendingFormat: @"/%@", kILConfigDirectory];
 }

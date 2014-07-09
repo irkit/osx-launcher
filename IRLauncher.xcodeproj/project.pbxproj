@@ -49,7 +49,6 @@
 		C7AB5EB0196BCEA800F8751A /* IRUserDefaultsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C7AB5EAF196BCEA800F8751A /* IRUserDefaultsStore.m */; };
 		C7B206A0194FF4BB001646DD /* ILLearnSignalWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B2069E194FF4BB001646DD /* ILLearnSignalWindowController.m */; };
 		C7B6934818EE63BA00DE7027 /* IRSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934718EE63BA00DE7027 /* IRSignals.m */; };
-		C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */; };
 		C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */; };
 		C7C5EBF4196CE1F900E4F19B /* Send IR signal.alfredworkflow in Resources */ = {isa = PBXBuildFile; fileRef = C7C5EBF3196CE1F900E4F19B /* Send IR signal.alfredworkflow */; };
 		C7D218EA19598720004AD675 /* FinderInfo.dat in Resources */ = {isa = PBXBuildFile; fileRef = C7D218E819598720004AD675 /* FinderInfo.dat */; };
@@ -154,8 +153,6 @@
 		C7B2069E194FF4BB001646DD /* ILLearnSignalWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILLearnSignalWindowController.m; sourceTree = "<group>"; };
 		C7B6934618EE63BA00DE7027 /* IRSignals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSignals.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRSignals.h; sourceTree = "<group>"; };
 		C7B6934718EE63BA00DE7027 /* IRSignals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSignals.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRSignals.m; sourceTree = "<group>"; };
-		C7B6934918EE647600DE7027 /* ILSignalsDirectorySearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSignalsDirectorySearcher.h; sourceTree = "<group>"; };
-		C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSignalsDirectorySearcher.m; sourceTree = "<group>"; };
 		C7B6C8C61920AB1B00C13F49 /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
 		C7B6C8C71920AB1B00C13F49 /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
 		C7C5EBF3196CE1F900E4F19B /* Send IR signal.alfredworkflow */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Send IR signal.alfredworkflow"; path = "AlfredExtension/Send IR signal.alfredworkflow"; sourceTree = SOURCE_ROOT; };
@@ -270,8 +267,6 @@
 				C71F8C4D189A015200298DFA /* ILAppDelegate.m */,
 				C7F6C491189A66B600A79261 /* ILUtils.h */,
 				C7F6C492189A66B600A79261 /* ILUtils.m */,
-				C7B6934918EE647600DE7027 /* ILSignalsDirectorySearcher.h */,
-				C7B6934A18EE647600DE7027 /* ILSignalsDirectorySearcher.m */,
 				C798A30C18FD3F9100C9994C /* ILFileStore.h */,
 				C798A30D18FD3F9100C9994C /* ILFileStore.m */,
 				C7965C2018FFB465004FF579 /* ILConst.h */,
@@ -576,7 +571,6 @@
 				C70745C0191A1D3E00AA7A32 /* ILQuicksilverExtension.m in Sources */,
 				C7A7ED6B192DD05E00F86AFF /* ILSender.m in Sources */,
 				C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */,
-				C7B6934B18EE647600DE7027 /* ILSignalsDirectorySearcher.m in Sources */,
 				C789EC9619419E1600BC8E90 /* ILSignalReceiveViewController.m in Sources */,
 				C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */,
 				C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */,
