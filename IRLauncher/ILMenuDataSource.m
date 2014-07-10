@@ -99,11 +99,6 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     }];
 }
 
-- (NSArray*) signalsWithPeripheral {
-    return [_signals.signals filteredArrayUsingPredicate: [NSPredicate predicateWithBlock:^BOOL (id evaluatedObject, NSDictionary *bindings) {
-            return !!((IRSignal*)evaluatedObject).peripheral;
-        }]];
-}
 
 #pragma mark - MOSectionedMenuDataSource
 
@@ -115,7 +110,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     switch (sectionIndex) {
     case ILMenuSectionIndexSignals:
     {
-        return [self signalsWithPeripheral].count;
+        return _signals.countOfSignals;
     }
     break;
     case ILMenuSectionIndexPeripherals:
@@ -255,7 +250,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     switch (indexPath.section) {
     case ILMenuSectionIndexSignals:
     {
-        IRSignal *signal = [[self signalsWithPeripheral] objectAtIndex: indexPath.item];
+        IRSignal *signal = [_signals objectAtIndex: indexPath.item];
         [self updateItem: item withSignal: signal atIndex: indexPath.item];
     }
     break;
@@ -340,14 +335,23 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 #pragma mark - NSMenuItem factories
 
 - (void) updateItem:(NSMenuItem*)item withSignal:(IRSignal*)signal atIndex:(NSUInteger)index {
-    item.title   = signal.name;
-    item.target  = self;
-    item.action  = @selector(send:);
-    item.tag     = index;
-    item.toolTip = [NSString stringWithFormat: @"Click to send via %@", signal.peripheral.customizedName];
-    if (index < 10) {
-        item.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
+    item.title = signal.name;
+    if (signal.peripheral) {
+        item.target  = self;
+        item.action  = @selector(send:);
+        item.toolTip = [NSString stringWithFormat: @"Click to send via %@", signal.peripheral.customizedName];
+        if (index < 10) {
+            item.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
+        }
+        [item setEnabled: YES];
     }
+    else {
+        item.target  = nil;
+        item.action  = nil;
+        item.toolTip = @"\"hostname\" key not found";
+        [item setEnabled: NO];
+    }
+    item.tag = index;
 }
 
 - (void) updateItem:(NSMenuItem*)item withPeripheral:(IRPeripheral*)peripheral atIndex:(NSUInteger)index {
@@ -367,7 +371,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     ILLOG( @"sender: %@", sender );
 
     NSUInteger signalIndex = ((NSMenuItem*)sender).tag;
-    IRSignal *signal       = (IRSignal*)[[self signalsWithPeripheral] objectAtIndex: signalIndex];
+    IRSignal *signal       = [_signals objectAtIndex: signalIndex];
     if (!signal.peripheral) {
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle: @"OK"];
