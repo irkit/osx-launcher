@@ -26,7 +26,6 @@
                                                                                   object: _inputTextField
                                                                                    queue: nil
                                                                               usingBlock:^(NSNotification *note) {
-        // TODO normalize path
         NSString *input = _self.inputTextField.stringValue;
         NSString *format = @"リモコン信号を以下に保存します。\n~/.irkit.d/signals/%@.json\nQuicksilverでは \"%@\" と検索してください。";
         NSString *guideMessage = [NSString stringWithFormat: format, input, input ];
@@ -42,7 +41,11 @@
 - (void)animationDidFinish {
     // activate and show blinking carret
     [self.view.window makeFirstResponder: _inputTextField];
-    [[_inputTextField currentEditor] setString: @""];
+
+    // we can make the carret blinking calling setString: ,
+    // but this makes the blue border blink once, which looks weird.
+    // I prefer not showing the carret blinking than the border blinking.
+    // [[_inputTextField currentEditor] setString: @""];
 }
 
 - (IBAction) returnKeyPressed:(id)sender {

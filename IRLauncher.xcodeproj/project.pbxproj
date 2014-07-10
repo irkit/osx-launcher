@@ -42,6 +42,8 @@
 		C78918E0194FE89A0075C36E /* ILSignalNameEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C78918DF194FE89A0075C36E /* ILSignalNameEditViewController.m */; };
 		C789EC9319419D7F00BC8E90 /* ILSignalReceiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C789EC9119419D7F00BC8E90 /* ILSignalReceiveView.xib */; };
 		C789EC9619419E1600BC8E90 /* ILSignalReceiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C789EC9519419E1600BC8E90 /* ILSignalReceiveViewController.m */; };
+		C793E3C4196E8D9D00B2DF1E /* MIT-License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C793E3C1196E8D9D00B2DF1E /* MIT-License.rtf */; };
+		C793E3C5196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C793E3C3196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.m */; };
 		C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C798A30D18FD3F9100C9994C /* ILFileStore.m */; };
 		C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C79AF43818FE5FA600814235 /* ILMenuProgressView.m */; };
 		C7A7ED6B192DD05E00F86AFF /* ILSender.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A7ED6A192DD05E00F86AFF /* ILSender.m */; };
@@ -137,6 +139,9 @@
 		C789EC9219419D7F00BC8E90 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ILSignalReceiveView.xib; sourceTree = "<group>"; };
 		C789EC9419419E1600BC8E90 /* ILSignalReceiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSignalReceiveViewController.h; sourceTree = "<group>"; };
 		C789EC9519419E1600BC8E90 /* ILSignalReceiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSignalReceiveViewController.m; sourceTree = "<group>"; };
+		C793E3C1196E8D9D00B2DF1E /* MIT-License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "MIT-License.rtf"; sourceTree = "<group>"; };
+		C793E3C2196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVerticallyCenteredTextFieldCell.h; sourceTree = "<group>"; };
+		C793E3C3196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVerticallyCenteredTextFieldCell.m; sourceTree = "<group>"; };
 		C7965C2018FFB465004FF579 /* ILConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILConst.h; sourceTree = "<group>"; };
 		C7965C2118FFB4A5004FF579 /* IRConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRConst.h; path = IRKit/IRConst.h; sourceTree = "<group>"; };
 		C798A30C18FD3F9100C9994C /* ILFileStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILFileStore.h; sourceTree = "<group>"; };
@@ -353,9 +358,20 @@
 			name = LearnSignalWindow;
 			sourceTree = "<group>";
 		};
+		C793E3C0196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell */ = {
+			isa = PBXGroup;
+			children = (
+				C793E3C1196E8D9D00B2DF1E /* MIT-License.rtf */,
+				C793E3C2196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.h */,
+				C793E3C3196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.m */,
+			);
+			path = RSVerticallyCenteredTextFieldCell;
+			sourceTree = "<group>";
+		};
 		C7BA33E61954288400B9247B /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				C793E3C0196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell */,
 				C7FD7F88189CFC9600EF0906 /* IRKit */,
 				C73F2D0A1964EA8700B9AC53 /* NSObject-PerformWhenIdle.h */,
 				C73F2D0B1964EA8700B9AC53 /* NSObject-PerformWhenIdle.m */,
@@ -490,6 +506,7 @@
 				C7D218EB19598720004AD675 /* ResourceFork.dat in Resources */,
 				C7D218EA19598720004AD675 /* FinderInfo.dat in Resources */,
 				C71F8C45189A015200298DFA /* InfoPlist.strings in Resources */,
+				C793E3C4196E8D9D00B2DF1E /* MIT-License.rtf in Resources */,
 				C71F8C53189A015200298DFA /* Images.xcassets in Resources */,
 				C7F32CB119516DED00601842 /* ILMenuProgressView.xib in Resources */,
 				C71F8C51189A015200298DFA /* MainMenu.xib in Resources */,
@@ -575,6 +592,7 @@
 				C7B6C8C81920AB1B00C13F49 /* NSString+UUID.m in Sources */,
 				C729A26B194080950012F40D /* NSMenuItem+StateAware.m in Sources */,
 				C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */,
+				C793E3C5196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.m in Sources */,
 				C7B206A0194FF4BB001646DD /* ILLearnSignalWindowController.m in Sources */,
 				C7E5555819615B7700485045 /* ILApplicationUpdater.m in Sources */,
 				C7AB5EAD196BCAA700F8751A /* ILAlfredExtension.m in Sources */,

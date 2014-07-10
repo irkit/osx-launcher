@@ -47,8 +47,8 @@
                     </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="yiI-Gg-huh">
                         <font key="font" size="13" name="HiraKakuProN-W3"/>
-                        <string key="title">リモコン信号を以下に保存します。 ~/.irkit.d/signals/signal-name.json
-Quicksilverでは "signal-name" と検索してください。</string>
+                        <string key="title">リモコン信号を以下に保存します。 ~/.irkit.d/signals/aircon-off.json
+ Quicksilver, Alfred 2では "aircon-off" と検索してください。</string>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
