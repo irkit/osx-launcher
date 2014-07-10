@@ -44,6 +44,12 @@
     [super loadView];
 }
 
+- (IBAction) returnKeyPressed:(id)sender {
+    ILLOG_CURRENT_METHOD;
+
+    [self saveButtonPressed: sender];
+}
+
 - (IBAction) saveButtonPressed:(id)sender {
     ILLOG_CURRENT_METHOD;
 

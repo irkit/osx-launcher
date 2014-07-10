@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="14A261i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
@@ -59,7 +59,7 @@ Quicksilverでは "signal-name" と検索してください。</string>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="m4g-Gn-Xmg"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Signal name ex: aircon-off" drawsBackground="YES" usesSingleLineMode="YES" id="ka9-Ik-gDB" customClass="RSVerticallyCenteredTextFieldCell">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Signal name ex: aircon-off" drawsBackground="YES" usesSingleLineMode="YES" id="ka9-Ik-gDB" customClass="RSVerticallyCenteredTextFieldCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -67,6 +67,9 @@ Quicksilverでは "signal-name" と検索してください。</string>
                             <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                         </allowedInputSourceLocales>
                     </textFieldCell>
+                    <connections>
+                        <action selector="returnKeyPressed:" target="-2" id="t26-rd-5V4"/>
+                    </connections>
                 </textField>
                 <button appearanceType="aqua" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mih-Fr-vVT">
                     <rect key="frame" x="514" y="28" width="100" height="25"/>
