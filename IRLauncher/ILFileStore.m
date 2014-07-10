@@ -36,40 +36,43 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
     return [[self configDirectory] stringByAppendingString: kILSignalsSubDirectory];
 }
 
-+ (BOOL) saveSignal:(IRSignal *)signal {
++ (BOOL) saveSignal:(IRSignal *)signal error:(NSError**) error {
     if (!signal.name) {
         // name is required
+        *error = [NSError errorWithDomain: IRLauncherErrorDomain
+                                     code: IRLauncherErrorCodeInvalidFile
+                                 userInfo: @{ NSLocalizedDescriptionKey: @"name is required"}];
         return NO;
     }
-    NSError *error = nil;
-    NSData *json   = [NSJSONSerialization dataWithJSONObject: signal.asSendableDictionary
-                                                     options: NSJSONWritingPrettyPrinted
-                                                       error: &error];
-    NSAssert(!!error, @"failed to serialize: %@", signal.asSendableDictionary);
+    NSData *json = [NSJSONSerialization dataWithJSONObject: signal.asSendableDictionary
+                                                   options: NSJSONWritingPrettyPrinted
+                                                     error: error];
+    if (*error) {
+        ILLOG( @"failed to serialize: %@, error: %@", signal.asSendableDictionary, *error );
+        return NO;
+    }
 
     // We'll deal with errors when write fails
-    [[NSFileManager defaultManager] createDirectoryAtPath: [self signalsDirectory]
-                              withIntermediateDirectories: YES
-                                               attributes: nil
-                                                    error: nil];
+    BOOL created = [[NSFileManager defaultManager] createDirectoryAtPath: [self signalsDirectory]
+                                             withIntermediateDirectories: YES
+                                                              attributes: nil
+                                                                   error: error];
+    if (!created) {
+        ILLOG( @"createDirectoryAtPath:... failed with error: %@", error );
+        return NO;
+    }
 
     NSString *basename = [NSString stringWithFormat: @"%@.json", signal.name];
     NSString *file     = [[self signalsDirectory] stringByAppendingPathComponent: basename];
     // overwrites file
-    BOOL success = [json writeToFile: file atomically: YES];
+    BOOL success = [json writeToURL: [NSURL fileURLWithPath: file]
+                            options: NSDataWritingAtomic
+                              error: error];
     if (!success) {
-        NSString *message = [NSString stringWithFormat: @"failed to write to: %@", file ];
-        NSAlert *alert    = [[NSAlert alloc] init];
-        [alert addButtonWithTitle: @"OK"];
-        [alert setMessageText: message];
-        [alert setAlertStyle: NSWarningAlertStyle];
-        [alert runModal];
-        ILLOG( message );
         return NO;
     }
 
     [self setSignalExtendedAttributesToFile: file];
-
     return YES;
 }
 

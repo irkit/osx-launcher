@@ -14,6 +14,6 @@
 
 + (NSString*) configDirectory;
 + (NSString*) signalsDirectory;
-+ (BOOL) saveSignal: (IRSignal*) signal;
++ (BOOL) saveSignal:(IRSignal *)signal error:(NSError**) error;
 
 @end

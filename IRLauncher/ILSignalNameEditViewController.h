@@ -21,6 +21,8 @@
 @property (nonatomic, weak) IBOutlet NSButton *saveButton;
 @property (nonatomic, weak) IBOutlet NSButton *cancelButton;
 
+- (void)animationDidFinish;
+
 @end
 
 @protocol ILSignalNameEditViewControllerDelegate <NSObject>

@@ -562,9 +562,16 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     }
 
     if (signal) {
-        BOOL saved = [ILFileStore saveSignal: signal];
+        NSError *error = nil;
+        BOOL saved     = [ILFileStore saveSignal: signal error: &error];
         if (!saved) {
             // ex: file name overwrite cancelled
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert addButtonWithTitle: @"OK"];
+            [alert setMessageText: error.localizedDescription];
+            [alert setAlertStyle: NSWarningAlertStyle];
+            [alert runModal];
+            ILLOG( @"saveSignal:error: failed with error: %@", error );
             return;
         }
 

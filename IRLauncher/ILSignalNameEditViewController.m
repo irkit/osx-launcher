@@ -39,9 +39,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver: _textObserver];
 }
 
-- (void) loadView {
-    ILLOG_CURRENT_METHOD;
-    [super loadView];
+- (void)animationDidFinish {
+    // activate and show blinking carret
+    [self.view.window makeFirstResponder: _inputTextField];
+    [[_inputTextField currentEditor] setString: @""];
 }
 
 - (IBAction) returnKeyPressed:(id)sender {

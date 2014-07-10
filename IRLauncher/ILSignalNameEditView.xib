@@ -59,7 +59,7 @@ Quicksilverでは "signal-name" と検索してください。</string>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="m4g-Gn-Xmg"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Signal name ex: aircon-off" drawsBackground="YES" usesSingleLineMode="YES" id="ka9-Ik-gDB" customClass="RSVerticallyCenteredTextFieldCell">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="ex: aircon-off" drawsBackground="YES" usesSingleLineMode="YES" id="ka9-Ik-gDB" customClass="RSVerticallyCenteredTextFieldCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

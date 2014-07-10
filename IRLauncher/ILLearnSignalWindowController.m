@@ -100,13 +100,15 @@
     frame.origin.y -= (nextFrame.size.height - frame.size.height);
     frame.size      = nextFrame.size;
 
-    [NSAnimationContext beginGrouping];
-
-    // Call the animator instead of the view / window directly
-    [[contentView animator] replaceSubview: currentView with: nextView];
-    [[self.window animator] setFrame: frame display: YES];
-
-    [NSAnimationContext endGrouping];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+        // Call the animator instead of the view / window directly
+        [[contentView animator] replaceSubview: currentView with: nextView];
+        [[self.window animator] setFrame: frame display: YES];
+    } completionHandler:^{
+        if ([c respondsToSelector: @selector(animationDidFinish)]) {
+            [c performSelector: @selector(animationDidFinish) withObject: nil];
+        }
+    }];
 }
 
 #pragma mark - ILSignalReceiveViewControllerDelegate
