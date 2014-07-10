@@ -7,10 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "YRKSpinningProgressIndicator.h"
 
 @interface ILMenuProgressView : NSView
 
-@property (nonatomic, weak) IBOutlet NSProgressIndicator *indicator;
+@property (nonatomic, weak) IBOutlet YRKSpinningProgressIndicator *indicator;
 @property (nonatomic, weak) IBOutlet NSTextField *textField;
 @property (nonatomic) BOOL animating;
 

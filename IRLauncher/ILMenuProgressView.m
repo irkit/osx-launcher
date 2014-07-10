@@ -16,8 +16,10 @@
 - (void) awakeFromNib {
     ILLOG_CURRENT_METHOD;
 
-    [self.indicator setUsesThreadedAnimation: YES];
-    [self.indicator setDisplayedWhenStopped: NO];
+    YRKSpinningProgressIndicator *indicator = self.indicator;
+    [indicator setUsesThreadedAnimation: NO];
+    [indicator setDisplayedWhenStopped: NO];
+    [indicator setIndeterminate: YES];
 }
 
 - (void) setAnimating:(BOOL)animating {
@@ -30,10 +32,7 @@
     ILLOG( @"self: %@ indicator: %@ title: %@ animating: %d", self, self.indicator, self.textField.stringValue, self.animating );
 
     if (self.animating) {
-        NSProgressIndicator *indicator = self.indicator;
-        // magic to keep indicator animating
-        [indicator setHidden: YES];
-        [indicator setHidden: NO];
+        YRKSpinningProgressIndicator *indicator = self.indicator;
         [indicator startAnimation: self];
     }
     else {
@@ -44,7 +43,7 @@
 - (void) stopAnimation {
     ILLOG_CURRENT_METHOD;
 
-    NSProgressIndicator *indicator = self.indicator;
+    YRKSpinningProgressIndicator *indicator = self.indicator;
     [indicator stopAnimation: self];
 }
 

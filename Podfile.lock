@@ -18,10 +18,12 @@ PODS:
   - ISHTTPOperation (1.2.0)
   - MOAutoUpdater (1.0.0):
     - AFNetworking (~> 2.1.0)
+  - YRKSpinningProgressIndicator (1.4)
 
 DEPENDENCIES:
   - ISHTTPOperation (from `~/src/github.com/ishkawa/ISHTTPOperation`)
   - MOAutoUpdater (from `git@github.com:mash/MOAutoUpdater.git`)
+  - YRKSpinningProgressIndicator (~> 1.4)
 
 EXTERNAL SOURCES:
   ISHTTPOperation:
@@ -33,5 +35,6 @@ SPEC CHECKSUMS:
   AFNetworking: 7c33510b46f994bc75b75c6e63c1d83414ca40f2
   ISHTTPOperation: e3cae0f1047973202c1a7d8ffc996e610c58dfbf
   MOAutoUpdater: ce3f8d2c28682cf30efc16ade2ded571af53cc8f
+  YRKSpinningProgressIndicator: bde1066f55433a424910ce749eda56232a920221
 
 COCOAPODS: 0.33.1
