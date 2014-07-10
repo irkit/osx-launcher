@@ -565,10 +565,13 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         NSError *error = nil;
         BOOL saved     = [ILFileStore saveSignal: signal error: &error];
         if (!saved) {
-            // ex: file name overwrite cancelled
+            NSString *message = error.localizedDescription;
+            if ((error.domain == NSCocoaErrorDomain) && (error.code == 4)) {
+                message = [NSString stringWithFormat: @"Failed to save to: %@", error.userInfo[ NSFilePathErrorKey ]];
+            }
             NSAlert *alert = [[NSAlert alloc] init];
             [alert addButtonWithTitle: @"OK"];
-            [alert setMessageText: error.localizedDescription];
+            [alert setMessageText: message];
             [alert setAlertStyle: NSWarningAlertStyle];
             [alert runModal];
             ILLOG( @"saveSignal:error: failed with error: %@", error );

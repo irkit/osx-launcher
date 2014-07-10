@@ -44,6 +44,13 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
                                  userInfo: @{ NSLocalizedDescriptionKey: @"name is required"}];
         return NO;
     }
+    if ([signal.name rangeOfString: @"/"].location != NSNotFound) {
+        *error = [NSError errorWithDomain: IRLauncherErrorDomain
+                                     code: IRLauncherErrorCodeInvalidFile
+                                 userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: @"Choose a file directly under %@",[self signalsDirectory]] }];
+        return NO;
+    }
+
     NSData *json = [NSJSONSerialization dataWithJSONObject: signal.asSendableDictionary
                                                    options: NSJSONWritingPrettyPrinted
                                                      error: error];
@@ -62,8 +69,15 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
         return NO;
     }
 
-    NSString *basename = [NSString stringWithFormat: @"%@.json", signal.name];
-    NSString *file     = [[self signalsDirectory] stringByAppendingPathComponent: basename];
+    NSString *basename    = [NSString stringWithFormat: @"%@.json", signal.name];
+    NSString *file        = [[self signalsDirectory] stringByAppendingPathComponent: basename];
+    NSString *cleanedFile = [file stringByStandardizingPath];
+    if (![file isEqualToString: cleanedFile]) {
+        *error = [NSError errorWithDomain: IRLauncherErrorDomain
+                                     code: IRLauncherErrorCodeInvalidFile
+                                 userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: @"Choose a file directly under %@",[self signalsDirectory]] }];
+        return NO;
+    }
     // overwrites file
     BOOL success = [json writeToURL: [NSURL fileURLWithPath: file]
                             options: NSDataWritingAtomic
