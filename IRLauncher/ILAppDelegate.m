@@ -117,6 +117,16 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     return self;
 }
 
+- (BOOL) application:(NSApplication *)sender openFile:(NSString *)filename {
+    ILLOG( @"sender: %@, openFile: %@", sender, filename );
+
+    if ([[filename pathExtension] isEqualToString: @"json"]) {
+        return YES;
+    }
+
+    return NO;
+}
+
 - (void) awakeFromNib {
     ILLOG_CURRENT_METHOD;
 }
