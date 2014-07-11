@@ -1,5 +1,5 @@
 //
-//  ILSignalsDirectoryStore.h
+//  ILFileStore.h
 //  IRLauncher
 //
 //  Created by Masakazu Ohtsuka on 2014/04/15.
@@ -15,5 +15,6 @@
 + (NSString*) configDirectory;
 + (NSString*) signalsDirectory;
 + (BOOL) saveSignal:(IRSignal *)signal error:(NSError**) error;
++ (int)setSignalExtendedAttributesToFile:(NSString*)file;
 
 @end

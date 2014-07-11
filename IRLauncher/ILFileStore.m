@@ -1,5 +1,5 @@
 //
-//  ILSignalsDirectoryStore.m
+//  ILFileStore.m
 //  IRLauncher
 //
 //  Created by Masakazu Ohtsuka on 2014/04/15.
@@ -90,25 +90,30 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
     return YES;
 }
 
-#pragma mark - Private
-
+// How to create ResourceFork.dat:
+// 1. Use Finder.app to set custom application against ~/.irkit.d/signals/open-in-customapp.json
+// 2. DeRez -only usro ~/.irkit.d/signals/open-in-customapp.json > open-in-customapp.usro
+// 3. xattr -c ~/.irkit.d/signals/temp.json
+// 4. Rez open-in-customapp.usro -append -o ~/.irkit.d/signals/temp.json
+// 5. Products/Xattr com.apple.ResourceFork ~/.irkit.d/signals/temp.json > ../IRLauncher/Attributes/ResourceFork.dat
 + (int)setSignalExtendedAttributesToFile:(NSString*)file {
-    NSString *finderInfoFile   = [[NSBundle mainBundle] pathForResource: @"FinderInfo"   ofType: @"dat"];
-    NSString *resourceForkFile = [[NSBundle mainBundle] pathForResource: @"ResourceFork" ofType: @"dat"];
-    NSData *finderInfo         = [NSData dataWithContentsOfFile: finderInfoFile];
+    // `bundleForClass:[self class]` to make this work in tests
+    NSString *resourceForkFile = [[NSBundle bundleForClass: [self class]] pathForResource: @"ResourceFork" ofType: @"dat"];
     NSData *resourceFork       = [NSData dataWithContentsOfFile: resourceForkFile];
 
     int result;
-    result = setxattr([file fileSystemRepresentation], XATTR_FINDERINFO_NAME, finderInfo.bytes, finderInfo.length, 0, 0);
-    if (result != 0) {
-        perror("setxattr finderinfo");
-        return result;
-    }
     result = setxattr([file fileSystemRepresentation], XATTR_RESOURCEFORK_NAME, resourceFork.bytes, resourceFork.length, 0, 0);
     if (result != 0) {
         perror("setxattr resourcefork");
         return result;
     }
+
+    // 512x512
+    NSString *path = [[NSBundle bundleForClass: [self class]] pathForResource: @"IRSignalIcon" ofType: @"png"];
+    NSImage *image = [[NSImage alloc] initWithContentsOfFile: path];
+    [[NSWorkspace sharedWorkspace] setIcon: image
+                                   forFile: file
+                                   options: NSExcludeQuickDrawElementsIconCreationOption];
 
     return result;
 }

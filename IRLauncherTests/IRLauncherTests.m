@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "ILFileStore.h"
 
 @interface IRLauncherTests : XCTestCase
 
@@ -24,8 +25,8 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+- (void)testSetExtendedAttributes {
+    // [ILFileStore setSignalExtendedAttributesToFile: @"/Users/mash/.irkit.d/signals/hogehage.json"];
 }
 
 @end
