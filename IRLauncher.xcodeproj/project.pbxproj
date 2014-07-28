@@ -65,6 +65,7 @@
 /* Begin PBXFileReference section */
 		5B1EF2A37F2D4D4C81E28AF5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB52621429724E208636A191 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		C700BC64198623A0000828B0 /* APIKey.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = APIKey.xcconfig; sourceTree = "<group>"; };
 		C70745BB191A1CAB00AA7A32 /* ILLauncherExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLauncherExtension.h; sourceTree = "<group>"; };
 		C70745BE191A1D3E00AA7A32 /* ILQuicksilverExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ILQuicksilverExtension.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuicksilverExtension.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
@@ -216,6 +217,7 @@
 				C71F8C39189A015200298DFA /* Frameworks */,
 				C71F8C38189A015200298DFA /* Products */,
 				BB52621429724E208636A191 /* Pods.xcconfig */,
+				C700BC64198623A0000828B0 /* APIKey.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -647,6 +649,7 @@
 /* Begin XCBuildConfiguration section */
 		C71F8C66189A015200298DFA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C700BC64198623A0000828B0 /* APIKey.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -685,6 +688,7 @@
 		};
 		C71F8C67189A015200298DFA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C700BC64198623A0000828B0 /* APIKey.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

@@ -31,7 +31,9 @@
 
 extern NSString * const kILWillSendSignalNotification;
 
-#pragma mark - NSUserDefaults
+#pragma mark - Make C strings into NSStrings
 
+#define NSStringize_helper(x) #x
+#define NSStringize(x) @NSStringize_helper(x)
 
 #endif

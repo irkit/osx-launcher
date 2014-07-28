@@ -17,7 +17,11 @@
 #import "ILApplicationUpdater.h"
 #import <MOAutoUpdater/MOUpdater.h>
 
-static NSString * const kIRKitAPIKey                   = @"E4D85D012E1B4735BC6F3EBCCCAE4100";
+// IRKit API key is defined in APIKey.xcconfig
+// Read more at http://getirkit.com/#IRKit-Internet-POST-1-apps
+// Get yours to build yourself
+static NSString * const kIRKitAPIKey = NSStringize(IRKIT_APIKEY);
+
 static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.send";
 NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotification";
 
