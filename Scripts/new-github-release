@@ -1,0 +1,15 @@
+#!/bin/sh
+
+SDK="macosx"
+CONFIGURATION="Release"
+TARGET_NAME="IRLauncher"
+SCHEME_NAME="IRLauncher"
+PRODUCT_NAME="IRLauncher"
+IPA_FILE_NAME="IRLauncher"
+OUT_APP_DIR="Products"
+WORKSPACE_FILE="IRLauncher.xcworkspace"
+
+xcodebuild clean -workspace "${WORKSPACE_FILE}" -scheme "${SCHEME_NAME}"
+xcodebuild -workspace "${WORKSPACE_FILE}" -scheme "${SCHEME_NAME}" -sdk "${SDK}" -configuration "${CONFIGURATION}" install DSTROOT="${OUT_APP_DIR}"
+
+codesign --sign "IRLauncher signing certificate" --verbose ./Products/Applications/IRLauncher.app
