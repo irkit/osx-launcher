@@ -15,8 +15,8 @@
 #import "ILLearnSignalWindowController.h"
 #import "NSMenuItem+StateAware.h"
 #import "ILConst.h"
-#import "IRSignals+FileStore.h"
 #import "ILApplicationUpdater.h"
+#import "IRSignals+FileStore.h"
 
 // Launcher Extensions
 #import "ILLauncherExtension.h"

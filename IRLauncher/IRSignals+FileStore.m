@@ -40,13 +40,36 @@
         // Request the two properties the method uses, name and isDirectory
         // Ignore hidden files
         NSArray *fileURLs = [manager contentsOfDirectoryAtURL: signalsURL
-                                   includingPropertiesForKeys: @[ NSURLNameKey, NSURLIsDirectoryKey ]
+                                   includingPropertiesForKeys: @[ NSURLNameKey, NSURLIsDirectoryKey, NSURLContentModificationDateKey ]
                                                       options: NSDirectoryEnumerationSkipsHiddenFiles|NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsPackageDescendants
                                                         error: &error];
         if (error) {
             completion( nil, error );
             return;
         }
+
+        fileURLs = [[fileURLs filteredArrayUsingPredicate: [NSPredicate predicateWithBlock:^BOOL (NSURL *evaluatedObject, NSDictionary *bindings) {
+                        NSError *error;
+                        NSNumber *isDirectory;
+                        [evaluatedObject getResourceValue: &isDirectory forKey: NSURLIsDirectoryKey error: &error];
+                        if (error || [isDirectory boolValue]) {
+                            return NO;
+                        }
+                        return YES;
+                    }]] sortedArrayUsingComparator:^NSComparisonResult (NSURL *obj1, NSURL *obj2) {
+                NSDate *modifiedDate1, *modifiedDate2;
+                NSError *error;
+                // modified date is cached during the enumeration.
+                [obj1 getResourceValue: &modifiedDate1 forKey: NSURLAttributeModificationDateKey error: &error];
+                if (error) {
+                    return (NSComparisonResult)NSOrderedAscending;
+                }
+                [obj2 getResourceValue: &modifiedDate2 forKey: NSURLAttributeModificationDateKey error: &error];
+                if (error) {
+                    return (NSComparisonResult)NSOrderedDescending;
+                }
+                return [modifiedDate1 compare: modifiedDate2];
+            }];
 
         // Enumerate the dirEnumerator results, each value is stored in allURLs
         for (NSURL *fileURL in fileURLs) {
@@ -55,20 +78,12 @@
             NSString *fileName;
             [fileURL getResourceValue: &fileName forKey: NSURLNameKey error: NULL];
 
-            // Retrieve whether a directory. From NSURLIsDirectoryKey, also
-            // cached during the enumeration.
-            NSNumber *isDirectory;
-            [fileURL getResourceValue: &isDirectory forKey: NSURLIsDirectoryKey error: NULL];
-
-            // Ignore files under the _extras directory
-            if ([isDirectory boolValue]==NO) {
-                NSData *content = [manager contentsAtPath: [fileURL path]];
-                NSMutableDictionary *object = [NSJSONSerialization JSONObjectWithData: content
-                                                                              options: NSJSONReadingMutableContainers
-                                                                                error: &error];
-                object[ @"name" ] = [[fileURL URLByDeletingPathExtension] lastPathComponent];
-                [ret addObject: object];
-            }
+            NSData *content = [manager contentsAtPath: [fileURL path]];
+            NSMutableDictionary *object = [NSJSONSerialization JSONObjectWithData: content
+                                                                          options: NSJSONReadingMutableContainers
+                                                                            error: &error];
+            object[ @"name" ] = [[fileURL URLByDeletingPathExtension] lastPathComponent];
+            [ret addObject: object];
         }
 
         dispatch_async( dispatch_get_main_queue(), ^{

@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MOSectionedMenu.h"
-#import "IRSignals.h"
 #import "IRSearcher.h"
 #import "ILLearnSignalWindowController.h"
 
