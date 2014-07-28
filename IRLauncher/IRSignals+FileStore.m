@@ -39,7 +39,7 @@
         // Enumerate the directory (specified elsewhere in your code)
         // Request the two properties the method uses, name and isDirectory
         // Ignore hidden files
-        NSArray *fileURLs = [manager contentsOfDirectoryAtURL: signalsURL
+        NSArray *fileURLs = [manager contentsOfDirectoryAtURL: [signalsURL URLByResolvingSymlinksInPath]
                                    includingPropertiesForKeys: @[ NSURLNameKey, NSURLIsDirectoryKey, NSURLContentModificationDateKey ]
                                                       options: NSDirectoryEnumerationSkipsHiddenFiles|NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsPackageDescendants
                                                         error: &error];
