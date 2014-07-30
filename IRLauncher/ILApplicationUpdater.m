@@ -65,7 +65,7 @@ static const NSTimeInterval kIdleInterval             = 60;
 
 - (void) runAndExit {
     NSString *version               = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-    MOGithubReleaseFetcher *fetcher = [[MOGithubReleaseFetcher alloc] initWithUserName: @"irkit" repositoryName: @"OSX-IRLauncher"];
+    MOGithubReleaseFetcher *fetcher = [[MOGithubReleaseFetcher alloc] initWithUserName: @"irkit" repositoryName: @"osx-launcher"];
 #ifdef DEBUG
     NSArray *validators = @[];
 #else

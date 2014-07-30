@@ -25,8 +25,8 @@
 // Add other extension headers here!
 
 static const NSInteger kILLauncherExtensionTagOffset = 10000;
-static NSString * const kILSupportWebSite            = @"http://github.com/irkit/macos-launcher/issues";
-static NSString * const kILOpenSourceWebSite         = @"http://github.com/irkit/macos-launcher";
+static NSString * const kILSupportWebSite            = @"http://github.com/irkit/osx-launcher/issues";
+static NSString * const kILOpenSourceWebSite         = @"http://github.com/irkit/osx-launcher";
 
 @interface ILMenuDataSource ()
 

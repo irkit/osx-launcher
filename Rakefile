@@ -8,7 +8,7 @@ PRODUCT_NAME          = TARGET_NAME
 CONFIGURATION         = "Release"
 SDK                   = "macosx"
 GITHUB_USER           = "irkit"
-GITHUB_REPO           = "OSX-IRLauncher"
+GITHUB_REPO           = "osx-launcher"
 
 PROJECT_PATH          = "#{TARGET_NAME}.xcodeproj"
 WORKSPACE_PATH        = "#{TARGET_NAME}.xcworkspace"
