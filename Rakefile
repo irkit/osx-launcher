@@ -7,6 +7,8 @@ SCHEME_NAME           = TARGET_NAME
 PRODUCT_NAME          = TARGET_NAME
 CONFIGURATION         = "Release"
 SDK                   = "macosx"
+GITHUB_USER           = "irkit"
+GITHUB_REPO           = "OSX-IRLauncher"
 
 PROJECT_PATH          = "#{TARGET_NAME}.xcodeproj"
 WORKSPACE_PATH        = "#{TARGET_NAME}.xcworkspace"
@@ -50,6 +52,15 @@ end
 desc "zip"
 task "zip" do |task|
   sh "cd ./Products/Applications && zip #{PRODUCT_NAME}.app.zip -r #{PRODUCT_NAME}.app"
+end
+
+desc "release"
+task "release" do |task|
+  tag=`git describe --abbrev=0 --tags`.chomp
+
+  # go get github.com/mash/github-release
+  sh "github-release release --user #{GITHUB_USER} --repo #{GITHUB_REPO} --tag #{tag} --name #{tag} --pre-release"
+  sh "github-release upload --user #{GITHUB_USER} --repo #{GITHUB_REPO} --tag #{tag} --name "#{PRODUCT_NAME}.app.zip" --file Products/Applications/#{PRODUCT_NAME}.app.zip"
 end
 
 task "default" => [ "clean", "build", "codesign", "zip" ]
