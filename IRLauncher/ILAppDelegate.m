@@ -70,9 +70,10 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
         NSDictionary *releaseInformation = [MOUpdater releaseInformation];
 
         NSUserNotification *notification = [[NSUserNotification alloc] init];
-        notification.title             = [NSString stringWithFormat: @"Updated to version %@",releaseInformation[ kMOReleaseInformationNewVersionKey ]];
-        notification.actionButtonTitle = @"Check release notes";
-        notification.userInfo          = releaseInformation;
+        notification.title           = [NSString stringWithFormat: @"Updated to version %@",releaseInformation[ kMOReleaseInformationNewVersionKey ]];
+        notification.informativeText = @"Click to show release notes";
+        notification.hasActionButton = NO;
+        notification.userInfo        = releaseInformation;
 
         NSUserNotificationCenter *center = [NSUserNotificationCenter defaultUserNotificationCenter];
         center.delegate = self;
