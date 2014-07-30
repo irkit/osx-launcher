@@ -38,6 +38,7 @@ end
 desc "clean"
 task "clean" do |task|
   sh "xcodebuild clean -workspace '#{WORKSPACE_PATH}' -scheme '#{SCHEME_NAME}'"
+  sh "rm -rf Products/"
 end
 
 desc "codesign"
@@ -46,4 +47,9 @@ task "codesign" do |task|
   sh "codesign --sign '#{CODE_SIGNING_IDENTITY}' --verbose ./Products/Applications/#{PRODUCT_NAME}.app" rescue nil
 end
 
-task "default" => [ "clean", "build", "codesign" ]
+desc "zip"
+task "zip" do |task|
+  sh "cd ./Products/Applications && zip #{PRODUCT_NAME}.app.zip -r #{PRODUCT_NAME}.app"
+end
+
+task "default" => [ "clean", "build", "codesign", "zip" ]
