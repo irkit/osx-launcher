@@ -50,6 +50,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 typedef NS_ENUM (NSUInteger,ILMenuHelpItemIndex) {
     ILMenuHelpItemIndexOpenSource = 0,
     ILMenuHelpItemIndexSupport    = 1,
+    ILMenuHelpItemIndexVersion    = 2
 };
 
 typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
@@ -125,7 +126,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     break;
     case ILMenuSectionIndexHelp:
     {
-        return 2;
+        return 3;
     }
     break;
     case ILMenuSectionIndexQuit:
@@ -296,11 +297,17 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         }
         break;
         case ILMenuHelpItemIndexSupport:
-        default:
         {
             item.title  = @"Support";
             item.target = self;
             item.action = @selector(showHelp:);
+        }
+        break;
+        case ILMenuHelpItemIndexVersion:
+        default:
+        {
+            item.title = [NSString stringWithFormat: @"Version: %@", [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]];
+            [item setEnabled: NO];
         }
         break;
         }
