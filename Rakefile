@@ -60,7 +60,7 @@ task "release" do |task|
 
   # go get github.com/mash/github-release
   sh "github-release release --user #{GITHUB_USER} --repo #{GITHUB_REPO} --tag #{tag} --name #{tag} --pre-release"
-  sh "github-release upload --user #{GITHUB_USER} --repo #{GITHUB_REPO} --tag #{tag} --name "#{PRODUCT_NAME}.app.zip" --file Products/Applications/#{PRODUCT_NAME}.app.zip"
+  sh "github-release upload --user #{GITHUB_USER} --repo #{GITHUB_REPO} --tag #{tag} --name \"#{PRODUCT_NAME}.app.zip\" --file Products/Applications/#{PRODUCT_NAME}.app.zip"
 end
 
 task "default" => [ "clean", "build", "codesign", "zip" ]
