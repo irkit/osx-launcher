@@ -66,9 +66,14 @@ static const NSTimeInterval kIdleInterval             = 60;
 - (void) runAndExit {
     NSString *version               = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     MOGithubReleaseFetcher *fetcher = [[MOGithubReleaseFetcher alloc] initWithUserName: @"irkit" repositoryName: @"OSX-IRLauncher"];
+#ifdef DEBUG
+    NSArray *validators = @[];
+#else
+    NSArray *validators = @[ [[MOCodeSignValidator alloc] init] ];
+#endif
     _checker = [[MOUpdateChecker alloc] initWithFetcher: fetcher
                                              unarchiver: [[MOZipUnarchiver alloc] init]
-                                             validators: @[ [[MOCodeSignValidator alloc] init] ]];
+                                             validators: validators];
     [_checker checkForVersionNewerThanVersion: version
                        foundNewerVersionBlock:^(NSDictionary *releaseInformation, NSURL *unarchivedBundlePath, NSError *error) {
         if (releaseInformation && unarchivedBundlePath && !error && [self enabled]) {
