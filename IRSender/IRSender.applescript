@@ -3,13 +3,8 @@ property pLSRegisterPath : "/System/Library/Frameworks/CoreServices.framework/Ve
 
 using terms from application "Quicksilver"
 	on open _files
-        display dialog _files as text
-
 		set _apppath to (do shell script pLSRegisterPath & " -dump | grep -m 1 --only-matching \"/.*/IRLauncher\\.app\"")
-		display dialog _apppath
-
 		set _path to POSIX path of (item 1 of _files as text)
-		display dialog _path
 	
 		do shell script _apppath & "/Contents/MacOS/IRLauncher " & _path & " > /dev/null 2>&1 &"
 	end open
