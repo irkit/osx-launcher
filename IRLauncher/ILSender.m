@@ -49,6 +49,7 @@
                 ILLOG( @"sent with error: %@", error );
                 completion(error);
             }];
+            return;
         }
         else {
             // unsupported yet
@@ -71,12 +72,10 @@
 //                                         userInfo: nil];
 //        completion(error);
 //    }
-    NSString *message = @"File %@ format not supported";
-    NSAlert *alert    = [[NSAlert alloc] init];
-    [alert addButtonWithTitle: @"OK"];
-    [alert setMessageText: message];
-    [alert setAlertStyle: NSWarningAlertStyle];
-    [alert runModal];
+    error = [NSError errorWithDomain: IRLauncherErrorDomain
+                                code: IRLauncherErrorCodeUnsupported
+                            userInfo: nil];
+    completion(error);
 }
 
 @end
