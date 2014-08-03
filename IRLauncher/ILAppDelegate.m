@@ -68,6 +68,7 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     if ([MOUpdater didRelaunch]) {
         // relaunched using Updater.app
         NSDictionary *releaseInformation = [MOUpdater releaseInformation];
+        ILLOG( @"didRelaunch with releaseInformation: %@", releaseInformation );
 
         NSUserNotification *notification = [[NSUserNotification alloc] init];
         notification.title           = [NSString stringWithFormat: @"Updated to version %@",releaseInformation[ kMOReleaseInformationNewVersionKey ]];
@@ -153,6 +154,8 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
 #pragma mark - NSDistributedNotification related
 
 - (void)postDistributedNotificationToSendFileAtPath: (NSString*)path {
+    ILLOG( @"path: %@", path );
+
     [[NSDistributedNotificationCenter defaultCenter] postNotificationName: kILDistributedNotificationName
                                                                    object: [[NSBundle mainBundle] bundleIdentifier]
                                                                  userInfo: @{ @"path": path }
