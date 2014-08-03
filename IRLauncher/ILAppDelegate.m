@@ -84,7 +84,8 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     [[NSDistributedNotificationCenter defaultCenter] addObserver: self
                                                         selector: @selector(receivedDistributedNotification:)
                                                             name: nil
-                                                          object: nil];
+                                                          object: nil
+                                              suspensionBehavior: NSNotificationSuspensionBehaviorDeliverImmediately];
     [[NSNotificationCenter defaultCenter] addObserverForName: kILWillSendSignalNotification
                                                       object: nil
                                                        queue: nil
