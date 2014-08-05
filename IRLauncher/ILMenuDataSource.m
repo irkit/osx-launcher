@@ -17,6 +17,7 @@
 #import "ILConst.h"
 #import "ILApplicationUpdater.h"
 #import "IRSignals+FileStore.h"
+#import "ILSender.h"
 
 // Launcher Extensions
 #import "ILLauncherExtension.h"
@@ -379,24 +380,11 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 
     NSUInteger signalIndex = ((NSMenuItem*)sender).tag;
     IRSignal *signal       = [_signals objectAtIndex: signalIndex];
-    if (!signal.peripheral) {
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle: @"OK"];
-        NSString *message = [NSString stringWithFormat: @"Set \"hostname\" key in ~/.irkit.d/signals/%@.json or remove it and re-learn", signal.name];
-        [alert setMessageText: message];
-        [alert setAlertStyle: NSWarningAlertStyle];
-        [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
-        [alert runModal];
-        return;
-    }
 
     [[NSNotificationCenter defaultCenter] postNotificationName: kILWillSendSignalNotification
                                                         object: self
                                                       userInfo: @{ @"signal": signal }];
-
-    [signal sendWithCompletion:^(NSError *error) {
-        ILLOG( @"sent: %@", error );
-    }];
+    [[[ILSender alloc] init] sendSignalAndAlertOnError: signal];
 }
 
 - (void) learnNewSignal :(id)sender {

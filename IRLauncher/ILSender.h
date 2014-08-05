@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "IRSignal.h"
 
 @interface ILSender : NSObject
 
-- (void)sendFileAtPath: (NSString*)filePath completion: (void (^)(NSError*))completion;
+- (void)sendFileAtPathAndAlertOnError:(NSString*)filePath;
+- (void)sendSignalAndAlertOnError:(IRSignal*)signal;
 
 @end

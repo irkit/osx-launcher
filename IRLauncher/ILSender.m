@@ -15,67 +15,78 @@
 
 @implementation ILSender
 
-- (void)sendFileAtPath: (NSString*)filePath completion: (void (^)(NSError*))completion {
+- (void)sendFileAtPathAndAlertOnError:(NSString*)filePath {
+    NSError *error;
+    IRSignal *signal = [self signalFromFile: filePath error: &error];
+    if (error) {
+        NSString *message;
+        switch (error.code) {
+        case IRLauncherErrorCodeInvalidFile:
+            message = [NSString stringWithFormat: @"Failed to load file: %@", filePath];
+            break;
+        case IRLauncherErrorCodeUnsupported:
+            message = @"Unsupported file format";
+            break;
+        case IRLauncherErrorCodePeripheralNotFound:
+            message = @"IRKit not found with provided \"hostname\" key. From which IRKit you want to send this signal?";
+            break;
+        default:
+            message = [NSString stringWithFormat: @"Failed to send file: %@ with error: %@", filePath, error.localizedDescription];
+            break;
+        }
+        [self showAlertWithMessage: message];
+    }
+    [self sendSignalAndAlertOnError: signal];
+}
+
+- (void)sendSignalAndAlertOnError:(IRSignal*)signal {
+    if (!signal.peripheral) {
+        [self showAlertWithMessage: @"IRKit not found with provided \"hostname\" key. From which IRKit you want to send this signal?"];
+    }
+    [signal sendWithCompletion:^(NSError *error) {
+        NSString *message = [NSString stringWithFormat: @"Failed to send: %@ with error: %@", signal.name, error.localizedDescription];
+        [self showAlertWithMessage: message];
+    }];
+}
+
+#pragma mark - Private
+
+- (IRSignal*)signalFromFile: (NSString*)filePath error:(NSError **)error {
     ILLOG( @"filePath: %@", filePath );
 
     if (![[NSFileManager defaultManager] fileExistsAtPath: filePath]) {
-        NSError *error = [NSError errorWithDomain: IRLauncherErrorDomain
-                                             code: IRLauncherErrorCodeInvalidFile
-                                         userInfo: nil];
-        completion(error);
-        return;
+        *error = [NSError errorWithDomain: IRLauncherErrorDomain
+                                     code: IRLauncherErrorCodeInvalidFile
+                                 userInfo: nil];
+        return nil;
     }
     NSData *signalJSON = [NSData dataWithContentsOfFile: filePath];
-    NSError *error;
-    id signalObject = [NSJSONSerialization JSONObjectWithData: signalJSON
-                                                      options: 0
-                                                        error: &error];
-    if (error) {
-        NSError *error = [NSError errorWithDomain: IRLauncherErrorDomain
-                                             code: IRLauncherErrorCodeInvalidFile
-                                         userInfo: nil];
-        completion(error);
-        return;
+    NSError *jsonError = nil;
+    id signalObject    = [NSJSONSerialization JSONObjectWithData: signalJSON
+                                                         options: 0
+                                                           error: &jsonError];
+    if (jsonError) {
+        *error = [NSError errorWithDomain: IRLauncherErrorDomain
+                                     code: IRLauncherErrorCodeInvalidFile
+                                 userInfo: nil];
+        return nil;
     }
     if ([signalObject isKindOfClass: [NSDictionary class]]) {
-        IRSignal *signal = [[IRSignal alloc] initWithDictionary: signalObject];
-
-        if (signal.peripheral) {
-            [[NSNotificationCenter defaultCenter] postNotificationName: kILWillSendSignalNotification
-                                                                object: self
-                                                              userInfo: @{ @"signal": signal }];
-
-            [signal sendWithCompletion:^(NSError *error) {
-                ILLOG( @"sent with error: %@", error );
-                completion(error);
-            }];
-            return;
-        }
-        else {
-            // unsupported yet
-            // Send through all known IRKit devices
-//            NSEnumerator *peripherals = [IRKit sharedInstance].peripherals.enumeratorOfPeripherals;
-//            IRPeripheral *p;
-//            while (p = [peripherals nextObject]) {
-//                [IRHTTPClient postSignal: signal toPeripheral: p withCompletion:^(NSError *error) {
-//                    ILLOG( @"sent with error: %@", error );
-//                    // TODO only call once when 1st error occured, or all requests have successfully finished.
-//                    completion(error);
-//                }];
-//            }
-        }
+        return [[IRSignal alloc] initWithDictionary: signalObject];
     }
-//    else if ([signalObject isKindOfClass: [NSArray class]]) {
-//        // TODO define a JSON representation of interval, and send multiple signals in a row?
-//        NSError *error = [NSError errorWithDomain: IRLauncherErrorDomain
-//                                             code: IRLauncherErrorCodeUnsupported
-//                                         userInfo: nil];
-//        completion(error);
-//    }
-    error = [NSError errorWithDomain: IRLauncherErrorDomain
-                                code: IRLauncherErrorCodeUnsupported
-                            userInfo: nil];
-    completion(error);
+
+    *error = [NSError errorWithDomain: IRLauncherErrorDomain
+                                 code: IRLauncherErrorCodeUnsupported
+                             userInfo: nil];
+    return nil;
+}
+
+- (void) showAlertWithMessage: (NSString*)message {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle: @"OK"];
+    [alert setMessageText: message];
+    [alert setAlertStyle: NSWarningAlertStyle];
+    [alert runModal];
 }
 
 @end

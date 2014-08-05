@@ -169,32 +169,7 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
         NSString *path = notification.userInfo[ @"path" ];
         ILLOG( @"will send: %@", path );
 
-        [[[ILSender alloc] init] sendFileAtPath: path completion:^(NSError *error) {
-            ILLOG( @"error: %@", error );
-
-            if (!error) {
-                return;
-            }
-
-            NSString *message;
-            switch (error.code) {
-            case IRLauncherErrorCodeInvalidFile:
-                message = [NSString stringWithFormat: @"Failed to load file: %@", path];
-                break;
-            case IRLauncherErrorCodeUnsupported:
-                message = @"Unsupported file format";
-                break;
-            default:
-                message = [NSString stringWithFormat: @"Failed to send file: %@ with error: %@", path, error.localizedDescription];
-                break;
-            }
-
-            NSAlert *alert = [[NSAlert alloc] init];
-            [alert addButtonWithTitle: @"OK"];
-            [alert setMessageText: message];
-            [alert setAlertStyle: NSWarningAlertStyle];
-            [alert runModal];
-        }];
+        [[[ILSender alloc] init] sendFileAtPathAndAlertOnError: path];
     }
 }
 

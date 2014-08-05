@@ -19,6 +19,7 @@
 #define IRLauncherErrorCodeInvalidTag                         1
 #define IRLauncherErrorCodeUnsupported                        2
 #define IRLauncherErrorCodeInvalidFile                        3
+#define IRLauncherErrorCodePeripheralNotFound                 4
 
 #define IRKitHTTPStatusCodeUnknown                            999
 
