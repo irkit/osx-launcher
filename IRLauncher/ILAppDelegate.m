@@ -185,7 +185,7 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
                 message = @"Unsupported file format";
                 break;
             default:
-                message = [NSString stringWithFormat: @"Failed to send file: %@ with error: %@", path, error];
+                message = [NSString stringWithFormat: @"Failed to send file: %@ with error: %@", path, error.localizedDescription];
                 break;
             }
 
