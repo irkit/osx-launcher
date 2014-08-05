@@ -83,7 +83,7 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
 
     [[NSDistributedNotificationCenter defaultCenter] addObserver: self
                                                         selector: @selector(receivedDistributedNotification:)
-                                                            name: nil
+                                                            name: kILDistributedNotificationName
                                                           object: nil
                                               suspensionBehavior: NSNotificationSuspensionBehaviorDeliverImmediately];
     [[NSNotificationCenter defaultCenter] addObserverForName: kILWillSendSignalNotification
@@ -164,7 +164,7 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
 }
 
 - (void)receivedDistributedNotification:(NSNotification*)notification {
-    // ILLOG( @"sender: %@", notification );
+    ILLOG( @"sender: %@", notification );
     if ([notification.name isEqualToString: kILDistributedNotificationName]) {
         NSString *path = notification.userInfo[ @"path" ];
         ILLOG( @"will send: %@", path );
