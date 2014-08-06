@@ -1,0 +1,66 @@
+/* ILMenuDataSource auto update item title */
+"Auto Update" = "自動アップデート";
+
+/* ILMenuDataSource confirm to install cancel
+   ILQuicksilverExtension cancel to relaunch quicksilver */
+"Cancel" = "キャンセル";
+
+/* ILFileStore error description of signal including / */
+"Choose a file directly under %@" = "%@以下のファイルを選んでください";
+
+/* ILMenuDataSource click to send via %@, tooltip */
+"Click to send via %@" = "クリックすると %@ を送ります";
+
+/* ILAppDelegate updated to version informative text */
+"Click to show release notes" = "クリックするとリリースノートを開きます";
+
+/* ILMenuDataSource failed to save alert message */
+"Failed to save to: %@" = "%@ に保存できませんでした";
+
+/* ILSender default error message */
+"Failed to send file: %@ with error: %@" = "%@ の送信に失敗しました。エラー: %@";
+
+/* ILSender send error message */
+"Failed to send: %@ with error: %@" = "%@ の送信に失敗しました。エラー: %@";
+
+/* ILQuicksilverExtension install informative text */
+"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths." = "~/Library/Application Support/Quicksilver/Catalog.plist を編集して ~/.irkit.d/signals を Quicksilver の検索パスに追加します";
+
+/* ILAlfredExtension install informative text */
+"I will launch \"Send IR signal.alfredworkflow\"" = "\"Send IR signal.alfredworkflow\" を開きます";
+
+/* ILMenuDataSource install %@ extension title */
+"Install %@ Extension" = "%@ Extension をインストールする";
+
+/* ILMenuDataSource install extension confirm message */
+"Install %@ Extension?" = "%@ Extension をインストールしますか?";
+
+/* ILMenuDataSource not searching IRKits section header title */
+"IRKits" = "IRKit";
+
+/* ILMenuDataSource searching IRKits section header title */
+"IRKits (Searching...)" = "IRKit (検索中...)";
+
+/* ILMenuDataSource learnNewSignal menu item title */
+"+ Learn New Signal" = "+ 新しいリモコン信号を学習する";
+
+/* ILFileStore error description of signal without name */
+"name is required" = "name is required";
+
+/* ILMenuDataSource no IRKits message title */
+"No IRKit found in the same Wi-Fi network.\nPlease setup IRKit and connect it to the same network." = "IRKitが同じWi-Fiネットワーク内に見つかりませんでした。\nIRKitをセットアップするか、セットアップ済みであればBonjour機能を有効にしてください。";
+
+/* ILMenuDataSource quit */
+"Quit IRLauncher" = "IRLauncherを終了する";
+
+/* ILQuicksilverExtension relaunch confirm message */
+"Relaunch Quicksilver?" = "Quicksilverを再起動します";
+
+/* ILMenuDataSource not searching signals section header title */
+"Signals" = "リモコン信号";
+
+/* ILMenuDataSource searching signals section header title */
+"Signals (Searching...)" = "リモコン信号 (検索中...)";
+
+/* ILAppDelegate updated to version notification title */
+"Updated to version %@" = "バージョン:%@ にアップデートしました";

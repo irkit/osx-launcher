@@ -1,0 +1,12 @@
+
+/* Class = "NSTextFieldCell"; title = "リモコン信号の学習"; ObjectID = "Ml2-ta-cpa"; */
+"Ml2-ta-cpa.title" = "リモコン信号の学習";
+
+/* Class = "NSTextFieldCell"; title = "信号の入力待ち"; ObjectID = "Q0z-lp-Jfn"; */
+"Q0z-lp-Jfn.title" = "信号の入力待ち";
+
+/* Class = "NSTextFieldCell"; title = "リモコンをIRKitに向けて ボタンを 短く 押してください"; ObjectID = "kUZ-2n-VPf"; */
+"kUZ-2n-VPf.title" = "リモコンをIRKitに向けて ボタンを 短く 押してください";
+
+/* Class = "NSButtonCell"; title = "Button"; ObjectID = "t9W-5H-VkN"; */
+"t9W-5H-VkN.title" = "Button";

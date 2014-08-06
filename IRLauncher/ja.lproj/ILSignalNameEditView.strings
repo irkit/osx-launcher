@@ -1,0 +1,15 @@
+
+/* Class = "NSButtonCell"; title = "保存"; ObjectID = "8KY-mW-EcL"; */
+"8KY-mW-EcL.title" = "保存";
+
+/* Class = "NSButtonCell"; title = "キャンセル"; ObjectID = "heT-3c-7i8"; */
+"heT-3c-7i8.title" = "キャンセル";
+
+/* Class = "NSTextFieldCell"; title = "受信したリモコン信号に名前を付けてください"; ObjectID = "jmE-Y3-yRJ"; */
+"jmE-Y3-yRJ.title" = "受信したリモコン信号に名前を付けてください";
+
+/* Class = "NSTextFieldCell"; placeholderString = "ex: aircon-off"; ObjectID = "ka9-Ik-gDB"; */
+"ka9-Ik-gDB.placeholderString" = "ex: aircon-off";
+
+/* Class = "NSTextFieldCell"; title = "リモコン信号を以下に保存します。 ~/.irkit.d/signals/aircon-off.json\n Quicksilver, Alfred 2では \"aircon-off\" と検索してください。"; ObjectID = "yiI-Gg-huh"; */
+"yiI-Gg-huh.title" = "リモコン信号を以下に保存します。 ~/.irkit.d/signals/aircon-off.json\n Quicksilver, Alfred 2では \"aircon-off\" と検索してください。";

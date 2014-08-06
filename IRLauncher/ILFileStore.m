@@ -41,13 +41,13 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
         // name is required
         *error = [NSError errorWithDomain: IRLauncherErrorDomain
                                      code: IRLauncherErrorCodeInvalidFile
-                                 userInfo: @{ NSLocalizedDescriptionKey: @"name is required"}];
+                                 userInfo: @{ NSLocalizedDescriptionKey: NSLocalizedString( @"name is required", @"ILFileStore error description of signal without name" )}];
         return NO;
     }
     if ([signal.name rangeOfString: @"/"].location != NSNotFound) {
         *error = [NSError errorWithDomain: IRLauncherErrorDomain
                                      code: IRLauncherErrorCodeInvalidFile
-                                 userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: @"Choose a file directly under %@",[self signalsDirectory]] }];
+                                 userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: NSLocalizedString(@"Choose a file directly under %@", @"ILFileStore error description of signal including /"),[self signalsDirectory]] }];
         return NO;
     }
 
@@ -75,7 +75,7 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
     if (![file isEqualToString: cleanedFile]) {
         *error = [NSError errorWithDomain: IRLauncherErrorDomain
                                      code: IRLauncherErrorCodeInvalidFile
-                                 userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: @"Choose a file directly under %@",[self signalsDirectory]] }];
+                                 userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: NSLocalizedString(@"Choose a file directly under %@", @"ILFileStore error description of signal including /"),[self signalsDirectory]] }];
         return NO;
     }
     // overwrites file

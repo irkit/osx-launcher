@@ -1,0 +1,12 @@
+
+/* Class = "NSTextFieldCell"; title = "Learn IR signal"; ObjectID = "Ml2-ta-cpa"; */
+"Ml2-ta-cpa.title" = "Learn IR signal";
+
+/* Class = "NSTextFieldCell"; title = "信号の入力待ち"; ObjectID = "Q0z-lp-Jfn"; */
+"Q0z-lp-Jfn.title" = "Waiting for signal";
+
+/* Class = "NSTextFieldCell"; title = "Place your plain old remote towards IRKit and press it's button shortly"; ObjectID = "kUZ-2n-VPf"; */
+"kUZ-2n-VPf.title" = "Place your plain old remote towards IRKit and press it's button shortly";
+
+/* Class = "NSButtonCell"; title = "Button"; ObjectID = "t9W-5H-VkN"; */
+"t9W-5H-VkN.title" = "Button";

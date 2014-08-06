@@ -31,7 +31,7 @@
             message = @"IRKit not found with provided \"hostname\" key. From which IRKit you want to send this signal?";
             break;
         default:
-            message = [NSString stringWithFormat: @"Failed to send file: %@ with error: %@", filePath, error.localizedDescription];
+            message = [NSString stringWithFormat: NSLocalizedString( @"Failed to send file: %@ with error: %@", @"ILSender default error message" ), filePath, error.localizedDescription];
             break;
         }
         [self showAlertWithMessage: message];
@@ -44,7 +44,7 @@
         [self showAlertWithMessage: @"IRKit not found with provided \"hostname\" key. From which IRKit you want to send this signal?"];
     }
     [signal sendWithCompletion:^(NSError *error) {
-        NSString *message = [NSString stringWithFormat: @"Failed to send: %@ with error: %@", signal.name, error.localizedDescription];
+        NSString *message = [NSString stringWithFormat: NSLocalizedString(@"Failed to send: %@ with error: %@", @"ILSender send error message"), signal.name, error.localizedDescription];
         [self showAlertWithMessage: message];
     }];
 }

@@ -1,0 +1,70 @@
+﻿/* ILMenuDataSource auto update item title */
+"Auto Update" = "Auto Update";
+
+/* ILMenuDataSource confirm to install cancel
+   ILQuicksilverExtension cancel to relaunch quicksilver */
+"Cancel" = "Cancel";
+
+/* ILFileStore error description of signal including / */
+"Choose a file directly under %@" = "Choose a file directly under %@";
+
+/* ILMenuDataSource click to send via %@, tooltip */
+"Click to send via %@" = "Click to send via %@";
+
+/* ILAppDelegate updated to version informative text */
+"Click to show release notes" = "Click to show release notes";
+
+/* ILMenuDataSource failed to save alert message */
+"Failed to save to: %@" = "Failed to save to: %@";
+
+/* ILSender default error message */
+"Failed to send file: %@ with error: %@" = "Failed to send file: %1$@ with error: %2$@";
+
+/* ILSender send error message */
+"Failed to send: %@ with error: %@" = "Failed to send: %1$@ with error: %2$@";
+
+/* ILQuicksilverExtension install informative text */
+"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths." = "I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths.";
+
+/* ILAlfredExtension install informative text */
+"I will launch \"Send IR signal.alfredworkflow\"" = "I will launch \"Send IR signal.alfredworkflow\"";
+
+/* ILMenuDataSource install %@ extension title */
+"Install %@ Extension" = "Install %@ Extension";
+
+/* ILMenuDataSource install extension confirm message */
+"Install %@ Extension?" = "Install %@ Extension?";
+
+/* ILMenuDataSource not searching IRKits section header title */
+"IRKits" = "IRKits";
+
+/* ILMenuDataSource searching IRKits section header title */
+"IRKits (Searching...)" = "IRKits (Searching...)";
+
+/* ILMenuDataSource learnNewSignal menu item title */
+"Learn New Signal" = "Learn New Signal";
+
+/* ILFileStore error description of signal without name */
+"name is required" = "name is required";
+
+/* ILMenuDataSource no IRKits message title */
+"No IRKit found in the same Wi-Fi network.\nPlease setup IRKit and connect it to the same network." = "No IRKit found in the same Wi-Fi network.\nPlease setup IRKit and connect it to the same network.";
+
+/* ILMenuDataSource quit */
+"Quit IRLauncher" = "Quit IRLauncher";
+
+/* ILQuicksilverExtension relaunch confirm message */
+"Relaunch Quicksilver?" = "Relaunch Quicksilver?";
+
+/* ILMenuDataSource not searching signals section header title */
+"Signals" = "Signals";
+
+/* ILMenuDataSource searching signals section header title */
+"Signals (Searching...)" = "Signals (Searching...)";
+
+/* ILAppDelegate updated to version notification title */
+"Updated to version %@" = "Updated to version %@";
+
+/* ILSignalNameEditViewController guide message */
+"リモコン信号を以下に保存します。\n~/.irkit.d/signals/%@.json\nQuicksilverでは \"%@\" と検索してください。" = "リモコン信号を以下に保存します。\n~/.irkit.d/signals/%1$@.json\nQuicksilverでは \"%2$@\" と検索してください。";
+
