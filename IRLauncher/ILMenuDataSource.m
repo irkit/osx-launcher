@@ -25,7 +25,6 @@
 // Add other extension headers here!
 
 static const NSInteger kILLauncherExtensionTagOffset = 10000;
-static NSString * const kILSupportWebSite            = @"http://github.com/irkit/osx-launcher/issues";
 static NSString * const kILOpenSourceWebSite         = @"http://github.com/irkit/osx-launcher";
 
 @interface ILMenuDataSource ()
@@ -49,8 +48,7 @@ typedef NS_ENUM (NSUInteger,ILMenuSectionIndex) {
 
 typedef NS_ENUM (NSUInteger,ILMenuHelpItemIndex) {
     ILMenuHelpItemIndexOpenSource = 0,
-    ILMenuHelpItemIndexSupport    = 1,
-    ILMenuHelpItemIndexVersion    = 2
+    ILMenuHelpItemIndexVersion    = 1
 };
 
 typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
@@ -126,7 +124,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     break;
     case ILMenuSectionIndexHelp:
     {
-        return 3;
+        return 2;
     }
     break;
     case ILMenuSectionIndexQuit:
@@ -280,16 +278,9 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         switch (indexPath.item) {
         case ILMenuHelpItemIndexOpenSource:
         {
-            item.title  = @"Open Source";
+            item.title  = @"Open Source / Support";
             item.target = self;
             item.action = @selector(showOpenSource:);
-        }
-        break;
-        case ILMenuHelpItemIndexSupport:
-        {
-            item.title  = @"Support";
-            item.target = self;
-            item.action = @selector(showHelp:);
         }
         break;
         case ILMenuHelpItemIndexVersion:
@@ -457,12 +448,6 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     ILLOG_CURRENT_METHOD;
 
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: kILOpenSourceWebSite]];
-}
-
-- (void) showHelp: (id)sender {
-    ILLOG_CURRENT_METHOD;
-
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: kILSupportWebSite]];
 }
 
 - (void) terminate: (id)sender {
