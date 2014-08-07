@@ -60,7 +60,6 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
         return NO;
     }
 
-    // We'll deal with errors when write fails
     BOOL created = [[NSFileManager defaultManager] createDirectoryAtPath: [self signalsDirectory]
                                              withIntermediateDirectories: YES
                                                               attributes: nil
@@ -79,9 +78,9 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
                                  userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: NSLocalizedString(@"Choose a file directly under %@", @"ILFileStore error description of signal including /"),[self signalsDirectory]] }];
         return NO;
     }
-    // overwrites file
+    // doesn't overwrite file
     BOOL success = [json writeToURL: [NSURL fileURLWithPath: file]
-                            options: NSDataWritingAtomic
+                            options: NSDataWritingWithoutOverwriting
                               error: error];
     if (!success) {
         return NO;
