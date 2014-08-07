@@ -371,9 +371,6 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     NSUInteger signalIndex = ((NSMenuItem*)sender).tag;
     IRSignal *signal       = [_signals objectAtIndex: signalIndex];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName: kILWillSendSignalNotification
-                                                        object: self
-                                                      userInfo: @{ @"signal": signal }];
     [[[ILSender alloc] init] sendSignalAndAlertOnError: signal];
 }
 
