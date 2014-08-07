@@ -44,7 +44,8 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
                                  userInfo: @{ NSLocalizedDescriptionKey: NSLocalizedString( @"name is required", @"ILFileStore error description of signal without name" )}];
         return NO;
     }
-    if ([signal.name rangeOfString: @"/"].location != NSNotFound) {
+    if (![signal.name isEqualToString: signal.name.lastPathComponent]) {
+        // name includes "/" equivalent
         *error = [NSError errorWithDomain: IRLauncherErrorDomain
                                      code: IRLauncherErrorCodeInvalidFile
                                  userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: NSLocalizedString(@"Choose a file directly under %@", @"ILFileStore error description of signal including /"),[self signalsDirectory]] }];
