@@ -41,6 +41,9 @@
 /* ILMenuDataSource searching IRKits section header title */
 "IRKits : Searching..." = "IRKit : 検索中...";
 
+/* ILSignalNameEditViewController guide message */
+"IR signal data will be saved as:\n~/.irkit.d/signals/%@.json\n\nSearch for \"%@\"\nin Quicksilver or Alfred 2" = "リモコン信号を以下に保存します。\n~/.irkit.d/signals/%@.json\n\nQuicksilver, Alfred 2では\n\"%@\" と検索してください。";
+
 /* ILMenuDataSource learnNewSignal menu item title */
 "+ Learn New Signal" = "+ 新しいリモコン信号を学習する";
 

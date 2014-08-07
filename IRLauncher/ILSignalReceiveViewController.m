@@ -28,10 +28,10 @@
 
     [self.progressIndicator startAnimation: nil];
 
-    NSArray *localizations       = [[NSBundle mainBundle] preferredLocalizations];
+    NSString *lang               = [[NSBundle mainBundle] preferredLocalizations][ 0 ];
     NSMutableAttributedString *s = self.detailTextField.attributedStringValue.mutableCopy;
     // emphasize "shortly"
-    if ([localizations[0] isEqualToString: @"ja"]) {
+    if ([lang isEqualToString: @"ja"]) {
         [s setAttributes: @{ NSForegroundColorAttributeName: [NSColor redColor] } range: (NSRange){ 20,2 }];
     }
     else {
