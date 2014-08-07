@@ -28,6 +28,17 @@
 
     [self.progressIndicator startAnimation: nil];
 
+    NSArray *localizations       = [[NSBundle mainBundle] preferredLocalizations];
+    NSMutableAttributedString *s = self.detailTextField.attributedStringValue.mutableCopy;
+    // emphasize "shortly"
+    if ([localizations[0] isEqualToString: @"ja"]) {
+        [s setAttributes: @{ NSForegroundColorAttributeName: [NSColor redColor] } range: (NSRange){ 20,2 }];
+    }
+    else {
+        [s setAttributes: @{ NSForegroundColorAttributeName: [NSColor redColor] } range: (NSRange){ 65,7 }];
+    }
+    self.detailTextField.attributedStringValue = s;
+
     __weak typeof(self) _self = self;
     _waiter                   = [IRHTTPClient waitForSignalWithCompletion:^(NSHTTPURLResponse *res, IRSignal *signal, NSError *error) {
         if (error) {

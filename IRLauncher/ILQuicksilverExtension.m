@@ -21,7 +21,7 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
 }
 
 - (NSString*) installInformativeText {
-    return @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths.";
+    return NSLocalizedString( @"I will edit ~/Library/Application Support/Quicksilver/Catalog.plist and add ~/.irkit.d/signals into Quicksilver's search paths.", @"ILQuicksilverExtension install informative text" );
 }
 
 - (void) install {
@@ -148,8 +148,8 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
 - (void) showConfirmToRelaunchQuicksilver:(void (^)(NSInteger returnCode))callback {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle: @"OK"];
-    [alert addButtonWithTitle: @"Cancel"];
-    [alert setMessageText: @"Relaunch Quicksilver?"];
+    [alert addButtonWithTitle: NSLocalizedString( @"Cancel", @"ILQuicksilverExtension cancel to relaunch quicksilver" )];
+    [alert setMessageText: NSLocalizedString(@"Relaunch Quicksilver?", @"ILQuicksilverExtension relaunch confirm message")];
     [alert setAlertStyle: NSWarningAlertStyle];
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     NSInteger ret = [alert runModal];

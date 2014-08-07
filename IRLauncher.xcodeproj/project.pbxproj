@@ -34,7 +34,6 @@
 		C7766FA4189A524800898267 /* ILLog.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* ILLog.m */; };
 		C77AFB4719528218002ED79A /* ILMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB4619528218002ED79A /* ILMenuDataSource.m */; };
 		C77AFB5A1952DCD6002ED79A /* MOAnimatingStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB591952DCD6002ED79A /* MOAnimatingStatusItem.m */; };
-		C77CC8D7194FE70800622994 /* ILSignalNameEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */; };
 		C781848518ED5F1F007FB4E1 /* IRHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C781847E18ED5F1F007FB4E1 /* IRHelper.m */; };
 		C781848618ED5F1F007FB4E1 /* IRHTTPJSONOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848018ED5F1F007FB4E1 /* IRHTTPJSONOperation.m */; };
 		C781848718ED5F1F007FB4E1 /* IRHTTPOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C781848218ED5F1F007FB4E1 /* IRHTTPOperationQueue.m */; };
@@ -42,10 +41,10 @@
 		C78918E0194FE89A0075C36E /* ILSignalNameEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C78918DF194FE89A0075C36E /* ILSignalNameEditViewController.m */; };
 		C789EC9319419D7F00BC8E90 /* ILSignalReceiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C789EC9119419D7F00BC8E90 /* ILSignalReceiveView.xib */; };
 		C789EC9619419E1600BC8E90 /* ILSignalReceiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C789EC9519419E1600BC8E90 /* ILSignalReceiveViewController.m */; };
+		C78DEB471993501F00A1A3F9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C78DEB451993501F00A1A3F9 /* Localizable.strings */; };
 		C793E3C4196E8D9D00B2DF1E /* MIT-License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C793E3C1196E8D9D00B2DF1E /* MIT-License.rtf */; };
 		C793E3C5196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C793E3C3196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.m */; };
 		C798A30E18FD3F9100C9994C /* ILFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C798A30D18FD3F9100C9994C /* ILFileStore.m */; };
-		C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C79AF43818FE5FA600814235 /* ILMenuProgressView.m */; };
 		C79DDEEB196FF8210088F13D /* ILFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C798A30D18FD3F9100C9994C /* ILFileStore.m */; };
 		C79DDEEC196FF8460088F13D /* ResourceFork.dat in Resources */ = {isa = PBXBuildFile; fileRef = C7D218E919598720004AD675 /* ResourceFork.dat */; };
 		C79DDEF7196FFFAB0088F13D /* IRSignalIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C79DDEF6196FFFAB0088F13D /* IRSignalIcon.png */; };
@@ -58,7 +57,7 @@
 		C7C5EBF4196CE1F900E4F19B /* Send IR signal.alfredworkflow in Resources */ = {isa = PBXBuildFile; fileRef = C7C5EBF3196CE1F900E4F19B /* Send IR signal.alfredworkflow */; };
 		C7D218EB19598720004AD675 /* ResourceFork.dat in Resources */ = {isa = PBXBuildFile; fileRef = C7D218E919598720004AD675 /* ResourceFork.dat */; };
 		C7E5555819615B7700485045 /* ILApplicationUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E5555719615B7700485045 /* ILApplicationUpdater.m */; };
-		C7F32CB119516DED00601842 /* ILMenuProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7F32CB019516DED00601842 /* ILMenuProgressView.xib */; };
+		C7E7399D1991F509006CC3EE /* ILSignalNameEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7E7399F1991F509006CC3EE /* ILSignalNameEditView.xib */; };
 		C7F6C493189A66B600A79261 /* ILUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6C492189A66B600A79261 /* ILUtils.m */; };
 /* End PBXBuildFile section */
 
@@ -77,7 +76,6 @@
 		C71F8C3E189A015200298DFA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C71F8C3F189A015200298DFA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C71F8C42189A015200298DFA /* IRLauncher-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRLauncher-Info.plist"; sourceTree = "<group>"; };
-		C71F8C44189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C71F8C46189A015200298DFA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C71F8C48189A015200298DFA /* IRLauncher-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRLauncher-Prefix.pch"; sourceTree = "<group>"; };
 		C71F8C4C189A015200298DFA /* ILAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILAppDelegate.h; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 		C71F8C58189A015200298DFA /* IRLauncherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IRLauncherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71F8C59189A015200298DFA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C71F8C60189A015200298DFA /* IRLauncherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRLauncherTests-Info.plist"; sourceTree = "<group>"; };
-		C71F8C62189A015200298DFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C71F8C64189A015200298DFA /* IRLauncherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRLauncherTests.m; sourceTree = "<group>"; };
 		C729A269194080950012F40D /* NSMenuItem+StateAware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenuItem+StateAware.h"; sourceTree = "<group>"; };
 		C729A26A194080950012F40D /* NSMenuItem+StateAware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenuItem+StateAware.m"; sourceTree = "<group>"; };
@@ -117,7 +114,6 @@
 		C77AFB4619528218002ED79A /* ILMenuDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenuDataSource.m; sourceTree = "<group>"; };
 		C77AFB581952DCD6002ED79A /* MOAnimatingStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAnimatingStatusItem.h; sourceTree = "<group>"; };
 		C77AFB591952DCD6002ED79A /* MOAnimatingStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAnimatingStatusItem.m; sourceTree = "<group>"; };
-		C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILSignalNameEditView.xib; sourceTree = "<group>"; };
 		C781847D18ED5F1F007FB4E1 /* IRHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHelper.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRHelper.h; sourceTree = "<group>"; };
 		C781847E18ED5F1F007FB4E1 /* IRHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRHelper.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRHelper.m; sourceTree = "<group>"; };
 		C781847F18ED5F1F007FB4E1 /* IRHTTPJSONOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRHTTPJSONOperation.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRHTTPJSONOperation.h; sourceTree = "<group>"; };
@@ -132,6 +128,13 @@
 		C789EC9219419D7F00BC8E90 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ILSignalReceiveView.xib; sourceTree = "<group>"; };
 		C789EC9419419E1600BC8E90 /* ILSignalReceiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSignalReceiveViewController.h; sourceTree = "<group>"; };
 		C789EC9519419E1600BC8E90 /* ILSignalReceiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSignalReceiveViewController.m; sourceTree = "<group>"; };
+		C78DEB481993506E00A1A3F9 /* Base */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C78DEB49199352DB00A1A3F9 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/ILSignalReceiveView.strings; sourceTree = "<group>"; };
+		C78DEB4A199352DB00A1A3F9 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/ILSignalNameEditView.strings; sourceTree = "<group>"; };
+		C78DEB4B199352DB00A1A3F9 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		C78DEB4C199352DB00A1A3F9 /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C78DEB4D199352DB00A1A3F9 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C78DEB4E199352DB00A1A3F9 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C793E3C1196E8D9D00B2DF1E /* MIT-License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "MIT-License.rtf"; sourceTree = "<group>"; };
 		C793E3C2196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVerticallyCenteredTextFieldCell.h; sourceTree = "<group>"; };
 		C793E3C3196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVerticallyCenteredTextFieldCell.m; sourceTree = "<group>"; };
@@ -139,8 +142,6 @@
 		C7965C2118FFB4A5004FF579 /* IRConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRConst.h; path = IRKit/IRConst.h; sourceTree = "<group>"; };
 		C798A30C18FD3F9100C9994C /* ILFileStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILFileStore.h; sourceTree = "<group>"; };
 		C798A30D18FD3F9100C9994C /* ILFileStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILFileStore.m; sourceTree = "<group>"; };
-		C79AF43718FE5FA600814235 /* ILMenuProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuProgressView.h; sourceTree = "<group>"; };
-		C79AF43818FE5FA600814235 /* ILMenuProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILMenuProgressView.m; sourceTree = "<group>"; };
 		C79DDEF6196FFFAB0088F13D /* IRSignalIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IRSignalIcon.png; path = IRLauncher/Images.xcassets/IRSignalIcon.imageset/IRSignalIcon.png; sourceTree = SOURCE_ROOT; };
 		C7A7ED69192DD05E00F86AFF /* ILSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSender.h; sourceTree = "<group>"; };
 		C7A7ED6A192DD05E00F86AFF /* ILSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSender.m; sourceTree = "<group>"; };
@@ -158,7 +159,7 @@
 		C7D218E919598720004AD675 /* ResourceFork.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ResourceFork.dat; sourceTree = "<group>"; };
 		C7E5555619615B7700485045 /* ILApplicationUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILApplicationUpdater.h; sourceTree = "<group>"; };
 		C7E5555719615B7700485045 /* ILApplicationUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILApplicationUpdater.m; sourceTree = "<group>"; };
-		C7F32CB019516DED00601842 /* ILMenuProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILMenuProgressView.xib; sourceTree = "<group>"; };
+		C7E7399E1991F509006CC3EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ILSignalNameEditView.xib; sourceTree = "<group>"; };
 		C7F6C491189A66B600A79261 /* ILUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUtils.h; sourceTree = "<group>"; };
 		C7F6C492189A66B600A79261 /* ILUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -280,6 +281,7 @@
 		C71F8C41189A015200298DFA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C78DEB451993501F00A1A3F9 /* Localizable.strings */,
 				C7766FA2189A524800898267 /* ILLog.h */,
 				C7766FA3189A524800898267 /* ILLog.m */,
 				C71F8C42189A015200298DFA /* IRLauncher-Info.plist */,
@@ -321,9 +323,6 @@
 		C7766F9D189A4E9B00898267 /* Menulet */ = {
 			isa = PBXGroup;
 			children = (
-				C79AF43718FE5FA600814235 /* ILMenuProgressView.h */,
-				C79AF43818FE5FA600814235 /* ILMenuProgressView.m */,
-				C7F32CB019516DED00601842 /* ILMenuProgressView.xib */,
 				C729A269194080950012F40D /* NSMenuItem+StateAware.h */,
 				C729A26A194080950012F40D /* NSMenuItem+StateAware.m */,
 				C764C1C519527E5B003410B6 /* MOSectionedMenu.h */,
@@ -348,7 +347,7 @@
 				C789EC9119419D7F00BC8E90 /* ILSignalReceiveView.xib */,
 				C78918DE194FE89A0075C36E /* ILSignalNameEditViewController.h */,
 				C78918DF194FE89A0075C36E /* ILSignalNameEditViewController.m */,
-				C77CC8D6194FE70800622994 /* ILSignalNameEditView.xib */,
+				C7E7399F1991F509006CC3EE /* ILSignalNameEditView.xib */,
 			);
 			name = LearnSignalWindow;
 			sourceTree = "<group>";
@@ -472,7 +471,7 @@
 		C71F8C2F189A015200298DFA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = ID;
+				CLASSPREFIX = IL;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Masakazu Ohtsuka";
 			};
@@ -483,6 +482,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = C71F8C2E189A015200298DFA;
 			productRefGroup = C71F8C38189A015200298DFA /* Products */;
@@ -504,11 +504,11 @@
 				C71F8C45189A015200298DFA /* InfoPlist.strings in Resources */,
 				C793E3C4196E8D9D00B2DF1E /* MIT-License.rtf in Resources */,
 				C71F8C53189A015200298DFA /* Images.xcassets in Resources */,
-				C7F32CB119516DED00601842 /* ILMenuProgressView.xib in Resources */,
+				C78DEB471993501F00A1A3F9 /* Localizable.strings in Resources */,
 				C71F8C51189A015200298DFA /* MainMenu.xib in Resources */,
 				C789EC9319419D7F00BC8E90 /* ILSignalReceiveView.xib in Resources */,
 				C7C5EBF4196CE1F900E4F19B /* Send IR signal.alfredworkflow in Resources */,
-				C77CC8D7194FE70800622994 /* ILSignalNameEditView.xib in Resources */,
+				C7E7399D1991F509006CC3EE /* ILSignalNameEditView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,7 +595,6 @@
 				C7E5555819615B7700485045 /* ILApplicationUpdater.m in Sources */,
 				C7AB5EAD196BCAA700F8751A /* ILAlfredExtension.m in Sources */,
 				C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */,
-				C79AF43918FE5FA600814235 /* ILMenuProgressView.m in Sources */,
 				C738EC001953D6F1006A7B6D /* ILStatusItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -615,7 +614,7 @@
 		C71F8C43189A015200298DFA /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C71F8C44189A015200298DFA /* en */,
+				C78DEB4D199352DB00A1A3F9 /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -624,6 +623,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C71F8C50189A015200298DFA /* Base */,
+				C78DEB4B199352DB00A1A3F9 /* ja */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -631,7 +631,7 @@
 		C71F8C61189A015200298DFA /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C71F8C62189A015200298DFA /* en */,
+				C78DEB4E199352DB00A1A3F9 /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -640,8 +640,27 @@
 			isa = PBXVariantGroup;
 			children = (
 				C789EC9219419D7F00BC8E90 /* Base */,
+				C78DEB49199352DB00A1A3F9 /* ja */,
 			);
 			name = ILSignalReceiveView.xib;
+			sourceTree = "<group>";
+		};
+		C78DEB451993501F00A1A3F9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C78DEB481993506E00A1A3F9 /* Base */,
+				C78DEB4C199352DB00A1A3F9 /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		C7E7399F1991F509006CC3EE /* ILSignalNameEditView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7E7399E1991F509006CC3EE /* Base */,
+				C78DEB4A199352DB00A1A3F9 /* ja */,
+			);
+			name = ILSignalNameEditView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

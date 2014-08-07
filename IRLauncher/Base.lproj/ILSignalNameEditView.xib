@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="14A314h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
@@ -33,22 +33,23 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="FVz-U4-hKY"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="受信したリモコン信号に名前を付けてください" usesSingleLineMode="YES" id="jmE-Y3-yRJ">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Give a name for the IR signal" usesSingleLineMode="YES" id="jmE-Y3-yRJ">
                         <font key="font" size="13" name="HiraKakuProN-W3"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dIN-OK-SVw">
-                    <rect key="frame" x="302" y="57" width="324" height="100"/>
+                    <rect key="frame" x="302" y="30" width="324" height="127"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="100" id="W9e-Qe-lYS"/>
+                        <constraint firstAttribute="height" constant="127" id="W9e-Qe-lYS"/>
                     </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="yiI-Gg-huh">
                         <font key="font" size="13" name="HiraKakuProN-W3"/>
-                        <string key="title">リモコン信号を以下に保存します。 ~/.irkit.d/signals/aircon-off.json
- Quicksilver, Alfred 2では "aircon-off" と検索してください。</string>
+                        <string key="title">IR signal data will be saved as: ~/.irkit.d/signals/aircon-off.json
+ Search for "aircon-off"
+in Quicksilver or Alfred 2</string>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -80,7 +81,7 @@
                     </constraints>
                     <buttonCell key="cell" type="roundTextured" title="Save" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8KY-mW-EcL">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" size="13" name="HiraKakuProN-W3"/>
                     </buttonCell>
                     <connections>
                         <action selector="saveButtonPressed:" target="-2" id="qyQ-z0-htk"/>
@@ -95,7 +96,7 @@
                     </constraints>
                     <buttonCell key="cell" type="roundTextured" title="Cancel" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="heT-3c-7i8">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" size="13" name="HiraKakuProN-W3"/>
                     </buttonCell>
                     <connections>
                         <action selector="cancelButtonPressed:" target="-2" id="Rog-aL-tR1"/>

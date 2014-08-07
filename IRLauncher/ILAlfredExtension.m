@@ -15,7 +15,7 @@
 }
 
 - (NSString*) installInformativeText {
-    return @"I will launch \"Send IR signal.alfredworkflow\"";
+    return NSLocalizedString(@"I will launch \"Send IR signal.alfredworkflow\"", @"ILAlfredExtension install informative text");
 }
 
 - (void) install {

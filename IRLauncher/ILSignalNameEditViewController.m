@@ -27,7 +27,7 @@
                                                                                    queue: nil
                                                                               usingBlock:^(NSNotification *note) {
         NSString *input = _self.inputTextField.stringValue;
-        NSString *format = @"リモコン信号を以下に保存します。\n~/.irkit.d/signals/%@.json\nQuicksilverでは \"%@\" と検索してください。";
+        NSString *format = NSLocalizedString(@"IR signal data will be saved as:\n~/.irkit.d/signals/%@.json\n\nSearch for \"%@\"\nin Quicksilver or Alfred 2", @"ILSignalNameEditViewController guide message");
         NSString *guideMessage = [NSString stringWithFormat: format, input, input ];
         _self.guideTextField.stringValue = guideMessage;
     }];

@@ -71,8 +71,8 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
         ILLOG( @"didRelaunch with releaseInformation: %@", releaseInformation );
 
         NSUserNotification *notification = [[NSUserNotification alloc] init];
-        notification.title           = [NSString stringWithFormat: @"Updated to version %@",releaseInformation[ kMOReleaseInformationNewVersionKey ]];
-        notification.informativeText = @"Click to show release notes";
+        notification.title           = [NSString stringWithFormat: NSLocalizedString(@"Updated to version %@", @"ILAppDelegate updated to version notification title"),releaseInformation[ kMOReleaseInformationNewVersionKey ]];
+        notification.informativeText = NSLocalizedString(@"Click to show release notes", @"ILAppDelegate updated to version informative text");
         notification.hasActionButton = NO;
         notification.userInfo        = releaseInformation;
 

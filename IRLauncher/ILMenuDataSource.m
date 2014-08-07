@@ -9,7 +9,6 @@
 #import "ILMenuDataSource.h"
 #import "ILLog.h"
 #import "IRKit.h"
-#import "ILMenuProgressView.h"
 #import "ILUtils.h"
 #import "ILFileStore.h"
 #import "ILLearnSignalWindowController.h"
@@ -197,7 +196,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     }
 
     NSMenuItem *item = [[NSMenuItem alloc] init];
-    item.title         = @"Learn New Signal";
+    item.title         = NSLocalizedString( @"+ Learn New Signal", @"ILMenuDataSource learnNewSignal menu item title" );
     item.target        = self;
     item.action        = @selector(learnNewSignal:);
     item.keyEquivalent = @"+";
@@ -205,39 +204,28 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 }
 
 - (void)sectionedMenu:(MOSectionedMenu *)menu updateHeaderItem:(NSMenuItem *)item inSection:(NSUInteger)sectionIndex {
+    // header items are all disabled
+    [item setEnabled: NO];
+
     switch (sectionIndex) {
     case ILMenuSectionIndexSignals:
     {
-        if (![item.view isKindOfClass: [ILMenuProgressView class]]) {
-            item.view = [ILUtils loadClassNamed: @"ILMenuProgressView"];
-        }
-        ILMenuProgressView *view = (ILMenuProgressView*)item.view;
         if (_searchingForSignals) {
-            view.animating = YES;
-            [view.textField setStringValue: @"Signals (Searching...)"];
+            item.title = NSLocalizedString( @"Signals : Searching...", @"ILMenuDataSource searching signals section header title" );
         }
         else {
-            view.animating = NO;
-            [view.textField setStringValue: @"Signals"];
+            item.title = NSLocalizedString( @"Signals", @"ILMenuDataSource not searching signals section header title" );
         }
-        [view startAnimationIfNeeded];
     }
     break;
     case ILMenuSectionIndexPeripherals:
     {
-        if (![item.view isKindOfClass: [ILMenuProgressView class]]) {
-            item.view = [ILUtils loadClassNamed: @"ILMenuProgressView"];
-        }
-        ILMenuProgressView *view = (ILMenuProgressView*)item.view;
         if ([IRSearcher sharedInstance].searching) {
-            view.animating = YES;
-            [view.textField setStringValue: @"IRKits (Searching...)"];
+            item.title = NSLocalizedString(@"IRKits : Searching...", @"ILMenuDataSource searching IRKits section header title");
         }
         else {
-            view.animating = NO;
-            [view.textField setStringValue: @"IRKits"];
+            item.title = NSLocalizedString( @"IRKits", @"ILMenuDataSource not searching IRKits section header title" );
         }
-        [view startAnimationIfNeeded];
     }
     break;
     default:
@@ -267,7 +255,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         switch (indexPath.item) {
         case ILMenuOptionsItemIndexAutoUpdate:
         {
-            item.title  = @"Auto Update";
+            item.title  = NSLocalizedString( @"Auto Update", @"ILMenuDataSource auto update item title" );
             item.target = self;
             item.action = @selector(toggleAutoUpdate:);
             item.state  = [ILApplicationUpdater sharedInstance].enabled;
@@ -278,7 +266,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         default:
         {
             id<ILLauncherExtension> extension = _launcherExtensions[ indexPath.item - 1 ];
-            item.title  = [NSString stringWithFormat: @"Install %@ Extension",extension.title];
+            item.title  = [NSString stringWithFormat: NSLocalizedString(@"Install %@ Extension", @"ILMenuDataSource install %@ extension title"),extension.title];
             item.target = self;
             item.action = @selector(toggleExtensionInstallation:);
             item.tag    = kILLauncherExtensionTagOffset + indexPath.item - 1;
@@ -307,7 +295,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         case ILMenuHelpItemIndexVersion:
         default:
         {
-            item.title = [NSString stringWithFormat: @"Version: %@", [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]];
+            item.title = [NSString stringWithFormat: @"Version : %@", [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]];
             [item setEnabled: NO];
         }
         break;
@@ -316,7 +304,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     break;
     case ILMenuSectionIndexQuit:
     {
-        item.title                     = @"Quit IRLauncher";
+        item.title                     = NSLocalizedString(@"Quit IRLauncher", @"ILMenuDataSource quit");
         item.target                    = self;
         item.action                    = @selector(terminate:);
         item.keyEquivalent             = @"q";
@@ -347,7 +335,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     if (signal.peripheral) {
         item.target  = self;
         item.action  = @selector(send:);
-        item.toolTip = [NSString stringWithFormat: @"Click to send via %@", signal.peripheral.customizedName];
+        item.toolTip = [NSString stringWithFormat: NSLocalizedString(@"Click to send via %@", @"ILMenuDataSource click to send via %@, tooltip"), signal.peripheral.customizedName];
         if (index < 10) {
             item.keyEquivalent = [NSString stringWithFormat: @"%lu", (unsigned long)index];
         }
@@ -359,7 +347,8 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         item.toolTip = @"\"hostname\" key not found";
         [item setEnabled: NO];
     }
-    item.tag = index;
+    item.tag              = index;
+    item.indentationLevel = 1;
 }
 
 - (void) updateItem:(NSMenuItem*)item withPeripheral:(IRPeripheral*)peripheral atIndex:(NSUInteger)index {
@@ -371,6 +360,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     }
     // You can't click IRKit menuItem, it doesn't do anything
     [item setEnabled: NO];
+    item.indentationLevel = 1;
 }
 
 #pragma mark - NSMenuItem Actions
@@ -393,7 +383,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     if (![IRKit sharedInstance].peripherals.countOfReadyPeripherals) {
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle: @"OK"];
-        NSString *message = @"No IRKit found in the same Wi-Fi network.\nPlease setup IRKit and connect it to the same network.";
+        NSString *message = NSLocalizedString(@"No IRKit found in the same Wi-Fi network.\nPlease setup IRKit and connect it to the same network.", @"ILMenuDataSource no IRKits message title");
         [alert setMessageText: message];
         [alert setAlertStyle: NSWarningAlertStyle];
         [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
@@ -562,7 +552,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         if (!saved) {
             NSString *message = error.localizedDescription;
             if ((error.domain == NSCocoaErrorDomain) && (error.code == 4)) {
-                message = [NSString stringWithFormat: @"Failed to save to: %@", error.userInfo[ NSFilePathErrorKey ]];
+                message = [NSString stringWithFormat: NSLocalizedString( @"Failed to save to: %@", @"ILMenuDataSource failed to save alert message"), error.userInfo[ NSFilePathErrorKey ]];
             }
             NSAlert *alert = [[NSAlert alloc] init];
             [alert addButtonWithTitle: @"OK"];
@@ -597,8 +587,8 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 - (void) showConfirmToInstallExtension:(id<ILLauncherExtension>)extension completion:(void (^)(NSInteger returnCode))callback {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle: @"OK"]; // right most : NSAlertFirstButtonReturn
-    [alert addButtonWithTitle: @"Cancel"]; // 2nd to right : NSAlertSecondButtonReturn
-    [alert setMessageText: [NSString stringWithFormat: @"Install %@ Extension?", extension.title]];
+    [alert addButtonWithTitle: NSLocalizedString(@"Cancel", @"ILMenuDataSource confirm to install cancel")]; // 2nd to right : NSAlertSecondButtonReturn
+    [alert setMessageText: [NSString stringWithFormat: NSLocalizedString(@"Install %@ Extension?", @"ILMenuDataSource install extension confirm message"), extension.title]];
     [alert setInformativeText: extension.installInformativeText];
     [alert setAlertStyle: NSWarningAlertStyle];
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];

@@ -17,6 +17,7 @@
 
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *progressIndicator;
 @property (nonatomic, weak) IBOutlet NSButton *debugButton;
+@property (nonatomic, weak) IBOutlet NSTextField *detailTextField;
 
 @end
 
