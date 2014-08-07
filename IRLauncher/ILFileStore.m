@@ -37,18 +37,20 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
 }
 
 + (BOOL) saveSignal:(IRSignal *)signal error:(NSError**) error {
-    if (!signal.name) {
+    if (!signal.name || [signal.name isEqualToString: @""]) {
         // name is required
         *error = [NSError errorWithDomain: IRLauncherErrorDomain
                                      code: IRLauncherErrorCodeInvalidFile
                                  userInfo: @{ NSLocalizedDescriptionKey: NSLocalizedString( @"name is required", @"ILFileStore error description of signal without name" )}];
         return NO;
     }
-    if (![signal.name isEqualToString: signal.name.lastPathComponent]) {
-        // name includes "/" equivalent
+    NSCharacterSet* illegalFileNameCharacters = [NSCharacterSet characterSetWithCharactersInString: @"/\\?%*|\"<>"];
+    NSString *safename                        = [[signal.name componentsSeparatedByCharactersInSet: illegalFileNameCharacters] componentsJoinedByString: @""];
+    if (![safename isEqualToString: signal.name]) {
+        // name includes other characters
         *error = [NSError errorWithDomain: IRLauncherErrorDomain
                                      code: IRLauncherErrorCodeInvalidFile
-                                 userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: NSLocalizedString(@"Choose a file directly under %@", @"ILFileStore error description of signal including /"),[self signalsDirectory]] }];
+                                 userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: NSLocalizedString(@"Choose a sane name", @"ILFileStore error description of signal including invalid characteres")]}];
         return NO;
     }
 
@@ -69,15 +71,9 @@ static NSString * const kILSignalsSubDirectory = @"signals/";
         return NO;
     }
 
-    NSString *basename    = [NSString stringWithFormat: @"%@.json", signal.name];
-    NSString *file        = [[self signalsDirectory] stringByAppendingPathComponent: basename];
-    NSString *cleanedFile = [file stringByStandardizingPath];
-    if (![file isEqualToString: cleanedFile]) {
-        *error = [NSError errorWithDomain: IRLauncherErrorDomain
-                                     code: IRLauncherErrorCodeInvalidFile
-                                 userInfo: @{ NSLocalizedDescriptionKey: [NSString stringWithFormat: NSLocalizedString(@"Choose a file directly under %@", @"ILFileStore error description of signal including /"),[self signalsDirectory]] }];
-        return NO;
-    }
+    NSString *basename = [NSString stringWithFormat: @"%@.json", signal.name];
+    NSString *file     = [[self signalsDirectory] stringByAppendingPathComponent: basename];
+
     // doesn't overwrite file
     BOOL success = [json writeToURL: [NSURL fileURLWithPath: file]
                             options: NSDataWritingWithoutOverwriting

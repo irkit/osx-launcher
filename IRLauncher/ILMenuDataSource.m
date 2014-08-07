@@ -536,47 +536,46 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 
 - (void) learnSignalWindowController:(ILLearnSignalWindowController*)c
                  didFinishWithSignal:(IRSignal*)signal
-                           withError:(NSError *)error {
-    ILLOG( @"signal: %@, error: %@", signal, error );
-    [_signalWindowController close];
-    _signalWindowController = nil;
+                           withError:(NSError *)error_ {
+    ILLOG( @"signal: %@, error: %@", signal, error_ );
 
-    if (error) {
+    if (error_ || !signal) {
         // Currently, no errors are expected.
         return;
     }
 
-    if (signal) {
-        NSError *error = nil;
-        BOOL saved     = [ILFileStore saveSignal: signal error: &error];
-        if (!saved) {
-            NSString *message = error.localizedDescription;
-            if ((error.domain == NSCocoaErrorDomain) && (error.code == 4)) {
-                message = [NSString stringWithFormat: NSLocalizedString( @"Failed to save to: %@", @"ILMenuDataSource failed to save alert message"), error.userInfo[ NSFilePathErrorKey ]];
-            }
-            NSAlert *alert = [[NSAlert alloc] init];
-            [alert addButtonWithTitle: @"OK"];
-            [alert setMessageText: message];
-            [alert setAlertStyle: NSWarningAlertStyle];
-            [alert runModal];
-            ILLOG( @"saveSignal:error: failed with error: %@", error );
-            return;
+    NSError *error = nil;
+    BOOL saved     = [ILFileStore saveSignal: signal error: &error];
+    if (!saved) {
+        NSString *message = error.localizedDescription;
+        if ((error.domain == NSCocoaErrorDomain) && (error.code == 4)) {
+            message = [NSString stringWithFormat: NSLocalizedString( @"Failed to save to: %@", @"ILMenuDataSource failed to save alert message"), error.userInfo[ NSFilePathErrorKey ]];
         }
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle: @"OK"];
+        [alert setMessageText: message];
+        [alert setAlertStyle: NSWarningAlertStyle];
+        [alert runModal];
+        ILLOG( @"saveSignal:error: failed with error: %@", error );
+        return;
+    }
 
-        [_signals addSignalsObject: signal];
-        NSUInteger index = [_signals indexOfSignal: signal];
-        [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemAdded
-                                                            object: self
-                                                          userInfo: @{
-             kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index
-                                                                   inSection: ILMenuSectionIndexSignals]
-         }];
+    [_signalWindowController close];
+    _signalWindowController = nil;
 
-        for (id<ILLauncherExtension> extension in _launcherExtensions) {
-            if ([extension respondsToSelector: @selector(installed)] && [extension installed]) {
-                if ([extension respondsToSelector: @selector(didLearnSignal)]) {
-                    [extension didLearnSignal];
-                }
+    [_signals addSignalsObject: signal];
+    NSUInteger index = [_signals indexOfSignal: signal];
+    [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemAdded
+                                                        object: self
+                                                      userInfo: @{
+         kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: index
+                                                               inSection: ILMenuSectionIndexSignals]
+     }];
+
+    for (id<ILLauncherExtension> extension in _launcherExtensions) {
+        if ([extension respondsToSelector: @selector(installed)] && [extension installed]) {
+            if ([extension respondsToSelector: @selector(didLearnSignal)]) {
+                [extension didLearnSignal];
             }
         }
     }

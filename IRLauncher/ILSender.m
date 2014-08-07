@@ -44,8 +44,10 @@
         [self showAlertWithMessage: @"IRKit not found with provided \"hostname\" key. From which IRKit you want to send this signal?"];
     }
     [signal sendWithCompletion:^(NSError *error) {
-        NSString *message = [NSString stringWithFormat: NSLocalizedString(@"Failed to send: %@ with error: %@", @"ILSender send error message"), signal.name, error.localizedDescription];
-        [self showAlertWithMessage: message];
+        if (error) {
+            NSString *message = [NSString stringWithFormat: NSLocalizedString(@"Failed to send: %@ with error: %@", @"ILSender send error message"), signal.name, error.localizedDescription];
+            [self showAlertWithMessage: message];
+        }
     }];
 }
 

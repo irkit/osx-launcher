@@ -48,7 +48,7 @@
 "+ Learn New Signal" = "+ 新しいリモコン信号を学習する";
 
 /* ILFileStore error description of signal without name */
-"name is required" = "name is required";
+"name is required" = "リモコン信号名を設定してください";
 
 /* ILMenuDataSource no IRKits message title */
 "No IRKit found in the same Wi-Fi network.\nPlease setup IRKit and connect it to the same network." = "IRKitが同じWi-Fiネットワーク内に見つかりませんでした。\nIRKitをセットアップするか、セットアップ済みであればBonjour機能を有効にしてください。";

@@ -27,6 +27,9 @@
                                                                                    queue: nil
                                                                               usingBlock:^(NSNotification *note) {
         NSString *input = _self.inputTextField.stringValue;
+        if ([input isEqualToString: @""]) {
+            input = @"aircon-off"; // this is what's shown in placeholder
+        }
         NSString *format = NSLocalizedString(@"IR signal data will be saved as:\n~/.irkit.d/signals/%@.json\n\nSearch for \"%@\"\nin Quicksilver or Alfred 2", @"ILSignalNameEditViewController guide message");
         NSString *guideMessage = [NSString stringWithFormat: format, input, input ];
         _self.guideTextField.stringValue = guideMessage;
@@ -58,7 +61,6 @@
     ILLOG_CURRENT_METHOD;
 
     _signal.name = _inputTextField.stringValue;
-
     [_delegate signalNameEditViewController: self
                           didFinishWithInfo: @{ IRViewControllerResultType : IRViewControllerResultTypeDone,
                                                 IRViewControllerResultSignal : _signal,

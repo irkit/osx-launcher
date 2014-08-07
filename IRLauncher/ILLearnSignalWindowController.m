@@ -116,7 +116,7 @@
 - (void) signalReceiveViewController:(ILSignalReceiveViewController*)c didReceiveSignal:(IRSignal*)signal withError:(NSError *)error {
     ILLOG( @"signal: %@", signal );
 
-    if (signal || 1) {
+    if (signal) {
         ILSignalNameEditViewController *c = [[ILSignalNameEditViewController alloc] initWithNibName: @"ILSignalNameEditView" bundle: nil];
         c.delegate = self;
         c.signal   = signal;
