@@ -34,10 +34,12 @@
         NSString *guideMessage = [NSString stringWithFormat: format, input, input ];
         _self.guideTextField.stringValue = guideMessage;
     }];
+    [_inputTextField setDelegate: self];
 }
 
 - (void) dealloc {
     ILLOG_CURRENT_METHOD;
+    [_inputTextField setDelegate: nil];
     [[NSNotificationCenter defaultCenter] removeObserver: _textObserver];
 }
 
@@ -72,6 +74,12 @@
 
     [_delegate signalNameEditViewController: self
                           didFinishWithInfo: @{ IRViewControllerResultType: IRViewControllerResultTypeCancelled }];
+}
+
+#pragma mark - NSTextFieldDelegate
+
+- (NSArray *)control:(NSControl *)control textView:(NSTextView *)textView completions:(NSArray *)words forPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index {
+    return nil;
 }
 
 @end

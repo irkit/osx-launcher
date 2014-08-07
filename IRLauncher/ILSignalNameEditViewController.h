@@ -11,7 +11,7 @@
 
 @protocol ILSignalNameEditViewControllerDelegate;
 
-@interface ILSignalNameEditViewController : NSViewController
+@interface ILSignalNameEditViewController : NSViewController<NSTextFieldDelegate>
 
 @property (nonatomic, weak) id<ILSignalNameEditViewControllerDelegate> delegate;
 @property (nonatomic, strong) IRSignal *signal;
