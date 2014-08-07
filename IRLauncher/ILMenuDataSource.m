@@ -9,7 +9,6 @@
 #import "ILMenuDataSource.h"
 #import "ILLog.h"
 #import "IRKit.h"
-#import "ILMenuProgressView.h"
 #import "ILUtils.h"
 #import "ILFileStore.h"
 #import "ILLearnSignalWindowController.h"
@@ -205,39 +204,28 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 }
 
 - (void)sectionedMenu:(MOSectionedMenu *)menu updateHeaderItem:(NSMenuItem *)item inSection:(NSUInteger)sectionIndex {
+    // header items are all disabled
+    [item setEnabled: NO];
+
     switch (sectionIndex) {
     case ILMenuSectionIndexSignals:
     {
-        if (![item.view isKindOfClass: [ILMenuProgressView class]]) {
-            item.view = [ILUtils loadClassNamed: @"ILMenuProgressView"];
-        }
-        ILMenuProgressView *view = (ILMenuProgressView*)item.view;
         if (_searchingForSignals) {
-            view.animating = YES;
-            [view.textField setStringValue: NSLocalizedString( @"Signals (Searching...)", @"ILMenuDataSource searching signals section header title" )];
+            item.title = NSLocalizedString( @"Signals : Searching...", @"ILMenuDataSource searching signals section header title" );
         }
         else {
-            view.animating = NO;
-            [view.textField setStringValue: NSLocalizedString( @"Signals", @"ILMenuDataSource not searching signals section header title" )];
+            item.title = NSLocalizedString( @"Signals", @"ILMenuDataSource not searching signals section header title" );
         }
-        [view startAnimationIfNeeded];
     }
     break;
     case ILMenuSectionIndexPeripherals:
     {
-        if (![item.view isKindOfClass: [ILMenuProgressView class]]) {
-            item.view = [ILUtils loadClassNamed: @"ILMenuProgressView"];
-        }
-        ILMenuProgressView *view = (ILMenuProgressView*)item.view;
         if ([IRSearcher sharedInstance].searching) {
-            view.animating = YES;
-            [view.textField setStringValue: NSLocalizedString(@"IRKits (Searching...)", @"ILMenuDataSource searching IRKits section header title")];
+            item.title = NSLocalizedString(@"IRKits : Searching...", @"ILMenuDataSource searching IRKits section header title");
         }
         else {
-            view.animating = NO;
-            [view.textField setStringValue: NSLocalizedString( @"IRKits", @"ILMenuDataSource not searching IRKits section header title" )];
+            item.title = NSLocalizedString( @"IRKits", @"ILMenuDataSource not searching IRKits section header title" );
         }
-        [view startAnimationIfNeeded];
     }
     break;
     default:
