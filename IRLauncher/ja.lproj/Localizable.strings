@@ -39,7 +39,7 @@
 "IRKits" = "IRKit";
 
 /* ILMenuDataSource searching IRKits section header title */
-"IRKits (Searching...)" = "IRKit (検索中...)";
+"IRKits : Searching..." = "IRKit : 検索中...";
 
 /* ILMenuDataSource learnNewSignal menu item title */
 "+ Learn New Signal" = "+ 新しいリモコン信号を学習する";
@@ -60,7 +60,7 @@
 "Signals" = "リモコン信号";
 
 /* ILMenuDataSource searching signals section header title */
-"Signals (Searching...)" = "リモコン信号 (検索中...)";
+"Signals : Searching..." = "リモコン信号 : 検索中...";
 
 /* ILAppDelegate updated to version notification title */
 "Updated to version %@" = "バージョン:%@ にアップデートしました";

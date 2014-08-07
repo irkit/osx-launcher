@@ -295,7 +295,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         case ILMenuHelpItemIndexVersion:
         default:
         {
-            item.title = [NSString stringWithFormat: @"Version: %@", [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]];
+            item.title = [NSString stringWithFormat: @"Version : %@", [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]];
             [item setEnabled: NO];
         }
         break;
@@ -347,7 +347,8 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         item.toolTip = @"\"hostname\" key not found";
         [item setEnabled: NO];
     }
-    item.tag = index;
+    item.tag              = index;
+    item.indentationLevel = 1;
 }
 
 - (void) updateItem:(NSMenuItem*)item withPeripheral:(IRPeripheral*)peripheral atIndex:(NSUInteger)index {
@@ -359,6 +360,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     }
     // You can't click IRKit menuItem, it doesn't do anything
     [item setEnabled: NO];
+    item.indentationLevel = 1;
 }
 
 #pragma mark - NSMenuItem Actions
