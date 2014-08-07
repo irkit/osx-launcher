@@ -439,18 +439,19 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     id<ILLauncherExtension> extension = _launcherExtensions[ extensionIndex ];
 
     [self showConfirmToInstallExtension: extension completion:^(NSInteger returnCode) {
-        if (returnCode == NSAlertFirstButtonReturn) {
-            [extension install];
-            [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
-                                                                object: self
-                                                              userInfo: @{
-                 kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: extensionIndex
+        if (returnCode != NSAlertFirstButtonReturn) {
+            return;
+        }
+        [extension install];
+        [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
+                                                            object: self
+                                                          userInfo: @{
+             kMOSectionedMenuItemIndexPathKey: [MOIndexPath     indexPathForItem: extensionIndex
                                                                        inSection: ILMenuSectionIndexOptions]
-             }];
+         }];
 
-            if ([extension respondsToSelector: @selector(didFinishInstallation)]) {
-                [extension didFinishInstallation];
-            }
+        if ([extension respondsToSelector: @selector(didFinishInstallation)]) {
+            [extension didFinishInstallation];
         }
     }];
 }

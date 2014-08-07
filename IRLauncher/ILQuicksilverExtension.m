@@ -38,7 +38,7 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
     NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: kILQuicksilverBundleIdentifier];
     if (quicksilvers.count) {
         [self showConfirmToRelaunchQuicksilver:^(NSInteger returnCode) {
-            if (returnCode == NSCancelButton) {
+            if (returnCode != NSAlertFirstButtonReturn) {
                 return;
             }
 
