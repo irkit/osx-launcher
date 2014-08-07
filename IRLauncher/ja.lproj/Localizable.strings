@@ -30,10 +30,10 @@
 "I will launch \"Send IR signal.alfredworkflow\"" = "\"Send IR signal.alfredworkflow\" を開きます";
 
 /* ILMenuDataSource install %@ extension title */
-"Install %@ Extension" = "%@ Extension をインストールする";
+"Install %@ Extension" = "%@ Extensionをインストールする";
 
 /* ILMenuDataSource install extension confirm message */
-"Install %@ Extension?" = "%@ Extension をインストールしますか?";
+"Install %@ Extension?" = "%@ Extensionをインストールしますか?";
 
 /* ILMenuDataSource not searching IRKits section header title */
 "IRKits" = "IRKit";
