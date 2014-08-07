@@ -446,8 +446,8 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemUpdated
                                                             object: self
                                                           userInfo: @{
-             kMOSectionedMenuItemIndexPathKey: [MOIndexPath     indexPathForItem: extensionIndex
-                                                                       inSection: ILMenuSectionIndexOptions]
+             kMOSectionedMenuItemIndexPathKey: [MOIndexPath indexPathForItem: extensionIndex
+                                                                   inSection: ILMenuSectionIndexOptions]
          }];
 
         if ([extension respondsToSelector: @selector(didFinishInstallation)]) {
@@ -542,6 +542,8 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 
     if (error_ || !signal) {
         // Currently, no errors are expected.
+        [_signalWindowController close];
+        _signalWindowController = nil;
         return;
     }
 
@@ -558,6 +560,8 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
         [alert setAlertStyle: NSWarningAlertStyle];
         [alert runModal];
         ILLOG( @"saveSignal:error: failed with error: %@", error );
+
+        // don't close window
         return;
     }
 
