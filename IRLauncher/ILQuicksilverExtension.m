@@ -48,7 +48,7 @@ static NSString *kILQuicksilverBundleIdentifier = @"com.blacktree.Quicksilver";
             if (!success) {
                 ILLOG( @"failed to terminate quicksilver" );
             }
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     NSArray *quicksilvers = [NSRunningApplication runningApplicationsWithBundleIdentifier: kILQuicksilverBundleIdentifier];
                     if (quicksilvers.count) {
                         ILLOG( @"failed to terminate quicksilver" );
