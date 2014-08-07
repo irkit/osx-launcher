@@ -9,7 +9,7 @@
 "Choose a file directly under %@" = "%@以下のファイルを選んでください";
 
 /* ILMenuDataSource click to send via %@, tooltip */
-"Click to send via %@" = "クリックすると %@ を送ります";
+"Click to send via %@" = "クリックすると %@ から送ります";
 
 /* ILAppDelegate updated to version informative text */
 "Click to show release notes" = "クリックするとリリースノートを開きます";
