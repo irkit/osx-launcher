@@ -21,6 +21,9 @@
     if (error) {
         NSString *message;
         switch (error.code) {
+        case IRLauncherErrorCodeNotFound:
+            message = nil;
+            break;
         case IRLauncherErrorCodeInvalidFile:
             message = [NSString stringWithFormat: @"Failed to load file: %@", filePath];
             break;
@@ -33,6 +36,10 @@
         default:
             message = [NSString stringWithFormat: NSLocalizedString( @"Failed to send file: %@ with error: %@", @"ILSender default error message" ), filePath, error.localizedDescription];
             break;
+        }
+        if (!message) {
+            // MacOS might give some random (ex: -psn_0_xxxxx) argument on launch, silently ignore that
+            return;
         }
         [self showAlertWithMessage: message];
     }
@@ -63,7 +70,7 @@
 
     if (![[NSFileManager defaultManager] fileExistsAtPath: filePath]) {
         *error = [NSError errorWithDomain: IRLauncherErrorDomain
-                                     code: IRLauncherErrorCodeInvalidFile
+                                     code: IRLauncherErrorCodeNotFound
                                  userInfo: nil];
         return nil;
     }
