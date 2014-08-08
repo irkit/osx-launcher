@@ -40,6 +40,8 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     ILLOG_CURRENT_METHOD;
     __weak typeof(self) _self = self;
 
+    [[NSUserDefaults standardUserDefaults] registerDefaults: @{ kILUserDefaultsAutoUpdateKey: @YES }];
+
     NSArray *args = [[NSProcessInfo processInfo] arguments];
     ILLOG( @"args: %@", args );
 

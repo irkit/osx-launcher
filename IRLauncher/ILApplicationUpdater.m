@@ -15,7 +15,7 @@
 #import <MOAutoUpdater/MOCodeSignValidator.h>
 #import "NSObject-PerformWhenIdle.h"
 
-static NSString * const kILUserDefaultsAutoUpdateKey  = @"autoupdate";
+NSString * const kILUserDefaultsAutoUpdateKey         = @"autoupdate";
 static NSString * const kILUserDefaultsLastCheckedKey = @"lastchecked";
 static const NSTimeInterval kCheckInterval            = 24 * 60 * 60;
 static const NSTimeInterval kIdleInterval             = 60;

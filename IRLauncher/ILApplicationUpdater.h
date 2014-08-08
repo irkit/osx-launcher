@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kILUserDefaultsAutoUpdateKey;
+
 @interface ILApplicationUpdater : NSObject
 
 + (instancetype) sharedInstance;
