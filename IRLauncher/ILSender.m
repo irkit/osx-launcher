@@ -30,9 +30,6 @@
         case IRLauncherErrorCodeUnsupported:
             message = @"Unsupported file format";
             break;
-        case IRLauncherErrorCodePeripheralNotFound:
-            message = @"IRKit not found with provided \"hostname\" key. From which IRKit you want to send this signal?";
-            break;
         default:
             message = [NSString stringWithFormat: NSLocalizedString( @"Failed to send file: %@ with error: %@", @"ILSender default error message" ), filePath, error.localizedDescription];
             break;
@@ -42,6 +39,7 @@
             return;
         }
         [self showAlertWithMessage: message];
+        return;
     }
     [self sendSignalAndAlertOnError: signal];
 }
@@ -49,6 +47,7 @@
 - (void)sendSignalAndAlertOnError:(IRSignal*)signal {
     if (!signal.peripheral) {
         [self showAlertWithMessage: @"IRKit not found with provided \"hostname\" key. From which IRKit you want to send this signal?"];
+        return;
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName: kILWillSendSignalNotification
