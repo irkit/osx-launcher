@@ -155,6 +155,7 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 - (BOOL)sectionedMenu:(MOSectionedMenu*)menu hasFooterForSection:(NSUInteger)sectionIndex {
     switch (sectionIndex) {
     case ILMenuSectionIndexSignals:
+    case ILMenuSectionIndexPeripherals:
     {
         return YES;
     }
@@ -189,16 +190,20 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 }
 
 - (NSMenuItem*)sectionedMenu:(MOSectionedMenu*)menu footerItemForSection:(NSUInteger)sectionIndex {
-    if (sectionIndex != ILMenuSectionIndexSignals) {
+    switch (sectionIndex) {
+    case ILMenuSectionIndexSignals:
+    case ILMenuSectionIndexPeripherals:
+    {
+        NSMenuItem *item = [[NSMenuItem alloc] init];
+        [self sectionedMenu: menu updateFooterItem: item inSection: sectionIndex];
+        return item;
+    }
+    break;
+    default:
+    {
         return nil;
     }
-
-    NSMenuItem *item = [[NSMenuItem alloc] init];
-    item.title         = NSLocalizedString( @"+ Learn New Signal", @"ILMenuDataSource learnNewSignal menu item title" );
-    item.target        = self;
-    item.action        = @selector(learnNewSignal:);
-    item.keyEquivalent = @"+";
-    return item;
+    }
 }
 
 - (void)sectionedMenu:(MOSectionedMenu *)menu updateHeaderItem:(NSMenuItem *)item inSection:(NSUInteger)sectionIndex {
@@ -232,6 +237,25 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
 }
 
 - (void)sectionedMenu:(MOSectionedMenu *)menu updateFooterItem:(NSMenuItem *)item inSection:(NSUInteger)sectionIndex {
+    switch (sectionIndex) {
+    case ILMenuSectionIndexSignals:
+    {
+        item.title         = NSLocalizedString( @"+ Learn New Signal", @"ILMenuDataSource learnNewSignal menu item title" );
+        item.target        = self;
+        item.action        = @selector(learnNewSignal:);
+        item.keyEquivalent = @"+";
+    }
+    break;
+    case ILMenuSectionIndexPeripherals:
+    {
+        item.title  = NSLocalizedString( @"Clear IRKit list", @"ILMenuDataSource clear IRKit list menu item title" );
+        item.target = self;
+        item.action = @selector(clearIRKitList:);
+    }
+    break;
+    default:
+        break;
+    }
 }
 
 - (void)sectionedMenu:(MOSectionedMenu *)menu updateItem:(NSMenuItem *)item atIndexPath:(MOIndexPath *)indexPath {
@@ -401,6 +425,23 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     [c showWindow: self];
     c.signalDelegate        = self;
     _signalWindowController = c; // retain to keep window showing
+}
+
+- (void) clearIRKitList: (id)sender {
+    __weak typeof(self) _self = self;
+    [self showConfirmToClearIRKitList:^(NSInteger returnCode) {
+        if (returnCode != NSAlertFirstButtonReturn) {
+            return;
+        }
+        IRPeripherals *peripherals = [IRKit sharedInstance].peripherals;
+        [peripherals clearPeripherals];
+        [peripherals save];
+        [[NSNotificationCenter defaultCenter] postNotificationName: kMOSectionedMenuItemsAdded
+                                                            object: _self
+                                                          userInfo: @{
+             kMOSectionedMenuItemSectionKey: @(ILMenuSectionIndexPeripherals)
+         }];
+    }];
 }
 
 - (void) toggleAutoUpdate: (id)sender {
@@ -576,6 +617,18 @@ typedef NS_ENUM (NSUInteger,ILMenuOptionsItemIndex) {
     [alert addButtonWithTitle: NSLocalizedString(@"Cancel", @"ILMenuDataSource confirm to install cancel")]; // 2nd to right : NSAlertSecondButtonReturn
     [alert setMessageText: [NSString stringWithFormat: NSLocalizedString(@"Install %@ Extension?", @"ILMenuDataSource install extension confirm message"), extension.title]];
     [alert setInformativeText: extension.installInformativeText];
+    [alert setAlertStyle: NSWarningAlertStyle];
+    [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
+    NSInteger ret = [alert runModal];
+    callback( ret );
+}
+
+- (void) showConfirmToClearIRKitList:(void (^)(NSInteger returnCode))callback {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle: @"OK"]; // right most : NSAlertFirstButtonReturn
+    [alert addButtonWithTitle: NSLocalizedString(@"Cancel", @"ILMenuDataSource confirm to clear IRKit list cancel")]; // 2nd to right : NSAlertSecondButtonReturn
+    [alert setMessageText: NSLocalizedString(@"Clear IRKit list?", @"ILMenuDataSource confirm to clear IRIit list message")];
+    [alert setInformativeText: NSLocalizedString(@"Click when you long pressed IRKit's reset button", @"ILMenuDataSource confirm to clear IRKit list informative text")];
     [alert setAlertStyle: NSWarningAlertStyle];
     [[NSRunningApplication currentApplication] activateWithOptions: NSApplicationActivateIgnoringOtherApps];
     NSInteger ret = [alert runModal];

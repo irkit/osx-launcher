@@ -5,6 +5,15 @@
    ILQuicksilverExtension cancel to relaunch quicksilver */
 "Cancel" = "キャンセル";
 
+/* ILFileStore error description of signal including invalid characteres */
+"Choose a sane name" = "Choose a sane name";
+
+/* ILMenuDataSource clear IRKit list menu item title */
+"Clear IRKit list" = "IRKit一覧のクリア";
+
+/* ILMenuDataSource confirm to clear IRIit list message */
+"Clear IRKit list?" = "IRKit一覧をクリアしますか?";
+
 /* ILFileStore error description of signal including / */
 "Choose a file directly under %@" = "%@以下のファイルを選んでください";
 
@@ -13,6 +22,9 @@
 
 /* ILAppDelegate updated to version informative text */
 "Click to show release notes" = "クリックするとリリースノートを開きます";
+
+/* ILMenuDataSource confirm to clear IRKit list informative text */
+"Click when you long pressed IRKit's reset button" = "IRKit背面のリセットボタンを長押しした場合にクリアしてください";
 
 /* ILMenuDataSource failed to save alert message */
 "Failed to save to: %@" = "%@ に保存できませんでした";
