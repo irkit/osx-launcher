@@ -25,13 +25,13 @@ youtube
 
 Type IR signals' name, `<TAB>` and select `IRSender` action.
 
-[Quicksilver screenshot](Web/quicksilver.png)
+![Quicksilver screenshot](/Web/quicksilver.png?raw=true)
 
 ### Alfred 2
 
 Type `ir<space>` and then IR signals' name.
 
-[Alfred 2 screenshot](Web/alfred2.png)
+![Alfred 2 screenshot](/Web/alfred2.png?raw=true)
 
 ## How does this work?
 
