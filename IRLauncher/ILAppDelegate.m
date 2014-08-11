@@ -31,6 +31,8 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
 @property (nonatomic, strong) MOAnimatingStatusItem *statusItem;
 @property (nonatomic, strong) IRSignals *signals;
 @property (nonatomic, strong) ILApplicationUpdater *updater;
+@property (nonatomic, strong) NSMutableArray *pendingSignalFiles;
+@property (nonatomic) BOOL didLaunch;
 
 @end
 
@@ -38,9 +40,6 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     ILLOG_CURRENT_METHOD;
-    __weak typeof(self) _self = self;
-
-    [[NSUserDefaults standardUserDefaults] registerDefaults: @{ kILUserDefaultsAutoUpdateKey: @YES }];
 
     NSArray *args = [[NSProcessInfo processInfo] arguments];
     ILLOG( @"args: %@", args );
@@ -59,12 +58,19 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
         [NSApp terminate: nil];
         return;
     }
-    else if (signalFilePath) {
-        // do it by myself
-        [self performSelector: @selector(postDistributedNotificationToSendFileAtPath:)
-                   withObject: signalFilePath
-                   afterDelay: 0.];
 
+    [self setupSingleInstance];
+
+    if (signalFilePath) {
+        // fresh launch with signal JSON file as argument
+        [self postDistributedNotificationToSendFileAtPath: signalFilePath];
+    }
+    else if (_pendingSignalFiles.count) {
+        // double clicked signal JSON file before launch
+        for (NSString *filename in _pendingSignalFiles) {
+            [self postDistributedNotificationToSendFileAtPath: filename];
+        }
+        _pendingSignalFiles = nil; // don't use after launch
     }
 
     if ([MOUpdater didRelaunch]) {
@@ -82,6 +88,14 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
         center.delegate = self;
         [center deliverNotification: notification];
     }
+
+    _didLaunch = YES;
+}
+
+// Things I don't want in duplicate instances
+- (void) setupSingleInstance {
+    ILLOG_CURRENT_METHOD;
+    __weak typeof(self) _self = self;
 
     [[NSDistributedNotificationCenter defaultCenter] addObserver: self
                                                         selector: @selector(receivedDistributedNotification:)
@@ -101,20 +115,41 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     // when duplicate process launches and terminates.
     _statusItem                 = [[ILStatusItem alloc] init];
     _statusItem.statusItem.menu = _sectionedMenu.menu;
+}
 
-    [IRKit startWithAPIKey: kIRKitAPIKey];
+- (BOOL) application:(NSApplication *)sender openFile:(NSString *)filename {
+    ILLOG( @"sender: %@, openFile: %@", sender, filename );
 
-    // automatically download, unarchive, update
-    _updater = [[ILApplicationUpdater alloc] init];
-    [_updater startPeriodicCheck];
+    if ([[filename pathExtension] isEqualToString: @"json"]) {
+        if (_didLaunch) {
+            // double clicked on signal JSON file while already launched
+            [self postDistributedNotificationToSendFileAtPath: filename];
+        }
+        else {
+            // double clicked on singal JSON file before launch
+            // send after launched
+            [_pendingSignalFiles addObject: filename];
+        }
+        return YES;
+    }
+
+    return NO;
 }
 
 - (instancetype) init {
     ILLOG_CURRENT_METHOD;
     self = [super init];
     if (!self) { return nil; }
+    return self;
+}
 
-    _signals = [[IRSignals alloc] init];
+- (void) awakeFromNib {
+    ILLOG_CURRENT_METHOD;
+
+    [[NSUserDefaults standardUserDefaults] registerDefaults: @{ kILUserDefaultsAutoUpdateKey: @YES }];
+
+    _signals            = [[IRSignals alloc] init];
+    _pendingSignalFiles = @[].mutableCopy;
 
     _sectionedMenu                       = [[MOSectionedMenu alloc] init];
     _sectionedMenu.menu.autoenablesItems = NO; // enable calling menuItem setEnabled:
@@ -123,22 +158,11 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     dataSource.signals        = _signals;
     [dataSource searchForSignals];
 
-    return self;
-}
+    [IRKit startWithAPIKey: kIRKitAPIKey];
 
-- (BOOL) application:(NSApplication *)sender openFile:(NSString *)filename {
-    ILLOG( @"sender: %@, openFile: %@", sender, filename );
-
-    if ([[filename pathExtension] isEqualToString: @"json"]) {
-        [self postDistributedNotificationToSendFileAtPath: filename];
-        return YES;
-    }
-
-    return NO;
-}
-
-- (void) awakeFromNib {
-    ILLOG_CURRENT_METHOD;
+    // automatically download, unarchive, update
+    _updater = [[ILApplicationUpdater alloc] init];
+    [_updater startPeriodicCheck];
 }
 
 - (void) dealloc {
