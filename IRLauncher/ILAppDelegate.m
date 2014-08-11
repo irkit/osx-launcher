@@ -130,6 +130,7 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     ILLOG( @"sender: %@, openFile: %@", sender, filename );
 
     if ([[filename pathExtension] isEqualToString: @"json"]) {
+        [self postDistributedNotificationToSendFileAtPath: filename];
         return YES;
     }
 
