@@ -39,7 +39,7 @@ end
 
 desc "clean"
 task "clean" do |task|
-  sh "xcodebuild clean -workspace '#{WORKSPACE_PATH}' -scheme '#{SCHEME_NAME}'"
+  sh "xcodebuild clean -workspace '#{WORKSPACE_PATH}' -scheme '#{SCHEME_NAME}' -configuration '#{CONFIGURATION}'"
   sh "rm -rf Products/"
 end
 
