@@ -10,7 +10,8 @@ I heavily use [Quicksilver](http://qsapp.com/), many others use [Alfred 2](http:
 
 ## Demo
 
-youtube
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Qex3yCzFVyA" target="_blank"><img src="http://img.youtube.com/vi/Qex3yCzFVyA/0.jpg" alt="IMAGE ALT TEXT HERE" width="480" height="360" border="10" /></a>  
+Click to play on YouTube.
 
 ## Installation
 
@@ -33,11 +34,17 @@ Type `ir<space>` and then IR signals' name.
 
 ![Alfred 2 screenshot](/Web/alfred2.png?raw=true)
 
+You need Powerpack license to use this.
+
 ## How does this work?
 
 IRLauncher stores IR signal JSON representation files under `~/.irkit.d/signals` directory, with a filename you give.  
 Quicksilver, Alfred 2 extensions tell their indexer to index files under `~/.irkit.d/signals`.  
 IRLauncher also sets the custom launch application of the IR JSON representation file to itself, so you can just double click `aircon-off.json` to turn off your air conditioner.
+
+You can also call `/Applications/IRLauncher.app/Contents/MacOS/IRLauncher ~/.irkit.d/signals/aircon-off.json` to send it.
+
+IRLauncher uses `NSDistributedNotificationCenter`, make sure you're not killing `distnoted` which manages `NSDistributedNotification`s.
 
 ## More information
 
