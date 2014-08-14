@@ -12,6 +12,8 @@ cat <<EOF
 EOF
 
 # check if prefix match first
+(
+IFS=$'\n';
 files=`ls ~/.irkit.d/signals/ | grep ^${q}`
 if [ -z ${files} ]; then
   files=`ls ~/.irkit.d/signals/ | grep ${q}`
@@ -27,6 +29,7 @@ for file in ${files}; do
   </item>
 EOF
 done
+)
 
 cat <<EOF
 </items>
