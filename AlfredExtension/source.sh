@@ -11,15 +11,16 @@ cat <<EOF
 <items>
 EOF
 
-# check if prefix match first
-(
+IFS_BACKUP=${IFS}
 IFS=$'\n';
-files=`ls ~/.irkit.d/signals/ | grep ^${q}`
-if [ -z ${files} ]; then
-  files=`ls ~/.irkit.d/signals/ | grep ${q}`
+
+# check if prefix match first
+files=(`ls ~/.irkit.d/signals/ | grep "^${q}"`)
+if [ ${#files[@]} == 0 ]; then
+  files=(`ls ~/.irkit.d/signals/ | grep "${q}"`)
 fi
 
-for file in ${files}; do
+for file in "${files[@]}"; do
   basename=${file##*/}
   cat <<EOF
   <item arg="~/.irkit.d/signals/${file}" valid="YES" type="file">
@@ -29,7 +30,8 @@ for file in ${files}; do
   </item>
 EOF
 done
-)
+
+IFS=${IFS_BACKUP}
 
 cat <<EOF
 </items>
