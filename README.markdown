@@ -46,6 +46,25 @@ You can also call `/Applications/IRLauncher.app/Contents/MacOS/IRLauncher ~/.irk
 
 IRLauncher uses `NSDistributedNotificationCenter`, make sure you're not killing `distnoted` which manages `NSDistributedNotification`s.
 
+## How to build?
+
+```
+# Get code
+git clone git@github.com:irkit/osx-launcher.git
+
+# Dive into it
+cd osx-launcher
+
+# Fetch dependencies
+pod install
+
+# Get IRKit API key
+open "http://getirkit.com/en/#post-/1/apps"
+
+# Go!
+open IRLauncher.xcworkspace
+```
+
 ## More information
 
 * [About IRKit](http://getirkit.com/)
