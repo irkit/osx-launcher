@@ -32,6 +32,7 @@
 		C7647EBB18ED5DD000171E7F /* IRReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C7647EB818ED5DD000171E7F /* IRReachability.m */; };
 		C764C1C719527E5B003410B6 /* MOSectionedMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C764C1C619527E5B003410B6 /* MOSectionedMenu.m */; };
 		C771619019A641F700E013FF /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = C771618F19A641F700E013FF /* APIKey.plist */; };
+		C771619219A645CF00E013FF /* README-APIKey.txt in Resources */ = {isa = PBXBuildFile; fileRef = C771619119A645CF00E013FF /* README-APIKey.txt */; };
 		C7766FA4189A524800898267 /* ILLog.m in Sources */ = {isa = PBXBuildFile; fileRef = C7766FA3189A524800898267 /* ILLog.m */; };
 		C77AFB4719528218002ED79A /* ILMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB4619528218002ED79A /* ILMenuDataSource.m */; };
 		C77AFB5A1952DCD6002ED79A /* MOAnimatingStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C77AFB591952DCD6002ED79A /* MOAnimatingStatusItem.m */; };
@@ -110,6 +111,7 @@
 		C764C1C519527E5B003410B6 /* MOSectionedMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOSectionedMenu.h; sourceTree = "<group>"; };
 		C764C1C619527E5B003410B6 /* MOSectionedMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOSectionedMenu.m; sourceTree = "<group>"; };
 		C771618F19A641F700E013FF /* APIKey.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
+		C771619119A645CF00E013FF /* README-APIKey.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "README-APIKey.txt"; sourceTree = "<group>"; };
 		C7766FA2189A524800898267 /* ILLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLog.h; sourceTree = "<group>"; };
 		C7766FA3189A524800898267 /* ILLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILLog.m; sourceTree = "<group>"; };
 		C77AFB4519528218002ED79A /* ILMenuDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILMenuDataSource.h; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				C71F8C46189A015200298DFA /* main.m */,
 				C71F8C48189A015200298DFA /* IRLauncher-Prefix.pch */,
 				C771618F19A641F700E013FF /* APIKey.plist */,
+				C771619119A645CF00E013FF /* README-APIKey.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				C71F8C53189A015200298DFA /* Images.xcassets in Resources */,
 				C78DEB471993501F00A1A3F9 /* Localizable.strings in Resources */,
 				C771619019A641F700E013FF /* APIKey.plist in Resources */,
+				C771619219A645CF00E013FF /* README-APIKey.txt in Resources */,
 				C71F8C51189A015200298DFA /* MainMenu.xib in Resources */,
 				C789EC9319419D7F00BC8E90 /* ILSignalReceiveView.xib in Resources */,
 				C7C5EBF4196CE1F900E4F19B /* Send IR signal.alfredworkflow in Resources */,

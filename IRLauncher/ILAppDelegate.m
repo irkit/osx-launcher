@@ -171,13 +171,19 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath: plistFile]) {
-        NSLog(@"!!!\n1. Copy APIKey.plist.template into APIKey.plist\n2. Get an APIKey from getirkit.com\n3. Copy the API Key into APIKey.plist\n4. Rebuild.\n!!!");
+        NSLog(@"!!!\nRead README-APIKey.txt\n!!!");
         abort();
         return nil;
     }
 
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: plistFile];
-    return dict[@"IRKitAPIKey"];
+    NSString *ret      = dict[@"IRKitAPIKey"];
+    if (!ret) {
+        NSLog(@"!!!\nRead README-APIKey.txt\n!!!");
+        abort();
+        return nil;
+    }
+    return ret;
 }
 
 #pragma mark - NSUserNotificationCenterDelegate
