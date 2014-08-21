@@ -17,11 +17,6 @@
 #import "ILApplicationUpdater.h"
 #import <MOAutoUpdater/MOUpdater.h>
 
-// IRKit API key is defined in APIKey.xcconfig
-// Read more at http://getirkit.com/#IRKit-Internet-POST-1-apps
-// Get yours to build yourself
-static NSString * const kIRKitAPIKey = NSStringize(IRKIT_APIKEY);
-
 static NSString * const kILDistributedNotificationName = @"jp.maaash.IRLauncher.send";
 NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotification";
 
@@ -158,7 +153,7 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
     dataSource.signals        = _signals;
     [dataSource searchForSignals];
 
-    [IRKit startWithAPIKey: kIRKitAPIKey];
+    [IRKit startWithAPIKey: [self APIKey]];
 
     // automatically download, unarchive, update
     _updater = [[ILApplicationUpdater alloc] init];
@@ -167,6 +162,22 @@ NSString * const kILWillSendSignalNotification         = @"ILWillSendSignalNotif
 
 - (void) dealloc {
     ILLOG_CURRENT_METHOD;
+}
+
+#pragma mark - misc
+
+- (NSString*) APIKey {
+    NSString *plistFile = [[NSBundle mainBundle] pathForResource: @"APIKey" ofType: @"plist"];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath: plistFile]) {
+        NSLog(@"!!!\n1. Copy APIKey.plist.template into APIKey.plist\n2. Get an APIKey from getirkit.com\n3. Copy the API Key into APIKey.plist\n4. Rebuild.\n!!!");
+        abort();
+        return nil;
+    }
+
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: plistFile];
+    return dict[@"IRKitAPIKey"];
 }
 
 #pragma mark - NSUserNotificationCenterDelegate
