@@ -21,15 +21,15 @@ PODS:
   - YRKSpinningProgressIndicator (1.4)
 
 DEPENDENCIES:
-  - ISHTTPOperation (from `~/src/github.com/ishkawa/ISHTTPOperation`)
-  - MOAutoUpdater (from `git@github.com:mash/MOAutoUpdater.git`)
+  - ISHTTPOperation (from `https://github.com/mash/ISHTTPOperation.git`)
+  - MOAutoUpdater (from `https://github.com/mash/MOAutoUpdater.git`)
   - YRKSpinningProgressIndicator (~> 1.4)
 
 EXTERNAL SOURCES:
   ISHTTPOperation:
-    :path: ~/src/github.com/ishkawa/ISHTTPOperation
+    :git: https://github.com/mash/ISHTTPOperation.git
   MOAutoUpdater:
-    :git: git@github.com:mash/MOAutoUpdater.git
+    :git: https://github.com/mash/MOAutoUpdater.git
 
 SPEC CHECKSUMS:
   AFNetworking: 7c33510b46f994bc75b75c6e63c1d83414ca40f2

@@ -57,6 +57,8 @@ cd osx-launcher
 
 # Fetch dependencies
 pod install
+git submodule init
+git submodule update
 
 # Get IRKit API key
 open "http://getirkit.com/en/#post-/1/apps"
