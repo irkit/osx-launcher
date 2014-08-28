@@ -62,6 +62,9 @@ git submodule update
 
 # Get IRKit API key
 open "http://getirkit.com/en/#post-/1/apps"
+cp IRLauncher/APIKey.plist.template IRLauncher/APIKey.plist
+open IRLauncher/APIKey.plist
+# Paste your API key into APIKey.plist
 
 # Go!
 open IRLauncher.xcworkspace
