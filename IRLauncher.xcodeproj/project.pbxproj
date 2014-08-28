@@ -70,6 +70,7 @@
 		C70745BB191A1CAB00AA7A32 /* ILLauncherExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILLauncherExtension.h; sourceTree = "<group>"; };
 		C70745BE191A1D3E00AA7A32 /* ILQuicksilverExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = ILQuicksilverExtension.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		C70745BF191A1D3E00AA7A32 /* ILQuicksilverExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuicksilverExtension.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
+		C709DFE119AEC7A600C8B080 /* IRConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRConst.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRConst.h; sourceTree = "<group>"; };
 		C71E8993189F92B7007BC9C4 /* IRSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRSearcher.m; path = ../Dependencies/IRKit/IRKit/IRKit/IRSearcher.m; sourceTree = "<group>"; };
 		C71E8994189F92B7007BC9C4 /* IRSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRSearcher.h; path = ../Dependencies/IRKit/IRKit/IRKit/IRSearcher.h; sourceTree = "<group>"; };
 		C71F8C37189A015200298DFA /* IRLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,7 +144,6 @@
 		C793E3C2196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVerticallyCenteredTextFieldCell.h; sourceTree = "<group>"; };
 		C793E3C3196E8D9D00B2DF1E /* RSVerticallyCenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVerticallyCenteredTextFieldCell.m; sourceTree = "<group>"; };
 		C7965C2018FFB465004FF579 /* ILConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILConst.h; sourceTree = "<group>"; };
-		C7965C2118FFB4A5004FF579 /* IRConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRConst.h; path = IRKit/IRConst.h; sourceTree = "<group>"; };
 		C798A30C18FD3F9100C9994C /* ILFileStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILFileStore.h; sourceTree = "<group>"; };
 		C798A30D18FD3F9100C9994C /* ILFileStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILFileStore.m; sourceTree = "<group>"; };
 		C79DDEF6196FFFAB0088F13D /* IRSignalIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IRSignalIcon.png; path = IRLauncher/Images.xcassets/IRSignalIcon.imageset/IRSignalIcon.png; sourceTree = SOURCE_ROOT; };
@@ -426,7 +426,7 @@
 				C71E8994189F92B7007BC9C4 /* IRSearcher.h */,
 				C7AB5EAE196BCEA800F8751A /* IRUserDefaultsStore.h */,
 				C7AB5EAF196BCEA800F8751A /* IRUserDefaultsStore.m */,
-				C7965C2118FFB4A5004FF579 /* IRConst.h */,
+				C709DFE119AEC7A600C8B080 /* IRConst.h */,
 			);
 			name = IRKit;
 			path = ..;
