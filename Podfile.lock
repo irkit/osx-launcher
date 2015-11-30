@@ -25,14 +25,14 @@ PODS:
   - YRKSpinningProgressIndicator (1.4)
 
 DEPENDENCIES:
-  - IRKit (from `~/proj/irkit/ios-sdk`)
+  - IRKit (from `https://github.com/irkit/ios-sdk.git`)
   - ISHTTPOperation (from `https://github.com/mash/ISHTTPOperation.git`)
   - MOAutoUpdater (from `https://github.com/mash/MOAutoUpdater.git`, tag `1.0.1`)
   - YRKSpinningProgressIndicator (~> 1.4)
 
 EXTERNAL SOURCES:
   IRKit:
-    :path: "~/proj/irkit/ios-sdk"
+    :git: https://github.com/irkit/ios-sdk.git
   ISHTTPOperation:
     :git: https://github.com/mash/ISHTTPOperation.git
   MOAutoUpdater:
@@ -40,6 +40,9 @@ EXTERNAL SOURCES:
     :tag: 1.0.1
 
 CHECKOUT OPTIONS:
+  IRKit:
+    :commit: 494fc0bf4780b0177396a6723cd3b87f1c6aa6c5
+    :git: https://github.com/irkit/ios-sdk.git
   ISHTTPOperation:
     :commit: a8d1e30b564c19dcce35460f8e286882afe1a00c
     :git: https://github.com/mash/ISHTTPOperation.git
