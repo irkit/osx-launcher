@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "ILFileStore.h"
 
 @interface IRLauncherTests : XCTestCase
 

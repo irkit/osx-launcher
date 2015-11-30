@@ -5,6 +5,7 @@ pod 'YRKSpinningProgressIndicator', '~> 1.4'
 pod 'IRKit', :path => '~/proj/irkit/ios-sdk'
 workspace 'IRLauncher'
 xcodeproj 'IRLauncher'
+link_with ['IRLauncher', 'IRLauncherTests']
 
 class ::Pod::Generator::Acknowledgements
   def footnote_text
