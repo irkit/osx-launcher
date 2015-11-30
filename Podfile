@@ -1,6 +1,6 @@
 platform :osx, "10.9"
 pod 'ISHTTPOperation' , :git => 'https://github.com/mash/ISHTTPOperation.git' # for IRKit
-pod 'MOAutoUpdater', :git => 'https://github.com/mash/MOAutoUpdater.git'
+pod 'MOAutoUpdater', :git => 'https://github.com/mash/MOAutoUpdater.git', :tag => '1.0.1'
 pod 'YRKSpinningProgressIndicator', '~> 1.4'
 pod 'IRKit', :path => '~/proj/irkit/ios-sdk'
 workspace 'IRLauncher'

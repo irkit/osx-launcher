@@ -15,17 +15,19 @@ PODS:
   - AFNetworking/Reachability (2.1.0)
   - AFNetworking/Security (2.1.0)
   - AFNetworking/Serialization (2.1.0)
+  - EDSemver (0.3.0)
   - IRKit (1.0.1):
     - ISHTTPOperation
   - ISHTTPOperation (1.2.0)
-  - MOAutoUpdater (1.0.0):
+  - MOAutoUpdater (1.0.1):
     - AFNetworking (~> 2.1.0)
+    - EDSemver (= 0.3.0)
   - YRKSpinningProgressIndicator (1.4)
 
 DEPENDENCIES:
   - IRKit (from `~/proj/irkit/ios-sdk`)
   - ISHTTPOperation (from `https://github.com/mash/ISHTTPOperation.git`)
-  - MOAutoUpdater (from `https://github.com/mash/MOAutoUpdater.git`)
+  - MOAutoUpdater (from `https://github.com/mash/MOAutoUpdater.git`, tag `1.0.1`)
   - YRKSpinningProgressIndicator (~> 1.4)
 
 EXTERNAL SOURCES:
@@ -35,17 +37,22 @@ EXTERNAL SOURCES:
     :git: https://github.com/mash/ISHTTPOperation.git
   MOAutoUpdater:
     :git: https://github.com/mash/MOAutoUpdater.git
+    :tag: 1.0.1
 
 CHECKOUT OPTIONS:
   ISHTTPOperation:
     :commit: a8d1e30b564c19dcce35460f8e286882afe1a00c
     :git: https://github.com/mash/ISHTTPOperation.git
+  MOAutoUpdater:
+    :git: https://github.com/mash/MOAutoUpdater.git
+    :tag: 1.0.1
 
 SPEC CHECKSUMS:
   AFNetworking: d397c9a76a60c670cbcd33f3ff2c5f961f724cbc
+  EDSemver: 124a90685873628ec30f42504b461a1a61757568
   IRKit: 29655059c992899221dc9de4660bc72314a53c27
   ISHTTPOperation: be875ed7ee34e103a3a2341023a1065c9196df6e
-  MOAutoUpdater: abe3925a631535a1d91fbba8ee43cb4c9b7c4cfd
+  MOAutoUpdater: d2f0b892ce65444de2812ab526a0d145581d9847
   YRKSpinningProgressIndicator: ff42b7cb298b18ce2fd280782c9b2b28e1a10c71
 
 COCOAPODS: 0.39.0
