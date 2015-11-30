@@ -1,1 +1,1 @@
-Pods/Pods-acknowledgements.markdown
+Pods/Target Support Files/Pods/Pods-acknowledgements.markdown
